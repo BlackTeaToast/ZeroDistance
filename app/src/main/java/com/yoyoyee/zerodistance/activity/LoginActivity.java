@@ -201,8 +201,7 @@ public class LoginActivity extends Activity {
     public void turnTestAct(View v){
         //這個主要是用來測試用的，直接轉跳TestActivity的按鍵。
         Intent intent = new Intent();
-        intent.setClass(LoginActivity.this,MainActivity.class);
+        intent.setClass(LoginActivity.this,TurnActivity.class);
         startActivity(intent);
-        LoginActivity.this.finish();
     }
 }

@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Main"
-            android:id="@+id/button2"
+            android:id="@+id/buttonMain"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -30,8 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mission"
-            android:id="@+id/button3"
-            android:layout_below="@+id/button2"
+            android:id="@+id/buttonMission"
+            android:layout_below="@+id/buttonMain"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="49dp" />
@@ -40,8 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Mission"
-            android:id="@+id/button4"
-            android:layout_below="@+id/button3"
+            android:id="@+id/buttonNewMission"
+            android:layout_below="@+id/buttonMission"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="51dp" />
@@ -50,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Q &amp; A"
-            android:id="@+id/button5"
-            android:layout_alignTop="@+id/button2"
+            android:id="@+id/buttonQA"
+            android:layout_alignTop="@+id/buttonMain"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -59,8 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Group"
-            android:id="@+id/button6"
-            android:layout_above="@+id/button4"
+            android:id="@+id/buttonGroup"
+            android:layout_above="@+id/buttonNewMission"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -68,9 +68,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Group"
-            android:id="@+id/button7"
-            android:layout_alignTop="@+id/button4"
+            android:id="@+id/buttonNewGroup"
+            android:layout_alignTop="@+id/buttonNewMission"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="現在是在測試頁面"
+            android:id="@+id/textViewTurnActView"
+            android:layout_below="@+id/buttonNewGroup"
+            android:layout_marginTop="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/buttonNewGroup"
+            android:layout_alignEnd="@+id/buttonNewGroup" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewTurnActExplain"
+            android:layout_below="@+id/textViewTurnActView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="43dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/buttonNewGroup"
+            android:layout_alignEnd="@+id/buttonNewGroup" />
     </RelativeLayout>
 </RelativeLayout>
