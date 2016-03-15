@@ -21,7 +21,7 @@ public class TestActivity extends Activity {
 
 	private SQLiteHandler db;
 	private SessionManager session;
-
+	//test
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
