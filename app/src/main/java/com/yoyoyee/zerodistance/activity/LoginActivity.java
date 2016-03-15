@@ -198,4 +198,11 @@ public class LoginActivity extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+    public void turnTestAct(View v){
+        //這個主要是用來測試用的，直接轉跳TestActivity的按鍵。
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        LoginActivity.this.finish();
+    }
 }
