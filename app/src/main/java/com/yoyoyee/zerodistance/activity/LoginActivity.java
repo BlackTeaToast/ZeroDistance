@@ -35,7 +35,6 @@ import com.yoyoyee.zerodistance.helper.SessionManager;
 public class LoginActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnLogin;
-
     private Button btnLinkToRegister;
     private EditText inputEmail;
     private EditText inputPassword;
