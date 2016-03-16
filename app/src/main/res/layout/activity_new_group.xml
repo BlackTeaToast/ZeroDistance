@@ -9,4 +9,78 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.yoyoyee.zerodistance.activity.NewGroupActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="任務名稱："
+        android:layout_column="0"
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView2"
+        android:layout_row="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="緊急程度："
+        android:layout_marginBottom="187dp"
+        android:id="@+id/justView"
+        android:layout_row="25"
+        android:layout_column="0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="24dp" />
+
+    <EditText
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextNGAPMissonName"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerNewGroupActPressing"
+        android:spinnerMode="dropdown"
+        android:layout_row="25"
+        android:layout_column="12"
+        android:layout_gravity="center_vertical"
+        android:layout_alignTop="@+id/justView"
+        android:layout_alignLeft="@+id/editTextNGAPMissonName"
+        android:layout_alignStart="@+id/editTextNGAPMissonName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="獎勵："
+        android:id="@+id/justView2"
+        android:layout_row="25"
+        android:layout_column="0"
+        android:textSize="24dp"
+        android:layout_below="@+id/spinnerNewGroupActPressing"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerNewGroupActPay"
+        android:spinnerMode="dropdown"
+        android:layout_row="25"
+        android:layout_column="12"
+        android:layout_gravity="center_vertical"
+        android:layout_alignTop="@+id/justView2"
+        android:layout_alignLeft="@+id/spinnerNewGroupActPressing"
+        android:layout_alignStart="@+id/spinnerNewGroupActPressing" />
+
 </RelativeLayout>
