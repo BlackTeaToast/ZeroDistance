@@ -96,9 +96,9 @@ public class LoginActivity extends Activity {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
+                        RegisterSelectActivity.class);
                 startActivity(i);
-                finish();
+
             }
         });
 
