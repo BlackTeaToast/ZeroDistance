@@ -88,7 +88,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		String selectQuery = "SELECT  * FROM " + TABLE_USER;
 
 		SQLiteDatabase db = this.getReadableDatabase();
+		//Log.d(TAG, "getUserDetails: "+db.rawQuery("SELECT * FROM "+TABLE_USER ,null));
 		Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        for(int i=0; i<cursor.getCount(); i++){
+            Log.d(TAG, "getUserDetails: "+cursor.getString(0)+", "+cursor.getString(1)+", "+cursor.getString(2)+", "+cursor.getString(3)+", "+cursor.getString(4));
+            cursor.moveToNext();
+        }
 		// Move to first row
 		cursor.moveToFirst();
 		if (cursor.getCount() > 0) {
