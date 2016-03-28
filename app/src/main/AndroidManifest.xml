@@ -25,7 +25,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/app_name"
@@ -41,7 +41,11 @@
         <activity android:name=".activity.NewGroupActivity" />
         <activity android:name=".activity.QAActivity" />
         <activity android:name=".activity.TurnActivity" />
-        <activity android:name=".activity.RegisterSelectActivity"></activity>
+        <activity
+            android:name=".activity.RegisterSelectActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
