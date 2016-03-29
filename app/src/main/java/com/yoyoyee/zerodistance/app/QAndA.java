@@ -4,7 +4,7 @@ package com.yoyoyee.zerodistance.app;
  Created by PatrickC on 2016/3/29.
  */
 public class QAndA {
-    public String questionUser;//	存放問問題的人的暱稱
+    public String questionUser;//	存放問問題的人的暱稱.
     public QAndA	next;//	指到下一個詢問者的問題串
     public Questions	firstQuestion;//	存放當前詢問者的第一個問題
     public  QAndA(){

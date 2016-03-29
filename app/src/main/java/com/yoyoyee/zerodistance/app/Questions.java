@@ -4,7 +4,7 @@ package com.yoyoyee.zerodistance.app;
   Created by PatrickC on 2016/3/29.
  */
 public class Questions {
-   public boolean	isQuestion;//	question = true; answer = false
+   public boolean	isQuestion;//	question = true; answer = false.
    public String	content;//	內容
    public   Questions	next;//	指到下一個question or answer
     public  Questions(){
