@@ -13,4 +13,8 @@
     <string name="name">Fullname</string>
     <string name="btn_register_student">學生</string>
     <string name="btn_register_teacher">老師</string>
+
+    <!--Tree使用-->
+    <string name="missionNameNGA">任務名稱：</string>
+
 </resources>
