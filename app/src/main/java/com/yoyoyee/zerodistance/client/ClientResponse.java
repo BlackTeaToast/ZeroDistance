@@ -5,9 +5,9 @@ package com.yoyoyee.zerodistance.client;
  */
 public interface ClientResponse {
 
-    public void onResponse(String response);
+    void onResponse(String response);
 
-    public void onErrorResponse(String response);
+    void onErrorResponse(String response);
 
 }
 

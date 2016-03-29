@@ -14,6 +14,7 @@ import com.yoyoyee.zerodistance.helper.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,8 +61,7 @@ public class ClientFunctions {
                         JSONObject user = jObj.getJSONObject("user");
                         String name = user.getString("name");
                         String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
+                        String created_at = user.getString("created_at");
 
                         // Inserting row in users table
                         db.addUser(name, email, uid, created_at);
@@ -105,11 +105,10 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void registerUser(final String name, final String email, final String password, final ClientResponse clientResponse) {
+    public static void registerUser(final String name, final String email, final String password,
+                                    final ClientResponse clientResponse) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
-
-
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_REGISTER, new Response.Listener<String>() {
@@ -129,8 +128,7 @@ public class ClientFunctions {
                         JSONObject user = jObj.getJSONObject("user");
                         String name = user.getString("name");
                         String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
+                        String created_at = user.getString("created_at");
 
                         // Inserting row in users table
                         //db.addUser(name, email, uid, created_at);
@@ -172,5 +170,28 @@ public class ClientFunctions {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void publishMission(final String title, final boolean isUrgent, final int needNum,
+                                      final String Content, final String imagePath,
+                                      final String voicePath, final String videoPath,
+                                      final String reward, final Date expAt,
+                                      final ClientResponse clientResponse) {
+
+    }
+
+    public static void publishGroup(final String title, final String needNum,  final String Content,
+                                    final String imagePath, final String voicePath,
+                                    final String videoPath, final Date expAt,
+                                    final ClientResponse clientResponse) {
+
+    }
+
+    public static void updateMissions() {
+
+    }
+
+    public static void updateGroups() {
+
     }
 }
