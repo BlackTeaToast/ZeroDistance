@@ -4,9 +4,9 @@ package com.yoyoyee.zerodistance.app;
  Created by PatrickC on 2016/3/29.
  */
 public class QAndA {
-    String	questionUser;//	存放問問題的人的暱稱
-    QAndA	next;//	指到下一個詢問者的問題串
-    Questions	firstQuestion;//	存放當前詢問者的第一個問題
+    public String questionUser;//	存放問問題的人的暱稱
+    public QAndA	next;//	指到下一個詢問者的問題串
+    public Questions	firstQuestion;//	存放當前詢問者的第一個問題
     public  QAndA(){
         this.firstQuestion = null;
         this.next = null;
@@ -26,6 +26,8 @@ public class QAndA {
         this.next = newQAndA;
 
     }
+
+
     //回傳最後一節 QAndA
     public QAndA findFinal(){
         QAndA index;
