@@ -52,7 +52,6 @@ public class NewGroupActivity extends AppCompatActivity {
     private TextView justViewNGA, Display, textViewTime, textViewDate;
     private Toolbar toolbar;
     private Calendar calendar;
-    private GetDate getDate;
     final int theme = 5; //TimePickerDialog的主題，有0~6;
     private boolean time12or24=true; //設定true為24小時制，false12小時制
     private boolean timeAMPMAuto=true;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
