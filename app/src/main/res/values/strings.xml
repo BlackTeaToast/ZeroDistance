@@ -15,8 +15,51 @@
     <string name="btn_register_teacher">老師</string>
 
     <!--Tree使用-->
-    <string name="missionNameNGA">任務名稱：</string>
+    <string name="missionname_new_group">任務名稱：</string>
+    <string name="actionbar_new_group">建立任務</string>
+    <string-array name="press_new_group">
+        <item>普通</item>
+        <item>緊急</item>
+    </string-array>
+    <string-array name="pay_new_group">
+        <item>飲料</item>
+        <item>餅乾</item>
+        <item>其他</item>
+    </string-array>
 
     <!--楊-->
     <string name="section_format">test：</string>
+    <string name="title_activity_new_tool_bar">NewToolBar</string>
 </resources>
+
+<!--
+如果要使用在.java黨上面時，可以以以下方式來引用。
+如果我們要用單一詞彙
+先在strings資料夾內建立文字資料
+例：
+<string name="要使用的變數名稱">要顯示的文字，任何語言皆可</string>
+那要引用的話，就以R.string.要使用的變數名稱，即可傳入字串
+例：
+strings內：
+<string name="yee">我是範例</string>
+JAVA內：
+private String string=R.string.yee;
+此時，string內即為"我是範例"
+
+若是要使用字串，則要定義為此
+例：
+ <string-array name="press_new_group">
+        <item>普通</item>
+        <item>緊急</item>
+    </string-array>
+<item>可以自行增加
+要呼叫時則比較麻煩
+例：
+private String[] stringNGAPress = getResources().getStringArray(R.array.press_new_group);
+
+
+
+
+
+
+-->
