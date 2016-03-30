@@ -17,4 +17,6 @@
     <!--Tree使用-->
     <string name="missionNameNGA">任務名稱：</string>
 
+    <!--楊-->
+    <string name="section_format">test：</string>
 </resources>
