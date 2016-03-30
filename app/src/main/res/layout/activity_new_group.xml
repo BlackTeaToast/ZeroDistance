@@ -40,14 +40,11 @@
                     android:layout_row="0" />
 
                 <EditText
-                    android:layout_width="188dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editTextNGAPMissonName"
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editTextMission" />
 
             </LinearLayout>
 
@@ -68,7 +65,7 @@
                         android:layout_row="25"
                         android:layout_column="2"
                         android:textSize="24dp"
-                        android:layout_below="@+id/editTextNGAPMissonName"
+                        android:layout_below="@+id/editTextMissonName"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true" />
 
@@ -82,7 +79,9 @@
                         android:layout_alignTop="@+id/justView"
                         android:layout_toRightOf="@+id/justView"
                         android:layout_toEndOf="@+id/justView"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:entries="@array/press_new_group"
+                        />
                 </TableRow>
 
                 <TableRow
@@ -113,7 +112,9 @@
                         android:layout_below="@+id/spinnerNewGroupActPressing"
                         android:layout_alignLeft="@+id/spinnerNewGroupActPressing"
                         android:layout_alignStart="@+id/spinnerNewGroupActPressing"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:entries="@array/pay_new_group"
+                        />
                 </TableRow>
 
                 <TableRow

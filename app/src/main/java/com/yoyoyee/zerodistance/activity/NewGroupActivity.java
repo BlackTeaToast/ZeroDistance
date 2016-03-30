@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -40,11 +41,11 @@ public class NewGroupActivity extends AppCompatActivity {
      -------------------------------------------------------------------------------------------------------------*/
     private Boolean oneTimesDate =true,oneTimesTime=true;
     private Spinner spinnerNGAPress, spinnerNGAPay;
-    private ArrayAdapter<CharSequence> arraysNGAPress, arraysNGAPPay;
+    private String[] stringPress ;
+    private String[] stringPay ;
+    private ArrayAdapter<String> arraysNGAPress, arraysNGAPPay;
     private Context contextNGAP;
     private ContentResolver cv;
-    private String[] stringNGAPress = getResources().getStringArray(R.array.press_new_group);
-    private String[] stringNGAPay = getResources().getStringArray(R.array.pay_new_group);
     private String outPutString;
     private String timeAMPM;
     private Button dataPath;
@@ -78,30 +79,41 @@ public class NewGroupActivity extends AppCompatActivity {
         //spinner 定位區
         spinnerNGAPress = (Spinner) findViewById(R.id.spinnerNewGroupActPressing);
         spinnerNGAPay = (Spinner) findViewById(R.id.spinnerNewGroupActPay);
-
         //ActionBar 設定區，主要為為了Spinner使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.actionbar_new_group);
         //Calendar定義區----------------------------------------------------------------------------
         calendar =Calendar.getInstance();
-
+        //定義區
+        stringPress =getResources().getStringArray(R.array.press_new_group);
+        stringPay =getResources().getStringArray(R.array.pay_new_group);
         //取的時間設定12或24小時制
 
 
-        contextNGAP = this.getApplicationContext();
 
+       spinnerNGAPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Display.setText(stringPress[position]);
+            }
 
-        arraysNGAPress = new ArrayAdapter<CharSequence>(NewGroupActivity.this,R.layout.support_simple_spinner_dropdown_item, stringNGAPress);
-        spinnerNGAPress.setAdapter(arraysNGAPress);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        spinnerNGAPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Display.setText(stringPay[position]);
+            }
 
-        arraysNGAPPay = new ArrayAdapter<CharSequence>(NewGroupActivity.this, R.layout.support_simple_spinner_dropdown_item, stringNGAPay);
-        spinnerNGAPay.setAdapter(arraysNGAPPay);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-
-
-
+            }
+        });
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗，
@@ -180,10 +192,17 @@ public class NewGroupActivity extends AppCompatActivity {
                     }
             }, year, month, day).show();
         }
-*/
+
 
      /*SimpleDateFormat date_sim = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date_date = new Date(System.currentTimeMillis());
         outPutString = date_sim.format(date_date);
         useToCompare = Float.parseFloat(outPutString);*/
 
+  /* 初始化spinner用的
+         contextNGAP = this.getApplicationContext();
+        arraysNGAPress = new ArrayAdapter<String>(NewGroupActivity.this, R.layout.support_simple_spinner_dropdown_item, stringPress);
+        spinnerNGAPress.setAdapter(arraysNGAPress);
+        arraysNGAPPay = new ArrayAdapter<String>(NewGroupActivity.this, R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.pay_new_group));
+        spinnerNGAPay.setAdapter(arraysNGAPPay);
+*/
