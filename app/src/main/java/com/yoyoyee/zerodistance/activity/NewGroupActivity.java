@@ -91,7 +91,7 @@ public class NewGroupActivity extends AppCompatActivity {
         //取的時間設定12或24小時制
 
 
-
+       //spinner的監聽
        spinnerNGAPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
