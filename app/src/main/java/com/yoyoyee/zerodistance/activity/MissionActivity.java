@@ -21,8 +21,7 @@ public class MissionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mission);
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
-
-
+        
 
         //-------------------------------------------------------------------------------
 

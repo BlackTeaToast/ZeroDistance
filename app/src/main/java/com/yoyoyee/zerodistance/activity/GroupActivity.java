@@ -23,7 +23,6 @@ public class GroupActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.group_tool_bar);
 
 
-
         //-------------------------------------------------------------------------------
 
 
