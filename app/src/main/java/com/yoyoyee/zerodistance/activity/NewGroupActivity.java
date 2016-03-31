@@ -3,7 +3,6 @@ package com.yoyoyee.zerodistance.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +10,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.FrameLayout;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,11 +20,10 @@ import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.app.GetDate;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.Date;
+
 
 public class NewGroupActivity extends AppCompatActivity {
 
@@ -40,25 +37,27 @@ public class NewGroupActivity extends AppCompatActivity {
 
      -------------------------------------------------------------------------------------------------------------*/
     private Boolean oneTimesDate =true,oneTimesTime=true;
-    private Spinner spinnerNGAPress, spinnerNGAPay;
-    private String[] stringPress ;
-    private String[] stringPay ;
-    private ArrayAdapter<String> arraysNGAPress, arraysNGAPPay;
-    private Context contextNGAP;
-    private ContentResolver cv;
-    private String outPutString;
-    private String timeAMPM;
-    private Button dataPath;
-    private TextView justViewNGA, Display, textViewTime, textViewDate;
-    private Toolbar toolbar;
+    private Boolean time12or24=false; //設定true為24小時制，false12小時制
+    private Boolean timeAMPMAuto=true;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
+    private Button buttonDate,buttonTime;
+
     private Calendar calendar;
+
+    private EditText editTextcontent;
+
+    private Spinner spinnerPress, spinnerPay;
+    private String[] stringPress ,stringPay;
+    private String getThatString;
+
+    private TextView textViewName,textViewPress,textViewPay,Display,textViewMissionDate, textViewcontent;
+    private TextView textViewTime,textViewDate;//Timepickerdialog使用
+    private Toolbar toolbar;
+
     final int theme = 5; //TimePickerDialog的主題，有0~6;
-    private boolean time12or24=true; //設定true為24小時制，false12小時制
-    private boolean timeAMPMAuto=true;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
-    private SimpleDateFormat formatter, formatYear, formatMonth, formatDay, formatHour, formatMin, formatSec;
 
     private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow;
     private int year, month, day, hour, minute;
+    private int hourAMPM;
 
 
     @Override
@@ -70,28 +69,48 @@ public class NewGroupActivity extends AppCompatActivity {
         //toolbar 定位區
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         //textView 定位區
-        textViewTime = (TextView) findViewById(R.id.textViewTimePick);
-        textViewDate = (TextView) findViewById(R.id.textViewDatePick);
-        Display = (TextView) findViewById(R.id.Display);
-        justViewNGA = (TextView) findViewById(R.id.justView2);
+        Display = (TextView) findViewById(R.id.printf);
+        textViewName = (TextView) findViewById(R.id.textViewName);
+        textViewPress = (TextView) findViewById(R.id.textViewPress);
+        textViewPay = (TextView) findViewById(R.id.textViewPay);
+        textViewMissionDate = (TextView) findViewById(R.id.textViewMissionDate);
+        textViewcontent = (TextView) findViewById(R.id.textViewContent);
+
         //buttom 定位區
+        buttonDate = (Button) findViewById(R.id.buttonDate);
+        buttonTime = (Button) findViewById(R.id.buttonTime);
         //spinner 定位區
-        spinnerNGAPress = (Spinner) findViewById(R.id.spinnerNewGroupActPressing);
-        spinnerNGAPay = (Spinner) findViewById(R.id.spinnerNewGroupActPay);
-        //ActionBar 設定區，主要為為了Spinner使用---------------------------------------------------
+        spinnerPress = (Spinner) findViewById(R.id.spinnerPress);
+        spinnerPay = (Spinner) findViewById(R.id.spinnerPay);
+        //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.actionbar_new_group);
-        //Calendar定義區----------------------------------------------------------------------------
+        actionBar.setTitle(R.string.actionbar_new_mission);
+        //定義區------------------------------------------------------------------------------------
+        //時間
+
         calendar =Calendar.getInstance();
-        //定義區
-        stringPress =getResources().getStringArray(R.array.press_new_group);
-        stringPay =getResources().getStringArray(R.array.pay_new_group);
+
+        stringPress =getResources().getStringArray(R.array.press_new_mission);
+        stringPay =getResources().getStringArray(R.array.pay_new_mission);
         //取的時間設定12或24小時制
+        //設定文字
+
+        textViewName.setText(R.string.missionname_new_mission);
+        textViewPress.setText(R.string.press_new_mission);
+        textViewPay.setText(R.string.pay_new_mission);
+
+        textViewcontent.setText(R.string.content_new_mission);
+        textViewMissionDate.setText(R.string.date_new_mission);
+        buttonTime.setText(R.string.buttomtime_new_mission);
+        buttonDate.setText(R.string.buttomdate_new_mission);
+
+
+
 
 
        //spinner的監聽
-       spinnerNGAPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       spinnerPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPress[position]);
@@ -102,7 +121,7 @@ public class NewGroupActivity extends AppCompatActivity {
 
             }
         });
-        spinnerNGAPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPay[position]);
@@ -132,12 +151,12 @@ public class NewGroupActivity extends AppCompatActivity {
                     year = lisYear;
                     month = lisMonth;
                     day = lisDay;
-                    textViewDate.setText(year + "年" + month + "月" + day + "日");
+                    buttonDate.setText(year + getResources().getString(R.string.year_new_mission) + month + getResources().getString(R.string.month_new_mission) + day + getResources().getString(R.string.day_new_mission));
             }
         }, year, month, day);
         datePickerDialog.show();
 
-        Display.setText(String.valueOf(year));
+       // Display.setText(String.valueOf(year));
         oneTimesDate =false;
     }
 
@@ -147,11 +166,12 @@ public class NewGroupActivity extends AppCompatActivity {
             minuteNow =calendar.get(Calendar.MINUTE);
             hour =hourNow;
             minute =minuteNow;
-            Toast.makeText(this,"開始設定", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this,"開始設定", Toast.LENGTH_SHORT).show();
         }
+        
         if (timeAMPMAuto==true) {//自動偵測系統設定的時間格式為12小時制或24小時制
-            cv = this.getContentResolver();
-            timeAMPM = android.provider.Settings.System.getString(cv, Settings.System.TIME_12_24);
+            ContentResolver cv = this.getContentResolver();
+            String timeAMPM = Settings.System.getString(cv, Settings.System.TIME_12_24);
             if (timeAMPM.equals("12")) {
                 time12or24 = false;
             }
@@ -161,7 +181,7 @@ public class NewGroupActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int lisHour, int lisminute) {
                 hour = lisHour;
                 minute = lisminute;
-                textViewTime.setText( hour + "點" + minute + "分");
+                buttonTime.setText(hour + getResources().getString(R.string.hour_new_mission) + minute + getResources().getString(R.string.minute_new_mission));
             }
         }, hour, minute, time12or24);
         timePickerDialog.show();
@@ -201,7 +221,7 @@ public class NewGroupActivity extends AppCompatActivity {
   /* 初始化spinner用的
          contextNGAP = this.getApplicationContext();
         arraysNGAPress = new ArrayAdapter<String>(NewGroupActivity.this, R.layout.support_simple_spinner_dropdown_item, stringPress);
-        spinnerNGAPress.setAdapter(arraysNGAPress);
+        spinnerPress.setAdapter(arraysNGAPress);
         arraysNGAPPay = new ArrayAdapter<String>(NewGroupActivity.this, R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.pay_new_group));
-        spinnerNGAPay.setAdapter(arraysNGAPPay);
+        spinnerPay.setAdapter(arraysNGAPPay);
 */

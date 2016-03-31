@@ -15,13 +15,31 @@
     <string name="btn_register_teacher">老師</string>
 
     <!--Tree使用-->
-    <string name="missionname_new_group">任務名稱：</string>
-    <string name="actionbar_new_group">建立任務</string>
-    <string-array name="press_new_group">
+    <string name="missionname_new_mission">任務名稱：</string>
+    <string name="actionbar_new_mission">建立任務：</string>
+    <string name="press_new_mission">緊急程度：</string>
+    <string name="pay_new_mission">支付獎勵：</string>
+    <string name="content_new_mission">任務內容：</string>
+    <string name="date_new_mission">任務日期：</string>
+    <string name="buttomdate_new_mission">選擇哪天</string>
+    <string name="buttomtime_new_mission">選擇幾點</string>
+    <string name="year_new_mission">年</string>
+    <string name="month_new_mission">月</string>
+    <string name="day_new_mission">日</string>
+    <string name="hour_new_mission">點</string>
+    <string name="minute_new_mission">分</string>
+
+
+
+
+
+
+
+    <string-array name="press_new_mission">
         <item>普通</item>
         <item>緊急</item>
     </string-array>
-    <string-array name="pay_new_group">
+    <string-array name="pay_new_mission">
         <item>飲料</item>
         <item>餅乾</item>
         <item>其他</item>
