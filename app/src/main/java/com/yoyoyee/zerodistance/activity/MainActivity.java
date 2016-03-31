@@ -1,5 +1,8 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -19,6 +23,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,20 +33,17 @@ import com.yoyoyee.zerodistance.helper.MyAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    //任務開始
-    String[] myDataset={"你說把愛漸漸放下會走更遠,或許命運的謙讓我遇見","你好阿","xx","你好阿","xx","你好阿"} , missionName ={"我難過","打屁屁","878787","打屁屁","878787","打屁屁"};
-    Drawable[] missiondangerous={Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on")} ;
-
-    //任務結束
     private SectionsPagerAdapter mSectionsPagerAdapter;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    public Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // setSupportActionBar(toolbar);
         //title
@@ -64,19 +66,29 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+//        Intent in = new Intent(this, fragmentActivity.class);
+////        in.setClass();
+//        try {
+////            startActivity(in);
+//
+////            f.startActivities(in);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
         //任務開始
-        MyAdapter myAdapter = new MyAdapter(myDataset , missionName , missiondangerous);
-        RecyclerView mList = (RecyclerView) findViewById(R.id.listview);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        mList.setLayoutManager(layoutManager);
+//        MyAdapter myAdapter = new MyAdapter(myDataset , missionName , missiondangerous);
+//        RecyclerView mList = (RecyclerView) findViewById(R.id.listview);
+////        mContext = getApplicationContext();
+//        LinearLayoutManager layoutManager;
+//        layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//            mList.setLayoutManager(layoutManager);
 //        mList.setAdapter(myAdapter);
         //任務結束
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,32 +142,71 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView ;
-            rootView= inflater.inflate(R.layout.fragment_mission, container, false);
-
+            View rootView = null;
             int a =getArguments().getInt(ARG_SECTION_NUMBER);
             switch(a){
+                case 1:
+                    rootView= inflater.inflate(R.layout.fragment_mission, container, false);
+                    CreateMissionView(rootView);
+                    break;
                 case 2:
                     rootView = inflater.inflate(R.layout.fragment_team, container, false);
+                    CreateTeamView(rootView);
                     break;
                 case 3:
                     rootView = inflater.inflate(R.layout.fragment_havebeen, container, false);
+                    CreateHaveBeenView(rootView);
                     break;
                 case 4:
                     rootView = inflater.inflate(R.layout.fragment_notbeen, container, false);
+                    CreateNotBeenView(rootView);
                     break;
                 case 5:
                     rootView = inflater.inflate(R.layout.fragment_achievement, container, false);
+                    CreateAchieventView(rootView);
                     break;
                 case 6:
                     rootView = inflater.inflate(R.layout.fragment_setting, container, false);
-
-
+                    CreateSettingView(rootView);
                     break;
             }
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
+        }
+
+        public void CreateMissionView(View rootView){
+            String[] myDataset={"你說把愛漸漸放下會走更遠,或許命運的謙讓我遇見","你好阿","xx","你好阿","xx","你好阿"} , missionName ={"我難過","打屁屁","878787","打屁屁","878787","打屁屁"};
+            Drawable[] missiondangerous={Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on")} ;
+
+//            TextView tv = (TextView)rootView.findViewById(R.id.Textview);
+//            tv.setText("ewewewwww" );
+            try {
+                MyAdapter myAdapter = new MyAdapter(myDataset , missionName , missiondangerous);
+                RecyclerView mList = (RecyclerView) rootView.findViewById(R.id.listView);
+                LinearLayoutManager layoutManager;
+                layoutManager = new LinearLayoutManager(getActivity());
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                mList.setLayoutManager(layoutManager);
+                mList.setAdapter(myAdapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        public void CreateTeamView(View rootView){
+
+        }
+        public void CreateHaveBeenView(View rootView){
+
+        }
+        public void CreateNotBeenView(View rootView){
+
+        }
+        public void CreateAchieventView(View rootView){
+
+        }
+        public void CreateSettingView(View rootView){
+
         }
     }
 
