@@ -43,7 +43,7 @@ public class NewGroupActivity extends AppCompatActivity {
 
     private Calendar calendar;
 
-    private EditText editTextcontent;
+    private EditText editTextcontent,editTextOtherPay;
 
     private Spinner spinnerPress, spinnerPay;
     private String[] stringPress ,stringPay;
@@ -75,7 +75,9 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewPay = (TextView) findViewById(R.id.textViewPay);
         textViewMissionDate = (TextView) findViewById(R.id.textViewMissionDate);
         textViewcontent = (TextView) findViewById(R.id.textViewContent);
-
+        //editText定位區
+        editTextcontent = (EditText) findViewById(R.id.editTextContent);
+        editTextOtherPay = (EditText) findViewById(R.id.editTextOtherPay);
         //buttom 定位區
         buttonDate = (Button) findViewById(R.id.buttonDate);
         buttonTime = (Button) findViewById(R.id.buttonTime);
@@ -105,6 +107,7 @@ public class NewGroupActivity extends AppCompatActivity {
         buttonTime.setText(R.string.buttomtime_new_mission);
         buttonDate.setText(R.string.buttomdate_new_mission);
 
+        editTextOtherPay.setVisibility(View.GONE);
 
 
 
@@ -125,6 +128,13 @@ public class NewGroupActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPay[position]);
+                if (position==(getResources().getStringArray(R.array.pay_new_mission).length-1)) {
+                    editTextOtherPay.setVisibility(View.VISIBLE);
+                }
+                else{
+                    editTextOtherPay.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -151,7 +161,7 @@ public class NewGroupActivity extends AppCompatActivity {
                     year = lisYear;
                     month = lisMonth;
                     day = lisDay;
-                    buttonDate.setText(year + getResources().getString(R.string.year_new_mission) + month + getResources().getString(R.string.month_new_mission) + day + getResources().getString(R.string.day_new_mission));
+                    buttonDate.setText(year + getResources().getString(R.string.year_new_mission) + (month+1) + getResources().getString(R.string.month_new_mission) + day + getResources().getString(R.string.day_new_mission));
             }
         }, year, month, day);
         datePickerDialog.show();
