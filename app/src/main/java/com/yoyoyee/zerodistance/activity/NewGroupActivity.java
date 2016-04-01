@@ -190,6 +190,12 @@ public class NewGroupActivity extends AppCompatActivity {
                 return true;
             }
         });
+        imv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
 
@@ -260,32 +266,63 @@ public class NewGroupActivity extends AppCompatActivity {
 
     }
 
-    protected void onActivityResult(int requireCode,int resultCode,Intent data){
-        super.onActivityResult(requireCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK && requireCode==100){
-            BitmapFactory.Options option =new BitmapFactory.Options();
-            //option.inJustDecodeBounds =true;//只讀圖檔資訊
-            option.inSampleSize =2;//設定縮小倍率，2為1/2倍
-            bitmapOutPut =  BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg",option); //讀取圖檔資訊，存入option中，已進行修改
-
-           // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
-
-            imv.setVisibility(View.VISIBLE);
-            imv.setImageBitmap(bitmapOutPut);
-            if (firstTakePicture==true){
-                Toast.makeText(this,R.string.takepicturemessage_new_mission, Toast.LENGTH_LONG).show();
-            }
-            firstTakePicture=false;
-        }
-        else{
-            Toast.makeText(this,R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
-        }
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
 
+    }
+    //從檔案讀取圖片
+    public void onClickPickimg(View v){
+        Intent intent =new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 101);
+    }
+    //傳回並顯示圖片
+    protected void onActivityResult(int requireCode,int resultCode,Intent data){
+        super.onActivityResult(requireCode, resultCode, data);
+        switch (requireCode) {
+            case 100: {
+                if (resultCode == Activity.RESULT_OK && requireCode == 100) {
+                    BitmapFactory.Options option = new BitmapFactory.Options();
+                    //option.inJustDecodeBounds =true;//只讀圖檔資訊
+                    option.inSampleSize = 2;//設定縮小倍率，2為1/2倍
+                    Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
+
+                    // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
+
+                    imv.setVisibility(View.VISIBLE);
+                    imv.setImageBitmap(bitmap);
+                    if (firstTakePicture == true) {
+                        Toast.makeText(this, R.string.takepicturemessage_new_mission, Toast.LENGTH_LONG).show();
+                    }
+                    firstTakePicture = false;
+                }
+                else {
+                    Toast.makeText(this, R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
+                }
+            }
+            case 101: {
+                if (resultCode == Activity.RESULT_OK && requireCode == 101) {
+                    BitmapFactory.Options option = new BitmapFactory.Options();
+                    //option.inJustDecodeBounds =true;//只讀圖檔資訊
+                    option.inSampleSize = 2;//設定縮小倍率，2為1/2倍
+                    Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
+
+                    // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
+
+                    imv.setVisibility(View.VISIBLE);
+                    imv.setImageBitmap(bitmap);
+                    if (firstTakePicture == true) {
+                        Toast.makeText(this, R.string.takepicturemessage_new_mission, Toast.LENGTH_LONG).show();
+                    }
+                    firstTakePicture = false;
+                }
+                else {
+                    Toast.makeText(this, R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
 
