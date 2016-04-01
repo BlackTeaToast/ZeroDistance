@@ -28,6 +28,11 @@
     <string name="day_new_mission">日</string>
     <string name="hour_new_mission">點</string>
     <string name="minute_new_mission">分</string>
+    <string name="okbuttom_new_mission">發送</string>
+    <string name="cancelbuttom_new_mission">取消</string>
+    <string name="uploadpicture_new_mission">選擇圖片照片：</string>
+    <string name="uploadpictruebuttom_new_mission">從檔案選取</string>
+    <string name="takepicturebuttom_new_mission">拍照</string>
 
 
 

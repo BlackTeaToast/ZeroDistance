@@ -4,12 +4,14 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.provider.Settings;
+import android.provider.Settings.*;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,10 +38,11 @@ public class NewGroupActivity extends AppCompatActivity {
 
 
      -------------------------------------------------------------------------------------------------------------*/
+    private ArrayAdapter<String> adapterPress,adapterPay;
     private Boolean oneTimesDate =true,oneTimesTime=true;
     private Boolean time12or24=false; //設定true為24小時制，false12小時制
-    private Boolean timeAMPMAuto=true;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
-    private Button buttonDate,buttonTime;
+    private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
+    private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
 
     private Calendar calendar;
 
@@ -49,7 +52,7 @@ public class NewGroupActivity extends AppCompatActivity {
     private String[] stringPress ,stringPay;
     private String getThatString;
 
-    private TextView textViewName,textViewPress,textViewPay,Display,textViewMissionDate, textViewcontent;
+    private TextView textViewName,textViewPress,textViewPay,Display,textViewMissionDate, textViewcontent,textViewPicture;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
 
@@ -75,15 +78,23 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewPay = (TextView) findViewById(R.id.textViewPay);
         textViewMissionDate = (TextView) findViewById(R.id.textViewMissionDate);
         textViewcontent = (TextView) findViewById(R.id.textViewContent);
+        textViewPicture= (TextView) findViewById(R.id.textViewPicture);
         //editText定位區
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
         editTextOtherPay = (EditText) findViewById(R.id.editTextOtherPay);
         //buttom 定位區
         buttonDate = (Button) findViewById(R.id.buttonDate);
         buttonTime = (Button) findViewById(R.id.buttonTime);
+        buttonCancel= (Button) findViewById(R.id.buttonCancel);
+        buttonOk= (Button) findViewById(R.id.buttonOK);
+        buttonPicture= (Button) findViewById(R.id.buttonPicture);
+        buttonTakePicture= (Button) findViewById(R.id.buttonTakePicture);
+
         //spinner 定位區
         spinnerPress = (Spinner) findViewById(R.id.spinnerPress);
         spinnerPay = (Spinner) findViewById(R.id.spinnerPay);
+
+        ;
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -101,18 +112,26 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewName.setText(R.string.missionname_new_mission);
         textViewPress.setText(R.string.press_new_mission);
         textViewPay.setText(R.string.pay_new_mission);
-
+        textViewPicture.setText(R.string.uploadpicture_new_mission);
         textViewcontent.setText(R.string.content_new_mission);
         textViewMissionDate.setText(R.string.date_new_mission);
         buttonTime.setText(R.string.buttomtime_new_mission);
         buttonDate.setText(R.string.buttomdate_new_mission);
+        buttonPicture.setTextSize(R.string.uploadpictruebuttom_new_mission);
+        buttonTakePicture.setText(R.string.takepicturebuttom_new_mission);
 
         editTextOtherPay.setVisibility(View.GONE);
 
+        adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission));
+        adapterPay = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.pay_new_mission));
+        adapterPress.setDropDownViewResource(R.layout.spinner);
+        adapterPay.setDropDownViewResource(R.layout.spinner);
+        spinnerPress.setAdapter(adapterPress);
+        spinnerPay.setAdapter(adapterPay);
 
 
 
-       //spinner的監聽
+        //spinner的監聽
        spinnerPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
