@@ -1,20 +1,31 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Settings.*;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,6 +35,7 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 
 
+import java.io.File;
 import java.util.Calendar;
 
 
@@ -40,19 +52,23 @@ public class NewGroupActivity extends AppCompatActivity {
      -------------------------------------------------------------------------------------------------------------*/
     private ArrayAdapter<String> adapterPress,adapterPay;
     private Boolean oneTimesDate =true,oneTimesTime=true;
+    private Boolean firstTakePicture=true;//是否第一次拍照
     private Boolean time12or24=false; //設定true為24小時制，false12小時制
     private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
     private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
+    private Bitmap bitmapOutPut;//要輸出出去的原圖
+
 
     private Calendar calendar;
 
     private EditText editTextcontent,editTextOtherPay;
 
+    private ImageView imv;
     private Spinner spinnerPress, spinnerPay;
     private String[] stringPress ,stringPay;
     private String getThatString;
 
-    private TextView textViewName,textViewPress,textViewPay,Display,textViewMissionDate, textViewcontent,textViewPicture;
+    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
 
@@ -73,6 +89,7 @@ public class NewGroupActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         //textView 定位區
         Display = (TextView) findViewById(R.id.printf);
+        Display2= (TextView) findViewById(R.id.printf2);
         textViewName = (TextView) findViewById(R.id.textViewName);
         textViewPress = (TextView) findViewById(R.id.textViewPress);
         textViewPay = (TextView) findViewById(R.id.textViewPay);
@@ -93,6 +110,9 @@ public class NewGroupActivity extends AppCompatActivity {
         //spinner 定位區
         spinnerPress = (Spinner) findViewById(R.id.spinnerPress);
         spinnerPay = (Spinner) findViewById(R.id.spinnerPay);
+
+        //ImageView
+        imv =(ImageView)findViewById(R.id.imageViewPicture);
 
         ;
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
@@ -117,10 +137,13 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewMissionDate.setText(R.string.date_new_mission);
         buttonTime.setText(R.string.buttomtime_new_mission);
         buttonDate.setText(R.string.buttomdate_new_mission);
-        buttonPicture.setTextSize(R.string.uploadpictruebuttom_new_mission);
+        buttonPicture.setText(R.string.uploadpictruebuttom_new_mission);
         buttonTakePicture.setText(R.string.takepicturebuttom_new_mission);
 
+
+
         editTextOtherPay.setVisibility(View.GONE);
+        imv.setVisibility(View.GONE);
 
         adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission));
         adapterPay = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.pay_new_mission));
@@ -133,24 +156,23 @@ public class NewGroupActivity extends AppCompatActivity {
 
         //spinner的監聽
        spinnerPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Display.setText(stringPress[position]);
-            }
+           @Override
+           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               Display.setText(stringPress[position]);
+           }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+           @Override
+           public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+           }
+       });
         spinnerPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPay[position]);
-                if (position==(getResources().getStringArray(R.array.pay_new_mission).length-1)) {
+                if (position == (getResources().getStringArray(R.array.pay_new_mission).length - 1)) {
                     editTextOtherPay.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     editTextOtherPay.setVisibility(View.GONE);
                 }
 
@@ -161,6 +183,17 @@ public class NewGroupActivity extends AppCompatActivity {
 
             }
         });
+        imv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                imv.setVisibility(View.GONE);
+                return true;
+            }
+        });
+
+
+
+
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗，
@@ -197,7 +230,7 @@ public class NewGroupActivity extends AppCompatActivity {
             minute =minuteNow;
            // Toast.makeText(this,"開始設定", Toast.LENGTH_SHORT).show();
         }
-        
+
         if (timeAMPMAuto==true) {//自動偵測系統設定的時間格式為12小時制或24小時制
             ContentResolver cv = this.getContentResolver();
             String timeAMPM = Settings.System.getString(cv, Settings.System.TIME_12_24);
@@ -216,6 +249,47 @@ public class NewGroupActivity extends AppCompatActivity {
         timePickerDialog.show();
         oneTimesTime =false;
     }
+    //圖片控制區------------------------------------------------------------------------------------
+    //按鈕設定開啟相機
+    public void useCamera(View v){
+        Intent camera =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File tmpFile = new File(Environment.getExternalStorageDirectory(),"image.jpg");
+        Uri outputFileUri = Uri.fromFile(tmpFile);
+        camera.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+        startActivityForResult(camera,100);
+
+    }
+
+    protected void onActivityResult(int requireCode,int resultCode,Intent data){
+        super.onActivityResult(requireCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK && requireCode==100){
+            BitmapFactory.Options option =new BitmapFactory.Options();
+            //option.inJustDecodeBounds =true;//只讀圖檔資訊
+            option.inSampleSize =2;//設定縮小倍率，2為1/2倍
+            bitmapOutPut =  BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg",option); //讀取圖檔資訊，存入option中，已進行修改
+
+           // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
+
+            imv.setVisibility(View.VISIBLE);
+            imv.setImageBitmap(bitmapOutPut);
+            if (firstTakePicture==true){
+                Toast.makeText(this,R.string.takepicturemessage_new_mission, Toast.LENGTH_LONG).show();
+            }
+            firstTakePicture=false;
+        }
+        else{
+            Toast.makeText(this,R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+
+    }
+
+
+
 }
     //
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -253,4 +327,9 @@ public class NewGroupActivity extends AppCompatActivity {
         spinnerPress.setAdapter(arraysNGAPress);
         arraysNGAPPay = new ArrayAdapter<String>(NewGroupActivity.this, R.layout.support_simple_spinner_dropdown_item,getResources().getStringArray(R.array.pay_new_group));
         spinnerPay.setAdapter(arraysNGAPPay);
+//抓取螢幕解析度
+        DisplayMetrics dm = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(dm);//取得螢幕解析度
+
+
 */

@@ -30,9 +30,12 @@
     <string name="minute_new_mission">分</string>
     <string name="okbuttom_new_mission">發送</string>
     <string name="cancelbuttom_new_mission">取消</string>
-    <string name="uploadpicture_new_mission">選擇圖片照片：</string>
+    <string name="uploadpicture_new_mission">選擇圖相：</string>
     <string name="uploadpictruebuttom_new_mission">從檔案選取</string>
     <string name="takepicturebuttom_new_mission">拍照</string>
+    <string name="notakepicture_new_mission">取消拍照</string>
+    <string name="takepicturemessage_new_mission">如果想取消選取圖片，可長按預覽圖片、重新拍照或是重新選取圖片</string>
+    <string name="idontwantpicture_new_mission">已取消選取</string>
 
 
 
