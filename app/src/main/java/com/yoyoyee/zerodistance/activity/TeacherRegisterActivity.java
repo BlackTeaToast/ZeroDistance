@@ -9,33 +9,19 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request.Method;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.app.AppConfig;
-import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 
-public class RegisterActivity extends Activity {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+public class TeacherRegisterActivity extends Activity {
+    private static final String TAG = TeacherRegisterActivity.class.getSimpleName();
     private Button btnRegister;
     private Button btnLinkToLogin;
     private EditText inputFullName;
@@ -48,7 +34,7 @@ public class RegisterActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_teacher_register);
 
         inputFullName = (EditText) findViewById(R.id.name);
         inputEmail = (EditText) findViewById(R.id.email);
@@ -69,7 +55,7 @@ public class RegisterActivity extends Activity {
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(RegisterActivity.this,
+            Intent intent = new Intent(TeacherRegisterActivity.this,
                     MainActivity.class);
             startActivity(intent);
             finish();
@@ -124,7 +110,7 @@ public class RegisterActivity extends Activity {
 
                 // Launch login activity
                 Intent intent = new Intent(
-                        RegisterActivity.this,
+                        TeacherRegisterActivity.this,
                         LoginActivity.class);
                 startActivity(intent);
                 finish();

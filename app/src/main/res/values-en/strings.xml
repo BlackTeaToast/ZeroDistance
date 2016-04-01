@@ -13,6 +13,9 @@
     <string name="name">Fullname</string>
     <string name="btn_register_student">Student</string>
     <string name="btn_register_teacher">Teacher</string>
+    <string name="hint_student_id">Student ID</string>
+    <string name="hint_nick_name">Nick Name</string>
+    <string name="hint_school">School</string>
     <!--</resources>
     =======
 <resources>

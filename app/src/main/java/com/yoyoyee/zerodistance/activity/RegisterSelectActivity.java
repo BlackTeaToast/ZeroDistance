@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 
 public class RegisterSelectActivity extends AppCompatActivity {
 
@@ -25,9 +27,21 @@ public class RegisterSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
-                startActivity(i);
+                ClientFunctions.updateSchools(new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        Intent i = new Intent(getApplicationContext(),
+                                StudentRegisterActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+
+                    }
+                });
+
 
             }
         });
@@ -37,8 +51,9 @@ public class RegisterSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
+                        TeacherRegisterActivity.class);
                 startActivity(i);
+                finish();
 
             }
         });

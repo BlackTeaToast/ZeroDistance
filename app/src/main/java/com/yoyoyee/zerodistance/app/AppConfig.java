@@ -6,4 +6,7 @@ public class AppConfig {
 
 	// Server user register url
 	public static String URL_REGISTER = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/register";
+
+	// Server schools url
+	public static String URL_SCHOOLS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/schools";
 }
