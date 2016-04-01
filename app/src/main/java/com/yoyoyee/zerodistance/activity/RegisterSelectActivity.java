@@ -33,6 +33,7 @@ public class RegisterSelectActivity extends AppCompatActivity {
                         Intent i = new Intent(getApplicationContext(),
                                 StudentRegisterActivity.class);
                         startActivity(i);
+                        finish();
                     }
 
                     @Override

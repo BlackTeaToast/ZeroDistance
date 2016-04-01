@@ -12,11 +12,11 @@ public class SchoolsTable {
     public static final String KEY_COUNTY = "county";
     public static final String KEY_NAME = "name";
 
-    public static final String CREATE_SCHOOLS_TABLE = "CREATE TABLE `schools` (\n" +
-            " `id` INTEGER unsigned UNIQUE NOT NULL PRIMARY KEY,\n" +
-            " `area` varchar(8) NOT NULL,\n" +
-            " `county` varchar(6) NOT NULL,\n" +
-            " `name` varchar(30) NOT NULL\n" +
+    public static final String CREATE_SCHOOLS_TABLE = "CREATE TABLE schools (\n" +
+            " id INTEGER PRIMARY KEY,\n" +
+            " area varchar(8) NOT NULL,\n" +
+            " county varchar(6) NOT NULL,\n" +
+            " name varchar(30) NOT NULL\n" +
             ")";
 
 

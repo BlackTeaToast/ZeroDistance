@@ -10,11 +10,13 @@ import com.yoyoyee.zerodistance.app.AppConfig;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+import com.yoyoyee.zerodistance.helper.datatype.School;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -204,7 +206,7 @@ public class ClientFunctions {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                //Log.d(TAG, "Register Response: " + response.toString());
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -213,13 +215,17 @@ public class ClientFunctions {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         JSONArray schools = jObj.getJSONArray("schools");
-
+                        //Log.d(TAG, "onResponse: "+schools.toString());
+                        ArrayList<School> schoolList = new ArrayList<>();
                         for(int i=0; i<schools.length(); i++) {
-                            Log.d(TAG, "onResponse: " + schools.getJSONObject(i).getString("name"));
+                            JSONObject school = schools.getJSONObject(i);
+                            schoolList.add(new School(school.getInt("id"), school.getString("area"),
+                                    school.getString("county"),school.getString("name")));
+                            //Log.d(TAG, "onResponse: add school to schoolList");
                         }
 
                         // Inserting row in users table
-                        //db.addUser(name, email, uid, created_at);
+                        db.updateSchools(schoolList);
                         clientResponse.onResponse("schools get");
 
                     } else {

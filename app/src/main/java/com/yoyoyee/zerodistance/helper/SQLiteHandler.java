@@ -12,9 +12,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
@@ -112,7 +114,112 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		db.delete(LoginTable.TABLE_NAME, null, null);
 		db.close();
 
-		Log.d(TAG, "Deleted all user info from sqlite");
+		Log.d(TAG, "Deleted all user info from SQLite");
 	}
+
+	public void updateSchools(ArrayList<School> schoolList) {
+		SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(SchoolsTable.TABLE_NAME, null, null);
+
+		for(int i=0; i<schoolList.size(); i++) {
+			ContentValues values = new ContentValues();
+			values.put(SchoolsTable.KEY_ID, schoolList.get(i).id); // Name
+			values.put(SchoolsTable.KEY_AREA, schoolList.get(i).area); // Email
+			values.put(SchoolsTable.KEY_COUNTY, schoolList.get(i).county); // Email
+			values.put(SchoolsTable.KEY_NAME, schoolList.get(i).name); // Created At
+
+			// Inserting Row
+			db.insert(SchoolsTable.TABLE_NAME, null, values);
+		}
+
+		Log.d(TAG, "Updated all schools info from SQLite");
+		db.close();
+
+	}
+
+	public ArrayList<School> getSchools() {
+
+		ArrayList<School> schools = new ArrayList<>();
+		String selectQuery = "SELECT  * FROM " + SchoolsTable.TABLE_NAME;
+
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		cursor.moveToFirst();
+
+		for(int i=0; i<cursor.getCount(); i++){
+			schools.add(new School(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3)));
+			cursor.moveToNext();
+		}
+		// Move to first row
+		cursor.close();
+		db.close();
+		return schools;
+	}
+
+    public ArrayList<String> getSchoolsArea() {
+
+        ArrayList<String> area = new ArrayList<>();
+        String selectQuery = "SELECT DISTINCT area FROM " + SchoolsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            //Log.d(TAG, "getSchoolsArea: " + cursor.getString(0));
+            area.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return area;
+    }
+
+    public ArrayList<String> getSchoolsCounty(String area) {
+
+        ArrayList<String> county = new ArrayList<>();
+        String selectQuery = "SELECT DISTINCT county FROM " + SchoolsTable.TABLE_NAME +
+                " WHERE area = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[] {area});
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+
+            county.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return county;
+    }
+
+    public ArrayList<String> getSchoolsName(String county) {
+
+        ArrayList<String> name = new ArrayList<>();
+        String selectQuery = "SELECT DISTINCT name FROM " + SchoolsTable.TABLE_NAME +
+                " WHERE county = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{county});
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            name.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return name;
+    }
 
 }
