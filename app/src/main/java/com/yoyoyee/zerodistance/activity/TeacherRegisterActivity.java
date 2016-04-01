@@ -17,26 +17,30 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 
-public class LoginActivity extends Activity {
-    private static final String TAG = LoginActivity.class.getSimpleName();
-    private Button btnLogin;
-    private Button btnLinkToRegister;
+public class TeacherRegisterActivity extends Activity {
+    private static final String TAG = TeacherRegisterActivity.class.getSimpleName();
+    private Button btnRegister;
+    private Button btnLinkToLogin;
+    private EditText inputFullName;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
+    private SQLiteHandler db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_teacher_register);
 
+        inputFullName = (EditText) findViewById(R.id.name);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -45,74 +49,79 @@ public class LoginActivity extends Activity {
         // Session manager
         session = new SessionManager(getApplicationContext());
 
+        // SQLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this, TestActivity.class);
+            Intent intent = new Intent(TeacherRegisterActivity.this,
+                    MainActivity.class);
             startActivity(intent);
             finish();
         }
 
-        // Login button Click Event
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-
+        // Register Button Click event
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                String name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
-                // Check for empty data in the form
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    // login user
-                    checkLogin(email, password);
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                    registerUser(name, email, password);
                 } else {
-                    // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "輸入不完整，請重新輸入!", Toast.LENGTH_SHORT)
+                            "Please enter your details!", Toast.LENGTH_LONG)
                             .show();
                 }
             }
-
         });
 
-        // Link to Register Screen
-        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
+        // Link to Login Screen
+        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        RegisterSelectActivity.class);
+                        LoginActivity.class);
                 startActivity(i);
-
+                finish();
             }
         });
 
     }
 
     /**
-     * function to verify login details in mysql db
+     * Function to store user in MySQL database will post params(tag, name,
+     * email, password) to register url
      * */
-    private void checkLogin(final String email, final String password) {
+    private void registerUser(final String name, final String email,
+                              final String password) {
         // Tag used to cancel the request
+        //String tag_string_req = "req_register";
 
-        pDialog.setMessage("登入中 ...");
+        pDialog.setMessage("Registering ...");
         showDialog();
 
-        ClientFunctions.checkLogin(email, password, new ClientResponse() {
+        ClientFunctions.registerUser(name, password, password, new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                // Launch main activity
-                Intent intent = new Intent(LoginActivity.this,
-                        TestActivity.class);
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+
+                // Launch login activity
+                Intent intent = new Intent(
+                        TeacherRegisterActivity.this,
+                        LoginActivity.class);
                 startActivity(intent);
                 finish();
-
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
             }
         });
+
         hideDialog();
     }
 
@@ -124,11 +133,5 @@ public class LoginActivity extends Activity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
-    }
-    public void turnTestAct(View v){
-        //這個主要是用來測試用的，直接轉跳TestActivity的按鍵。
-        Intent intent = new Intent();
-        intent.setClass(LoginActivity.this,TurnActivity.class);
-        startActivity(intent);
     }
 }
