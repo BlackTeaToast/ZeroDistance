@@ -1,7 +1,6 @@
 package com.yoyoyee.zerodistance.app;
 
 import android.app.Application;
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -18,7 +17,6 @@ public class AppController extends Application {
 	private static SQLiteHandler db;
     private static SessionManager session;
 	private static AppController mInstance;
-	private static Context context;
 
 	@Override
 	public void onCreate() {
@@ -26,7 +24,6 @@ public class AppController extends Application {
 		mInstance = this;
 		db = new SQLiteHandler(getApplicationContext());
         session = new SessionManager(getApplicationContext());
-		context = getApplicationContext();
 	}
 
 	public static synchronized AppController getInstance() {
@@ -38,9 +35,6 @@ public class AppController extends Application {
     public static synchronized  SessionManager getSession() {
         return session;
     }
-	public static synchronized  Context getContext() {
-		return context;
-	}
 
 	public RequestQueue getRequestQueue() {
 		if (mRequestQueue == null) {

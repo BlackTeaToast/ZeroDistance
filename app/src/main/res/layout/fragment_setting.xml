@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,30 +6,34 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.zeremain.Main2Activity$PlaceholderFragment">
-
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    tools:context="com.example.zeremain.Main2Activity$PlaceholderFragment"
+    android:orientation="vertical">
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Switch"
         android:id="@+id/switch1"
-        android:layout_below="@+id/section_label"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="89dp" />
+        android:layout_marginTop="89dp"
+        android:checked="false" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_below="@+id/switch1"
-        android:layout_toLeftOf="@+id/switch1"
-        android:layout_toStartOf="@+id/switch1" />
+        android:id="@+id/progressBar2"
+        android:layout_below="@+id/switch1" />
 
-</RelativeLayout>
+    <SeekBar
+        android:layout_width="302dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar" />
+
+    <SeekBar
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar2" />
+
+</LinearLayout>
