@@ -11,6 +11,7 @@ import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -192,6 +193,58 @@ public class ClientFunctions {
     }
 
     public static void updateGroups() {
+
+    }
+
+    public static void updateSchools(final ClientResponse clientResponse) {
+        String tag_string_req = "req_getSchools";
+
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray schools = jObj.getJSONArray("schools");
+
+                        for(int i=0; i<schools.length(); i++) {
+                            Log.d(TAG, "onResponse: " + schools.getJSONObject(i).getString("name"));
+                        }
+
+                        // Inserting row in users table
+                        //db.addUser(name, email, uid, created_at);
+                        clientResponse.onResponse("schools get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) ;
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
 
     }
 }
