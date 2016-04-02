@@ -1,19 +1,28 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Settings.*;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +45,7 @@ import com.yoyoyee.zerodistance.R;
 
 
 import java.io.File;
+import java.lang.System;
 import java.util.Calendar;
 
 
@@ -71,8 +81,10 @@ public class NewGroupActivity extends AppCompatActivity {
     private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
+    private Uri uriImg;
 
     final int theme = 5; //TimePickerDialog的主題，有0~6;
+    final int requireCodefromSdcard=101,requireCodefromCamara=100;
 
     private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow;
     private int year, month, day, hour, minute;
@@ -139,7 +151,7 @@ public class NewGroupActivity extends AppCompatActivity {
         buttonDate.setText(R.string.buttomdate_new_mission);
         buttonPicture.setText(R.string.uploadpictruebuttom_new_mission);
         buttonTakePicture.setText(R.string.takepicturebuttom_new_mission);
-
+        Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
 
 
         editTextOtherPay.setVisibility(View.GONE);
@@ -247,23 +259,91 @@ public class NewGroupActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, theme, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int lisHour, int lisminute) {
+                String tempAMPM;
                 hour = lisHour;
                 minute = lisminute;
-                buttonTime.setText(hour + getResources().getString(R.string.hour_new_mission) + minute + getResources().getString(R.string.minute_new_mission));
+                if (hour>=12 && hour<24){
+                    if (hour>12) {
+                        tempAMPM = new String(getResources().getString(R.string.PM_new_mission));
+                        lisHour-=12;
+                    }
+                    else {
+                        tempAMPM = new String(getResources().getString(R.string.PM_new_mission));
+                    }
+                }
+                else{
+                    tempAMPM =new String(getResources().getString(R.string.AM_new_mission));
+                }
+                buttonTime.setText(lisHour + getResources().getString(R.string.hour_new_mission) + minute + getResources().getString(R.string.minute_new_mission)+" "+tempAMPM);
             }
         }, hour, minute, time12or24);
         timePickerDialog.show();
         oneTimesTime =false;
     }
     //圖片控制區------------------------------------------------------------------------------------
-    //按鈕設定開啟相機
+    //按鈕開啟相機，但要先取得相機權限
     public void useCamera(View v){
-        Intent camera =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File tmpFile = new File(Environment.getExternalStorageDirectory(),"image.jpg");
-        Uri outputFileUri = Uri.fromFile(tmpFile);
-        camera.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-        startActivityForResult(camera,100);
-
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+            int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+                //申请WRITE_EXTERNAL_STORAGE權限，
+                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) == false) {
+                    showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission), new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                }
+                else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromCamara);
+                    if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED){
+                        openCamara();
+                    }
+                }
+            }
+            else {
+                openCamara();
+            }
+        }
+        else{
+            openCamara();
+        }
+    }
+    public void onClickPickimg(View v){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+            int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+                //申请WRITE_EXTERNAL_STORAGE權限，
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission), new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                }
+                else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        Pickimg();
+                    }
+                }
+            }
+            else
+               Pickimg();
+        }
+        else{
+            Pickimg();
+        }
+    }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(NewGroupActivity.this)
+                .setMessage(message)
+                .setPositiveButton(getResources().getString(R.string.okbuttom_new_mission), okListener)
+                .setNegativeButton(getResources().getString(R.string.cancelbuttom_new_mission), null)
+                .create()
+                .show();
     }
 
     @Override
@@ -273,21 +353,40 @@ public class NewGroupActivity extends AppCompatActivity {
 
     }
     //從檔案讀取圖片
-    public void onClickPickimg(View v){
+    public void Pickimg(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
+        }
         Intent intent =new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        startActivityForResult(intent, 101);
+        startActivityForResult(intent, requireCodefromSdcard);
     }
-    //傳回並顯示圖片
+    //開啟相機
+    private void openCamara(){
+        Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        String fname ="p"+ System.currentTimeMillis() +".jpg";
+        uriImg =Uri.parse("file://" + dir + "/" +fname);
+        camera.putExtra(MediaStore.EXTRA_OUTPUT, uriImg);
+        startActivityForResult(camera, requireCodefromCamara);
+
+       /* File tmpFile = new File(Environment.getExternalStorageDirectory(),"image.jpg");
+
+        Uri outputFileUri = Uri.fromFile(tmpFile);
+        camera.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);*/
+    }
+    //傳回並顯示圖片，從開啟相機和從檔案讀取圖片
     protected void onActivityResult(int requireCode,int resultCode,Intent data){
         super.onActivityResult(requireCode, resultCode, data);
         switch (requireCode) {
-            case 100: {
-                if (resultCode == Activity.RESULT_OK && requireCode == 100) {
+            case requireCodefromCamara: {
+                if (resultCode == Activity.RESULT_OK ) {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
-                    option.inSampleSize = 2;//設定縮小倍率，2為1/2倍
-                    Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
+                    option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
+                    Bitmap bitmap = BitmapFactory.decodeFile(uriImg.getPath(), option); //讀取圖檔資訊，存入option中，已進行修改
 
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
 
@@ -302,11 +401,11 @@ public class NewGroupActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
                 }
             }
-            case 101: {
-                if (resultCode == Activity.RESULT_OK && requireCode == 101) {
+            case requireCodefromSdcard: {
+                if (resultCode == Activity.RESULT_OK ) {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
-                    option.inSampleSize = 2;//設定縮小倍率，2為1/2倍
+                    option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
                     Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
 
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
