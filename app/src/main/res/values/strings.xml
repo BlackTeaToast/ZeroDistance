@@ -19,6 +19,7 @@
     <string name="press_new_mission">緊急程度：</string>
     <string name="pay_new_mission">支付獎勵：</string>
     <string name="content_new_mission">任務內容：</string>
+    <string name="peoplenumber_new_mission">需求人數</string>
     <string name="date_new_mission">任務日期：</string>
     <string name="buttomdate_new_mission">選擇哪天</string>
     <string name="buttomtime_new_mission">選擇幾點</string>
@@ -38,8 +39,11 @@
     <string name="AM_new_mission">AM</string>
     <string name="PM_new_mission">PM</string>
     <string name="restorereadpermission_new_mission">無法讀取圖片資訊\n請至設定->應用程式->校園0距離->權限，將儲存權限打開</string>
-
-
+    <string name="errornoname_new_mission">任務名稱不能留白</string>
+    <string name="errorpeoplenumber_new_mission">請填寫需求人數</string>
+    <string name="errornocontent_new_mission">任務內容不能留白</string>
+    <string name="errornoDate_new_mission">尚未選擇日期</string>
+    <string name="errornoTime_new_mission">尚未選擇時間</string>
 
 
 
@@ -52,6 +56,7 @@
     <string-array name="pay_new_mission">
         <item>飲料</item>
         <item>餅乾</item>
+        <item>無</item>
         <item>其他</item>
     </string-array>
 
