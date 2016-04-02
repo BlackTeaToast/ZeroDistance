@@ -119,18 +119,27 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	public void updateSchools(ArrayList<School> schoolList) {
 		SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(SchoolsTable.TABLE_NAME, null, null);
 
-		for(int i=0; i<schoolList.size(); i++) {
-			ContentValues values = new ContentValues();
-			values.put(SchoolsTable.KEY_ID, schoolList.get(i).id); // Name
-			values.put(SchoolsTable.KEY_AREA, schoolList.get(i).area); // Email
-			values.put(SchoolsTable.KEY_COUNTY, schoolList.get(i).county); // Email
-			values.put(SchoolsTable.KEY_NAME, schoolList.get(i).name); // Created At
+        db.beginTransaction();
+        try {
+            db.delete(SchoolsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<schoolList.size(); i++) {
+                values.put(SchoolsTable.KEY_ID, schoolList.get(i).id); // Name
+                values.put(SchoolsTable.KEY_AREA, schoolList.get(i).area); // Email
+                values.put(SchoolsTable.KEY_COUNTY, schoolList.get(i).county); // Email
+                values.put(SchoolsTable.KEY_NAME, schoolList.get(i).name); // Created At
+                // Inserting Row
+                db.insert(SchoolsTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateSchools: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
 
-			// Inserting Row
-			db.insert(SchoolsTable.TABLE_NAME, null, values);
-		}
 
 		Log.d(TAG, "Updated all schools info from SQLite");
 		db.close();

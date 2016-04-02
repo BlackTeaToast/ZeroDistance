@@ -222,6 +222,7 @@ public class ClientFunctions {
                             schoolList.add(new School(school.getInt("id"), school.getString("area"),
                                     school.getString("county"),school.getString("name")));
                             //Log.d(TAG, "onResponse: add school to schoolList");
+
                         }
 
                         // Inserting row in users table
