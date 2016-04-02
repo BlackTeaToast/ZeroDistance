@@ -9,9 +9,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
@@ -20,6 +24,8 @@ import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 
+import java.util.ArrayList;
+
 public class TeacherRegisterActivity extends Activity {
     private static final String TAG = TeacherRegisterActivity.class.getSimpleName();
     private Button btnRegister;
@@ -27,9 +33,15 @@ public class TeacherRegisterActivity extends Activity {
     private EditText inputFullName;
     private EditText inputEmail;
     private EditText inputPassword;
+    private Spinner spinnerArea;
+    private Spinner spinnerCounty;
+    private Spinner spinnerSchool;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
+    private String[] areaArray;
+    private String[] countyArray;
+    private String[] schoolArray;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,9 @@ public class TeacherRegisterActivity extends Activity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        spinnerArea = (Spinner) findViewById(R.id.spinnerArea);
+        spinnerCounty = (Spinner) findViewById(R.id.spinnerCounty);
+        spinnerSchool = (Spinner) findViewById(R.id.spinnerSchool);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -65,11 +80,14 @@ public class TeacherRegisterActivity extends Activity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String name = inputFullName.getText().toString().trim();
+                String schoolID = String.valueOf(db.getSchoolID(spinnerArea.getSelectedItem().toString(),
+                        spinnerCounty.getSelectedItem().toString(),
+                        spinnerSchool.getSelectedItem().toString()));
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+                    registerTeacher(name, schoolID, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -89,23 +107,91 @@ public class TeacherRegisterActivity extends Activity {
             }
         });
 
+        countyArray = new String[]{"選擇學校縣市"};
+        schoolArray = new String[]{"選擇學校"};
+        ArrayList<String> area = db.getSchoolsArea();
+        area.add(0, "選擇學校區域");
+        areaArray = area.toArray(new String[0]);
+
+        ArrayAdapter<String> adapterCounty = new ArrayAdapter<>(this , R.layout.spinner_item, countyArray);
+        ArrayAdapter<String> adapterSchool = new ArrayAdapter<>(this , R.layout.spinner_item, schoolArray);
+        ArrayAdapter<String> adapterArea = new ArrayAdapter<>(this , R.layout.spinner_item, areaArray);
+
+        spinnerArea.setAdapter(adapterArea);
+        spinnerCounty.setAdapter(adapterCounty);
+        spinnerSchool.setAdapter(adapterSchool);
+
+        spinnerArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    ArrayList<String> county = db.getSchoolsCounty(parent.getSelectedItem().toString());
+                    county.add(0, "選擇學校縣市");
+                    countyArray = county.toArray(new String[0]);
+                    ArrayAdapter<String> adapterCounty = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, countyArray);
+                    spinnerCounty.setAdapter(adapterCounty);
+                    Log.d(TAG, "onItemSelected: " + position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerCounty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    ArrayList<String> school = db.getSchoolsName(parent.getSelectedItem().toString());
+                    school.add(0, "選擇學校");
+                    schoolArray = school.toArray(new String[0]);
+                    ArrayAdapter<String> adapterSchool = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, schoolArray);
+                    spinnerSchool.setAdapter(adapterSchool);
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerSchool.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position>0) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     /**
      * Function to store user in MySQL database will post params(tag, name,
      * email, password) to register url
      * */
-    private void registerUser(final String name, final String email,
+    private void registerTeacher(final String name, final String schoolID ,final String email,
                               final String password) {
-        // Tag used to cancel the request
-        //String tag_string_req = "req_register";
 
-        pDialog.setMessage("Registering ...");
+        pDialog.setMessage("註冊中 ...");
         showDialog();
 
-        ClientFunctions.registerUser(name, password, password, new ClientResponse() {
+        ClientFunctions.registerTeacher(name, schoolID, email, password, new ClientResponse() {
             @Override
             public void onResponse(String response) {
+                hideDialog();
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
                 // Launch login activity
@@ -118,11 +204,11 @@ public class TeacherRegisterActivity extends Activity {
 
             @Override
             public void onErrorResponse(String response) {
+                hideDialog();
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
             }
         });
 
-        hideDialog();
     }
 
     private void showDialog() {

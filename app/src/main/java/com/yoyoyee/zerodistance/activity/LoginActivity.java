@@ -100,6 +100,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onResponse(String response) {
                 // Launch main activity
+                hideDialog();
                 Intent intent = new Intent(LoginActivity.this,
                         TestActivity.class);
                 startActivity(intent);
@@ -110,10 +111,11 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onErrorResponse(String response) {
+                hideDialog();
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
             }
         });
-        hideDialog();
+
     }
 
     private void showDialog() {

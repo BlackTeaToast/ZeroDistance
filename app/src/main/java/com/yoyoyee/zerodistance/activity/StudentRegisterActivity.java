@@ -31,6 +31,8 @@ public class StudentRegisterActivity extends Activity {
     private Button btnRegister;
     private Button btnLinkToLogin;
     private EditText inputFullName;
+    private EditText inputNickName;
+    private EditText inputStudentID;
     private EditText inputEmail;
     private EditText inputPassword;
     private Spinner spinnerArea;
@@ -49,6 +51,8 @@ public class StudentRegisterActivity extends Activity {
         setContentView(R.layout.activity_student_register);
 
         inputFullName = (EditText) findViewById(R.id.name);
+        inputNickName = (EditText) findViewById(R.id.nickName);
+        inputStudentID = (EditText) findViewById(R.id.studentID);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -80,11 +84,17 @@ public class StudentRegisterActivity extends Activity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String name = inputFullName.getText().toString().trim();
+                String nickName = inputNickName.getText().toString().trim();
+                String schoolID = String.valueOf(db.getSchoolID(spinnerArea.getSelectedItem().toString(),
+                        spinnerCounty.getSelectedItem().toString(),
+                        spinnerSchool.getSelectedItem().toString()));
+                String studentID = inputStudentID.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+                if (!name.isEmpty() && !nickName.isEmpty() && !schoolID.isEmpty() &&
+                        !studentID.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                    registerStudent(name, nickName, schoolID, studentID, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -179,17 +189,18 @@ public class StudentRegisterActivity extends Activity {
      * Function to store user in MySQL database will post params(tag, name,
      * email, password) to register url
      * */
-    private void registerUser(final String name, final String email,
-                              final String password) {
+    private void registerStudent(final String name, final String nickName, final String schoolID,
+                              final String studentID, final String email, final String password) {
         // Tag used to cancel the request
         //String tag_string_req = "req_register";
 
-        pDialog.setMessage("Registering ...");
+        pDialog.setMessage("註冊中 ...");
         showDialog();
 
-        ClientFunctions.registerUser(name, password, password, new ClientResponse() {
+        ClientFunctions.registerStudent(name, nickName, schoolID, studentID, email, password, new ClientResponse() {
             @Override
             public void onResponse(String response) {
+                hideDialog();
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
                 // Launch login activity
@@ -202,11 +213,11 @@ public class StudentRegisterActivity extends Activity {
 
             @Override
             public void onErrorResponse(String response) {
+                hideDialog();
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
             }
         });
 
-        hideDialog();
     }
 
     private void showDialog() {
