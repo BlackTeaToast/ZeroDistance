@@ -7,9 +7,11 @@ package com.yoyoyee.zerodistance.activity;
         import android.widget.Button;
 
         import com.yoyoyee.zerodistance.R;
+        import com.yoyoyee.zerodistance.app.QAndA;
 
 public class QAActivity extends AppCompatActivity {
     Button GO;
+    QAndA Q =new QAndA();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

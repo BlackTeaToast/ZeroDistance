@@ -1,13 +1,12 @@
 <resources>
-    <string name="app_name">Zero Distance</string>
+    <string name="app_name">校園0距離</string>
     <string name="action_settings">Settings</string>
     <string name="hint_email">信箱</string>
     <string name="hint_password">密碼</string>
-    <string name="hint_name">暱稱</string>
+    <string name="hint_name">姓名</string>
     <string name="btn_login">登入</string>
     <string name="btn_register">註冊</string>
-    <string name="btn_link_to_register">Not a member? Sign up now.</string>
-    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="btn_link_to_register">尚未註冊嗎？現在馬上註冊！</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">登出</string>
     <string name="name">Fullname</string>
@@ -15,22 +14,69 @@
     <string name="btn_register_teacher">老師</string>
 
     <!--Tree使用-->
-    <string name="missionname_new_group">任務名稱：</string>
-    <string name="actionbar_new_group">建立任務</string>
-    <string-array name="press_new_group">
+    <string name="missionname_new_mission">任務名稱：</string>
+    <string name="actionbar_new_mission">建立任務：</string>
+    <string name="press_new_mission">緊急程度：</string>
+    <string name="pay_new_mission">支付獎勵：</string>
+    <string name="content_new_mission">任務內容：</string>
+    <string name="peoplenumber_new_mission">需求人數</string>
+    <string name="date_new_mission">任務日期：</string>
+    <string name="buttomdate_new_mission">選擇哪天</string>
+    <string name="buttomtime_new_mission">選擇幾點</string>
+    <string name="year_new_mission">年</string>
+    <string name="month_new_mission">月</string>
+    <string name="day_new_mission">日</string>
+    <string name="hour_new_mission">點</string>
+    <string name="minute_new_mission">分</string>
+    <string name="okbuttom_new_mission">完成</string>
+    <string name="cancelbuttom_new_mission">取消</string>
+    <string name="uploadpicture_new_mission">選擇圖相：</string>
+    <string name="uploadpictruebuttom_new_mission">從檔案選取</string>
+    <string name="takepicturebuttom_new_mission">拍照</string>
+    <string name="notakepicture_new_mission">取消拍照</string>
+    <string name="takepicturemessage_new_mission">如果想取消選取圖片，可長按預覽圖片、重新拍照或是重新選取圖片</string>
+    <string name="idontwantpicture_new_mission">已取消選取</string>
+    <string name="AM_new_mission">AM</string>
+    <string name="PM_new_mission">PM</string>
+    <string name="restorereadpermission_new_mission">無法讀取圖片資訊\n請至設定->應用程式->校園0距離->權限，將儲存權限打開</string>
+    <string name="errornoname_new_mission">任務名稱不能留白</string>
+    <string name="errorpeoplenumber_new_mission">請填寫需求人數</string>
+    <string name="errornocontent_new_mission">任務內容不能留白</string>
+    <string name="errornoDate_new_mission">尚未選擇日期</string>
+    <string name="errornoTime_new_mission">尚未選擇時間</string>
+
+
+
+
+
+    <string-array name="press_new_mission">
         <item>普通</item>
         <item>緊急</item>
     </string-array>
-    <string-array name="pay_new_group">
+    <string-array name="pay_new_mission">
         <item>飲料</item>
         <item>餅乾</item>
+        <item>無</item>
         <item>其他</item>
     </string-array>
 
     <!--楊-->
     <string name="section_format">test：</string>
     <string name="title_activity_new_tool_bar">NewToolBar</string>
+    <string name="hint_nick_name">暱稱</string>
+    <string name="hint_student_id">學號</string>
+    <string name="btn_link_to_login">已經註冊了嗎？馬上登入看看吧！</string>
+
+    <!--吱吱吱之-->
+    <string name="ask_for_title">發問</string>
+    <string name="ask_for_ok">確認</string>
+    <string name="ask_for_cancle">取消</string>
+
+
+
 </resources>
+
+
 
 <!--
 如果要使用在.java黨上面時，可以以以下方式來引用。
@@ -45,6 +91,10 @@ strings內：
 JAVA內：
 private String string=R.string.yee;
 此時，string內即為"我是範例"
+Xml內：
+android:text="@string/yee"
+此時你要的地方就會出現"我是範例"喔!!
+是不是很神奇呢？
 
 若是要使用字串，則要定義為此
 例：

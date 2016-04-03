@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.group.Group;
 import com.yoyoyee.zerodistance.helper.MyAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    public Context context;
+    public static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,18 +60,11 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 //        Intent in = new Intent(this, fragmentActivity.class);
 ////        in.setClass();
 //        try {
-////            startActivity(in);
+//            startActivity(in);
 //
 ////            f.startActivities(in);
 //        } catch (Exception e) {
@@ -181,9 +176,12 @@ public class MainActivity extends AppCompatActivity {
 
 //            TextView tv = (TextView)rootView.findViewById(R.id.Textview);
 //            tv.setText("ewewewwww" );
+
             try {
+
                 MyAdapter myAdapter = new MyAdapter(myDataset , missionName , missiondangerous);
                 RecyclerView mList = (RecyclerView) rootView.findViewById(R.id.listView);
+
                 LinearLayoutManager layoutManager;
                 layoutManager = new LinearLayoutManager(getActivity());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -192,9 +190,43 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            //漂浮
+            FloatingActionButton fab=  (FloatingActionButton) rootView.findViewById(R.id.fab);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+    //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+    //                        .setAction("Action", null).show();
+                        Intent in = new Intent(context, MissionActivity.class);
+
+                            startActivity(in);
+
+
+
+                    }
+                });
+
+            //漂浮
         }
         public void CreateTeamView(View rootView){
+            //漂浮
+            FloatingActionButton fab=  (FloatingActionButton) rootView.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    //                        .setAction("Action", null).show();
+                    Intent in = new Intent(context, GroupActivity.class);
 
+                    startActivity(in);
+
+
+
+                }
+            });
+
+            //漂浮
         }
         public void CreateHaveBeenView(View rootView){
 

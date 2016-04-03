@@ -1,4 +1,4 @@
-package com.yoyoyee.zerodistance.activity;
+/*package com.yoyoyee.zerodistance.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -39,7 +39,7 @@ public class NewGroupActivity extends AppCompatActivity {
 
 
      -------------------------------------------------------------------------------------------------------------*/
-    private Boolean oneTimesDate =true,oneTimesTime=true;
+  /*  private Boolean oneTimesDate =true,oneTimesTime=true;
     private Spinner spinnerNGAPress, spinnerNGAPay;
     private String[] stringPress ;
     private String[] stringPay ;
@@ -68,7 +68,7 @@ public class NewGroupActivity extends AppCompatActivity {
 
         //FindByID區--------------------------------------------------------------------------------
         //toolbar 定位區
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+       toolbar = (Toolbar) findViewById(R.id.tool_bar);
         //textView 定位區
         textViewTime = (TextView) findViewById(R.id.textViewTimePick);
         textViewDate = (TextView) findViewById(R.id.textViewDatePick);

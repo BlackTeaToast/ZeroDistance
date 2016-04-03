@@ -17,6 +17,7 @@ public class TestActivity extends Activity {
 
 	private TextView txtName;
 	private TextView txtEmail;
+	private TextView textViewIsTeacher;
 	private Button btnLogout;
 
 	private SQLiteHandler db;
@@ -30,6 +31,7 @@ public class TestActivity extends Activity {
 		txtName = (TextView) findViewById(R.id.name);
 		txtEmail = (TextView) findViewById(R.id.email);
 		btnLogout = (Button) findViewById(R.id.btnLogout);
+		textViewIsTeacher = (TextView) findViewById(R.id.isTeacher);
 
 		// SqLite database handler
 		db = new SQLiteHandler(getApplicationContext());
@@ -50,6 +52,7 @@ public class TestActivity extends Activity {
 		// Displaying the user details on the screen
 		txtName.setText(name);
 		txtEmail.setText(email);
+		textViewIsTeacher.setText(String.valueOf(db.isTeacher()));
 
 		// Logout button click event
 		btnLogout.setOnClickListener(new View.OnClickListener() {
