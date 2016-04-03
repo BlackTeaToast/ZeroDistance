@@ -25,7 +25,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -58,20 +58,33 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 	/**
 	 * Storing user details in database
 	 * */
-	public void addUser(String name, String email, String uid, String created_at) {
-		SQLiteDatabase db = this.getWritableDatabase();
+	public void addUser(String isTeacher ,String name, String nickName, String schoolID,
+                        String studentID, String email, String uid, String created_at,
+                        String access_key) {
 
-		ContentValues values = new ContentValues();
-		values.put(LoginTable.KEY_NAME, name); // Name
-		values.put(LoginTable.KEY_EMAIL, email); // Email
-		values.put(LoginTable.KEY_UID, uid); // Email
-		values.put(LoginTable.KEY_CREATED_AT, created_at); // Created At
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(LoginTable.KEY_IS_TEACHER, isTeacher);
+            values.put(LoginTable.KEY_NAME, name); // Name
+            values.put(LoginTable.KEY_NICKNAME, nickName);
+            values.put(LoginTable.KEY_SCHOOL_ID, schoolID);
+            values.put(LoginTable.KEY_STUDENT_ID, studentID);
+            values.put(LoginTable.KEY_EMAIL, email); // Email
+            values.put(LoginTable.KEY_UID, uid); // Email
+            values.put(LoginTable.KEY_CREATED_AT, created_at); // Created At
+            values.put(LoginTable.KEY_ACCESS_KEY, access_key); // Created At
 
-		// Inserting Row
-		long id = db.insert(LoginTable.TABLE_NAME, null, values);
-		db.close(); // Closing database connection
+            // Inserting Row
+            long id = db.insert(LoginTable.TABLE_NAME, null, values);
 
-		Log.d(TAG, "New user inserted into sqlite: " + id);
+            Log.d(TAG, "New user inserted into SQLite: " + id);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            db.close(); // Closing database connection
+        }
+
 	}
 
 	/**
@@ -92,15 +105,15 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		// Move to first row
 		cursor.moveToFirst();
 		if (cursor.getCount() > 0) {
-			user.put("name", cursor.getString(1));
-			user.put("email", cursor.getString(2));
-			user.put("uid", cursor.getString(3));
-			user.put("created_at", cursor.getString(4));
+			user.put("name", cursor.getString(LoginTable.COLUMNS_NUM_NAME));
+			user.put("email", cursor.getString(LoginTable.COLUMNS_NUM_EMAIL));
+			user.put("uid", cursor.getString(LoginTable.COLUMNS_NUM_UID));
+			user.put("created_at", cursor.getString(LoginTable.COLUMNS_NUM_CREATED_AT));
 		}
 		cursor.close();
 		db.close();
 		// return user
-		Log.d(TAG, "Fetching user from Sqlite: " + user.toString());
+		Log.d(TAG, "Fetching user from SQLite: " + user.toString());
 
 		return user;
 	}
@@ -235,8 +248,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		int schoolID;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(SchoolsTable.TABLE_NAME, new String[]{"id"},
-				"area = ? AND county = ? AND name = ?", new String[]{area, county, school},
-				null, null, null);
+                "area = ? AND county = ? AND name = ?", new String[]{area, county, school},
+                null, null, null);
 		cursor.moveToFirst();
 		schoolID = cursor.getInt(0);
 
@@ -244,5 +257,20 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		db.close();
 		return schoolID;
 	}
+
+    public boolean isTeacher() {
+        boolean isTeacher;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{"is_teacher"},
+                "1 = 1", null, null, null, null);
+
+        cursor.moveToFirst();
+        isTeacher = cursor.getInt(0) != 0;
+        Log.d(TAG, "isTeacher: " + cursor.getString(0));
+        cursor.close();
+        db.close();
+        return isTeacher;
+    }
 
 }

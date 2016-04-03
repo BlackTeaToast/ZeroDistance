@@ -62,12 +62,18 @@ public class ClientFunctions {
                         String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
+                        String isTeacher = user.getString("is_teacher");
                         String name = user.getString("name");
+                        String nickName = user.getString("nick_name");
+                        String schoolID = user.getString("school_id");
+                        String studentID = user.getString("student_id");
                         String email = user.getString("email");
-                        String created_at = user.getString("created_at");
+                        String createdAt = user.getString("created_at");
+                        String accessKey = user.getString("access_key");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,
+                                createdAt, accessKey);
 
                         clientResponse.onResponse("登入成功!");
 
