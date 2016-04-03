@@ -1,7 +1,9 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,9 +22,15 @@ public class AskActivity extends AppCompatActivity {
         ET = (EditText)findViewById(R.id.askEditText);
         OK = (Button)findViewById(R.id.askOk);
         NO = (Button)findViewById(R.id.askCancle);
-        TV.setText("發問");
-        OK.setText("確認");
-        NO.setText("取消");
+        TV.setText(R.string.ask_for_title);
+        OK.setText(R.string.ask_for_ok);
+        NO.setText(R.string.ask_for_cancle);
+        NO.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 }

@@ -66,7 +66,17 @@
     <string name="hint_nick_name">暱稱</string>
     <string name="hint_student_id">學號</string>
     <string name="btn_link_to_login">已經註冊了嗎？馬上登入看看吧！</string>
+
+    <!--吱吱吱之-->
+    <string name="ask_for_title">發問</string>
+    <string name="ask_for_ok">確認</string>
+    <string name="ask_for_cancle">取消</string>
+
+
+
 </resources>
+
+
 
 <!--
 如果要使用在.java黨上面時，可以以以下方式來引用。
@@ -81,6 +91,10 @@ strings內：
 JAVA內：
 private String string=R.string.yee;
 此時，string內即為"我是範例"
+Xml內：
+android:text="@string/yee"
+此時你要的地方就會出現"我是範例"喔!!
+是不是很神奇呢？
 
 若是要使用字串，則要定義為此
 例：
