@@ -41,7 +41,7 @@ public class UsedData {
         endTime = null;
         needNumber = 0;
         acceptNumber = 0;
-        qAndA = new QAndA();
+        qAndA = null;
         isFinish = 0;
         satisfaction = 0;
         id = null;
@@ -53,21 +53,28 @@ public class UsedData {
         whoJoin  = new WhoJoin();
     }
 
-
-    //回傳當前位置以後(當前位置算在內)，第一個指定questionUser 的 QAndA;若找不到會回傳null; 請另外做判斷
-    public QAndA getQAndAByUser(String questionUser){
-        QAndA index;
-        QAndA newQAndA = null;
-        index = this.qAndA;
-        while(index.next!=null){
-            if(!index.questionUser.equals(questionUser)){
-                index = index.next;
-            }
-            else{
-                newQAndA = index;
-            }
-        }
-        return newQAndA;
+    //第一個問與答(尚未有人問問題時，第一個問與答建立時使用)
+    public void firstQAndA(String questionUser, String content){
+      this.qAndA = new QAndA(questionUser, content);
     }
+
+    
+
+//可能改版會用到
+//    //回傳當前位置以後(當前位置算在內)，第一個指定questionUser 的 QAndA;若找不到會回傳null; 請另外做判斷
+//    public QAndA getQAndAByUser(String questionUser){
+//        QAndA index;
+//        QAndA newQAndA = null;
+//        index = this.qAndA;
+//        while(index.next!=null){
+//            if(!index.questionUser.equals(questionUser)){
+//                index = index.next;
+//            }
+//            else{
+//                newQAndA = index;
+//            }
+//        }
+//        return newQAndA;
+//    }
 
 }
