@@ -62,7 +62,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
 
      -------------------------------------------------------------------------------------------------------------*/
-    private Mission missionData;
+    private Mission missionData =new Mission();
     private ArrayAdapter<String> adapterPress,adapterPay;
     private Boolean oneTimesDate =true,oneTimesTime=true;//第一次進行時間日期設定判斷用的，用以顯示提示吐司
     private Boolean allreadyDate=false,allreadyTime=false;//是否有選取時間和日期
@@ -117,7 +117,7 @@ public class NewMissionActivity extends AppCompatActivity {
         editTextName= (EditText) findViewById(R.id.editTextName);
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
         editTextOtherPay = (EditText) findViewById(R.id.editTextOtherPay);
-        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextNumber = (EditText) findViewById(R.id.editTextPeopleNumber);
         //buttom 定位區
         buttonDate = (Button) findViewById(R.id.buttonDate);
         buttonTime = (Button) findViewById(R.id.buttonTime);
@@ -452,7 +452,7 @@ public class NewMissionActivity extends AppCompatActivity {
         else{
             missionData.setTitle(editTextName.getText().toString());
            if ( editTextNumber.getText().toString().trim().equals("")){
-                Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errorpeoplenumber_new_mission, Toast.LENGTH_SHORT).show();
             }
             else {
                 missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
