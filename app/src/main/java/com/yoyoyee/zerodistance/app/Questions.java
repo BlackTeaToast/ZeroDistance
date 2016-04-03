@@ -13,8 +13,8 @@ public class Questions {
         this.next = null;
     }
     public Questions(boolean isQuestion, String content){
-        this.isQuestion = true;
-        this.content =null;
+        this.isQuestion = isQuestion;
+        this.content =content;
         this.next = null;
     }
 
