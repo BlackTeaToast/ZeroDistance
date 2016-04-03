@@ -25,7 +25,6 @@ public class AskActivity extends AppCompatActivity {
         TV.setText(R.string.ask_for_title);
         OK.setText(R.string.ask_for_ok);
         NO.setText(R.string.ask_for_cancle);
-
         NO.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
