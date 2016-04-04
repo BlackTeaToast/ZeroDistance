@@ -21,9 +21,6 @@ public class MissionsTable {
     public static final String KEY_IS_RUNNING = "is_running";
     public static final String KEY_IS_FINISHED = "is_finished";
     public static final String KEY_FINISHED_AT = "finished_at";
-    public static final String KEY_AREA = "area";
-    public static final String KEY_COUNTY = "county";
-    public static final String KEY_NAME = "name";
 
     public static final String CREATE_SCHOOLS_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + KEY_ID + " INTEGER NOT NULL PRIMARY KEY, " + KEY_USER_ID + " varchar(30) NOT NULL, "

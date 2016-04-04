@@ -1,4 +1,4 @@
-package com.yoyoyee.zerodistance.mission;
+package com.yoyoyee.zerodistance.helper.datatype;
 
 import java.util.Date;
 
@@ -7,8 +7,8 @@ import java.util.Date;
  */
 public class Mission {
 
-    public String id;             //任務id
-    public String userID;         //擁有者id
+    public int id;             //任務id
+    public String userUid;         //擁有者id
     public String schoolID;       //學校id
     public String title;          //任務名稱
     public Boolean isUrgent;      //是否緊急
@@ -19,25 +19,49 @@ public class Mission {
     public String voicePath;      //語音url
     public String videoPath;      //影片url
     public String reward;         //獎勵
-    public Date createAt;         //創建時間
+    public Date createdAt;         //創建時間
     public Date expAt;            //到期時間
     public String qaId;           //Q&A ID
     public boolean isRunning;     //是否執行中
-    public boolean isFinshed;     //是否完成
-    public String getId() {
+    public boolean isFinished;     //是否完成
+    public Date finishedAt;
+
+    public Mission() {
+
+    }
+    public Mission(int id, String userUid, String schoolID, String title, boolean isUrgent,
+                   int needNum, int currentNum, String content, String reward, Date createdAt,
+                   Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
+        this.id = id;
+        this.userUid = userUid;
+        this.schoolID = schoolID;
+        this.title = title;
+        this.isUrgent = isUrgent;
+        this.needNum = needNum;
+        this.currentNum = currentNum;
+        this.content = content;
+        this.reward = reward;
+        this.createdAt = createdAt;
+        this.expAt = expAt;
+        this.isRunning = isRunning;
+        this.isFinished = isFinished;
+        this.finishedAt = finishedAt;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getUserID() {
-        return userID;
+        return userUid;
     }
 
     public void setUserID(String userID) {
-        this.userID = userID;
+        this.userUid = userID;
     }
 
     public String getSchoolID() {
@@ -121,11 +145,11 @@ public class Mission {
     }
 
     public Date getCreateAt() {
-        return createAt;
+        return createdAt;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setCreateAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getExpAt() {
@@ -153,11 +177,11 @@ public class Mission {
     }
 
     public boolean isFinshed() {
-        return isFinshed;
+        return isFinished;
     }
 
     public void setIsFinshed(boolean isFinshed) {
-        this.isFinshed = isFinshed;
+        this.isFinished = isFinshed;
     }
 
 
