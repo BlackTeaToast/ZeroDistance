@@ -257,18 +257,138 @@ public class ClientFunctions {
     }
 
     public static void publishMission(final String title, final boolean isUrgent, final int needNum,
-                                      final String Content, final String imagePath,
-                                      final String voicePath, final String videoPath,
-                                      final String reward, final Date expAt,
+                                      final String Content, final String reward, final Date expAt,
                                       final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_mission";
 
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray schools = jObj.getJSONArray("schools");
+                        //Log.d(TAG, "onResponse: "+schools.toString());
+                        ArrayList<School> schoolList = new ArrayList<>();
+                        for(int i=0; i<schools.length(); i++) {
+                            JSONObject school = schools.getJSONObject(i);
+                            schoolList.add(new School(school.getInt("id"), school.getString("area"),
+                                    school.getString("county"),school.getString("name")));
+                            //Log.d(TAG, "onResponse: add school to schoolList");
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateSchools(schoolList);
+                        clientResponse.onResponse("schools get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("uid", db.getUserUid());
+                params.put("access_key", db.getUserAccessKey());
+                params.put("title", title);
+                params.put("is_urgent", String.valueOf(isUrgent));
+                params.put("need_num", title);
+                params.put("content", title);
+                params.put("reward", title);
+                params.put("exp_at", title);
+
+                return params;
+            }
+
+        };;
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     public static void publishGroup(final String title, final String needNum,  final String Content,
                                     final String imagePath, final String voicePath,
                                     final String videoPath, final Date expAt,
                                     final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_group";
 
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray schools = jObj.getJSONArray("schools");
+                        //Log.d(TAG, "onResponse: "+schools.toString());
+                        ArrayList<School> schoolList = new ArrayList<>();
+                        for(int i=0; i<schools.length(); i++) {
+                            JSONObject school = schools.getJSONObject(i);
+                            schoolList.add(new School(school.getInt("id"), school.getString("area"),
+                                    school.getString("county"),school.getString("name")));
+                            //Log.d(TAG, "onResponse: add school to schoolList");
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateSchools(schoolList);
+                        clientResponse.onResponse("schools get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) ;
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     public static void updateMissions() {

@@ -161,7 +161,6 @@ public class NewMissionActivity extends AppCompatActivity {
         buttonTakePicture.setText(R.string.takepicturebuttom_new_mission);
         Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
 
-
         editTextOtherPay.setVisibility(View.GONE);
         imv.setVisibility(View.GONE);
 

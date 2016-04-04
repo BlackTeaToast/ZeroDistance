@@ -97,7 +97,7 @@ public class StudentRegisterActivity extends Activity {
                     registerStudent(name, nickName, schoolID, studentID, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            "Please enter your details!", Toast.LENGTH_SHORT)
                             .show();
                 }
             }

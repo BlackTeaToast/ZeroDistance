@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
+import com.yoyoyee.zerodistance.helper.table.MissionsTable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 		db.execSQL(LoginTable.CREATE_LOGIN_TABLE);
 		db.execSQL(SchoolsTable.CREATE_SCHOOLS_TABLE);
-
+        db.execSQL(MissionsTable.CREATE_SCHOOLS_TABLE);
 		Log.d(TAG, "Database tables created");
 	}
 
@@ -271,6 +272,36 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return isTeacher;
+    }
+
+    public String getUserUid() {
+        String uid;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{LoginTable.KEY_UID},
+                "1 = 1", null, null, null, null);
+
+        cursor.moveToFirst();
+        uid = cursor.getString(0);
+        Log.d(TAG, "getUserUid: " + cursor.getString(0));
+        cursor.close();
+        db.close();
+        return uid;
+    }
+
+    public String getUserAccessKey() {
+        String accessKey;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{LoginTable.KEY_ACCESS_KEY},
+                "1 = 1", null, null, null, null);
+
+        cursor.moveToFirst();
+        accessKey = cursor.getString(0);
+        Log.d(TAG, "getUserUid: " + cursor.getString(0));
+        cursor.close();
+        db.close();
+        return accessKey;
     }
 
 }
