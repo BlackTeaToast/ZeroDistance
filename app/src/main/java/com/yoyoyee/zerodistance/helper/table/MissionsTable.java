@@ -21,16 +21,13 @@ public class MissionsTable {
     public static final String KEY_IS_RUNNING = "is_running";
     public static final String KEY_IS_FINISHED = "is_finished";
     public static final String KEY_FINISHED_AT = "finished_at";
-    public static final String KEY_AREA = "area";
-    public static final String KEY_COUNTY = "county";
-    public static final String KEY_NAME = "name";
 
     public static final String CREATE_SCHOOLS_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + KEY_ID + " INTEGER NOT NULL PRIMARY KEY, " + KEY_USER_ID + " varchar(30) NOT NULL, "
             + KEY_SCHOOL_ID + " int(3) NOT NULL, " + KEY_TITLE + " varchar(60) NOT NULL, "
             + KEY_IS_URGENT + " tinyint(1) NOT NULL DEFAULT '0', "
-            + KEY_NEED_NUM + " int(10) unsigned NOT NULL, "
-            + KEY_CURRENT_NUM + " int(10) unsigned NOT NULL DEFAULT '0', "
+            + KEY_NEED_NUM + " int(10) NOT NULL, "
+            + KEY_CURRENT_NUM + " int(10) NOT NULL DEFAULT '0', "
             + KEY_CONTENT + " TEXT , " + KEY_REWARD + " varchar(60) DEFAULT NULL, "
             + KEY_CREATED_AT + " datetime NOT NULL, " + KEY_EXP_AT + " datetime NOT NULL, "
             + KEY_IS_RUNNING + " tinyint(1) NOT NULL DEFAULT '0', "

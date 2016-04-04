@@ -12,12 +12,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
 import com.yoyoyee.zerodistance.helper.table.MissionsTable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
@@ -26,7 +30,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 5;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -302,6 +306,77 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return accessKey;
+    }
+
+    public void updateMissions(ArrayList<Mission> missionsList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            db.delete(MissionsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<missionsList.size(); i++) {
+                values.put(MissionsTable.KEY_ID, missionsList.get(i).id); // Name
+                values.put(MissionsTable.KEY_USER_ID, missionsList.get(i).userUid); // Email
+                values.put(MissionsTable.KEY_SCHOOL_ID, missionsList.get(i).schoolID); // Email
+                values.put(MissionsTable.KEY_TITLE, missionsList.get(i).title); // Created At
+                values.put(MissionsTable.KEY_IS_URGENT, missionsList.get(i).content); // Created At
+                values.put(MissionsTable.KEY_NEED_NUM, missionsList.get(i).needNum); // Created At
+                values.put(MissionsTable.KEY_CURRENT_NUM, missionsList.get(i).currentNum); // Created At
+                values.put(MissionsTable.KEY_CONTENT, missionsList.get(i).content); // Created At
+                values.put(MissionsTable.KEY_REWARD, missionsList.get(i).reward); // Created At
+                values.put(MissionsTable.KEY_CREATED_AT, missionsList.get(i).createdAt.toString()); // Created At
+                values.put(MissionsTable.KEY_EXP_AT, missionsList.get(i).expAt.toString()); // Created At
+                values.put(MissionsTable.KEY_IS_RUNNING, missionsList.get(i).isRunning); // Created At
+                values.put(MissionsTable.KEY_IS_FINISHED, missionsList.get(i).isFinished); // Created At
+                values.put(MissionsTable.KEY_FINISHED_AT, missionsList.get(i).finishedAt.toString()); // Created At
+                // Inserting Row
+                db.insert(MissionsTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateMissions: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+
+        Log.d(TAG, "Updated all missions info from SQLite");
+        db.close();
+
+    }
+
+    public ArrayList<Mission> getMissions() {
+
+        ArrayList<Mission> missions = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                missions.add(new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                        cursor.getString(3), cursor.getInt(4)!=0, cursor.getInt(5),
+                        cursor.getInt(6), cursor.getString(7), cursor.getString(8),
+                        dateFormat.parse(cursor.getString(9)),
+                        dateFormat.parse(cursor.getString(10)), cursor.getInt(11)!=0,
+                        cursor.getInt(12)!=0, dateFormat.parse(cursor.getString(13))));
+                Log.d(TAG, "getMissions: " + cursor.getInt(0) + cursor.getString(1)+cursor.getString(2)+
+                        cursor.getString(3)+(cursor.getInt(4)!=0)+cursor.getInt(5));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return missions;
     }
 
 }

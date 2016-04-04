@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
 
 public class TurnActivity extends AppCompatActivity {
 
@@ -17,6 +18,7 @@ public class TurnActivity extends AppCompatActivity {
     private Button btnGroup;
     private Button btnNewGroup;
     private Button btnQA;
+    private Button btnUnitTest;
     private TextView tvExplain;
     private TextView tvView;
 
@@ -32,6 +34,7 @@ public class TurnActivity extends AppCompatActivity {
         btnGroup = (Button) findViewById(R.id.buttonGroup);
         btnNewGroup = (Button) findViewById(R.id.buttonNewGroup);
         btnQA = (Button) findViewById(R.id.buttonQA);
+        btnUnitTest = (Button) findViewById(R.id.btnUnitTest);
         tvExplain = (TextView) findViewById(R.id.textViewTurnActExplain);
         tvView = (TextView) findViewById(R.id.textViewTurnActView);
 
@@ -82,6 +85,12 @@ public class TurnActivity extends AppCompatActivity {
                 Intent intent = new Intent(TurnActivity.this, QAActivity.class);
                 startActivity(intent);
                 tvView.setText("轉跳的頁面為"+btnQA.getText());
+            }
+        });
+        btnUnitTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

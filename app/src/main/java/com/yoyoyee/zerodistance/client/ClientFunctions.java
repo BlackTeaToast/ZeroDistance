@@ -10,15 +10,19 @@ import com.yoyoyee.zerodistance.app.AppConfig;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -272,20 +276,39 @@ public class ClientFunctions {
                     if (!error) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
-                        JSONArray schools = jObj.getJSONArray("schools");
+                        JSONArray schools = jObj.getJSONArray("missions");
                         //Log.d(TAG, "onResponse: "+schools.toString());
-                        ArrayList<School> schoolList = new ArrayList<>();
+                        ArrayList<Mission> missionList = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
                         for(int i=0; i<schools.length(); i++) {
-                            JSONObject school = schools.getJSONObject(i);
-                            schoolList.add(new School(school.getInt("id"), school.getString("area"),
-                                    school.getString("county"),school.getString("name")));
+                            JSONObject mission = schools.getJSONObject(i);
+                            try {
+                                missionList.add(new Mission(mission.getInt("id"),
+                                        mission.getString("user_uid"),
+                                        mission.getString("school_id"),
+                                        mission.getString("title"),
+                                        mission.getBoolean("is_urgent"),
+                                        mission.getInt("need_num"),
+                                        mission.getInt("current_num"),
+                                        mission.getString("content"),
+                                        mission.getString("reward"),
+                                        dateFormat.parse(mission.getString("created_at")),
+                                        dateFormat.parse(mission.getString("exp_at")),
+                                        mission.getBoolean("is_running"),
+                                        mission.getBoolean("is_finished"),
+                                        dateFormat.parse(mission.getString("finishedAt"))));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                             //Log.d(TAG, "onResponse: add school to schoolList");
 
                         }
 
                         // Inserting row in users table
-                        db.updateSchools(schoolList);
-                        clientResponse.onResponse("schools get");
+                        db.updateMissions(missionList);
+                        clientResponse.onResponse("missions get");
 
                     } else {
 
