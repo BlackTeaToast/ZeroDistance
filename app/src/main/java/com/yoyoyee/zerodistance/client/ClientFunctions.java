@@ -391,6 +391,7 @@ public class ClientFunctions {
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", db.getUserUid());
                 params.put("access_key", db.getUserAccessKey());
@@ -399,7 +400,7 @@ public class ClientFunctions {
                 params.put("need_num", String.valueOf(needNum));
                 params.put("content", content);
                 params.put("reward", reward);
-                params.put("exp_at", expAt.toString());
+                params.put("exp_at", sdf.format(expAt));
 
                 return params;
             }
