@@ -17,15 +17,19 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="85dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/askEditText"
-        android:layout_centerVertical="true"
+        android:minLines="10"
+        android:maxLines="10"
+        android:layout_below="@+id/askTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="68dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

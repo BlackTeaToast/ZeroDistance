@@ -12,7 +12,10 @@ package com.yoyoyee.zerodistance.activity;
 public class QAActivity extends AppCompatActivity {
     Button GO;
     QAndA Q =new QAndA();
+    Boolean isQ=true;
     @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qa);
@@ -25,4 +28,5 @@ public class QAActivity extends AppCompatActivity {
             }
         });
     }
+
 }
