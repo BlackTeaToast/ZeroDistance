@@ -97,7 +97,7 @@ public class StudentRegisterActivity extends Activity {
                     registerStudent(name, nickName, schoolID, studentID, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            "Please enter your details!", Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -201,20 +201,16 @@ public class StudentRegisterActivity extends Activity {
             @Override
             public void onResponse(String response) {
                 hideDialog();
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 
                 // Launch login activity
-                Intent intent = new Intent(
-                        StudentRegisterActivity.this,
-                        LoginActivity.class);
-                startActivity(intent);
                 finish();
             }
 
             @Override
             public void onErrorResponse(String response) {
                 hideDialog();
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
             }
         });
 

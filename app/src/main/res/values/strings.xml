@@ -66,6 +66,7 @@
     <string name="hint_nick_name">暱稱</string>
     <string name="hint_student_id">學號</string>
     <string name="btn_link_to_login">已經註冊了嗎？馬上登入看看吧！</string>
+    <string name="peoplenumber">參與人數:</string>>
 
     <!--吱吱吱之-->
     <string name="ask_for_title">發問</string>

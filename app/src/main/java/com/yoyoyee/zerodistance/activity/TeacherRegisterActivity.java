@@ -192,20 +192,16 @@ public class TeacherRegisterActivity extends Activity {
             @Override
             public void onResponse(String response) {
                 hideDialog();
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 
                 // Launch login activity
-                Intent intent = new Intent(
-                        TeacherRegisterActivity.this,
-                        LoginActivity.class);
-                startActivity(intent);
                 finish();
             }
 
             @Override
             public void onErrorResponse(String response) {
                 hideDialog();
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
             }
         });
 

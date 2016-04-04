@@ -17,7 +17,7 @@
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
     <color name="ColorPrimaryToolbar">#10ffff</color>
-
+    <color name="tabsScrollColor">#8a140e</color>
 
     <!--Tree使用區-->
     <color name="spinnertext_new_mission">#46A3FF</color>

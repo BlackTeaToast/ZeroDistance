@@ -11,14 +11,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.provider.Settings.*;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -26,7 +23,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,10 +38,9 @@ import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.mission.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
-import java.io.File;
 import java.lang.System;
 import java.util.Calendar;
 
@@ -160,7 +155,6 @@ public class NewMissionActivity extends AppCompatActivity {
         buttonPicture.setText(R.string.uploadpictruebuttom_new_mission);
         buttonTakePicture.setText(R.string.takepicturebuttom_new_mission);
         Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
-
 
         editTextOtherPay.setVisibility(View.GONE);
         imv.setVisibility(View.GONE);

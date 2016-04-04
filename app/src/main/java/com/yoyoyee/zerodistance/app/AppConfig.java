@@ -12,4 +12,10 @@ public class AppConfig {
 
 	// Server schools url
 	public static String URL_SCHOOLS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/schools";
+
+	// Server publish missions url
+	public static String URL_PUBLISH_MISSION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMission";
+
+	// Server publish missions url
+	public static String URL_GET_USER_MISSIONS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getUserMissions";
 }

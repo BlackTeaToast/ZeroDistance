@@ -49,7 +49,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.missionDetial.setText(mData[position]);
         holder.missionName.setText(missionName[position]);
         holder.missiondangerous.setImageDrawable(missiondangerous[position]);
-
     }
 
     @Override
