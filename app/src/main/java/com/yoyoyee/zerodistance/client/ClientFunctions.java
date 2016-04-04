@@ -264,7 +264,7 @@ public class ClientFunctions {
         String tag_string_req = "req_update_missions";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+                AppConfig.URL_GET_USER_MISSIONS, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -353,7 +353,7 @@ public class ClientFunctions {
         String tag_string_req = "req_publish_mission";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+                AppConfig.URL_PUBLISH_MISSION, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
