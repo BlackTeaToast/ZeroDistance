@@ -256,10 +256,8 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void publishMission(final String title, final boolean isUrgent, final int needNum,
-                                      final String Content, final String reward, final Date expAt,
-                                      final ClientResponse clientResponse) {
-        String tag_string_req = "req_publish_mission";
+    public static void updateMissions(final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_missions";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
@@ -288,6 +286,63 @@ public class ClientFunctions {
                         // Inserting row in users table
                         db.updateSchools(schoolList);
                         clientResponse.onResponse("schools get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("uid", db.getUserUid());
+                params.put("access_key", db.getUserAccessKey());
+
+                return params;
+            }
+
+        };;
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void publishMission(final String title, final boolean isUrgent, final int needNum,
+                                      final String Content, final String reward, final Date expAt,
+                                      final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_mission";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("上傳任務成功");
 
                     } else {
 
