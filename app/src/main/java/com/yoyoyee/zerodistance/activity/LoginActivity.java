@@ -48,7 +48,7 @@ public class LoginActivity extends Activity {
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this, TestActivity.class);
+            Intent intent = new Intent(LoginActivity.this, TurnActivity.class);
             startActivity(intent);
             finish();
         }
@@ -102,7 +102,7 @@ public class LoginActivity extends Activity {
                 // Launch main activity
                 hideDialog();
                 Intent intent = new Intent(LoginActivity.this,
-                        TestActivity.class);
+                        TurnActivity.class);
                 startActivity(intent);
                 finish();
 
