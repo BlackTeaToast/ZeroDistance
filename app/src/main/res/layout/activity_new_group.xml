@@ -327,8 +327,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:onClick="onClickOkOutputData" />
+            android:layout_marginLeft="15dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -343,8 +342,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:layout_columnSpan="7"
-            android:onClick="onClickCancel" />
+            android:layout_columnSpan="7" />
 
     </GridLayout>
 
