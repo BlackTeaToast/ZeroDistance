@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
-import com.yoyoyee.zerodistance.helper.MyAdapter;
+
 /**
  * Created by Falan on 2016/4/6.
  */
