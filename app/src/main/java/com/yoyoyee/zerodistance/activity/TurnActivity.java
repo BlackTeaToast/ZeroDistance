@@ -114,7 +114,7 @@ public class TurnActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         ArrayList<Mission> missions = db.getMissions();
                         if (missions.size() > 0) {
-                            Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).finishedAt);
+                            Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                         }
 
                     }

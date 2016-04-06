@@ -20,10 +20,12 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by p1235 on 2016/3/28.
@@ -277,7 +279,7 @@ public class ClientFunctions {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         JSONArray missions = jObj.getJSONArray("missions");
-                        //Log.d(TAG, "onResponse: "+schools.toString());
+
                         ArrayList<Mission> missionList = new ArrayList<>();
                         SimpleDateFormat dateFormat = new SimpleDateFormat(
                                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -299,10 +301,10 @@ public class ClientFunctions {
                                         mission.getInt("is_running")!=0,
                                         mission.getInt("is_finished")!=0,
                                         dateFormat.parse(mission.getString("finished_at"))));
+                                Log.d(TAG, "onResponse: " + mission.getString("exp_at"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //Log.d(TAG, "onResponse: add school to schoolList");
 
                         }
 
@@ -334,7 +336,7 @@ public class ClientFunctions {
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("uid", db.getUserUid());
                 params.put("access_key", db.getUserAccessKey());
 
@@ -357,7 +359,6 @@ public class ClientFunctions {
 
             @Override
             public void onResponse(String response) {
-                //Log.d(TAG, "Register Response: " + response.toString());
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -392,7 +393,9 @@ public class ClientFunctions {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Map<String, String> params = new HashMap<String, String>();
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                Map<String, String> params = new HashMap<>();
                 params.put("uid", db.getUserUid());
                 params.put("access_key", db.getUserAccessKey());
                 params.put("title", title);

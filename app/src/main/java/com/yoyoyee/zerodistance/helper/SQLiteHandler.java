@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
 
@@ -314,6 +316,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public void updateMissions(ArrayList<Mission> missionsList) {
         SQLiteDatabase db = this.getWritableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
         db.beginTransaction();
         try {
             db.delete(MissionsTable.TABLE_NAME, null, null);
@@ -328,11 +331,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 values.put(MissionsTable.KEY_CURRENT_NUM, missionsList.get(i).currentNum); // Created At
                 values.put(MissionsTable.KEY_CONTENT, missionsList.get(i).content); // Created At
                 values.put(MissionsTable.KEY_REWARD, missionsList.get(i).reward); // Created At
-                values.put(MissionsTable.KEY_CREATED_AT, missionsList.get(i).createdAt.toString()); // Created At
-                values.put(MissionsTable.KEY_EXP_AT, missionsList.get(i).expAt.toString()); // Created At
+                values.put(MissionsTable.KEY_CREATED_AT, dateFormat.format(missionsList.get(i).createdAt)); // Created At
+                values.put(MissionsTable.KEY_EXP_AT, dateFormat.format(missionsList.get(i).expAt)); // Created At
                 values.put(MissionsTable.KEY_IS_RUNNING, missionsList.get(i).isRunning); // Created At
                 values.put(MissionsTable.KEY_IS_FINISHED, missionsList.get(i).isFinished); // Created At
-                values.put(MissionsTable.KEY_FINISHED_AT, missionsList.get(i).finishedAt.toString()); // Created At
+                values.put(MissionsTable.KEY_FINISHED_AT, dateFormat.format(missionsList.get(i).finishedAt)); // Created At
                 // Inserting Row
                 db.insert(MissionsTable.TABLE_NAME, null, values);
                 values.clear();
@@ -343,7 +346,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
-
 
         Log.d(TAG, "Updated all missions info from SQLite");
         db.close();
@@ -356,6 +358,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
@@ -365,9 +369,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 missions.add(new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
                                 cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5),
                                 cursor.getInt(6), cursor.getString(7), cursor.getString(8),
-                                new Date(cursor.getLong(9)),
-                                new Date(cursor.getLong(10)), cursor.getInt(11) != 0,
-                        cursor.getInt(12) != 0, new Date(cursor.getLong(13))));
+                                dateFormat.parse(cursor.getString(9)),
+                        dateFormat.parse(cursor.getString(10)), cursor.getInt(11) != 0,
+                        cursor.getInt(12) != 0, dateFormat.parse(cursor.getString(13))));
                 Log.d(TAG, "getMissions: " + cursor.getInt(0) + cursor.getString(1) + cursor.getString(2) +
                         cursor.getString(3) + (cursor.getInt(4) != 0) + cursor.getInt(5) + " " + cursor.getInt(6) + cursor.getString(7) + cursor.getString(8) +
                         cursor.getString(9) +
