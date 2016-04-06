@@ -11,11 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
-import com.yoyoyee.zerodistance.helper.MyAdapter;
+import com.yoyoyee.zerodistance.helper.missionAdapter;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -30,14 +33,14 @@ public class fragment_mission extends Fragment {
 
         try {
 
-            MyAdapter myAdapter = new MyAdapter(myDataset , missionName , missiondangerous);
+            missionAdapter missionAdapter = new missionAdapter(myDataset , missionName , missiondangerous);
             RecyclerView mList = (RecyclerView) v.findViewById(R.id.listView);
 
             LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
-            mList.setAdapter(myAdapter);
+            mList.setAdapter(missionAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,4 +64,21 @@ public class fragment_mission extends Fragment {
         //漂浮
         return v;
     }
+
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        // TODO Auto-generated method stub
+//        super.onActivityCreated(savedInstanceState);
+//
+//        Button btn = (Button) getActivity().findViewById(R.id.button10);
+//
+//        btn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                Toast.makeText(getActivity(), "success2", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
+
 }
