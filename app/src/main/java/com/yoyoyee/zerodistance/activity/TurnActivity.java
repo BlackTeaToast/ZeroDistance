@@ -12,6 +12,7 @@ import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
+import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
@@ -26,9 +27,12 @@ public class TurnActivity extends AppCompatActivity {
     private Button btnNewGroup;
     private Button btnQA;
     private Button btnUnitTest;
+    private Button buttonLogout;
     private TextView tvExplain;
     private TextView tvView;
     private SQLiteHandler db;
+    private SessionManager session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,15 @@ public class TurnActivity extends AppCompatActivity {
         btnNewGroup = (Button) findViewById(R.id.buttonNewGroup);
         btnQA = (Button) findViewById(R.id.buttonQA);
         btnUnitTest = (Button) findViewById(R.id.btnUnitTest);
+        buttonLogout = (Button) findViewById(R.id.buttonLogout);
         tvExplain = (TextView) findViewById(R.id.textViewTurnActExplain);
         tvView = (TextView) findViewById(R.id.textViewTurnActView);
 
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
+
+        // session manager
+        session = new SessionManager(getApplicationContext());
 
         tvExplain.setText("此頁面主要為用來轉跳各個Activity用，直接點選要跳的頁面即可，在轉跳後的頁面按上一頁可回到此頁，在此頁按上一頁可回到登入畫面");
         btnMain.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +113,8 @@ public class TurnActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         ArrayList<Mission> missions = db.getMissions();
-                        if(missions.size()>0){
-                            Log.d(TAG, "onResponse: " + missions.get(0).getTitle()+" "+missions.get(0).finishedAt);
+                        if (missions.size() > 0) {
+                            Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).finishedAt);
                         }
 
                     }
@@ -119,5 +127,26 @@ public class TurnActivity extends AppCompatActivity {
             }
         });
 
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
+
+    }
+    /**
+     * Logging out the user. Will set isLoggedIn flag to false in shared
+     * preferences Clears the user data from sqlite users table
+     * */
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(TurnActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

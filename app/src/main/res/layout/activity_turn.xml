@@ -79,12 +79,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="現在是在測試頁面"
             android:id="@+id/textViewTurnActView"
-            android:layout_below="@+id/buttonNewGroup"
-            android:layout_marginTop="60dp"
+            android:layout_below="@+id/btnUnitTest"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/buttonNewGroup"
-            android:layout_alignEnd="@+id/buttonNewGroup" />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,7 +101,18 @@
             android:layout_height="wrap_content"
             android:text="Unit Test"
             android:id="@+id/btnUnitTest"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_below="@+id/buttonNewMission"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="43dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:id="@+id/buttonLogout"
+            android:layout_alignTop="@+id/btnUnitTest"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </RelativeLayout>
