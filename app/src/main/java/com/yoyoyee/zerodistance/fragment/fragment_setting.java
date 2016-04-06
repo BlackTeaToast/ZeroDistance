@@ -15,10 +15,12 @@ import com.yoyoyee.zerodistance.R;
  * Created by 楊霖村 on 2016/4/4.
  */
 public class fragment_setting extends Fragment {
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
         SeekBar seekBar = (SeekBar) v.findViewById(R.id.seekBar);
-        final TextView textView17 = (TextView) v.findViewById(R.id.textView17);
+        final TextView textsize = (TextView) v.findViewById(R.id.textsize);
+        textsize.setText((int) textsize.getTextSize());
         seekBar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() { int progress = 0;
 
             @Override
@@ -34,7 +36,7 @@ public class fragment_setting extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Display the value in textview
-                textView17.setText(progress + "/" + seekBar.getMax());
+                textsize.setText(progress + "/" + seekBar.getMax());
             }
         });
         return v;}

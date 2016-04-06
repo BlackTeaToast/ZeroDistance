@@ -81,9 +81,16 @@
     <string name="peoplenumber">參與人數:</string>
     <string name="date">日期:</string>
     <string name="time">時間:</string>
+    <string name="language">語言:</string>
     <style name="cardtext">
         <item name="android:textSize">20sp</item>
     </style>
+    <style name="settext">
+        <item name="android:textSize">25sp</item>
+    </style>
+    <string name="showstyles">展現方式:</string>
+    <string name="textsize">字體大小:</string>
+    <string name="Sign_out">登出</string>
     <!--吱吱吱之-->
     <string name="ask_for_title">發問</string>
     <string name="ask_for_ok">確認</string>
