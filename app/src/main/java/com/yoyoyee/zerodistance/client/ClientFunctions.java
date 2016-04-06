@@ -276,29 +276,29 @@ public class ClientFunctions {
                     if (!error) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
-                        JSONArray schools = jObj.getJSONArray("missions");
+                        JSONArray missions = jObj.getJSONArray("missions");
                         //Log.d(TAG, "onResponse: "+schools.toString());
                         ArrayList<Mission> missionList = new ArrayList<>();
                         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-                        for(int i=0; i<schools.length(); i++) {
-                            JSONObject mission = schools.getJSONObject(i);
+                        for(int i=0; i<missions.length(); i++) {
+                            JSONObject mission = missions.getJSONObject(i);
                             try {
                                 missionList.add(new Mission(mission.getInt("id"),
                                         mission.getString("user_uid"),
                                         mission.getString("school_id"),
                                         mission.getString("title"),
-                                        mission.getBoolean("is_urgent"),
+                                        mission.getInt("is_urgent")!=0,
                                         mission.getInt("need_num"),
                                         mission.getInt("current_num"),
                                         mission.getString("content"),
                                         mission.getString("reward"),
                                         dateFormat.parse(mission.getString("created_at")),
                                         dateFormat.parse(mission.getString("exp_at")),
-                                        mission.getBoolean("is_running"),
-                                        mission.getBoolean("is_finished"),
-                                        dateFormat.parse(mission.getString("finishedAt"))));
+                                        mission.getInt("is_running")!=0,
+                                        mission.getInt("is_finished")!=0,
+                                        dateFormat.parse(mission.getString("finished_at"))));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
