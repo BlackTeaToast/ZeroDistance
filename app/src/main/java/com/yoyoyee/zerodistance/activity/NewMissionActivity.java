@@ -6,16 +6,20 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.provider.Settings.*;
+import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -23,6 +27,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,11 +44,16 @@ import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
+import java.io.File;
 import java.lang.System;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class NewMissionActivity extends AppCompatActivity {
@@ -59,16 +70,20 @@ public class NewMissionActivity extends AppCompatActivity {
      -------------------------------------------------------------------------------------------------------------*/
     private Mission missionData =new Mission();
     private ArrayAdapter<String> adapterPress,adapterPay;
+    private Boolean press;//緊急程度 false是不僅緊急，true是緊急
     private Boolean oneTimesDate =true,oneTimesTime=true;//第一次進行時間日期設定判斷用的，用以顯示提示吐司
     private Boolean allreadyDate=false,allreadyTime=false;//是否有選取時間和日期
     private Boolean firstTakePicture=true;//是否第一次拍照
     private Boolean time12or24=false; //設定true為24小時制，false12小時制
     private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
+    private Boolean PICTURE_GONE=true;//隱藏拍照功能
+
     private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
     private Bitmap bitmapOutPut;//要輸出出去的原圖
-
+    private Layout cc;
 
     private Calendar calendar;
+
 
     private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber;
 
@@ -76,6 +91,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private Spinner spinnerPress, spinnerPay;
     private String[] stringPress ,stringPay;
     private String getThatString;
+    private String getPay;
 
     private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
@@ -88,6 +104,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow;
     private int year, month, day, hour, minute;
     private int hourAMPM;
+    private int pay;
 
 
     @Override
@@ -128,38 +145,38 @@ public class NewMissionActivity extends AppCompatActivity {
         //ImageView
         imv =(ImageView)findViewById(R.id.imageViewPicture);
 
-        ;
+
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.actionbar_new_mission);
         //定義區------------------------------------------------------------------------------------
-        //時間
+        //時間F
 
         calendar =Calendar.getInstance();
 
-        stringPress =getResources().getStringArray(R.array.press_new_mission);
+        stringPress =getResources().getStringArray(R.array.press_new_mission_and_group);
         stringPay =getResources().getStringArray(R.array.pay_new_mission);
         //取的時間設定12或24小時制
         //設定文字
 
         textViewName.setText(R.string.missionname_new_mission);
-        textViewPress.setText(R.string.press_new_mission);
+        textViewPress.setText(R.string.press_new_mission_and_group);
         textViewPay.setText(R.string.pay_new_mission);
-        textViewPicture.setText(R.string.uploadpicture_new_mission);
+        textViewPicture.setText(R.string.uploadpicture_new_mission_and_group);
         textViewcontent.setText(R.string.content_new_mission);
         textViewMissionDate.setText(R.string.date_new_mission);
-        textViewPeopleNumber.setText(R.string.peoplenumber_new_mission);
-        buttonTime.setText(R.string.buttomtime_new_mission);
-        buttonDate.setText(R.string.buttomdate_new_mission);
-        buttonPicture.setText(R.string.uploadpictruebuttom_new_mission);
-        buttonTakePicture.setText(R.string.takepicturebuttom_new_mission);
+        textViewPeopleNumber.setText(R.string.peoplenumber_new_mission_and_group);
+        buttonTime.setText(R.string.buttomtime_new_mission_and_group);
+        buttonDate.setText(R.string.buttomdate_new_mission_and_group);
+        buttonPicture.setText(R.string.uploadpictruebuttom_new_mission_and_group);
+        buttonTakePicture.setText(R.string.takepicturebuttom_new_mission_and_group);
         Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
 
         editTextOtherPay.setVisibility(View.GONE);
         imv.setVisibility(View.GONE);
 
-        adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission));
+        adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission_and_group));
         adapterPay = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.pay_new_mission));
         adapterPress.setDropDownViewResource(R.layout.spinner);
         adapterPay.setDropDownViewResource(R.layout.spinner);
@@ -174,6 +191,8 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPress[position]);
+                press =(position==0)? false: true;
+
             }
 
             @Override
@@ -186,9 +205,12 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPay[position]);
+
                 if (position == (getResources().getStringArray(R.array.pay_new_mission).length - 1)) {
                     editTextOtherPay.setVisibility(View.VISIBLE);
+                    getPay = editTextOtherPay.getText().toString();
                 } else {
+                    getPay =stringPay[position];
                     editTextOtherPay.setVisibility(View.GONE);
                 }
 
@@ -220,6 +242,12 @@ public class NewMissionActivity extends AppCompatActivity {
 
 
 
+        //此區為隱藏功能用--------------------------------------------------------------------------
+        if(PICTURE_GONE) {
+            textViewPicture.setVisibility(View.GONE);
+            buttonPicture.setVisibility(View.GONE);
+            buttonTakePicture.setVisibility(View.GONE);
+        }
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------
@@ -241,7 +269,7 @@ public class NewMissionActivity extends AppCompatActivity {
                 month = lisMonth;
                 day = lisDay;
                 allreadyDate =true;
-                buttonDate.setText(year + getResources().getString(R.string.year_new_mission) + (month+1) + getResources().getString(R.string.month_new_mission) + day + getResources().getString(R.string.day_new_mission));
+                buttonDate.setText(year + getResources().getString(R.string.year_new_mission_and_group) + (month+1) + getResources().getString(R.string.month_new_mission_and_group) + day + getResources().getString(R.string.day_new_mission_and_group));
             }
         }, year, month, day);
         datePickerDialog.show();
@@ -275,17 +303,17 @@ public class NewMissionActivity extends AppCompatActivity {
                 allreadyTime =true;
                 if (hour>=12 && hour<24){
                     if (hour>12) {
-                        tempAMPM = new String(getResources().getString(R.string.PM_new_mission));
+                        tempAMPM = new String(getResources().getString(R.string.PM_new_mission_and_group));
                         lisHour-=12;
                     }
                     else {
-                        tempAMPM = new String(getResources().getString(R.string.PM_new_mission));
+                        tempAMPM = new String(getResources().getString(R.string.PM_new_mission_and_group));
                     }
                 }
                 else{
-                    tempAMPM =new String(getResources().getString(R.string.AM_new_mission));
+                    tempAMPM =new String(getResources().getString(R.string.AM_new_mission_and_group));
                 }
-                buttonTime.setText(lisHour + getResources().getString(R.string.hour_new_mission) + minute + getResources().getString(R.string.minute_new_mission)+" "+tempAMPM);
+                buttonTime.setText(lisHour + getResources().getString(R.string.hour_new_mission_and_group) + minute + getResources().getString(R.string.minute_new_mission_and_group)+" "+tempAMPM);
             }
         }, hour, minute, time12or24);
         timePickerDialog.show();
@@ -299,7 +327,7 @@ public class NewMissionActivity extends AppCompatActivity {
             if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
                 //申请WRITE_EXTERNAL_STORAGE權限，
                 if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) == false) {
-                    showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission), new DialogInterface.OnClickListener() {
+                    showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission_and_group), new DialogInterface.OnClickListener() {
                         @TargetApi(Build.VERSION_CODES.M)
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -328,7 +356,7 @@ public class NewMissionActivity extends AppCompatActivity {
             if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
                 //申请WRITE_EXTERNAL_STORAGE權限，
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission), new DialogInterface.OnClickListener() {
+                    showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission_and_group), new DialogInterface.OnClickListener() {
                         @TargetApi(Build.VERSION_CODES.M)
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -353,8 +381,8 @@ public class NewMissionActivity extends AppCompatActivity {
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(NewMissionActivity.this)
                 .setMessage(message)
-                .setPositiveButton(getResources().getString(R.string.okbuttom_new_mission), okListener)
-                .setNegativeButton(getResources().getString(R.string.cancelbuttom_new_mission), null)
+                .setPositiveButton(getResources().getString(R.string.okbuttom_new_mission_and_group), okListener)
+                .setNegativeButton(getResources().getString(R.string.cancelbuttom_new_mission_and_group), null)
                 .create()
                 .show();
     }
@@ -406,12 +434,12 @@ public class NewMissionActivity extends AppCompatActivity {
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
                     if (firstTakePicture == true) {
-                        Toast.makeText(this, R.string.takepicturemessage_new_mission, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.takepicturemessage_new_mission_and_group, Toast.LENGTH_LONG).show();
                     }
                     firstTakePicture = false;
                 }
                 else {
-                    Toast.makeText(this, R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
             }
             case requireCodefromSdcard: {
@@ -426,12 +454,12 @@ public class NewMissionActivity extends AppCompatActivity {
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
                     if (firstTakePicture == true) {
-                        Toast.makeText(this, R.string.takepicturemessage_new_mission, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.takepicturemessage_new_mission_and_group, Toast.LENGTH_LONG).show();
                     }
                     firstTakePicture = false;
                 }
                 else {
-                    Toast.makeText(this, R.string.notakepicture_new_mission, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -446,17 +474,17 @@ public class NewMissionActivity extends AppCompatActivity {
         else{
             missionData.setTitle(editTextName.getText().toString());
            if ( editTextNumber.getText().toString().trim().equals("")){
-                Toast.makeText(this, R.string.errorpeoplenumber_new_mission, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errorpeoplenumber_new_mission_and_group, Toast.LENGTH_SHORT).show();
             }
             else {
                 missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
                 if (allreadyDate == false) {
-                    Toast.makeText(this, R.string.errornoDate_new_mission, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.errornoDate_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     //待添加DATE
                     if (allreadyTime == false) {
-                        Toast.makeText(this, R.string.errornoTime_new_mission, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.errornoTime_new_mission_and_group, Toast.LENGTH_SHORT).show();
                     }
                     else {
                         //待添加TIME
@@ -465,6 +493,26 @@ public class NewMissionActivity extends AppCompatActivity {
                         }
                         else {
                             missionData.content = editTextcontent.getText().toString();
+                            calendar.set(year,month,day,hour,minute);
+                            ClientFunctions.publishMission(
+                                    editTextName.getText().toString(),
+                                    press,
+                                    Integer.valueOf(editTextNumber.getText().toString()),
+                                    editTextcontent.getText().toString(),
+                                    getPay,
+                                    calendar.getTime(),
+                                    new ClientResponse() {
+                                        @Override
+                                        public void onResponse(String response) {
+
+                                        }
+
+
+                                        @Override
+                                        public void onErrorResponse(String response) {
+
+                                        }
+                                    });
                             this.finish();
                         }
                     }
@@ -474,7 +522,8 @@ public class NewMissionActivity extends AppCompatActivity {
     }
     //按取消鈕返回
     public void onClickCancel(View v){
-        this.finish();
+
+
     }
 
 }

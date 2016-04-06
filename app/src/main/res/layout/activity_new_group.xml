@@ -24,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/missionname_new_mission"
+            android:text="@string/groupname_new_group"
             android:layout_column="0"
             android:textSize="24dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/textViewName"
-            android:layout_row="2"
+            android:layout_row="4"
             android:layout_columnSpan="7"
             android:layout_gravity="left|center"
             android:layout_margin="0dp"
@@ -45,22 +45,23 @@
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/editTextName"
-            android:layout_row="2"
+            android:layout_row="4"
             android:layout_column="7"
             android:layout_gravity="center|right"
             android:layout_marginTop="40dp"
             android:layout_columnSpan="7"
             android:layout_marginRight="15dp"
             android:layout_margin="0dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:gravity="left|center_vertical" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="緊急程度："
+            android:text="@string/press_new_mission_and_group"
             android:id="@+id/textViewPress"
-            android:layout_row="3"
+            android:layout_row="6"
             android:layout_column="0"
             android:textSize="24dp"
             android:layout_below="@+id/editTextMissonName"
@@ -78,13 +79,13 @@
             android:layout_height="match_parent"
             android:id="@+id/spinnerPress"
             android:spinnerMode="dropdown"
-            android:layout_row="3"
+            android:layout_row="6"
             android:layout_column="7"
             android:layout_alignTop="@+id/textView4"
             android:layout_toRightOf="@+id/textView4"
             android:layout_toEndOf="@+id/textView4"
             android:layout_weight="1"
-            android:entries="@array/press_new_mission"
+            android:entries="@array/press_new_mission_and_group"
             android:layout_columnSpan="7"
             android:layout_gravity="center"
             android:layout_marginRight="15dp"
@@ -96,9 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="獎勵："
-            android:id="@+id/textViewPay"
-            android:layout_row="4"
+            android:text="@string/peoplenumber_new_mission_and_group"
+            android:id="@+id/textViewPeopleNumber"
+            android:layout_row="11"
             android:layout_column="0"
             android:textSize="24dp"
             android:layout_below="@+id/spinner"
@@ -112,44 +113,28 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp" />
 
-        <Spinner
-            android:layout_width="190dp"
-            android:layout_height="match_parent"
-            android:id="@+id/spinnerPay"
-            android:spinnerMode="dropdown"
-            android:layout_row="4"
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:id="@+id/editTextPeopleNumber"
+            android:layout_row="11"
             android:layout_column="7"
-            android:layout_below="@+id/spinner"
-            android:layout_alignLeft="@+id/spinner"
-            android:layout_alignStart="@+id/spinner"
-            android:layout_weight="1"
-            android:entries="@array/pay_new_mission"
             android:layout_columnSpan="7"
-            android:layout_gravity="center"
-            android:layout_margin="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextOtherPay"
-            android:layout_column="0"
-            android:layout_row="5"
-            android:layout_columnSpan="14"
-            android:layout_gravity="center"
-            android:layout_margin="15dp" />
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center|right"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="任務日期："
-            android:id="@+id/textViewMissionDate"
-            android:layout_row="6"
+            android:text="@string/date_new_group"
+            android:id="@+id/textViewGroupDate"
+            android:layout_row="12"
             android:layout_column="0"
             android:textSize="24dp"
             android:layout_below="@+id/spinner"
@@ -163,10 +148,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="日期"
+            android:text="@string/buttomdate_new_mission_and_group"
             android:id="@+id/buttonDate"
             android:layout_column="0"
-            android:layout_row="7"
+            android:layout_row="14"
             android:layout_columnSpan="7"
             android:onClick="onClickDate"
             android:layout_margin="0dp"
@@ -178,10 +163,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="時間"
+            android:text="@string/buttomtime_new_mission_and_group"
             android:id="@+id/buttonTime"
             android:layout_column="7"
-            android:layout_row="7"
+            android:layout_row="14"
             android:onClick="onClickTime"
             android:layout_gravity="center|right"
             android:layout_columnSpan="7"
@@ -193,9 +178,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="任務內容："
+            android:text="@string/content_new_group"
             android:id="@+id/textViewContent"
-            android:layout_row="8"
+            android:layout_row="18"
             android:layout_column="0"
             android:textSize="24dp"
             android:layout_below="@+id/spinner"
@@ -213,7 +198,7 @@
             android:ems="10"
             android:id="@+id/editTextContent"
             android:layout_column="0"
-            android:layout_row="9"
+            android:layout_row="19"
             android:layout_columnSpan="14"
             android:layout_gravity="center"
             android:layout_margin="15dp" />
@@ -222,9 +207,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="選擇圖像"
+            android:text="@string/where_new_group"
+            android:id="@+id/textViewWhere"
+            android:layout_row="16"
+            android:layout_column="0"
+            android:textSize="24dp"
+            android:layout_below="@+id/spinner"
+            android:layout_toLeftOf="@+id/spinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_columnSpan="14"
+            android:layout_gravity="left|center"
+            android:layout_margin="15dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_column="0"
+            android:layout_row="17"
+            android:layout_columnSpan="14"
+            android:layout_gravity="center"
+            android:layout_margin="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/uploadpicture_new_mission_and_group"
             android:id="@+id/textViewPicture"
-            android:layout_row="10"
+            android:layout_row="21"
             android:layout_column="0"
             android:textSize="24dp"
             android:layout_below="@+id/spinner"
@@ -242,11 +256,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="從檔案選取"
+            android:text="@string/uploadpictruebuttom_new_mission_and_group"
             android:id="@+id/buttonPicture"
             android:layout_column="0"
             android:layout_columnSpan="7"
-            android:layout_row="11"
+            android:layout_row="22"
             android:layout_margin="0dp"
             android:layout_gravity="left|center"
             android:layout_marginTop="15dp"
@@ -258,16 +272,27 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="拍照"
+            android:text="@string/takepicturebuttom_new_mission_and_group"
             android:id="@+id/buttonTakePicture"
             android:layout_column="7"
-            android:layout_row="11"
+            android:layout_row="22"
             android:onClick="useCamera"
             android:layout_gravity="center|right"
             android:layout_columnSpan="7"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewPicture"
+            android:layout_column="0"
+            android:layout_columnSpan="14"
+            android:layout_row="28"
+            android:layout_margin="15dp"
+            android:layout_gravity="center"
+            android:longClickable="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -289,21 +314,10 @@
             android:layout_column="1"
             android:layout_columnSpan="11" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewPicture"
-            android:layout_column="0"
-            android:layout_columnSpan="14"
-            android:layout_row="12"
-            android:layout_margin="15dp"
-            android:layout_gravity="center"
-            android:longClickable="true" />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="發送"
+            android:text="@string/okbuttom_new_mission_and_group"
             android:id="@+id/buttonOK"
             android:layout_margin="0dp"
             android:layout_gravity="left|center|fill_vertical"
@@ -313,12 +327,13 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp" />
+            android:layout_marginLeft="15dp"
+            android:onClick="onClickOkOutputData" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="取消"
+            android:text="@string/cancelbuttom_new_mission_and_group"
             android:id="@+id/buttonCancel"
             android:layout_column="7"
             android:layout_row="100"
@@ -328,8 +343,11 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:layout_columnSpan="7" />
+            android:layout_columnSpan="7"
+            android:onClick="onClickCancel" />
 
     </GridLayout>
+
+
 
 </ScrollView>

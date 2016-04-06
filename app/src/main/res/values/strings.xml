@@ -16,40 +16,52 @@
     <!--Tree使用-->
     <string name="missionname_new_mission">任務名稱：</string>
     <string name="actionbar_new_mission">建立任務：</string>
-    <string name="press_new_mission">緊急程度：</string>
     <string name="pay_new_mission">支付獎勵：</string>
     <string name="content_new_mission">任務內容：</string>
-    <string name="peoplenumber_new_mission">需求人數</string>
     <string name="date_new_mission">任務日期：</string>
-    <string name="buttomdate_new_mission">選擇哪天</string>
-    <string name="buttomtime_new_mission">選擇幾點</string>
-    <string name="year_new_mission">年</string>
-    <string name="month_new_mission">月</string>
-    <string name="day_new_mission">日</string>
-    <string name="hour_new_mission">點</string>
-    <string name="minute_new_mission">分</string>
-    <string name="okbuttom_new_mission">完成</string>
-    <string name="cancelbuttom_new_mission">取消</string>
-    <string name="uploadpicture_new_mission">選擇圖相：</string>
-    <string name="uploadpictruebuttom_new_mission">從檔案選取</string>
-    <string name="takepicturebuttom_new_mission">拍照</string>
-    <string name="notakepicture_new_mission">取消拍照</string>
-    <string name="takepicturemessage_new_mission">如果想取消選取圖片，可長按預覽圖片、重新拍照或是重新選取圖片</string>
-    <string name="idontwantpicture_new_mission">已取消選取</string>
-    <string name="AM_new_mission">AM</string>
-    <string name="PM_new_mission">PM</string>
-    <string name="restorereadpermission_new_mission">無法讀取圖片資訊\n請至設定->應用程式->校園0距離->權限，將儲存權限打開</string>
+    <string name="where_new_mission">集合地點：</string>
     <string name="errornoname_new_mission">任務名稱不能留白</string>
-    <string name="errorpeoplenumber_new_mission">請填寫需求人數</string>
     <string name="errornocontent_new_mission">任務內容不能留白</string>
-    <string name="errornoDate_new_mission">尚未選擇日期</string>
-    <string name="errornoTime_new_mission">尚未選擇時間</string>
+
+    <string name="groupname_new_group">揪團名稱：</string>
+    <string name="actionbar_new_group">建立揪團</string>
+    <string name="date_new_group">出團日期：</string>
+    <string name="content_new_group">揪團內容：</string>
+    <string name="where_new_group">相約在哪：</string>
+
+
+    <string name="press_new_mission_and_group">緊急程度：</string>
+    <string name="peoplenumber_new_mission_and_group">需求人數：</string>
+    <string name="buttomdate_new_mission_and_group">選擇哪天</string>
+    <string name="buttomtime_new_mission_and_group">選擇幾點</string>
+    <string name="year_new_mission_and_group">年</string>
+    <string name="month_new_mission_and_group">月</string>
+    <string name="day_new_mission_and_group">日</string>
+    <string name="hour_new_mission_and_group">點</string>
+    <string name="minute_new_mission_and_group">分</string>
+    <string name="okbuttom_new_mission_and_group">完成</string>
+    <string name="cancelbuttom_new_mission_and_group">取消</string>
+    <string name="uploadpicture_new_mission_and_group">選擇圖片：</string>
+    <string name="uploadpictruebuttom_new_mission_and_group">從檔案選取</string>
+    <string name="takepicturebuttom_new_mission_and_group">拍照</string>
+    <string name="notakepicture_new_mission_and_group">取消拍照</string>
+    <string name="AM_new_mission_and_group">AM</string>
+    <string name="PM_new_mission_and_group">PM</string>
+    <string name="errornoDate_new_mission_and_group">尚未選擇日期</string>
+    <string name="errornoTime_new_mission_and_group">尚未選擇時間</string>
+    <string name="restorereadpermission_new_mission_and_group">無法讀取圖片資訊\n請至設定->應用程式->校園0距離->權限，將儲存權限打開</string>
+    <string name="errorpeoplenumber_new_mission_and_group">請填寫需求人數</string>
+    <string name="takepicturemessage_new_mission_and_group">長按圖片可刪除</string>
+    <string name="idontwantpicture_new_mission_and_group">已取消選取</string>
 
 
 
 
 
-    <string-array name="press_new_mission">
+
+
+
+    <string-array name="press_new_mission_and_group">
         <item>普通</item>
         <item>緊急</item>
     </string-array>
