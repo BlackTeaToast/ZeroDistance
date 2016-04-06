@@ -90,14 +90,14 @@ public class TurnActivity extends AppCompatActivity {
                 tvView.setText("轉跳的頁面為" + btnGroup.getText());
             }
         });
-     /*   btnNewGroup.setOnClickListener(new View.OnClickListener() {
+        btnNewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TurnActivity.this, NewGroupActivity.class);
                 startActivity(intent);
                 tvView.setText("轉跳的頁面為" + btnNewGroup.getText());
             }
-        });*/
+        });
         btnQA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
