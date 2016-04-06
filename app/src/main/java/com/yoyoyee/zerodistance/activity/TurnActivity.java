@@ -118,6 +118,8 @@ public class TurnActivity extends AppCompatActivity {
                             Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                         }
 
+                        Mission mission = QueryFunctions.getMission(missions.get(0).id);
+                        Log.d(TAG, "onResponse: " + mission.getTitle() + " " + mission.createdAt + " " + mission.finishedAt);
                     }
 
                     @Override

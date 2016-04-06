@@ -312,6 +312,36 @@ public class QueryFunctions {
 
     }
 
+    public static Mission getMission(int id) {
+
+        Mission mission = new Mission();
+        String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME + " WHERE "
+                + MissionsTable.KEY_ID + " = ?";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+
+        try {
+            mission = new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5),
+                    cursor.getInt(6), cursor.getString(7), cursor.getString(8),
+                    dateFormat.parse(cursor.getString(9)),
+                    dateFormat.parse(cursor.getString(10)), cursor.getInt(11) != 0,
+                    cursor.getInt(12) != 0, dateFormat.parse(cursor.getString(13)));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cursor.close();
+        db.close();
+        return mission;
+    }
+
     public static ArrayList<Mission> getMissions() {
 
         ArrayList<Mission> missions = new ArrayList<>();

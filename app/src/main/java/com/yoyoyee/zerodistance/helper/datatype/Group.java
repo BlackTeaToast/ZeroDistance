@@ -23,6 +23,7 @@ public class Group {
     public Group() {
 
     }
+
     public Group(int id, String userUid, String schoolID, String title,
                    int needNum, int currentNum, String content, Date createdAt,
                    Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
