@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -112,7 +113,7 @@ public class TurnActivity extends AppCompatActivity {
                 ClientFunctions.updateMissions(new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
-                        ArrayList<Mission> missions = db.getMissions();
+                        ArrayList<Mission> missions = QueryFunctions.getMissions();
                         if (missions.size() > 0) {
                             Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                         }

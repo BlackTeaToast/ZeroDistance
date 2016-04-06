@@ -1,38 +1,15 @@
 package com.yoyoyee.zerodistance.activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.group.Group;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
 

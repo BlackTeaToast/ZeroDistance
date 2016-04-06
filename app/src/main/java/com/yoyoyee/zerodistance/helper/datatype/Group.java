@@ -5,38 +5,34 @@ import java.util.Date;
 /**
  * Created by p1235 on 2016/3/29.
  */
-public class Mission {
+public class Group {
 
     public int id;             //任務id
     public String userUid;         //擁有者id
     public String schoolID;       //學校id
     public String title;          //任務名稱
-    public Boolean isUrgent;      //是否緊急
     public int needNum;           //需求人數
     public int currentNum;        //目前人數
     public String content;        //任務內容
-    public String reward;         //獎勵
     public Date createdAt;         //創建時間
     public Date expAt;            //到期時間
     public boolean isRunning;     //是否執行中
     public boolean isFinished;     //是否完成
     public Date finishedAt;
 
-    public Mission() {
+    public Group() {
 
     }
-    public Mission(int id, String userUid, String schoolID, String title, boolean isUrgent,
-                   int needNum, int currentNum, String content, String reward, Date createdAt,
+    public Group(int id, String userUid, String schoolID, String title,
+                   int needNum, int currentNum, String content, Date createdAt,
                    Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
         this.id = id;
         this.userUid = userUid;
         this.schoolID = schoolID;
         this.title = title;
-        this.isUrgent = isUrgent;
         this.needNum = needNum;
         this.currentNum = currentNum;
         this.content = content;
-        this.reward = reward;
         this.createdAt = createdAt;
         this.expAt = expAt;
         this.isRunning = isRunning;
@@ -76,14 +72,6 @@ public class Mission {
         this.title = title;
     }
 
-    public Boolean getIsUrgent() {
-        return isUrgent;
-    }
-
-    public void setIsUrgent(Boolean isUrgent) {
-        this.isUrgent = isUrgent;
-    }
-
     public int getNeedNum() {
         return needNum;
     }
@@ -106,14 +94,6 @@ public class Mission {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getReward() {
-        return reward;
-    }
-
-    public void setReward(String reward) {
-        this.reward = reward;
     }
 
     public Date getCreateAt() {
@@ -147,9 +127,4 @@ public class Mission {
     public void setIsFinshed(boolean isFinshed) {
         this.isFinished = isFinshed;
     }
-
-
-
-
 }
-
