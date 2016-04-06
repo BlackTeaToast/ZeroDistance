@@ -82,6 +82,9 @@
     <string name="date">日期:</string>
     <string name="time">時間:</string>
     <string name="language">語言:</string>
+    <string name="textsizeL">大</string>
+    <string name="textsizeM">中</string>
+    <string name="textsizeS">小</string>
     <style name="cardtext">
         <item name="android:textSize">20sp</item>
     </style>

@@ -18,26 +18,10 @@ public class fragment_setting extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
-        SeekBar seekBar = (SeekBar) v.findViewById(R.id.seekBar);
+
         final TextView textsize = (TextView) v.findViewById(R.id.textsize);
-        textsize.setText((int) textsize.getTextSize());
-        seekBar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() { int progress = 0;
+        final float ttsize =textsize.getTextSize();
+        textsize.setText(""+ttsize);
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) { progress = progresValue; }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // Do something here,
-
-                //if you want to do anything at the start of
-                // touching the seekbar
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // Display the value in textview
-                textsize.setText(progress + "/" + seekBar.getMax());
-            }
-        });
         return v;}
 }
