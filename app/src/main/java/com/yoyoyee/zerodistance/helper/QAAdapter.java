@@ -1,11 +1,6 @@
 package com.yoyoyee.zerodistance.helper;
 
-/**
- * Created by 楊霖村 on 2016/3/30.
- */
-
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +10,10 @@ import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+/**
+ * Created by 楊霖村 on 2016/4/6.
+ */
+public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     private String[] mData ,missionName;
     private Drawable[] missiondangerous;
 
@@ -30,14 +28,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 
-    public MyAdapter(String[] data ,String[] missionName , Drawable[] missiondangerous) {
+    public QAAdapter(String[] data ,String[] missionName , Drawable[] missiondangerous) {
         mData = data;
         this.missionName = missionName;
         this.missiondangerous = missiondangerous;
     }
 
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public QAAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_fragment_mission, parent, false);
         ViewHolder vh = new ViewHolder(v);

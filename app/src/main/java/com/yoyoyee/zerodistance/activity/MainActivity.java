@@ -33,7 +33,6 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.group.Group;
-import com.yoyoyee.zerodistance.helper.MyAdapter;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
 

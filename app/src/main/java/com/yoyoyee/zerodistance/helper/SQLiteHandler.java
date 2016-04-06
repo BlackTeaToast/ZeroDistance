@@ -12,15 +12,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
 import com.yoyoyee.zerodistance.helper.table.MissionsTable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -310,7 +313,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     public void updateMissions(ArrayList<Mission> missionsList) {
         SQLiteDatabase db = this.getWritableDatabase();
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         db.beginTransaction();
         try {
             db.delete(MissionsTable.TABLE_NAME, null, null);
@@ -353,7 +356,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
@@ -361,14 +363,17 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         for(int i=0; i<cursor.getCount(); i++){
             try {
                 missions.add(new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getInt(4)!=0, cursor.getInt(5),
-                        cursor.getInt(6), cursor.getString(7), cursor.getString(8),
-                        dateFormat.parse(cursor.getString(9)),
-                        dateFormat.parse(cursor.getString(10)), cursor.getInt(11)!=0,
-                        cursor.getInt(12)!=0, dateFormat.parse(cursor.getString(13))));
-                Log.d(TAG, "getMissions: " + cursor.getInt(0) + cursor.getString(1)+cursor.getString(2)+
-                        cursor.getString(3)+(cursor.getInt(4)!=0)+cursor.getInt(5));
-            } catch (ParseException e) {
+                                cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5),
+                                cursor.getInt(6), cursor.getString(7), cursor.getString(8),
+                                new Date(cursor.getLong(9)),
+                                new Date(cursor.getLong(10)), cursor.getInt(11) != 0,
+                        cursor.getInt(12) != 0, new Date(cursor.getLong(13))));
+                Log.d(TAG, "getMissions: " + cursor.getInt(0) + cursor.getString(1) + cursor.getString(2) +
+                        cursor.getString(3) + (cursor.getInt(4) != 0) + cursor.getInt(5) + " " + cursor.getInt(6) + cursor.getString(7) + cursor.getString(8) +
+                        cursor.getString(9) +
+                        cursor.getString(10) + (cursor.getInt(11) != 0) +
+                        (cursor.getInt(12) != 0) + cursor.getString(13));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             cursor.moveToNext();
