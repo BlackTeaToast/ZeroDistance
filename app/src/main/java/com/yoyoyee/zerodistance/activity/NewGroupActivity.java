@@ -45,7 +45,7 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
-
+import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
 import java.io.File;
@@ -85,6 +85,8 @@ public class NewGroupActivity extends AppCompatActivity {
     private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber;
 
     private ImageView imv;
+
+    private Mission missionData;
     private Spinner spinnerPress, spinnerPay;
     private String[] stringPress ,stringPay;
     private String getThatString;
@@ -436,17 +438,17 @@ public class NewGroupActivity extends AppCompatActivity {
             }
         }
     }
-/*
+
     //按完成鈕送出
     //防止空白資訊
     public void onClickOkOutputData(View v){
         if (editTextName.getText().toString().trim().equals("")) {
-            Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.errorname_new_group, Toast.LENGTH_SHORT).show();
         }
         else{
             missionData.setTitle(editTextName.getText().toString());
             if ( editTextNumber.getText().toString().trim().equals("")){
-                Toast.makeText(this, R.string.errorpeoplenumber_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.errorpeoplenumber_new_group, Toast.LENGTH_SHORT).show();
             }
             else {
                 missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
@@ -461,23 +463,25 @@ public class NewGroupActivity extends AppCompatActivity {
                     else {
                         //待添加TIME
                         if (editTextcontent.getText().toString().trim().equals("")) {
-                            Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, R.string.errorcontent_new_group, Toast.LENGTH_SHORT).show();
                         }
                         else {
                             missionData.content = editTextcontent.getText().toString();
                             calendar.set(year,month,day,hour,minute);
-                            ClientFunctions.publishMission(
+                            ClientFunctions.publishGroup(
                                     editTextName.getText().toString(),
-                                    press,
-                                    Integer.valueOf(editTextNumber.getText().toString()),
+                                    editTextNumber.getText().toString(),
                                     editTextcontent.getText().toString(),
-                                    getPay,
+                                    null,
+                                    null,
+                                    null,
                                     calendar.getTime(),
                                     new ClientResponse() {
                                         @Override
                                         public void onResponse(String response) {
 
                                         }
+
 
                                         @Override
                                         public void onErrorResponse(String response) {
@@ -492,9 +496,8 @@ public class NewGroupActivity extends AppCompatActivity {
         }
     }
     //按取消鈕返回
-    public void onClickCancel(View v){
+    public void onClickCancel(View v) {
 
-
-    }*/
+    }
 
 }

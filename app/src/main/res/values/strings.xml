@@ -28,7 +28,10 @@
     <string name="date_new_group">出團日期：</string>
     <string name="content_new_group">揪團內容：</string>
     <string name="where_new_group">相約在哪：</string>
-
+    <string name="errorname_new_group">尚未輸入揪團名稱</string>
+    <string name="errorpeoplenumber_new_group">還沒寫要揪幾人</string>
+    <string name="errorwhere_new_group">還沒說到哪集合歐</string>
+    <string name="errorcontent_new_group">還沒輸入要做什麼歐</string>
 
     <string name="press_new_mission_and_group">緊急程度：</string>
     <string name="peoplenumber_new_mission_and_group">需求人數：</string>

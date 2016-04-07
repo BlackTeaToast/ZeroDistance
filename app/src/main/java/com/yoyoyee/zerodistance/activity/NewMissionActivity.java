@@ -85,7 +85,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private Calendar calendar;
 
 
-    private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber;
+    private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber,editTextWhere;
 
     private ImageView imv;
     private Spinner spinnerPress, spinnerPay;
@@ -130,7 +130,7 @@ public class NewMissionActivity extends AppCompatActivity {
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
         editTextOtherPay = (EditText) findViewById(R.id.editTextOtherPay);
         editTextNumber = (EditText) findViewById(R.id.editTextPeopleNumber);
-        //buttom 定位區
+        editTextWhere = (EditText) findViewById(R.id.editTextWhere);        //buttom 定位區
         buttonDate = (Button) findViewById(R.id.buttonDate);
         buttonTime = (Button) findViewById(R.id.buttonTime);
         buttonCancel= (Button) findViewById(R.id.buttonCancel);
@@ -498,6 +498,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                     editTextName.getText().toString(),
                                     press,
                                     Integer.valueOf(editTextNumber.getText().toString()),
+                                    editTextWhere.getText().toString(),
                                     editTextcontent.getText().toString(),
                                     getPay,
                                     calendar.getTime(),
