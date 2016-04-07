@@ -566,14 +566,6 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void updateMissions() {
-
-    }
-
-    public static void updateGroups() {
-
-    }
-
     public static void updateSchools(final ClientResponse clientResponse) {
         String tag_string_req = "req_getSchools";
 

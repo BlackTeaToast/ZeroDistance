@@ -14,6 +14,7 @@ import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
@@ -120,6 +121,24 @@ public class TurnActivity extends AppCompatActivity {
 
                         Mission mission = QueryFunctions.getMission(missions.get(0).id);
                         Log.d(TAG, "onResponse: " + mission.getTitle() + " " + mission.createdAt + " " + mission.finishedAt);
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+
+                    }
+                });
+
+                ClientFunctions.updateGroups(new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        ArrayList<Group> groups = QueryFunctions.getGroups();
+                        if (groups.size() > 0) {
+                            Log.d(TAG, "onResponse: " + groups.get(0).getTitle() + " " + groups.get(0).createdAt + " " + groups.get(0).finishedAt);
+                        }
+
+                        Group group = QueryFunctions.getGroup(groups.get(0).id);
+                        Log.d(TAG, "onResponse: " + group.getTitle() + " " + group.createdAt + " " + group.finishedAt);
                     }
 
                     @Override

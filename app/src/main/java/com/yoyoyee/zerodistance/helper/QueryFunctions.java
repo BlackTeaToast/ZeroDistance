@@ -474,7 +474,7 @@ public class QueryFunctions {
         return missions;
     }
 
-    public ArrayList<Group> getGroups() {
+    public static ArrayList<Group> getGroups() {
 
         ArrayList<Group> groups = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + GroupsTable.TABLE_NAME;
