@@ -16,6 +16,7 @@
             layout="@layout/tool_bar"
             android:layout_row="0"
             android:layout_column="0"
+            android:text="@string/actionbar_new_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="14" />
@@ -225,7 +226,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/editTextWhere"
             android:layout_column="0"
             android:layout_row="17"
             android:layout_columnSpan="14"
@@ -327,7 +328,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp" />
+            android:layout_marginLeft="15dp"
+            android:onClick="onClickOkOutputDataGroup" />
 
         <Button
             android:layout_width="wrap_content"
@@ -342,7 +344,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:layout_columnSpan="7" />
+            android:layout_columnSpan="7"
+            android:onClick="onClickCancelGroup" />
 
     </GridLayout>
 

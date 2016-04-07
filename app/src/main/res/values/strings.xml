@@ -22,6 +22,8 @@
     <string name="where_new_mission">集合地點：</string>
     <string name="errornoname_new_mission">任務名稱不能留白</string>
     <string name="errornocontent_new_mission">任務內容不能留白</string>
+    <string name="errorwhere_new_mission">未填寫任務地點</string>
+
 
     <string name="groupname_new_group">揪團名稱：</string>
     <string name="actionbar_new_group">建立揪團</string>

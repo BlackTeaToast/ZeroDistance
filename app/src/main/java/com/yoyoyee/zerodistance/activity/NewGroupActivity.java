@@ -82,7 +82,7 @@ public class NewGroupActivity extends AppCompatActivity {
     private Calendar calendar;
 
 
-    private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber;
+    private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber,editTextWhere;
 
     private ImageView imv;
 
@@ -126,6 +126,7 @@ public class NewGroupActivity extends AppCompatActivity {
         editTextName= (EditText) findViewById(R.id.editTextName);
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
         editTextNumber = (EditText) findViewById(R.id.editTextPeopleNumber);
+        editTextWhere= (EditText) findViewById(R.id.editTextWhere);
         //buttom 定位區
         buttonDate = (Button) findViewById(R.id.buttonDate);
         buttonTime = (Button) findViewById(R.id.buttonTime);
@@ -145,7 +146,7 @@ public class NewGroupActivity extends AppCompatActivity {
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.actionbar_new_mission);
+        actionBar.setTitle(R.string.actionbar_new_group);
         //定義區------------------------------------------------------------------------------------
         //時間F
 
@@ -442,17 +443,17 @@ public class NewGroupActivity extends AppCompatActivity {
 
     //按完成鈕送出
     //防止空白資訊
-    public void onClickOkOutputData(View v){
+    public void onClickOkOutputDataGroup(View v){
         if (editTextName.getText().toString().trim().equals("")) {
             Toast.makeText(this, R.string.errorname_new_group, Toast.LENGTH_SHORT).show();
         }
         else{
-            missionData.setTitle(editTextName.getText().toString());
+           // missionData.setTitle(editTextName.getText().toString());
             if ( editTextNumber.getText().toString().trim().equals("")){
                 Toast.makeText(this, R.string.errorpeoplenumber_new_group, Toast.LENGTH_SHORT).show();
             }
             else {
-                missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
+               // missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
                 if (allreadyDate == false) {
                     Toast.makeText(this, R.string.errornoDate_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
@@ -462,34 +463,36 @@ public class NewGroupActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.errornoTime_new_mission_and_group, Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        //待添加TIME
-                        if (editTextcontent.getText().toString().trim().equals("")) {
-                            Toast.makeText(this, R.string.errorcontent_new_group, Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            missionData.content = editTextcontent.getText().toString();
-                            calendar.set(year,month,day,hour,minute);
-                            ClientFunctions.publishGroup(
-                                    editTextName.getText().toString(),
-                                    editTextNumber.getText().toString(),
-                                    editTextcontent.getText().toString(),
-                                    null,
-                                    null,
-                                    null,
-                                    calendar.getTime(),
-                                    new ClientResponse() {
-                                        @Override
-                                        public void onResponse(String response) {
+                        if (editTextWhere.getText().toString().trim().equals("")) {
+                            Toast.makeText(this, R.string.errorwhere_new_group, Toast.LENGTH_SHORT).show();
+                        } else {
+                            //待添加TIME
+                            if (editTextcontent.getText().toString().trim().equals("")) {
+                                Toast.makeText(this, R.string.errorcontent_new_group, Toast.LENGTH_SHORT).show();
+                            } else {
 
-                                        }
+                                //missionData.content = editTextcontent.getText().toString();
+                                calendar.set(year, month, day, hour, minute);
+                                ClientFunctions.publishGroup(
+                                        editTextName.getText().toString(),
+                                        Integer.valueOf(editTextNumber.getText().toString()),
+                                        editTextWhere.getText().toString(),
+                                        editTextcontent.getText().toString(),
+                                        calendar.getTime(),
+                                        new ClientResponse() {
+                                            @Override
+                                            public void onResponse(String response) {
+
+                                            }
 
 
-                                        @Override
-                                        public void onErrorResponse(String response) {
+                                            @Override
+                                            public void onErrorResponse(String response) {
 
-                                        }
-                                    });
-                            this.finish();
+                                            }
+                                        });
+                                this.finish();
+                            }
                         }
                     }
                 }
@@ -497,8 +500,8 @@ public class NewGroupActivity extends AppCompatActivity {
         }
     }
     //按取消鈕返回
-    public void onClickCancel(View v) {
-
+    public void onClickCancelGroup(View v) {
+    finish();
     }
 
 }

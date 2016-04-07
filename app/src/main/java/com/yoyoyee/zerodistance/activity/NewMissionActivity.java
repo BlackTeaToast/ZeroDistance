@@ -472,12 +472,12 @@ public class NewMissionActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
         }
         else{
-            missionData.setTitle(editTextName.getText().toString());
+           // missionData.setTitle(editTextName.getText().toString());
            if ( editTextNumber.getText().toString().trim().equals("")){
                 Toast.makeText(this, R.string.errorpeoplenumber_new_mission_and_group, Toast.LENGTH_SHORT).show();
             }
             else {
-                missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
+             //   missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
                 if (allreadyDate == false) {
                     Toast.makeText(this, R.string.errornoDate_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
@@ -487,34 +487,37 @@ public class NewMissionActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.errornoTime_new_mission_and_group, Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        //待添加TIME
-                        if (editTextcontent.getText().toString().trim().equals("")) {
-                            Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            missionData.content = editTextcontent.getText().toString();
-                            calendar.set(year,month,day,hour,minute);
-                            ClientFunctions.publishMission(
-                                    editTextName.getText().toString(),
-                                    press,
-                                    Integer.valueOf(editTextNumber.getText().toString()),
-                                    editTextWhere.getText().toString(),
-                                    editTextcontent.getText().toString(),
-                                    getPay,
-                                    calendar.getTime(),
-                                    new ClientResponse() {
-                                        @Override
-                                        public void onResponse(String response) {
+                        if (editTextWhere.getText().toString().trim().equals("")) {
+                            Toast.makeText(this, R.string.errorwhere_new_mission, Toast.LENGTH_SHORT).show();
+                        } else {
+                            //待添加TIME
+                            if (editTextcontent.getText().toString().trim().equals("")) {
+                                Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
+                            } else {
+                                //    missionData.content = editTextcontent.getText().toString();
+                                calendar.set(year, month, day, hour, minute);
+                                ClientFunctions.publishMission(
+                                        editTextName.getText().toString(),
+                                        press,
+                                        Integer.valueOf(editTextNumber.getText().toString()),
+                                        editTextWhere.getText().toString(),
+                                        editTextcontent.getText().toString(),
+                                        getPay,
+                                        calendar.getTime(),
+                                        new ClientResponse() {
+                                            @Override
+                                            public void onResponse(String response) {
 
-                                        }
+                                            }
 
 
-                                        @Override
-                                        public void onErrorResponse(String response) {
+                                            @Override
+                                            public void onErrorResponse(String response) {
 
-                                        }
-                                    });
-                            this.finish();
+                                            }
+                                        });
+                                this.finish();
+                            }
                         }
                     }
                 }
@@ -524,7 +527,7 @@ public class NewMissionActivity extends AppCompatActivity {
     //按取消鈕返回
     public void onClickCancel(View v){
 
-
+    finish();
     }
 
 }
