@@ -20,6 +20,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         public TextView a_A_Title,  a_Atime, a_Acontent;
         public ViewHolder(View v) {
             super(v);
+
             q_Q_Title = (TextView) v.findViewById(R.id.q_Q_Title);
             q_Qname = (TextView) v.findViewById(R.id.q_Qname);
             q_Qtime = (TextView) v.findViewById(R.id.q_Qtime);
