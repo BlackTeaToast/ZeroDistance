@@ -28,6 +28,7 @@ public class UsedData {
     public QAndA qAndA;       //       存放Q&A
     public WhoJoin whoJoin;    //       存放有哪些參與者(鏈結串列)
     public int textsize;        //          文字大小
+    public int showstyle;       //顯示內容或獎勵 0 內容 ,1 獎勵
 
     //初始化
     public UsedData(){
@@ -53,6 +54,7 @@ public class UsedData {
         videoPath = null;
         whoJoin  = new WhoJoin();
         textsize = 20;
+        showstyle =0;
     }
 
     //第一個問與答(尚未有人問問題時，第一個問與答建立時使用)
