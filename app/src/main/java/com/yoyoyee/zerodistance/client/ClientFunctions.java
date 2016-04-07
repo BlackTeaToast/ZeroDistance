@@ -351,8 +351,8 @@ public class ClientFunctions {
     }
 
     public static void publishMission(final String title, final boolean isUrgent, final int needNum,
-                                      final String content, final String reward, final Date expAt,
-                                      final ClientResponse clientResponse) {
+                                      final String place, final String content, final String reward,
+                                      final Date expAt, final ClientResponse clientResponse) {
         String tag_string_req = "req_publish_mission";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -402,6 +402,7 @@ public class ClientFunctions {
                 params.put("title", title);
                 params.put("is_urgent", String.valueOf(isUrgent));
                 params.put("need_num", String.valueOf(needNum));
+                params.put("place", place);
                 params.put("content", content);
                 params.put("reward", reward);
                 params.put("exp_at", sdf.format(expAt));
