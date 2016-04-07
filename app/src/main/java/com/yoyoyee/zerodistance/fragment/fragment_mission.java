@@ -1,5 +1,7 @@
 package com.yoyoyee.zerodistance.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,19 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
+import com.yoyoyee.zerodistance.helper.RecyclerItemClickListener;
 import com.yoyoyee.zerodistance.helper.missionAdapter;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
 public class fragment_mission extends Fragment {
-
+    RecyclerView mList;
+    FloatingActionButton fab;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission,container,false);
@@ -37,8 +42,7 @@ public class fragment_mission extends Fragment {
         try {
 
             missionAdapter missionAdapter = new missionAdapter(myDataset , missionName , missiondangerous , missionnumber);
-            RecyclerView mList = (RecyclerView) v.findViewById(R.id.listView);
-
+            mList = (RecyclerView) v.findViewById(R.id.listView);
             LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -49,7 +53,7 @@ public class fragment_mission extends Fragment {
         }
 
         //漂浮
-        FloatingActionButton fab=  (FloatingActionButton) v.findViewById(R.id.fab);
+         fab=  (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +70,10 @@ public class fragment_mission extends Fragment {
 
         //漂浮
         return v;
+
+        //listView 典籍
+
+        //listView 典籍
     }
 
 }
