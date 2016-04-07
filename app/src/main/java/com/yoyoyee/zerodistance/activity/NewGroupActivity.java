@@ -210,6 +210,7 @@ public class NewGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
             }
         });
 
