@@ -273,7 +273,7 @@ public class QueryFunctions {
         return accessKey;
     }
 
-    public static void updateMissions(ArrayList<Mission> missionsList) {
+    public void updateMissions(ArrayList<Mission> missionsList) {
         SQLiteDatabase db = DB.getWritableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
@@ -283,12 +283,13 @@ public class QueryFunctions {
             ContentValues values = new ContentValues();
             for(int i=0; i<missionsList.size(); i++) {
                 values.put(MissionsTable.KEY_ID, missionsList.get(i).id); // Name
-                values.put(MissionsTable.KEY_USER_ID, missionsList.get(i).userUid); // Email
+                values.put(MissionsTable.KEY_USER_UID, missionsList.get(i).userUid); // Email
                 values.put(MissionsTable.KEY_SCHOOL_ID, missionsList.get(i).schoolID); // Email
                 values.put(MissionsTable.KEY_TITLE, missionsList.get(i).title); // Created At
                 values.put(MissionsTable.KEY_IS_URGENT, missionsList.get(i).content); // Created At
                 values.put(MissionsTable.KEY_NEED_NUM, missionsList.get(i).needNum); // Created At
                 values.put(MissionsTable.KEY_CURRENT_NUM, missionsList.get(i).currentNum); // Created At
+                values.put(MissionsTable.KEY_PLACE, missionsList.get(i).place);
                 values.put(MissionsTable.KEY_CONTENT, missionsList.get(i).content); // Created At
                 values.put(MissionsTable.KEY_REWARD, missionsList.get(i).reward); // Created At
                 values.put(MissionsTable.KEY_CREATED_AT, dateFormat.format(missionsList.get(i).createdAt)); // Created At
@@ -326,12 +327,22 @@ public class QueryFunctions {
         cursor.moveToFirst();
 
         try {
-            mission = new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5),
-                    cursor.getInt(6), cursor.getString(7), cursor.getString(8),
-                    dateFormat.parse(cursor.getString(9)),
-                    dateFormat.parse(cursor.getString(10)), cursor.getInt(11) != 0,
-                    cursor.getInt(12) != 0, dateFormat.parse(cursor.getString(13)));
+
+            mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+            mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+            mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+            mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+            mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+            mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+            mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+            mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+            mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+            mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+            mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+            mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+            mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+            mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+            mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -342,7 +353,7 @@ public class QueryFunctions {
         return mission;
     }
 
-    public static ArrayList<Mission> getMissions() {
+    public ArrayList<Mission> getMissions() {
 
         ArrayList<Mission> missions = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
@@ -356,17 +367,24 @@ public class QueryFunctions {
 
         for(int i=0; i<cursor.getCount(); i++){
             try {
-                missions.add(new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5),
-                        cursor.getInt(6), cursor.getString(7), cursor.getString(8),
-                        dateFormat.parse(cursor.getString(9)),
-                        dateFormat.parse(cursor.getString(10)), cursor.getInt(11) != 0,
-                        cursor.getInt(12) != 0, dateFormat.parse(cursor.getString(13))));
-                Log.d(TAG, "getMissions: " + cursor.getInt(0) + cursor.getString(1) + cursor.getString(2) +
-                        cursor.getString(3) + (cursor.getInt(4) != 0) + cursor.getInt(5) + " " + cursor.getInt(6) + cursor.getString(7) + cursor.getString(8) +
-                        cursor.getString(9) +
-                        cursor.getString(10) + (cursor.getInt(11) != 0) +
-                        (cursor.getInt(12) != 0) + cursor.getString(13));
+                Mission mission = new Mission();
+                mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                missions.add(mission);
+                Log.d(TAG, "getMissions: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
