@@ -15,6 +15,7 @@ import android.util.Log;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
@@ -373,6 +374,122 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     }
 
+    public void updateGroups(ArrayList<Group> groupsList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        db.beginTransaction();
+        try {
+            db.delete(GroupsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<groupsList.size(); i++) {
+                values.put(GroupsTable.KEY_ID, groupsList.get(i).id); // Name
+                values.put(GroupsTable.KEY_USER_UID, groupsList.get(i).userUid); // Email
+                values.put(GroupsTable.KEY_SCHOOL_ID, groupsList.get(i).schoolID); // Email
+                values.put(GroupsTable.KEY_TITLE, groupsList.get(i).title); // Created At
+                values.put(GroupsTable.KEY_NEED_NUM, groupsList.get(i).needNum); // Created At
+                values.put(GroupsTable.KEY_CURRENT_NUM, groupsList.get(i).currentNum); // Created At
+                values.put(GroupsTable.KEY_PLACE, groupsList.get(i).place);
+                values.put(GroupsTable.KEY_CONTENT, groupsList.get(i).content); // Created At
+                values.put(GroupsTable.KEY_CREATED_AT, dateFormat.format(groupsList.get(i).createdAt)); // Created At
+                values.put(GroupsTable.KEY_EXP_AT, dateFormat.format(groupsList.get(i).expAt)); // Created At
+                values.put(GroupsTable.KEY_IS_RUNNING, groupsList.get(i).isRunning); // Created At
+                values.put(GroupsTable.KEY_IS_FINISHED, groupsList.get(i).isFinished); // Created At
+                values.put(GroupsTable.KEY_FINISHED_AT, dateFormat.format(groupsList.get(i).finishedAt)); // Created At
+                // Inserting Row
+                db.insert(GroupsTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateGroups: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all groups info from SQLite");
+        db.close();
+
+    }
+
+    public Mission getMission(int id) {
+
+        Mission mission = new Mission();
+        String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME + " WHERE "
+                + MissionsTable.KEY_ID + " = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+
+        try {
+
+            mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+            mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+            mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+            mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+            mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+            mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+            mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+            mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+            mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+            mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+            mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+            mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+            mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+            mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+            mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cursor.close();
+        db.close();
+        return mission;
+    }
+
+    public Group getGroup(int id) {
+
+        Group group = new Group();
+        String selectQuery = "SELECT  * FROM " + GroupsTable.TABLE_NAME + " WHERE "
+                + GroupsTable.KEY_ID + " = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+
+        try {
+
+            group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+            group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+            group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+            group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+            group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+            group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+            group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+            group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+            group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+            group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+            group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+            group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+            group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cursor.close();
+        db.close();
+        return group;
+    }
+
     public ArrayList<Mission> getMissions() {
 
         ArrayList<Mission> missions = new ArrayList<>();
@@ -414,6 +531,47 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return missions;
+    }
+
+    public ArrayList<Group> getGroups() {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + GroupsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Group group = new Group();
+                group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+                group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+                group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+                group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+                group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+                group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+                group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+                group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+                group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+                group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+                groups.add(group);
+                Log.d(TAG, "getGroups: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return groups;
     }
 
 }

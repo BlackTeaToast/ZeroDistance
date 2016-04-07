@@ -10,6 +10,7 @@ import com.yoyoyee.zerodistance.app.AppConfig;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 
@@ -343,7 +344,93 @@ public class ClientFunctions {
                 return params;
             }
 
-        };;
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void updateGroups(final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_groups";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_USER_GROUPS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray groups = jObj.getJSONArray("groups");
+
+                        ArrayList<Group> groupList = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                        for(int i=0; i<groups.length(); i++) {
+                            JSONObject group = groups.getJSONObject(i);
+                            try {
+                                groupList.add(new Group(group.getInt("id"),
+                                        group.getString("user_uid"),
+                                        group.getInt("school_id"),
+                                        group.getString("title"),
+                                        group.getInt("need_num"),
+                                        group.getInt("current_num"),
+                                        group.getString("place"),
+                                        group.getString("content"),
+                                        dateFormat.parse(group.getString("created_at")),
+                                        dateFormat.parse(group.getString("exp_at")),
+                                        group.getInt("is_running")!=0,
+                                        group.getInt("is_finished")!=0,
+                                        dateFormat.parse(group.getString("finished_at"))));
+                                Log.d(TAG, "onResponse: " + group.getString("exp_at"));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateGroups(groupList);
+                        clientResponse.onResponse("groups get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", db.getUserUid());
+                params.put("access_key", db.getUserAccessKey());
+
+                return params;
+            }
+
+        };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
@@ -409,24 +496,22 @@ public class ClientFunctions {
                 return params;
             }
 
-        };;
+        };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void publishGroup(final String title, final String needNum,  final String Content,
-                                    final String imagePath, final String voicePath,
-                                    final String videoPath, final Date expAt,
-                                    final ClientResponse clientResponse) {
+    public static void publishGroup(final String title, final int needNum, final String place,
+                                      final String content, final Date expAt,
+                                      final ClientResponse clientResponse) {
         String tag_string_req = "req_publish_group";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_SCHOOLS, new Response.Listener<String>() {
+                AppConfig.URL_PUBLISH_GROUP, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
-                //Log.d(TAG, "Register Response: " + response.toString());
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -434,20 +519,7 @@ public class ClientFunctions {
                     if (!error) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
-                        JSONArray schools = jObj.getJSONArray("schools");
-                        //Log.d(TAG, "onResponse: "+schools.toString());
-                        ArrayList<School> schoolList = new ArrayList<>();
-                        for(int i=0; i<schools.length(); i++) {
-                            JSONObject school = schools.getJSONObject(i);
-                            schoolList.add(new School(school.getInt("id"), school.getString("area"),
-                                    school.getString("county"),school.getString("name")));
-                            //Log.d(TAG, "onResponse: add school to schoolList");
-
-                        }
-
-                        // Inserting row in users table
-                        db.updateSchools(schoolList);
-                        clientResponse.onResponse("schools get");
+                        clientResponse.onResponse("上傳揪團成功");
 
                     } else {
 
@@ -468,7 +540,27 @@ public class ClientFunctions {
                 Log.e(TAG, "Registration Error: " + error.getMessage());
                 clientResponse.onErrorResponse(error.getMessage());
             }
-        }) ;
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", db.getUserUid());
+                params.put("access_key", db.getUserAccessKey());
+                params.put("title", title);
+                params.put("need_num", String.valueOf(needNum));
+                params.put("place", place);
+                params.put("content", content);
+                params.put("exp_at", sdf.format(expAt));
+
+                return params;
+            }
+
+        };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
