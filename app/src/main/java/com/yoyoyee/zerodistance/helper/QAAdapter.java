@@ -55,8 +55,8 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.q_Q_Title.setText(q_Q_Titletext[position]);
-        holder.q_Qname.setText(q_Qtimetext[position]);
-        holder.q_Qtime.setText(q_Qnametext[position]);
+        holder.q_Qname.setText(q_Qnametext[position]);
+        holder.q_Qtime.setText(q_Qtimetext[position]);
         holder.q_Qcontent.setText(q_Qcontenttext[position]);
         holder.a_A_Title.setText(a_A_Titletext[position]);
        // holder.a_Aname.setText(a_Atimetext[position]);

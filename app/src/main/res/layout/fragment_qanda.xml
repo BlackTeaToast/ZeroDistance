@@ -10,7 +10,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="124dp"
-        android:columnCount="3"
+        android:columnCount="5"
         android:rowCount="6"
         android:rowOrderPreserved="false"
         android:useDefaultMargins="false">
@@ -107,8 +107,7 @@
             android:layout_gravity="right"
             android:layout_column="3"
             android:layout_row="3"
-            android:layout_marginRight="5dp"
-            android:layout_columnSpan="29" />
+            android:layout_marginRight="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
