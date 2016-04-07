@@ -49,7 +49,8 @@
                 android:text="@string/textsizeL"
                 android:id="@+id/textsizeLRB"
                 android:layout_alignParentLeft="true"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="30dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
                 android:layout_alignWithParentIfMissing="false"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="25dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -67,7 +69,8 @@
                 android:text="@string/textsizeS"
                 android:id="@+id/textsizeSRB"
                 android:layout_alignParentRight="true"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="20dp" />
         </RadioGroup>
 
         <LinearLayout

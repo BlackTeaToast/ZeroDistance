@@ -20,22 +20,25 @@ import com.yoyoyee.zerodistance.R;
 public class missionAdapter extends RecyclerView.Adapter<missionAdapter.ViewHolder> {
     private String[] mData ,missionName;
     private Drawable[] missiondangerous;
+    private int[] missionnumber;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView missionDetial, missionName;
+        public TextView missionDetial, missionName, missionnumber;
         public ImageView missiondangerous;
         public ViewHolder(View v) {
             super(v);
             missionDetial = (TextView) v.findViewById(R.id.missionDetial);
             missionName = (TextView) v.findViewById(R.id.missionName);
             missiondangerous = (ImageView) v.findViewById(R.id.missiondangerous);
+            missionnumber = (TextView) v.findViewById(R.id.missionnumber);
         }
     }
 
-    public missionAdapter(String[] data ,String[] missionName , Drawable[] missiondangerous) {
+    public missionAdapter(String[] data ,String[] missionName , Drawable[] missiondangerous, int[] missionnumber) {
         mData = data;
         this.missionName = missionName;
         this.missiondangerous = missiondangerous;
+        this.missionnumber = missionnumber;
     }
 
     @Override
@@ -48,13 +51,16 @@ public class missionAdapter extends RecyclerView.Adapter<missionAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.missionDetial.setText(mData[position]);
-        holder.missionName.setText(missionName[position]);
-        holder.missiondangerous.setImageDrawable(missiondangerous[position]);
+            holder.missionDetial.setText(mData[position]);
+            holder.missionName.setText(missionName[position]);
+            holder.missiondangerous.setImageDrawable(missiondangerous[position]);
+            holder.missionnumber.setText(""+missionnumber[position]);
     }
 
     @Override
     public int getItemCount() {
         return mData.length;
     }
+
+
 }

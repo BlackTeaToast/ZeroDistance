@@ -30,10 +30,13 @@ public class fragment_mission extends Fragment {
         View v =inflater.inflate(R.layout.fragment_mission,container,false);
         String[] myDataset={"你說把愛漸漸放下會走更遠,或許命運的謙讓我遇見","你好阿","xx","你好阿","xx","你好阿"} , missionName ={"我難過","打屁屁SASAjjjijjiji","878787","打屁屁","878787","打屁屁"};
         Drawable[] missiondangerous={Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on")} ;
-
+        int missionnumber[]=new int[myDataset.length];
+        for(int i=0;i<myDataset.length;i++){
+            missionnumber[i]=i;
+        }
         try {
 
-            missionAdapter missionAdapter = new missionAdapter(myDataset , missionName , missiondangerous);
+            missionAdapter missionAdapter = new missionAdapter(myDataset , missionName , missiondangerous , missionnumber);
             RecyclerView mList = (RecyclerView) v.findViewById(R.id.listView);
 
             LinearLayoutManager layoutManager;
@@ -64,21 +67,5 @@ public class fragment_mission extends Fragment {
         //漂浮
         return v;
     }
-
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        // TODO Auto-generated method stub
-//        super.onActivityCreated(savedInstanceState);
-//
-//        Button btn = (Button) getActivity().findViewById(R.id.button10);
-//
-//        btn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                Toast.makeText(getActivity(), "success2", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
 
 }

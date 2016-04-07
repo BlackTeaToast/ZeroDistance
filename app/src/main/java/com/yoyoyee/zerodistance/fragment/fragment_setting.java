@@ -62,7 +62,7 @@ public class fragment_setting extends Fragment {
         //radio button
         textsizeRG = (RadioGroup) v.findViewById(R.id.textsizeRG);
         textsizeRG.setOnCheckedChangeListener(textsizeListener);
-        showstyleRG = (RadioGroup) v.findViewById(R.id.textsizeRG);
+        showstyleRG = (RadioGroup) v.findViewById(R.id.showstyleRG);
         showstyleRG.setOnCheckedChangeListener(showstyleListener);
         //radio button
 
@@ -73,13 +73,13 @@ public class fragment_setting extends Fragment {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch(checkedId){
                 case R.id.textsizeLRB:
-                    ttsize=20;
+                    ttsize=30;
                     break;
                 case R.id.textsizeMRB:
                     ttsize=25;
                     break;
                 case R.id.textsizeSRB:
-                    ttsize=30;
+                    ttsize=20;
                     break;
             }
             textsize.setText(""+ttsize);
