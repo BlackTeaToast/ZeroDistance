@@ -289,11 +289,12 @@ public class ClientFunctions {
                             try {
                                 missionList.add(new Mission(mission.getInt("id"),
                                         mission.getString("user_uid"),
-                                        mission.getString("school_id"),
+                                        mission.getInt("school_id"),
                                         mission.getString("title"),
                                         mission.getInt("is_urgent")!=0,
                                         mission.getInt("need_num"),
                                         mission.getInt("current_num"),
+                                        mission.getString("place"),
                                         mission.getString("content"),
                                         mission.getString("reward"),
                                         dateFormat.parse(mission.getString("created_at")),

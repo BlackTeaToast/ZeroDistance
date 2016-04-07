@@ -15,6 +15,7 @@ import android.util.Log;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
+import com.yoyoyee.zerodistance.helper.table.GroupsTable;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
 import com.yoyoyee.zerodistance.helper.table.MissionsTable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
@@ -35,7 +36,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 6;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -50,7 +51,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 		db.execSQL(LoginTable.CREATE_LOGIN_TABLE);
 		db.execSQL(SchoolsTable.CREATE_SCHOOLS_TABLE);
-        db.execSQL(MissionsTable.CREATE_SCHOOLS_TABLE);
+        db.execSQL(MissionsTable.CREATE_MISSIONS_TABLE);
+        db.execSQL(GroupsTable.CREATE_GROUPS_TABLE);
 		Log.d(TAG, "Database tables created");
 	}
 
@@ -323,12 +325,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             for(int i=0; i<missionsList.size(); i++) {
                 values.put(MissionsTable.KEY_ID, missionsList.get(i).id); // Name
-                values.put(MissionsTable.KEY_USER_ID, missionsList.get(i).userUid); // Email
+                values.put(MissionsTable.KEY_USER_UID, missionsList.get(i).userUid); // Email
                 values.put(MissionsTable.KEY_SCHOOL_ID, missionsList.get(i).schoolID); // Email
                 values.put(MissionsTable.KEY_TITLE, missionsList.get(i).title); // Created At
                 values.put(MissionsTable.KEY_IS_URGENT, missionsList.get(i).content); // Created At
                 values.put(MissionsTable.KEY_NEED_NUM, missionsList.get(i).needNum); // Created At
                 values.put(MissionsTable.KEY_CURRENT_NUM, missionsList.get(i).currentNum); // Created At
+                values.put(MissionsTable.KEY_PLACE, missionsList.get(i).place);
                 values.put(MissionsTable.KEY_CONTENT, missionsList.get(i).content); // Created At
                 values.put(MissionsTable.KEY_REWARD, missionsList.get(i).reward); // Created At
                 values.put(MissionsTable.KEY_CREATED_AT, dateFormat.format(missionsList.get(i).createdAt)); // Created At
@@ -366,17 +369,24 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         for(int i=0; i<cursor.getCount(); i++){
             try {
-                missions.add(new Mission(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                                cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5),
-                                cursor.getInt(6), cursor.getString(7), cursor.getString(8),
-                                dateFormat.parse(cursor.getString(9)),
-                        dateFormat.parse(cursor.getString(10)), cursor.getInt(11) != 0,
-                        cursor.getInt(12) != 0, dateFormat.parse(cursor.getString(13))));
-                Log.d(TAG, "getMissions: " + cursor.getInt(0) + cursor.getString(1) + cursor.getString(2) +
-                        cursor.getString(3) + (cursor.getInt(4) != 0) + cursor.getInt(5) + " " + cursor.getInt(6) + cursor.getString(7) + cursor.getString(8) +
-                        cursor.getString(9) +
-                        cursor.getString(10) + (cursor.getInt(11) != 0) +
-                        (cursor.getInt(12) != 0) + cursor.getString(13));
+                Mission mission = new Mission();
+                mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                missions.add(mission);
+                Log.d(TAG, "getMissions: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
