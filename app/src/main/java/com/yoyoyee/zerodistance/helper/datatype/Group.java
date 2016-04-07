@@ -25,9 +25,9 @@ public class Group {
 
     }
 
-    public Group(int id, String userUid, int schoolID, String title, boolean isUrgent,
-                   int needNum, int currentNum, String place, String content, String reward, Date createdAt,
-                   Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
+    public Group(int id, String userUid, int schoolID, String title, int needNum, int currentNum,
+                 String place, String content, Date createdAt, Date expAt, boolean isRunning,
+                 boolean isFinished, Date finishedAt) {
         this.id = id;
         this.userUid = userUid;
         this.schoolID = schoolID;
