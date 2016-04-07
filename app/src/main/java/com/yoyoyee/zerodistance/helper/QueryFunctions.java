@@ -273,7 +273,7 @@ public class QueryFunctions {
         return accessKey;
     }
 
-    public void updateMissions(ArrayList<Mission> missionsList) {
+    public static void updateMissions(ArrayList<Mission> missionsList) {
         SQLiteDatabase db = DB.getWritableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
@@ -353,7 +353,7 @@ public class QueryFunctions {
         return mission;
     }
 
-    public ArrayList<Mission> getMissions() {
+    public static ArrayList<Mission> getMissions() {
 
         ArrayList<Mission> missions = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
