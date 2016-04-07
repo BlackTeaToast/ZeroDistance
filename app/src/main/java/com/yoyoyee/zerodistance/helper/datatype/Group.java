@@ -9,10 +9,11 @@ public class Group {
 
     public int id;             //任務id
     public String userUid;         //擁有者id
-    public String schoolID;       //學校id
+    public int schoolID;       //學校id
     public String title;          //任務名稱
     public int needNum;           //需求人數
     public int currentNum;        //目前人數
+    public String place;
     public String content;        //任務內容
     public Date createdAt;         //創建時間
     public Date expAt;            //到期時間
@@ -24,8 +25,8 @@ public class Group {
 
     }
 
-    public Group(int id, String userUid, String schoolID, String title,
-                   int needNum, int currentNum, String content, Date createdAt,
+    public Group(int id, String userUid, int schoolID, String title, boolean isUrgent,
+                   int needNum, int currentNum, String place, String content, String reward, Date createdAt,
                    Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
         this.id = id;
         this.userUid = userUid;
@@ -33,6 +34,7 @@ public class Group {
         this.title = title;
         this.needNum = needNum;
         this.currentNum = currentNum;
+        this.place = place;
         this.content = content;
         this.createdAt = createdAt;
         this.expAt = expAt;
@@ -57,11 +59,11 @@ public class Group {
         this.userUid = userID;
     }
 
-    public String getSchoolID() {
+    public int getSchoolID() {
         return schoolID;
     }
 
-    public void setSchoolID(String schoolID) {
+    public void setSchoolID(int schoolID) {
         this.schoolID = schoolID;
     }
 
@@ -87,6 +89,14 @@ public class Group {
 
     public void setCurrentNum(int currentNum) {
         this.currentNum = currentNum;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getContent() {
@@ -128,4 +138,9 @@ public class Group {
     public void setIsFinshed(boolean isFinshed) {
         this.isFinished = isFinshed;
     }
+
+
+
+
 }
+

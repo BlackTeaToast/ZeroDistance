@@ -22,8 +22,8 @@ public class AppController extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
+		session = new SessionManager(getApplicationContext());
 		db = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
 	}
 
 	public static synchronized AppController getInstance() {
@@ -32,7 +32,7 @@ public class AppController extends Application {
 	public static synchronized SQLiteHandler getDB() {
 		return db;
 	}
-    public static synchronized  SessionManager getSession() {
+    public static synchronized SessionManager getSession() {
         return session;
     }
 

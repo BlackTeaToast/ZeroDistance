@@ -22,6 +22,8 @@ public class SessionManager {
 	private static final String PREF_NAME = "ZeroDistanceLogin";
 	
 	private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
+	private static final String KEY_USER_EMAIL = "email";
+	private static final String KEY_USER_PASSWORD = "password";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -37,6 +39,28 @@ public class SessionManager {
 		editor.commit();
 
 		Log.d(TAG, "User login session modified!");
+	}
+
+	public void setEmail(String email) {
+
+		editor.putString(KEY_USER_EMAIL, email);
+		editor.commit();
+
+	}
+
+	public String getEmail() {
+		return pref.getString(KEY_USER_EMAIL, "");
+	}
+
+	public void setPassword(String password) {
+
+		editor.putString(KEY_USER_PASSWORD, password);
+		editor.commit();
+
+	}
+
+	public String getPassword() {
+		return pref.getString(KEY_USER_PASSWORD, "");
 	}
 	
 	public boolean isLoggedIn(){

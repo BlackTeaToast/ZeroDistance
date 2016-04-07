@@ -13,6 +13,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
@@ -36,10 +38,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 10;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
+    private static final SessionManager session = AppController.getSession();
 
 	public SQLiteHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -49,10 +52,23 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 
-		db.execSQL(LoginTable.CREATE_LOGIN_TABLE);
-		db.execSQL(SchoolsTable.CREATE_SCHOOLS_TABLE);
+        db.execSQL(LoginTable.CREATE_LOGIN_TABLE);
+        db.execSQL(SchoolsTable.CREATE_SCHOOLS_TABLE);
         db.execSQL(MissionsTable.CREATE_MISSIONS_TABLE);
         db.execSQL(GroupsTable.CREATE_GROUPS_TABLE);
+        if(session.isLoggedIn()) {
+            ClientFunctions.checkLogin(session.getEmail(), session.getPassword(), new ClientResponse() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d(TAG, "onResponse: ReLogin success!");
+                }
+
+                @Override
+                public void onErrorResponse(String response) {
+                    Log.d(TAG, "onResponse: ReLogin error!");
+                }
+            });
+        }
 		Log.d(TAG, "Database tables created");
 	}
 
@@ -62,6 +78,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		// Drop older table if existed
 		db.execSQL("DROP TABLE IF EXISTS " + LoginTable.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + SchoolsTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MissionsTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + GroupsTable.TABLE_NAME);
 
 		// Create tables again
 		onCreate(db);

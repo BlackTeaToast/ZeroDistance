@@ -62,7 +62,6 @@ public class ClientFunctions {
                     if (!error) {
                         // user successfully logged in
                         // Create login session
-                        session.setLogin(true);
 
                         // Now store the user in SQLite
                         String uid = jObj.getString("uid");
@@ -80,7 +79,7 @@ public class ClientFunctions {
                         // Inserting row in users table
                         db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,
                                 createdAt, accessKey);
-
+                        session.setLogin(true);
                         clientResponse.onResponse("登入成功!");
 
                     } else {

@@ -100,6 +100,8 @@ public class LoginActivity extends Activity {
             @Override
             public void onResponse(String response) {
                 // Launch main activity
+                session.setEmail(email);
+                session.setPassword(password);
                 hideDialog();
                 Intent intent = new Intent(LoginActivity.this,
                         TurnActivity.class);
