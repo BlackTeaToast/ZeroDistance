@@ -22,7 +22,7 @@ import com.yoyoyee.zerodistance.helper.missionAdapter;
  */
 public class QATest {
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String[] q_Q_Titletext = {"滾", "你有病嘛", "閃邊", "87", "P0", "好啦好啦"},a_A_Titletext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
+    String[] q_Q_Titletext = {"Q", "Q", "Q", "Q","Q", "Q"},a_A_Titletext = {"A", "A", "A", "A", "A", "A"};
         String[] q_Qtimetext = {"1/11 1:11", "12/11 11:11", "xx", "48/43", "154/45", "12/12"}, q_Qnametext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
         String[] q_Qcontenttext = {"你說把愛漸漸放下會走更遠,或許命運的謙讓我遇見", "你好阿", "xx", "你好阿", "xx", "你好阿"}, a_Atimetext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
         String[] a_Acontenttext = {"滾", "你有病嘛", "閃邊", "87", "P0", "好啦好啦"}, a_Anametext = {"978", "978", "978", "978", "978", "978"};

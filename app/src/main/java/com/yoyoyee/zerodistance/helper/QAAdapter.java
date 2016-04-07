@@ -14,7 +14,7 @@ import com.yoyoyee.zerodistance.R;
  * Created by 楊霖村 on 2016/4/6.
  */
 public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
-    private String[] q_Q_Titletext, q_Qtimetext, q_Qnametext, q_Qcontenttext, a_A_Titletext, a_Atimetext, a_Acontenttext, a_Anametext;
+    private String[] q_Q_Titletext, q_Qtimetext, q_Qnametext, q_Qcontenttext, a_A_Titletext, a_Atimetext, a_Acontenttext;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView q_Q_Title, q_Qname, q_Qtime, q_Qcontent;
         public TextView a_A_Title,  a_Atime, a_Acontent;
@@ -31,7 +31,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         }
     }
 
-    public QAAdapter(String[] q_Q_Titletext ,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, String[] a_A_Titletext,String[] a_Atimetext,String[] a_Acontenttext, String[] a_Anametext) {
+    public QAAdapter(String[] q_Q_Titletext ,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, String[] a_A_Titletext,String[] a_Atimetext,String[] a_Acontenttext) {
         this.q_Q_Titletext = q_Q_Titletext;
         this.q_Qtimetext = q_Qtimetext;
         this.q_Qnametext = q_Qnametext;
@@ -39,8 +39,9 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         this.a_A_Titletext = a_A_Titletext;
         this.a_Atimetext = a_Atimetext;
         this.a_Acontenttext = a_Acontenttext;
-        this.a_Anametext = a_Anametext;
+     //   this.a_Anametext = a_Anametext;
     }
+
 
     @Override
     public QAAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,12 +59,12 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         holder.q_Qcontent.setText(q_Qcontenttext[position]);
         holder.a_A_Title.setText(a_A_Titletext[position]);
        // holder.a_Aname.setText(a_Atimetext[position]);
-        holder.a_Atime.setText(a_Acontenttext[position]);
-        holder.a_Acontent.setText(a_Anametext[position]);
+        holder.a_Atime.setText(a_Atimetext[position]);
+        holder.a_Acontent.setText(a_Acontenttext[position]);
     }
 
     @Override
     public int getItemCount() {
-        return a_Anametext.length;
+        return q_Qnametext.length;
     }
 }
