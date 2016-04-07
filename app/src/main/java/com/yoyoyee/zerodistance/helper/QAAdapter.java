@@ -20,7 +20,6 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         public TextView a_A_Title,  a_Atime, a_Acontent;
         public ViewHolder(View v) {
             super(v);
-
             q_Q_Title = (TextView) v.findViewById(R.id.q_Q_Title);
             q_Qname = (TextView) v.findViewById(R.id.q_Qname);
             q_Qtime = (TextView) v.findViewById(R.id.q_Qtime);
@@ -42,7 +41,6 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         this.a_Acontenttext = a_Acontenttext;
      //   this.a_Anametext = a_Anametext;
     }
-
 
     @Override
     public QAAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -66,6 +64,6 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return q_Qnametext.length;
+    return q_Qnametext.length;
     }
 }

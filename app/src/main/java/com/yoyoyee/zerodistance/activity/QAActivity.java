@@ -1,12 +1,15 @@
 package com.yoyoyee.zerodistance.activity;
 
         import android.content.Intent;
+        import android.support.v7.app.ActionBar;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
+        import android.support.v7.widget.Toolbar;
         import android.view.View;
         import android.widget.Button;
+
 
         import com.yoyoyee.zerodistance.R;
         import com.yoyoyee.zerodistance.app.QAndA;
@@ -16,12 +19,19 @@ public class QAActivity extends AppCompatActivity {
     Button GO;
     QAndA Q =new QAndA();
     Boolean isQ=true;
+    Toolbar toolbar;
     @Override
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qa);
+        //toolbar
+        toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.qAndA_Title));
+        //
         GO = (Button)findViewById(R.id.for_Q_Button);
         GO.setOnClickListener(new Button.OnClickListener() {
             @Override
