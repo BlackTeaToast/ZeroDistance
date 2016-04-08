@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class MissionActivity extends AppCompatActivity {
 
-    //變數區=====================================
+    //變數區====================================
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
     private TextView need;
