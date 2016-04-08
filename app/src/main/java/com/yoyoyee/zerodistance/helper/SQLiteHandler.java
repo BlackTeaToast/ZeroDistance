@@ -58,7 +58,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(MissionsTable.CREATE_MISSIONS_TABLE);
         db.execSQL(GroupsTable.CREATE_GROUPS_TABLE);
         if(session.isLoggedIn()) {
-            ClientFunctions.checkLogin(session.getEmail(), session.getPassword(), new ClientResponse() {
+            ClientFunctions.checkLogin(session.getUserEmail(), session.getUserPassword(), new ClientResponse() {
                 @Override
                 public void onResponse(String response) {
                     Log.d(TAG, "onResponse: ReLogin success!");

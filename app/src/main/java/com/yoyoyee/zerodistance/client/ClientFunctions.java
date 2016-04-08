@@ -35,8 +35,8 @@ import java.util.TimeZone;
 public class ClientFunctions {
 
     public static final String TAG = AppController.class.getSimpleName();
-    private static final SQLiteHandler db = AppController.getDB();
-    private static final SessionManager session  = AppController.getSession();
+    private static SQLiteHandler db = AppController.getDB();
+    private static SessionManager session  = AppController.getSession();
 
     public ClientFunctions() {
 
@@ -77,6 +77,16 @@ public class ClientFunctions {
                         String email = user.getString("email");
                         String createdAt = user.getString("created_at");
                         String accessKey = user.getString("access_key");
+
+                        session.setUserEmail(email);
+                        session.setUserPassword(password);
+                        session.setUserUid(uid);
+                        session.setUserName(name);
+                        session.setUserNickName(nickName);
+                        session.setIsTeacher(Integer.valueOf(isTeacher)!=0);
+                        session.setUserStudentID(studentID);
+                        session.setUserSchoolID(Integer.valueOf(schoolID));
+                        session.setUserAccessKey(accessKey);
 
                         // Inserting row in users table
                         db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,
@@ -339,8 +349,8 @@ public class ClientFunctions {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
 
                 return params;
             }
@@ -425,8 +435,8 @@ public class ClientFunctions {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", QueryFunctions.getUserUid());
-                params.put("access_key", QueryFunctions.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
 
                 return params;
             }
@@ -484,8 +494,8 @@ public class ClientFunctions {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
                 params.put("is_urgent", String.valueOf(isUrgent));
                 params.put("need_num", String.valueOf(needNum));
@@ -550,8 +560,8 @@ public class ClientFunctions {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
                 params.put("need_num", String.valueOf(needNum));
                 params.put("place", place);
@@ -611,8 +621,8 @@ public class ClientFunctions {
                 // Posting params to register url
 
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", QueryFunctions.getUserUid());
-                params.put("access_key", QueryFunctions.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
                 params.put("mission_id", String.valueOf(missionID));
                 params.put("question", question);
 
