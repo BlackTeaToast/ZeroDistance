@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ public class GroupActivity extends AppCompatActivity {
         acceptNumber = 5;
         who = "鸚鵡養殖專家";
         timeS = "2016/12/12";
-        timeT = "20170101";
+        timeT = "2017/01/01";
         where = "你家";
 
         //字體大小
@@ -242,6 +243,11 @@ public class GroupActivity extends AppCompatActivity {
             //把參加鈕關掉
             buttonVisible = (Button)findViewById(R.id.joinOrNotG);
             buttonVisible.setVisibility(View.GONE);
+            //QandA比重調成全版
+            buttonVisible = (Button)findViewById(R.id.qAndAButtonG);
+            LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) buttonVisible.getLayoutParams();
+            layoutParams.weight = 1;
+            buttonVisible.getParent().requestLayout();//ViewParent的requestLayout方法可以重新安排子視圖
         }
         else{
             //參加鈕要顯示
@@ -257,6 +263,11 @@ public class GroupActivity extends AppCompatActivity {
             buttonVisible.setVisibility(View.GONE);
             buttonVisible = (Button)findViewById(R.id.deleteButtonG);
             buttonVisible.setVisibility(View.GONE);
+            //QandA比重調成一半
+            buttonVisible = (Button)findViewById(R.id.qAndAButtonG);
+            LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) buttonVisible.getLayoutParams();
+            layoutParams.weight = 0.5f;
+            buttonVisible.getParent().requestLayout();//ViewParent的requestLayout方法可以重新安排子視圖
 
         }
     }
