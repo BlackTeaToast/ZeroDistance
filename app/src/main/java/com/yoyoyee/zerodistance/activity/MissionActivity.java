@@ -86,7 +86,7 @@ public class MissionActivity extends AppCompatActivity {
         isFinished = false;
 
         //字體大小
-        size = 20;
+        size = 15;
 
         //設置餐與者
         user = new ArrayList<>();
@@ -336,7 +336,7 @@ public class MissionActivity extends AppCompatActivity {
         TextView textViewTemp;
         //委託人
         textViewTemp = (TextView)findViewById(R.id.whoSentTitleM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+9);
         textViewTemp = (TextView)findViewById(R.id.whoSentM);
         textViewTemp.setTextSize(size+5);
         //發文時間
@@ -346,37 +346,37 @@ public class MissionActivity extends AppCompatActivity {
         textViewTemp.setTextSize(size);
         //內容
         textViewTemp = (TextView)findViewById(R.id.contentM);
-        textViewTemp.setTextSize(size+2);
+        textViewTemp.setTextSize(size+5);
         //執行時間
         textViewTemp = (TextView)findViewById(R.id.timeToDoTitleM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.timeToDoM);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //執行地點
         textViewTemp = (TextView)findViewById(R.id.whereTitleM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.whereM);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //獎勵
         textViewTemp = (TextView)findViewById(R.id.priceTitleM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.priceM);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //人數
         textViewTemp = (TextView)findViewById(R.id.needTitleM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.needM);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //參與者
         textViewTemp = (TextView)findViewById(R.id.usersTitleM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.usersM);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //已完成
-        checkBox.setTextSize(size+10);
+        checkBox.setTextSize(size+7);
         //評分(統一、個別)
         textViewTemp = (TextView)findViewById(R.id.rateTotalM);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         Button ButtonTemp;
         ButtonTemp = (Button)findViewById(R.id.ratebuttonM);
         ButtonTemp.setTextSize(size+5);
