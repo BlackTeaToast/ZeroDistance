@@ -239,19 +239,21 @@
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
-                        android:layout_width="197dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="參加"
                         android:id="@+id/joinOrNotG"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:layout_weight="0.5" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Q&amp;A"
                         android:id="@+id/qAndAButtonG"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:layout_weight="0.5" />
 
                 </LinearLayout>
 
