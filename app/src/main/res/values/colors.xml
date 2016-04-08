@@ -16,7 +16,8 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
-    <color name="ColorPrimaryToolbar">#10ffff</color>
+    <color name="ColorPrimaryToolbar">#e22d133b</color>
+    <color name="ColorTextToolbar">#d09eea</color>
     <color name="tabsScrollColor">#8a140e</color>
 
     <!--Tree使用區-->
