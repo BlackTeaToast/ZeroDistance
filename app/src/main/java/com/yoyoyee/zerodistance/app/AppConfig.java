@@ -16,8 +16,14 @@ public class AppConfig {
 	// Server publish missions url
 	public static String URL_PUBLISH_MISSION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMission";
 
+    // Server publish missions QA url
+    public static String URL_PUBLISH_MISSION_QA = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMissionQA";
+
 	// Server publish groups url
 	public static String URL_PUBLISH_GROUP = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishGroup";
+
+    // Server publish groups QA url
+    public static String URL_PUBLISH_GROUP_QA = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishGroupQA";
 
 	// Server get missions url
 	public static String URL_GET_USER_MISSIONS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getUserMissions";
