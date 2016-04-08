@@ -12,6 +12,7 @@
     tools:context = ".activity.GroupActivity">
 
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -20,198 +21,8 @@
         android:weightSum="1">
 
         <include
-            android:id="@+id/group_tool_bar"
+            android:id="@+id/mission_tool_bar"
             layout="@layout/tool_bar" />
-
-        <Space
-            android:layout_width="20px"
-            android:layout_height="20px" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:gravity="center"
-            android:id="@+id/groupHorizontalTop"
-            android:background="#38b0a2fe">
-
-            <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="發布"
-                        android:id="@+id/textView4"
-                        android:layout_column="0"
-                        android:textSize="25dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="  2016/12/12"
-                        android:id="@+id/textView"
-                        android:layout_column="1"
-                        android:textSize="30dp" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="時間"
-                        android:id="@+id/textView5"
-                        android:layout_column="0"
-                        android:textSize="25dp"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView3"
-                        android:layout_column="1"
-                        android:text="12:15"
-                        android:gravity="right"
-                        android:textSize="25dp" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
-                        android:layout_column="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="截止"
-                        android:id="@+id/textView8"
-                        android:layout_column="0"
-                        android:textSize="25dp"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="  2016/12/12"
-                        android:id="@+id/textView6"
-                        android:layout_column="1"
-                        android:textSize="30dp" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="時間"
-                        android:id="@+id/textView7"
-                        android:layout_column="0"
-                        android:textSize="25dp"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView9"
-                        android:layout_column="1"
-                        android:text="12:15"
-                        android:gravity="right"
-                        android:textSize="25dp" />
-                </TableRow>
-            </TableLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="136dp"
-                android:layout_height="166dp"
-                android:weightSum="1"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:layout_width="88dp"
-                    android:layout_height="79dp"
-                    android:id="@+id/imageView"
-                    android:src="@drawable/ic_report_problem_black_48dp" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="97dp"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="人數"
-                        android:id="@+id/textView10"
-                        android:gravity="center_horizontal" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="9/10"
-                        android:id="@+id/textView11"
-                        android:gravity="top|center_horizontal"
-                        android:textSize="45dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <Space
-            android:layout_width="20px"
-            android:layout_height="20px" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -219,131 +30,206 @@
             android:layout_height="match_parent"
             android:id="@+id/groupMainLinear">
 
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/whoSent"
+                android:layout_weight="0.01"
+                android:layout_marginTop="10dp"
+                android:background="#38b0a2fe"
+                android:clickable="false">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="發文者:"
+                    android:id="@+id/whoSentTitleG"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:textSize="30dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#c6670e" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鸚鵡養殖專家"
+                    android:id="@+id/whoSentG"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="25dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="發文時間"
+                    android:id="@+id/timeSentTitleG"
+                    android:layout_row="0"
+                    android:layout_column="3"
+                    android:layout_marginRight="0dp"
+                    android:textSize="25dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#2d66fa" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2016/12/12"
+                    android:id="@+id/timeSentG"
+                    android:layout_row="1"
+                    android:layout_column="3"
+                    android:layout_marginRight="5dp"
+                    android:textSize="20dp" />
+
+            </GridLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewG"
+                android:layout_gravity="right"
+                android:layout_weight="0.01"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1"
+                android:id="@+id/context"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。                     \n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。"
+                    android:id="@+id/contentG"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#38b0a2fe"
-                android:id="@+id/price">
+                android:id="@+id/linearLayout3"
+                android:layout_marginTop="10dp" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="獎勵"
-                    android:id="@+id/textView15"
+                    android:text="執行時間"
+                    android:id="@+id/timeToDoTitleG"
                     android:textSize="30dp"
-                    android:textColor="#f115df" />
+                    android:textColor="#47d016" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="飲料"
-                    android:id="@+id/textView16"
-                    android:textSize="35dp" />
+                    android:text="2017/01/01"
+                    android:id="@+id/timeToDoG"
+                    android:textSize="28dp"
+                    android:layout_marginLeft="10dp" />
             </LinearLayout>
 
-            <Space
-                android:layout_width="20px"
-                android:layout_height="20px" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#38b0a2fe"
+                android:id="@+id/linearLayout2"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="執行地點"
+                    android:id="@+id/whereTitleG"
+                    android:textSize="30dp"
+                    android:textColor="#ff4545" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="你家"
+                    android:id="@+id/whereG"
+                    android:textSize="28dp"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/many"
+                android:layout_marginTop="10dp"
+                android:background="#38b0a2fe">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/needTitleG"
+                    android:textSize="30dp"
+                    android:text="人數"
+                    android:textColor="#057d45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5/8"
+                    android:id="@+id/needG"
+                    android:textSize="28dp"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.09"
-                android:background="#38b0a2fe">
+                android:background="#38b0a2fe"
+                android:id="@+id/who"
+                android:layout_marginTop="10dp"
+                android:contextClickable="false">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="參與者"
-                    android:id="@+id/textView14"
+                    android:id="@+id/usersTitleG"
                     android:textSize="30dp"
                     android:gravity="center_vertical"
                     android:textColor="#2087cc" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="PatrickC\nTreetops\nDeep Moon\n小毽子在飛呀"
-                    android:id="@+id/Users"
-                    android:layout_weight="0.05"
-                    android:textColor="#c6670e"
-                    android:textSize="35dp" />
+                    android:text="PatrickC\nTreetops\nDeep Moon\n小毽子在飛呀\n血色的狂氣-不滅的葛路米"
+                    android:id="@+id/usersG"
+                    android:textSize="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="false"
+                    android:contextClickable="false" />
             </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:text="鸚鵡"
-                    android:id="@+id/textView12"
-                    android:textSize="30dp"
-                    android:gravity="left|center_vertical"
-                    android:textColor="#386910"
-                    android:layout_weight="0.16" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。
-                    \n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，進而提升自己的身價。\n
-       相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。"
-                    android:id="@+id/textView13" />
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="20px"
-                android:layout_height="20px" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/bottomLinear"
-                android:background="#66f0cd1d">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="1">
-
-                    <Space
-                        android:layout_width="20px"
-                        android:layout_height="20px"
-                        android:layout_row="0"
-                        android:layout_column="1" />
-
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="已完成"
-                        android:id="@+id/checkBox2"
-                        android:checked="false"
-                        android:textSize="30dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:layout_weight="0.33" />
-
-                    <RatingBar
-                        android:layout_width="147dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ratingBar2"
-                        android:layout_row="2"
-                        android:layout_column="2"
-                        android:numStars="3"
-                        android:stepSize="1" />
-                </LinearLayout>
+                android:background="#66f0cd1d"
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -356,16 +242,16 @@
                         android:layout_width="197dp"
                         android:layout_height="wrap_content"
                         android:text="參加"
-                        android:id="@+id/button8"
-                        android:textSize="20dp" />
+                        android:id="@+id/joinOrNotG"
+                        android:textSize="25dp" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="取消參加"
-                        android:id="@+id/button9"
-                        android:textSize="20dp" />
+                        android:text="Q&amp;A"
+                        android:id="@+id/qAndAButtonG"
+                        android:textSize="25dp" />
 
                 </LinearLayout>
 
@@ -377,28 +263,21 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Q&amp;A"
-                        android:id="@+id/button"
-                        android:textSize="25dp" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:text="編輯"
-                        android:id="@+id/button7"
+                        android:id="@+id/editButtonG"
                         android:textSize="25dp" />
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="刪除"
-                        android:id="@+id/button11"
+                        android:id="@+id/deleteButtonG"
                         android:textSize="25dp" />
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
-
 
 
     </LinearLayout>
