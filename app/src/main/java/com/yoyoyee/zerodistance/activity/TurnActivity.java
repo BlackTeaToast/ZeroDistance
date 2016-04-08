@@ -147,7 +147,7 @@ public class TurnActivity extends AppCompatActivity {
 
                     }
                 });
-                ClientFunctions.publishMissionQA(30, "ANDROID TEST", new ClientResponse() {
+                /*ClientFunctions.publishMissionQA(30, "ANDROID TEST", new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
@@ -162,6 +162,18 @@ public class TurnActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+                ClientFunctions.updateMissionQA(30, new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        QueryFunctions.getQAs();
                     }
 
                     @Override

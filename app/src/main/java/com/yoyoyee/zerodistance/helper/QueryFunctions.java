@@ -8,10 +8,12 @@ import android.util.Log;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
 import com.yoyoyee.zerodistance.helper.table.MissionsTable;
+import com.yoyoyee.zerodistance.helper.table.QATable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
 
 import java.text.SimpleDateFormat;
@@ -516,5 +518,79 @@ public class QueryFunctions {
         db.close();
         return groups;
     }
+
+    public static void updateQAs(ArrayList<QA> QAsList) {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        db.beginTransaction();
+        try {
+            db.delete(MissionsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<QAsList.size(); i++) {
+                values.put(QATable.KEY_ID, QAsList.get(i).id); // Name
+                values.put(QATable.KEY_USER_UID, QAsList.get(i).userUid); // Email
+                values.put(QATable.KEY_USER_NAME, QAsList.get(i).userName); // Email
+                values.put(QATable.KEY_QUESTION, QAsList.get(i).question); // Email
+                values.put(QATable.KEY_ANSWER, QAsList.get(i).answer); // Email
+                values.put(QATable.KEY_IS_ANSWERED, QAsList.get(i).isAnswered); // Email
+                values.put(QATable.KEY_CREATED_AT, dateFormat.format(QAsList.get(i).createdAt)); // Created At
+                values.put(QATable.KEY_ANSWERED_AT, dateFormat.format(QAsList.get(i).answeredAt)); // Created At
+
+                // Inserting Row
+                db.insert(QATable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateQAs: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all QAs info from SQLite");
+        db.close();
+
+    }
+
+    public static ArrayList<QA> getQAs() {
+
+        ArrayList<QA> QAs = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + QATable.TABLE_NAME;
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                QA qa = new QA();
+                qa.id = cursor.getInt(QATable.COLUMNS_NUM_ID);
+                qa.userUid = cursor.getString(QATable.COLUMNS_NUM_USER_UID);
+                qa.userName = cursor.getString(QATable.COLUMNS_NUM_USER_NAME);
+                qa.question = cursor.getString(QATable.COLUMNS_NUM_QUESTION);
+                qa.answer = cursor.getString(QATable.COLUMNS_NUM_ANSWER);
+                qa.isAnswered = cursor.getInt(QATable.COLUMNS_NUM_IS_ANSWERED)!=0;
+                qa.createdAt = dateFormat.parse(cursor.getString(QATable.COLUMNS_NUM_CREATED_AT));
+                qa.answeredAt = dateFormat.parse(cursor.getString(QATable.COLUMNS_NUM_ANSWERED_AT));
+
+                QAs.add(qa);
+                Log.d(TAG, "getQAs: " + qa.id + ", " + qa.userUid + ", " + qa.userName + ", "
+                        + qa.question + ", " + qa.answer + ", " + qa.isAnswered + ", "
+                        + qa.createdAt + ", " + qa.answeredAt );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return QAs;
+    }
+
 
 }

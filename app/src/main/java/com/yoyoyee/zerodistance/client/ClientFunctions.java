@@ -13,6 +13,7 @@ import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 
 import org.json.JSONArray;
@@ -749,4 +750,171 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
 
     }
+
+    public static void updateMissionQA(final int missionID, final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_mission_qas";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_MISSION_QA, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray qas = jObj.getJSONArray("qas");
+
+                        ArrayList<QA> QAList = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                        for(int i=0; i<qas.length(); i++) {
+                            JSONObject qa = qas.getJSONObject(i);
+                            try {
+                                QAList.add(new QA(
+                                        qa.getInt("id"),
+                                        qa.getString("user_uid"),
+                                        qa.getString("user_name"),
+                                        qa.getString("question"),
+                                        qa.getString("answer"),
+                                        qa.getInt("is_answered")!=0,
+                                        dateFormat.parse(qa.getString("created_at")),
+                                        dateFormat.parse(qa.getString("answered_at"))));
+                                Log.d(TAG, "onResponse: " + qa.getString("question"));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateQAs(QAList);
+                        clientResponse.onResponse("QAs get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("mission_id", String.valueOf(missionID));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void updateGroupQA(final int groupID, final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_mission_qas";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_GROUP_QA, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray qas = jObj.getJSONArray("qas");
+
+                        ArrayList<QA> QAList = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                        for(int i=0; i<qas.length(); i++) {
+                            JSONObject qa = qas.getJSONObject(i);
+                            try {
+                                QAList.add(new QA(
+                                        qa.getInt("id"),
+                                        qa.getString("user_uid"),
+                                        qa.getString("user_name"),
+                                        qa.getString("question"),
+                                        qa.getString("answer"),
+                                        qa.getInt("is_answered")!=0,
+                                        dateFormat.parse(qa.getString("created_at")),
+                                        dateFormat.parse(qa.getString("answered_at"))));
+                                Log.d(TAG, "onResponse: " + qa.getString("question"));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateQAs(QAList);
+                        clientResponse.onResponse("QAs get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("mission_id", String.valueOf(groupID));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
 }
