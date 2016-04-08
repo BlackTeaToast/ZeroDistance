@@ -467,7 +467,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
     //按完成鈕送出
     //防止空白資訊
-    public void onClickOkOutputData(View v){
+    public void onClickOkOutputData(final View v){
         if (editTextName.getText().toString().trim().equals("")) {
             Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
         }
@@ -507,16 +507,18 @@ public class NewMissionActivity extends AppCompatActivity {
                                         new ClientResponse() {
                                             @Override
                                             public void onResponse(String response) {
-
+                                                Toast.makeText(v.getContext(), R.string.updata_new_mission_and_group, Toast.LENGTH_SHORT).show();
                                             }
 
 
                                             @Override
                                             public void onErrorResponse(String response) {
+                                                Toast.makeText(v.getContext(), R.string.errorupdata_new_mission_and_group, Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
                                 this.finish();
+
                             }
                         }
                     }

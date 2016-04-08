@@ -58,6 +58,8 @@
     <string name="errorpeoplenumber_new_mission_and_group">請填寫需求人數</string>
     <string name="takepicturemessage_new_mission_and_group">長按圖片可刪除</string>
     <string name="idontwantpicture_new_mission_and_group">已取消選取</string>
+    <string name="updata_new_mission_and_group">上傳成功</string>
+    <string name="errorupdata_new_mission_and_group">上傳失敗</string>
 
 
 

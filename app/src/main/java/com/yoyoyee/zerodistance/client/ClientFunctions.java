@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.yoyoyee.zerodistance.app.AppConfig;
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
@@ -34,8 +35,8 @@ import java.util.TimeZone;
 public class ClientFunctions {
 
     public static final String TAG = AppController.class.getSimpleName();
-    private static final SQLiteHandler db = AppController.getDB();
-    private static final SessionManager session  = AppController.getSession();
+    private static SQLiteHandler db = AppController.getDB();
+    private static SessionManager session  = AppController.getSession();
 
     public ClientFunctions() {
 
@@ -76,6 +77,16 @@ public class ClientFunctions {
                         String email = user.getString("email");
                         String createdAt = user.getString("created_at");
                         String accessKey = user.getString("access_key");
+
+                        session.setUserEmail(email);
+                        session.setUserPassword(password);
+                        session.setUserUid(uid);
+                        session.setUserName(name);
+                        session.setUserNickName(nickName);
+                        session.setIsTeacher(Integer.valueOf(isTeacher)!=0);
+                        session.setUserStudentID(studentID);
+                        session.setUserSchoolID(Integer.valueOf(schoolID));
+                        session.setUserAccessKey(accessKey);
 
                         // Inserting row in users table
                         db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,
@@ -338,8 +349,8 @@ public class ClientFunctions {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
 
                 return params;
             }
@@ -424,8 +435,8 @@ public class ClientFunctions {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
 
                 return params;
             }
@@ -483,8 +494,8 @@ public class ClientFunctions {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
                 params.put("is_urgent", String.valueOf(isUrgent));
                 params.put("need_num", String.valueOf(needNum));
@@ -549,13 +560,71 @@ public class ClientFunctions {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
                 params.put("need_num", String.valueOf(needNum));
                 params.put("place", place);
                 params.put("content", content);
                 params.put("exp_at", sdf.format(expAt));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void publishMissionQA(final int missionID, final String question,
+                                    final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_mission_QA";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_PUBLISH_MISSION_QA, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("上傳任務QA成功");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("mission_id", String.valueOf(missionID));
+                params.put("question", question);
 
                 return params;
             }

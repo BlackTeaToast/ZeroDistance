@@ -58,7 +58,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(MissionsTable.CREATE_MISSIONS_TABLE);
         db.execSQL(GroupsTable.CREATE_GROUPS_TABLE);
         if(session.isLoggedIn()) {
-            ClientFunctions.checkLogin(session.getEmail(), session.getPassword(), new ClientResponse() {
+            ClientFunctions.checkLogin(session.getUserEmail(), session.getUserPassword(), new ClientResponse() {
                 @Override
                 public void onResponse(String response) {
                     Log.d(TAG, "onResponse: ReLogin success!");
@@ -307,14 +307,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public String getUserUid() {
         String uid;
         SQLiteDatabase db = this.getReadableDatabase();
-
+        db.beginTransaction();
         Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{LoginTable.KEY_UID},
                 "1 = 1", null, null, null, null);
 
         cursor.moveToFirst();
         uid = cursor.getString(0);
         Log.d(TAG, "getUserUid: " + cursor.getString(0));
+
         cursor.close();
+        db.endTransaction();
         db.close();
         return uid;
     }
@@ -322,7 +324,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public String getUserAccessKey() {
         String accessKey;
         SQLiteDatabase db = this.getReadableDatabase();
-
+        db.beginTransaction();
         Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{LoginTable.KEY_ACCESS_KEY},
                 "1 = 1", null, null, null, null);
 
@@ -330,6 +332,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         accessKey = cursor.getString(0);
         Log.d(TAG, "getUserUid: " + cursor.getString(0));
         cursor.close();
+        db.endTransaction();
         db.close();
         return accessKey;
     }

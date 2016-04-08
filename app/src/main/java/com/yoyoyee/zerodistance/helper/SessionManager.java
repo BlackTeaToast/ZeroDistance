@@ -24,6 +24,13 @@ public class SessionManager {
 	private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 	private static final String KEY_USER_EMAIL = "email";
 	private static final String KEY_USER_PASSWORD = "password";
+	private static final String KEY_USER_UID = "uid";
+	private static final String KEY_USER_ACCESS_KEY = "accessKey";
+	private static final String KEY_USER_NAME = "name";
+	private static final String KEY_USER_NICK_NAME = "nickName";
+    private static final String KEY_USER_IS_TEACHER = "isTeacher";
+	private static final String KEY_USER_SCHOOL_ID = "schoolID";
+	private static final String KEY_USER_STUDENT_ID = "studentID";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -41,29 +48,92 @@ public class SessionManager {
 		Log.d(TAG, "User login session modified!");
 	}
 
-	public void setEmail(String email) {
+    public boolean isLoggedIn(){
+        return pref.getBoolean(KEY_IS_LOGGED_IN, false);
+    }
+
+    public void setIsTeacher(boolean isTeacher) {
+        editor.putBoolean(KEY_USER_IS_TEACHER, isTeacher);
+        editor.commit();
+    }
+
+    public boolean isTeacher() {
+        return pref.getBoolean(KEY_USER_IS_TEACHER, false);
+    }
+
+    public void setUserEmail(String email) {
 
 		editor.putString(KEY_USER_EMAIL, email);
 		editor.commit();
 
 	}
 
-	public String getEmail() {
+	public String getUserEmail() {
 		return pref.getString(KEY_USER_EMAIL, "");
 	}
 
-	public void setPassword(String password) {
+	public void setUserPassword(String password) {
 
 		editor.putString(KEY_USER_PASSWORD, password);
 		editor.commit();
 
 	}
 
-	public String getPassword() {
+	public String getUserPassword() {
 		return pref.getString(KEY_USER_PASSWORD, "");
 	}
-	
-	public boolean isLoggedIn(){
-		return pref.getBoolean(KEY_IS_LOGGED_IN, false);
-	}
+
+    public void setUserUid(String uid) {
+        editor.putString(KEY_USER_UID, uid);
+        editor.commit();
+    }
+
+    public String getUserUid() {
+        return  pref.getString(KEY_USER_UID, "");
+    }
+
+    public void setUserAccessKey(String accessKey) {
+        editor.putString(KEY_USER_ACCESS_KEY, accessKey);
+        editor.commit();
+    }
+
+    public String getUserAccessKey() {
+        return pref.getString(KEY_USER_ACCESS_KEY, "");
+    }
+
+    public void setUserName(String name) {
+        editor.putString(KEY_USER_NAME, name);
+        editor.commit();
+    }
+
+    public String getUserName() {
+        return pref.getString(KEY_USER_NAME, "");
+    }
+
+    public void setUserNickName(String nickName) {
+        editor.putString(KEY_USER_NICK_NAME, nickName);
+        editor.commit();
+    }
+
+    public String getUserNickName() {
+        return pref.getString(KEY_USER_NICK_NAME, "");
+    }
+
+    public void setUserSchoolID(int schoolID) {
+        editor.putInt(KEY_USER_SCHOOL_ID, schoolID);
+        editor.commit();
+    }
+
+    public int getUserSchoolID() {
+        return pref.getInt(KEY_USER_SCHOOL_ID, -1);
+    }
+
+    public void setUserStudentID(String studentID) {
+        editor.putString(KEY_USER_STUDENT_ID, studentID);
+        editor.commit();
+    }
+
+    public String getStudentID() {
+        return pref.getString(KEY_USER_STUDENT_ID, "");
+    }
 }

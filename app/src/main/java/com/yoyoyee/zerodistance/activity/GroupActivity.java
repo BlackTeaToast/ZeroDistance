@@ -77,7 +77,7 @@ public class GroupActivity extends AppCompatActivity {
         where = "你家";
 
         //字體大小
-        size = 20;
+        size = 15;
 
         //設置餐與者
         user = new ArrayList<>();
@@ -266,7 +266,7 @@ public class GroupActivity extends AppCompatActivity {
         TextView textViewTemp;
         //委託人
         textViewTemp = (TextView)findViewById(R.id.whoSentTitleG);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+9);
         textViewTemp = (TextView)findViewById(R.id.whoSentG);
         textViewTemp.setTextSize(size+5);
         //發文時間
@@ -276,27 +276,27 @@ public class GroupActivity extends AppCompatActivity {
         textViewTemp.setTextSize(size);
         //內容
         textViewTemp = (TextView)findViewById(R.id.contentG);
-        textViewTemp.setTextSize(size+2);
+        textViewTemp.setTextSize(size+5);
         //執行時間
         textViewTemp = (TextView)findViewById(R.id.timeToDoTitleG);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.timeToDoG);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //執行地點
         textViewTemp = (TextView)findViewById(R.id.whereTitleG);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.whereG);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //人數
         textViewTemp = (TextView)findViewById(R.id.needTitleG);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.needG);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //參與者
         textViewTemp = (TextView)findViewById(R.id.usersTitleG);
-        textViewTemp.setTextSize(size+10);
+        textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.usersG);
-        textViewTemp.setTextSize(size+8);
+        textViewTemp.setTextSize(size+3);
         //按鈕群(參加鈕、Q&A、編輯、刪除)
         Button ButtonTemp;
         ButtonTemp = (Button)findViewById(R.id.joinOrNotG);
