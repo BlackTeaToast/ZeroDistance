@@ -24,6 +24,12 @@ public class SessionManager {
 	private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 	private static final String KEY_USER_EMAIL = "email";
 	private static final String KEY_USER_PASSWORD = "password";
+	private static final String KEY_USER_UID = "uid";
+	private static final String KEY_USER_ACCESSKEY = "accessKey";
+	private static final String KEY_USER_NAME = "name";
+	private static final String KEY_USER_NICK_NAME = "nickName";
+	private static final String KEY_USER_SCHOOL_ID = "schoolID";
+	private static final String KEY_USER_STUDENT_ID = "studentID";
 
 	public SessionManager(Context context) {
 		this._context = context;

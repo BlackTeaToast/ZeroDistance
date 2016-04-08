@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.yoyoyee.zerodistance.app.AppConfig;
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
@@ -424,8 +425,8 @@ public class ClientFunctions {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<>();
-                params.put("uid", db.getUserUid());
-                params.put("access_key", db.getUserAccessKey());
+                params.put("uid", QueryFunctions.getUserUid());
+                params.put("access_key", QueryFunctions.getUserAccessKey());
 
                 return params;
             }
@@ -556,6 +557,64 @@ public class ClientFunctions {
                 params.put("place", place);
                 params.put("content", content);
                 params.put("exp_at", sdf.format(expAt));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void publishMissionQA(final int missionID, final String question,
+                                    final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_mission_QA";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_PUBLISH_MISSION_QA, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("上傳任務QA成功");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", QueryFunctions.getUserUid());
+                params.put("access_key", QueryFunctions.getUserAccessKey());
+                params.put("mission_id", String.valueOf(missionID));
+                params.put("question", question);
 
                 return params;
             }

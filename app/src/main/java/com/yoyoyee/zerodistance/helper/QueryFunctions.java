@@ -248,7 +248,7 @@ public class QueryFunctions {
     public static String getUserUid() {
         String uid;
         SQLiteDatabase db = DB.getReadableDatabase();
-
+        db.beginTransaction();
         Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{LoginTable.KEY_UID},
                 "1 = 1", null, null, null, null);
 
@@ -256,6 +256,7 @@ public class QueryFunctions {
         uid = cursor.getString(0);
         Log.d(TAG, "getUserUid: " + cursor.getString(0));
         cursor.close();
+        db.endTransaction();
         db.close();
         return uid;
     }
@@ -263,7 +264,7 @@ public class QueryFunctions {
     public static String getUserAccessKey() {
         String accessKey;
         SQLiteDatabase db = DB.getReadableDatabase();
-
+        db.beginTransaction();
         Cursor cursor = db.query(LoginTable.TABLE_NAME, new String[]{LoginTable.KEY_ACCESS_KEY},
                 "1 = 1", null, null, null, null);
 
@@ -271,6 +272,7 @@ public class QueryFunctions {
         accessKey = cursor.getString(0);
         Log.d(TAG, "getUserUid: " + cursor.getString(0));
         cursor.close();
+        db.endTransaction();
         db.close();
         return accessKey;
     }
