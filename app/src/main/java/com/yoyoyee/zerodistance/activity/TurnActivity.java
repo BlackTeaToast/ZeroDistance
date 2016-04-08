@@ -158,6 +158,17 @@ public class TurnActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
+                ClientFunctions.publishGroupQA(1, "sad sad", new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
