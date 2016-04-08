@@ -60,7 +60,7 @@ public class GroupActivity extends AppCompatActivity {
     private boolean joined;//是否有餐與
     private String imagePath;
 
-    //============================================
+    //=============================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -181,15 +181,13 @@ public class MissionActivity extends AppCompatActivity {
         //關掉評分區，等待被選取
         gridLayout.setVisibility(View.GONE);
 
-        //設置已完成在剛開始是否被勾選
-        checkBox.setChecked(isFinished);
-
         //如果點選了才開啟評分區
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //有勾選的話
                 if (isChecked) {
+                    isFinished = true;
                     gridLayout.setVisibility(View.VISIBLE);
 
                     //因應人數改變評分文字與按鈕
@@ -206,9 +204,10 @@ public class MissionActivity extends AppCompatActivity {
                         buttonVisible = (Button) findViewById(R.id.ratebuttonM);
                         buttonVisible.setVisibility(View.GONE);
                     }
-                } else
+                } else {
+                    isFinished = false;
                     gridLayout.setVisibility(View.GONE);
-
+                }
             }
         });
 
@@ -232,6 +231,7 @@ public class MissionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isTeacher) {
                     isTeacher = false;
+                    gridLayout.setVisibility(View.GONE);
                     setTeacherOrStudent();
                 }
                 else {
@@ -290,7 +290,15 @@ public class MissionActivity extends AppCompatActivity {
 
     }//onCreate
 
+    //設置老師與學生的差別
     private void setTeacherOrStudent(){
+        //設置已完成是否被勾選
+        checkBox.setChecked(isFinished);
+        if(isFinished && isTeacher)
+            gridLayout.setVisibility(View.VISIBLE);
+        else
+            gridLayout.setVisibility(View.GONE);
+
         if(isTeacher){
             //把已完成鈕打開
             checkBox.setVisibility(View.VISIBLE);
