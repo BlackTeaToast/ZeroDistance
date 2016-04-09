@@ -52,7 +52,8 @@
             android:layout_columnSpan="2"
             android:layout_columnWeight="4"
             android:maxLines="1"
-            android:ellipsize="marquee" />
+            android:ellipsize="marquee"
+            android:layout_rowWeight="2" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,7 +63,8 @@
             android:id="@+id/dateread"
             style="@style/cardtext"
             android:layout_column="2"
-            android:layout_row="0" />
+            android:layout_row="0"
+            android:layout_rowWeight="1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,7 +74,7 @@
             android:id="@+id/datetime"
             android:layout_column="3"
             android:layout_row="0"
-            android:layout_rowWeight="0"
+            android:layout_rowWeight="1"
             android:layout_rowSpan="1"
             android:allowUndo="false"
             android:clickable="false"
@@ -86,7 +88,7 @@
             android:id="@+id/missiondangerous"
             android:layout_row="0"
             android:layout_column="4"
-            android:layout_rowWeight="0"
+            android:layout_rowWeight="1"
             android:layout_rowSpan="3"
             android:layout_gravity="right"
             android:src="@drawable/ic_report_problem_black_48dp"
@@ -101,7 +103,8 @@
             android:layout_gravity="left"
             style="@style/cardtext"
             android:layout_column="2"
-            android:layout_row="1" />
+            android:layout_row="1"
+            android:layout_rowWeight="1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -111,7 +114,8 @@
             android:id="@+id/expAt"
             style="@style/cardtext"
             android:layout_column="3"
-            android:layout_row="1" />
+            android:layout_row="1"
+            android:layout_rowWeight="1" />
     </GridLayout>//上半部
         <LinearLayout
             android:orientation="horizontal"

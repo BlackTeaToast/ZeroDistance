@@ -32,14 +32,15 @@ public class fragment_setting extends Fragment {
     private RadioButton showcontent, showpay;//顯示內容或獎勵
     private RadioGroup textsizeRG , showstyleRG;
     float ttsize;  //字體大小
-    TextView textsize;
+    TextView textsize , userid;
     SessionFunctions SF= new SessionFunctions();//手機內設定
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_setting, container, false);
         textsize= (TextView) v.findViewById(R.id.textsize);
         ttsize =textsize.getTextSize();
         textsize.setText(""+((ttsize/5)+10));
-
+        userid = (TextView) v.findViewById(R.id.userid);
+        userid.setText(SF.getUserUid());
         //登出
         Button Sign_outbut = (Button) v.findViewById(R.id.Sign_outbut);
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
