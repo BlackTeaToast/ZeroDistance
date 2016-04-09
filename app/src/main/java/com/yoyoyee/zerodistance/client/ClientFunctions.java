@@ -906,7 +906,7 @@ public class ClientFunctions {
                 Map<String, String> params = new HashMap<>();
                 params.put("uid", session.getUserUid());
                 params.put("access_key", session.getUserAccessKey());
-                params.put("mission_id", String.valueOf(groupID));
+                params.put("group_id", String.valueOf(groupID));
 
                 return params;
             }
