@@ -9,6 +9,7 @@ package com.yoyoyee.zerodistance.activity;
         import android.support.v7.widget.Toolbar;
         import android.view.View;
         import android.widget.Button;
+        import android.widget.TextView;
 
 
         import com.yoyoyee.zerodistance.R;
@@ -16,10 +17,16 @@ package com.yoyoyee.zerodistance.activity;
         import com.yoyoyee.zerodistance.helper.QAAdapter;
 
 public class QAActivity extends AppCompatActivity {
-    Button GO;
-    QAndA Q =new QAndA();
-    Boolean isQ=true;
-    Toolbar toolbar;
+    private float size;//定義所有文字大小
+    private Button GO;
+   // QAndA Q =new QAndA();
+    private Boolean isQ=true;
+    private Toolbar toolbar;
+    private int userID;
+    private Button A;
+
+
+
     @Override
 
 
@@ -31,15 +38,28 @@ public class QAActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.qAndA_Title));
-        //
+        //字體大小
+        size = 15;
+        //設定字型大小
+    //    setFontSize();
+        //按發問紐換頁功能
         GO = (Button)findViewById(R.id.for_Q_Button);
-        GO.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(QAActivity.this, AskActivity.class);
-                startActivity(intent);
-            }
-        });
+        if(equals(userID))
+        {
+         GO.setVisibility(Button.GONE);//發文者沒有發問功能
+        }
+        else {
+            GO.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(QAActivity.this, AskActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        //回答按鍵
+        A = (Button)findViewById(R.id.for_A_Buttom);
+
         //listview start
         String[] q_Q_Titletext = {"Q", "Q", "Q", "Q","Q", "Q"},a_A_Titletext = {"A", "A", "A", "A", "A", "A"};
         String[] q_Qtimetext = {"1/11 1:11", "12/11 11:11", "xx", "48/43", "154/45", "12/12"}, q_Qnametext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
@@ -58,5 +78,28 @@ public class QAActivity extends AppCompatActivity {
 
         //listview end
     }
-
+/*    private void setFontSize() {
+        TextView textViewTemp;
+        //Q
+        textViewTemp = (TextView)findViewById(R.id.q_Q_Title);
+        textViewTemp.setTextSize(size+9);
+        //Q者
+        textViewTemp = (TextView)findViewById(R.id.q_Qname);
+        textViewTemp.setTextSize(size);
+        //Q時
+        textViewTemp = (TextView)findViewById(R.id.q_Qtime);
+        textViewTemp.setTextSize(size);
+        //Q內容
+        textViewTemp = (TextView)findViewById(R.id.q_Qcontent);
+        textViewTemp.setTextSize(size+5);
+        //A
+        textViewTemp = (TextView)findViewById(R.id.a_A_Title);
+        textViewTemp.setTextSize(size+9);
+        //A時
+        textViewTemp = (TextView)findViewById(R.id.a_Atime);
+        textViewTemp.setTextSize(size);
+        //A內容
+        textViewTemp = (TextView)findViewById(R.id.a_Acontent);
+        textViewTemp.setTextSize(size+5);
+    }*/
 }
