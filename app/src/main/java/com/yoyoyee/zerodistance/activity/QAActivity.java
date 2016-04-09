@@ -37,10 +37,13 @@ public class QAActivity extends AppCompatActivity {
    // QAndA Q =new QAndA();
     private Boolean isQ=true;
     private Boolean reload;
+    private Boolean isGroup;
     private Toolbar toolbar;
-    private int userID ;
+    private String userID =QueryFunctions.getUserUid() ;
     private Button A;
     private int group_or_mission_ID;
+    private String publisher;
+    private Intent intentData =getIntent();
     private SQLiteDatabase db ;
     private ArrayList<QA> DataQas;
 
@@ -50,42 +53,44 @@ public class QAActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qa);
         //toolbar
+       /* isGroup=intentData.getBooleanExtra("isGroup",true);
+        group_or_mission_ID=intentData.getIntExtra("id", 0);
+        publisher =intentData.getStringExtra("publisher");*/
+
         toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.qAndA_Title));
+
         //字體大小
         size = 15;
         //設定字型大小
         GO = (Button)findViewById(R.id.for_Q_Button);
-        loadQandAData(true, 1);
 
         //按發問紐換頁功能
 
-        if(equals(userID))
+        if(userID.equals(publisher))
         {
          GO.setVisibility(Button.GONE);//發文者沒有發問功能
+
         }
         else {
+
             GO.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(QAActivity.this, AskActivity.class);
                     intent.putExtra("isGroup",true);
-                    intent.putExtra("groupID", 1);
+                    intent.putExtra("ID", 1);
                     startActivity(intent);
                 }
             });
         }
 
         //回答按鍵
-        A = (Button)findViewById(R.id.for_A_Buttom);
 
         //listview start
      //   String[] q_Q_Titletext = {"Q", "Q", "Q", "Q","Q", "Q"},a_A_Titletext = {"A", "A", "A", "A", "A", "A"};
-
-
-
         //listview end
     }
 
@@ -105,14 +110,18 @@ public class QAActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(String response) {
+                        progressDialog.dismiss();
                         TextView print = (TextView) findViewById(R.id.textView3);
                         print.setText(response);
                     }
                 });
             } else {
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.show(QAActivity.this,"讀取中","請稍後",true);
                 ClientFunctions.updateMissionQA(ID, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
+                        progressDialog.dismiss();
                         DataQas = QueryFunctions.getQAs();
                         printListView();
                         TextView print = (TextView) findViewById(R.id.textView3);
@@ -121,6 +130,7 @@ public class QAActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(String response) {
+                        progressDialog.dismiss();
                         TextView print = (TextView) findViewById(R.id.textView3);
                         print.setText(response);
                     }
@@ -148,7 +158,7 @@ public class QAActivity extends AppCompatActivity {
             q_Qcontenttext[z] = q[z].question;
             a_Acontenttext [z]=q[z].answer;
         }
-        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/ q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
+        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/ userID.equals(publisher),q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
 
         LinearLayoutManager layoutManager;

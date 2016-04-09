@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
@@ -39,24 +40,35 @@ public class AskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =getIntent();
                 if (intent.getBooleanExtra("isGroup",false)) {
-                    ClientFunctions.publishGroupQA(intent.getIntExtra("groupID", 0), ET.getText().toString(), new ClientResponse() {
+                    ClientFunctions.publishGroupQA(intent.getIntExtra("ID", 0), ET.getText().toString(), new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
+                            Toast.makeText(AskActivity.this,"發問成功", Toast.LENGTH_SHORT).show();
 
                         }
 
                         @Override
                         public void onErrorResponse(String response) {
-
+                            Toast.makeText(AskActivity.this,"發問失敗", Toast.LENGTH_SHORT).show();
                         }
                     });
 
                 }
                 else
                 {
+                    ClientFunctions.publishMissionQA(intent.getIntExtra("ID", 0), ET.getText().toString(), new ClientResponse() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(AskActivity.this,"發問成功", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+                            Toast.makeText(AskActivity.this,"發問失敗", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     // ClientFunctions.publishMissionQA();
                 }
-
                 finish();
             }
         });
