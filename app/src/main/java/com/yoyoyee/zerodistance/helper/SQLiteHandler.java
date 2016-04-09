@@ -671,6 +671,92 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return groups;
     }
 
+    public ArrayList<Group> getUnfinishedGroups() {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + GroupsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                if(!(cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0)) {
+                    Group group = new Group();
+                    group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+                    group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                    group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+                    group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+                    group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+                    group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+                    group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+                    group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+                    group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+                    group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+                    group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                    group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                    group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+                    groups.add(group);
+                    Log.d(TAG, "getGroups: " );
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return groups;
+    }
+
+    public ArrayList<Group> getFinishedGroups() {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + GroupsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                if(cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0) {
+                    Group group = new Group();
+                    group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+                    group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                    group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+                    group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+                    group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+                    group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+                    group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+                    group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+                    group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+                    group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+                    group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                    group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                    group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+                    groups.add(group);
+                    Log.d(TAG, "getGroups: " );
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return groups;
+    }
+
     public void updateQAs(ArrayList<QA> QAsList) {
         SQLiteDatabase db = this.getWritableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
