@@ -40,7 +40,7 @@ public class fragment_mission extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
        // Drawable[] missiondangerous={Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on")} ;
-        ArrayList<Mission> missions = QueryFunctions.getUnfinishedMissions() ;
+        ArrayList<Mission> missions = QueryFunctions.getUnfinishedMissions();
         SessionFunctions SF = new SessionFunctions();
         int[] id = new int[missions.size()];//任務id
         String[] title = new String[missions.size()];//任務標題
@@ -95,7 +95,6 @@ public class fragment_mission extends Fragment {
                 Intent in = new Intent(getActivity(), NewMissionActivity.class);
 
                 startActivity(in);
-
             }
         });
 
@@ -106,5 +105,10 @@ public class fragment_mission extends Fragment {
 
         //listView 典籍
     }
+    //設置字體大小
+    private void setFontSize(){
+        TextView textViewTemp;
+        SessionFunctions SF= new SessionFunctions();
 
+    }
 }

@@ -91,20 +91,9 @@ public class fragment_setting extends Fragment {
         textsizeLRB = (RadioButton) v.findViewById(R.id.textsizeLRB);
         textsizeMRB = (RadioButton) v.findViewById(R.id.textsizeMRB);
         textsizeSRB = (RadioButton) v.findViewById(R.id.textsizeSRB);
-        if(SF.getbecontext()){
-            showcontent.setChecked(true);
-        }else{
-            showpay.setChecked(true);
-        }
-        if(SF.getUserTextSize()==25){
-            textsizeMRB.setChecked(true);
-        }else if (SF.getUserTextSize()==20){
-            textsizeSRB.setChecked(true);
-        }else if (SF.getUserTextSize()==30){
-            textsizeLRB.setChecked(true);
-        }
+        checkbecontext();//選擇預設項目
 
-
+        setFontSize(v);//設定字體大小
         //radio button
 
         return v;}
@@ -160,5 +149,44 @@ public class fragment_setting extends Fragment {
         db.deleteUsers();
         Intent in = new Intent(getActivity(), LoginActivity.class);
         startActivity(in);
+    }
+    //設定預設大小或顯示資料
+    private void checkbecontext(){
+        if(SF.getbecontext()){
+            showcontent.setChecked(true);
+        }else{
+            showpay.setChecked(true);
+        }
+        if(SF.getUserTextSize()==25){
+            textsizeMRB.setChecked(true);
+        }else if (SF.getUserTextSize()==20){
+            textsizeSRB.setChecked(true);
+        }else if (SF.getUserTextSize()==30){
+            textsizeLRB.setChecked(true);
+        }
+    }
+    private void setFontSize(View v){
+        TextView textViewTemp;
+        SessionFunctions SF= new SessionFunctions();
+        textViewTemp = (TextView) v.findViewById(R.id.languageread);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView) v.findViewById (R.id.showstyleread);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView) v.findViewById(R.id.textsize);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+//        textViewTemp = (TextView) v.findViewById(R.id.userid);
+//        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp =(RadioButton) v.findViewById(R.id.showcontent);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (RadioButton) v.findViewById(R.id.showpay);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp =(RadioButton) v.findViewById(R.id.textsizeLRB);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (RadioButton) v.findViewById(R.id.textsizeMRB);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp =  (RadioButton) v.findViewById(R.id.textsizeSRB);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (Button) v.findViewById(R.id.Sign_outbut);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
     }
 }

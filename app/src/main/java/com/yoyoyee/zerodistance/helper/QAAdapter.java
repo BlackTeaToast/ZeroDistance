@@ -13,7 +13,7 @@ import com.yoyoyee.zerodistance.R;
 /**
  * Created by 楊霖村 on 2016/4/6.
  */
-public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
+public class QAAdapter extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     //字型大小
     public  int size = 15;
     private String[] q_Q_Titletext, q_Qtimetext, q_Qnametext, q_Qcontenttext, a_A_Titletext, a_Atimetext, a_Acontenttext;
@@ -62,7 +62,6 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
        // holder.a_Aname.setText(a_Atimetext[position]);
         holder.a_Atime.setText(a_Atimetext[position]);
         holder.a_Acontent.setText(a_Acontenttext[position]);
-
         //設定字型大小
         //Q
         holder.q_Q_Title.setTextSize(size + 9);

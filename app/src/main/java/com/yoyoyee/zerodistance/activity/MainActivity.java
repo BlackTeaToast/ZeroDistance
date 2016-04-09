@@ -18,6 +18,7 @@ import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
+import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager pager;
     SlidingTabLayout tabs;
     private ProgressDialog pDialog;
+    private SQLiteHandler db;
     CharSequence Titles[]={"任務","揪團","未完成任務","已完成揪團","成就","設定"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +53,17 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setMessage("載入中 ...");
 
 
+        //更新手機資料庫
         context = this;
 
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.container);
-        pager.setAdapter(adapter);
-
-        // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         showDialog();
+
         //更新手機資料庫
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
+                db = AppController.getDB();
                 String TAG = AppController.class.getSimpleName();
                 ArrayList<Mission> missions = db.getMissions();
                 if (missions.size() > 0) {
@@ -90,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
-                hideDialog();
+
             }
 
             @Override
@@ -98,7 +93,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //更新手機資料庫
+
+        //更新資料
+
+
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.container);
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
+        pager.setAdapter(adapter);
+
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -110,11 +117,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-
+        hideDialog();
 
     }
+    protected void onStart(){
+        super.onStart();
 
-
+    }
     /**
      * A placeholder fragment containing a simple view.
      */

@@ -39,6 +39,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         public ImageView missiondangerous;
         public ViewHolder(View v) {
             super(v);
+
             missionName = (TextView) v.findViewById(R.id.missionName);
             missionDetial = (TextView) v.findViewById(R.id.missionDetial);
             datetime = (TextView)v.findViewById(R.id.datetime);
@@ -62,6 +63,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 mm[i] = date[i].get(Calendar.MINUTE);  //取出分
                 //處理日期
             }
+            setFontSize(v);//設定字體大小
         }
 
     }
@@ -88,7 +90,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-
             holder.missionName.setText(missionName[position]);
             holder.missionDetial.setText(mData[position]);
             holder.datetime.setText(month[position]+"/"+day[position]);
@@ -113,10 +114,23 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     public int getItemCount() {
         return mData.length;
     }
-
-    //listView 典籍
-
-    //在点击事件中调用自己的接口
-
-//典籍
+    //設置字體大小
+    private void setFontSize(View v){
+        TextView textViewTemp;
+        SessionFunctions SF= new SessionFunctions();
+        textViewTemp = (TextView) v.findViewById(R.id.missionName);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView)v.findViewById(R.id.datetime);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView)v.findViewById(R.id.expAt);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView) v.findViewById(R.id.missionnumber);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (TextView)v.findViewById(R.id.peoplenumber);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp = (Button)v.findViewById(R.id.missionbutton);
+        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+    }
 }

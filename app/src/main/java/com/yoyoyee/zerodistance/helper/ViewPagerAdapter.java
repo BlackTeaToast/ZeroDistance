@@ -1,15 +1,24 @@
 package com.yoyoyee.zerodistance.helper;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
+import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.fragment.fragment_achievement;
 import com.yoyoyee.zerodistance.fragment.fragment_havebeen;
 import com.yoyoyee.zerodistance.fragment.fragment_mission;
 import com.yoyoyee.zerodistance.fragment.fragment_notbeen;
 import com.yoyoyee.zerodistance.fragment.fragment_setting;
 import com.yoyoyee.zerodistance.fragment.fragment_team;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
+import com.yoyoyee.zerodistance.helper.datatype.Mission;
+
+import java.util.ArrayList;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -18,6 +27,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
+    private SQLiteHandler db;
 
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
@@ -31,12 +41,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     //This method return the fragment for the every position in the View Pager
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(final int position) {
+
         Fragment f = null;
+
         if(position == 0) // if the position is 0 we are returning the First tab
         {
             fragment_mission fm = new fragment_mission();
-            f= fm;
+            f = fm;
         }
         if(position == 1)             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
@@ -45,7 +57,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
         if(position==2){
             fragment_notbeen fnb = new fragment_notbeen();
-            f = fnb;
+            f= fnb;
         }
         if(position==3){
             fragment_havebeen fhb = new fragment_havebeen();
