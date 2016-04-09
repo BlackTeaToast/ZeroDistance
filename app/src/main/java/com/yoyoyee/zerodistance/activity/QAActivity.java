@@ -36,6 +36,7 @@ public class QAActivity extends AppCompatActivity {
     private Button GO;
    // QAndA Q =new QAndA();
     private Boolean isQ=true;
+    private Boolean reload;
     private Toolbar toolbar;
     private int userID ;
     private Button A;
@@ -71,11 +72,12 @@ public class QAActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(QAActivity.this, AskActivity.class);
                     intent.putExtra("isGroup",true);
-                    intent.putExtra("groupID",1);
+                    intent.putExtra("groupID", 1);
                     startActivity(intent);
                 }
             });
         }
+
         //回答按鍵
         A = (Button)findViewById(R.id.for_A_Buttom);
 
@@ -113,11 +115,14 @@ public class QAActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         DataQas = QueryFunctions.getQAs();
                         printListView();
+                        TextView print = (TextView) findViewById(R.id.textView3);
+                        print.setText(response);
                     }
 
                     @Override
                     public void onErrorResponse(String response) {
-
+                        TextView print = (TextView) findViewById(R.id.textView3);
+                        print.setText(response);
                     }
                 });
             }
@@ -152,7 +157,11 @@ public class QAActivity extends AppCompatActivity {
         mList.setLayoutManager(layoutManager);
         mList.setAdapter(QAAdapter);
     }
-
+    @Override
+    protected void onResume(){
+        super.onResume();
+        loadQandAData(true, 1);
+    }
 
 
 }

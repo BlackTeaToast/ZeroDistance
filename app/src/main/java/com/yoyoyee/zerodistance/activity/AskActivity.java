@@ -30,8 +30,14 @@ public class AskActivity extends AppCompatActivity {
         NO.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+        OK.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
                 Intent intent =getIntent();
-                OK.setText(String.valueOf(intent.getIntExtra("groupID", 0)));
                 if (intent.getBooleanExtra("isGroup",false)) {
                     ClientFunctions.publishGroupQA(intent.getIntExtra("groupID", 0), ET.getText().toString(), new ClientResponse() {
                         @Override
@@ -48,8 +54,9 @@ public class AskActivity extends AppCompatActivity {
                 }
                 else
                 {
-                   // ClientFunctions.publishMissionQA();
+                    // ClientFunctions.publishMissionQA();
                 }
+
                 finish();
             }
         });
