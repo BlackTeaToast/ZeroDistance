@@ -32,7 +32,7 @@
             android:layout_height="200dp"
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/login_pic4"
+            android:src="@drawable/login_pic5"
             android:layout_marginBottom="25dp"
             android:scaleType="fitCenter" />
 
