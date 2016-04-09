@@ -193,6 +193,12 @@ public class TurnActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+
+    }
+
     /**
      * Logging out the user. Will set isLoggedIn flag to false in shared
      * preferences Clears the user data from sqlite users table

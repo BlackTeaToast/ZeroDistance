@@ -9,91 +9,91 @@ public class SessionFunctions {
 
     private static SessionManager session = AppController.getSession();
 
-    public void setIsTeacher(boolean isTeacher) {
+    public static void setIsTeacher(boolean isTeacher) {
         session.setIsTeacher(isTeacher);;
     }
 
-    public boolean isTeacher() {
+    public static boolean isTeacher() {
         return session.isTeacher();
     }
 
-    public void setUserEmail(String email) {
+    public static void setUserEmail(String email) {
 
         session.setUserEmail(email);
 
     }
 
-    public String getUserEmail() {
+    public static String getUserEmail() {
         return session.getUserEmail();
     }
 
-    public void setUserPassword(String password) {
+    public static void setUserPassword(String password) {
 
         session.setUserPassword(password);
 
     }
 
-    public String getUserPassword() {
+    public static String getUserPassword() {
         return session.getUserPassword();
     }
 
-    public void setUserUid(String uid) {
+    public static void setUserUid(String uid) {
         session.setUserUid(uid);
     }
 
-    public String getUserUid() {
+    public static String getUserUid() {
         return  session.getUserUid();
     }
 
-    public void setUserAccessKey(String accessKey) {
+    public static void setUserAccessKey(String accessKey) {
         session.setUserAccessKey(accessKey);
     }
 
-    public String getUserAccessKey() {
+    public static String getUserAccessKey() {
         return getUserAccessKey();
     }
 
-    public void setUserName(String name) {
+    public static void setUserName(String name) {
         session.setUserName(name);
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         return session.getUserName();
     }
 
-    public void setUserNickName(String nickName) {
+    public static void setUserNickName(String nickName) {
         session.setUserNickName(nickName);
     }
 
-    public String getUserNickName() {
+    public static String getUserNickName() {
         return session.getUserNickName();
     }
 
-    public void setUserSchoolID(int schoolID) {
+    public static void setUserSchoolID(int schoolID) {
         session.setUserSchoolID(schoolID);
     }
 
-    public int getUserSchoolID() {
+    public static int getUserSchoolID() {
         return session.getUserSchoolID();
     }
 
-    public void setUserStudentID(String studentID) {
+    public static void setUserStudentID(String studentID) {
         session.setUserStudentID(studentID);
     }
 
-    public String getStudentID() {
+    public static String getStudentID() {
         return session.getStudentID();
     }
-    public void setUserTextSize(float UserTextSize){
+    public static void setUserTextSize(float UserTextSize){
         session.setUserTextSize(UserTextSize);
     }
-    public float getUserTextSize(){
+    public static float getUserTextSize(){
         return session.getUserTextSize();
     }
-    public void setbecontext(boolean setbecontext){
+    public static void setbecontext(boolean setbecontext){
         session.setbecontext(setbecontext);
     }
-    public boolean getbecontext(){
+    public static boolean getbecontext(){
         return session.getbecontext();
     }
 }
