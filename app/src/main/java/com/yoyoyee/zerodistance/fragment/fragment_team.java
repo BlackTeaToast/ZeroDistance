@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.GroupActivity;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
+import com.yoyoyee.zerodistance.helper.CardViewAdapter;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
-import com.yoyoyee.zerodistance.helper.missionAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,13 +54,13 @@ public class fragment_team extends Fragment {
         }
         try {
 
-            missionAdapter missionAdapter = new missionAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber);
+            CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
-            mList.setAdapter(missionAdapter);
+            mList.setAdapter(CardViewAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
