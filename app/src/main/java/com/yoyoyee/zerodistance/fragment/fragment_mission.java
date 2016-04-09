@@ -62,11 +62,11 @@ public class fragment_mission extends Fragment {
             needNum[i] = missions.get(i).needNum;
             currentNum[i] = missions.get(i).currentNum;
             missiondangerous[i] = missions.get(i).isUrgent;
-            if(title[i].length()>10){
+            if(title[i].length()>10){//限制字數
                 title[i] = (String)title[i].subSequence(0, 7)+"...";
             }
-            if(detial[i].length()>10){
-                detial[i] = (String)detial[i].subSequence(0, 15)+"...";
+            if(detial[i].length()>20){//限制字數
+                detial[i] = (String)detial[i].subSequence(0, 20)+"...";
             }
         }
         int missionnumber[]=new int[title.length];
@@ -95,8 +95,6 @@ public class fragment_mission extends Fragment {
                 Intent in = new Intent(getActivity(), NewMissionActivity.class);
 
                 startActivity(in);
-
-
 
             }
         });
