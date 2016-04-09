@@ -18,35 +18,56 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class missionAdapter extends RecyclerView.Adapter<missionAdapter.ViewHolder> {
     private String[] mData ,missionName;
-    private Drawable[] missiondangerous;
-    private int[] missionnumber;
+    private boolean[] missiondangerous;
+    private int[] id, needNum, currentNum, missionnumber, month, day, hour, mm;
+    private Date[] expAtD;
+    private Calendar[] date ;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView missionDetial, missionName, missionnumber;
+        public TextView missionDetial, missionName, missionnumber, datetime, expAt, peoplenumber;
         public Button missionbutton;
         public ImageView missiondangerous;
         public ViewHolder(View v) {
             super(v);
-            missionDetial = (TextView) v.findViewById(R.id.missionDetial);
             missionName = (TextView) v.findViewById(R.id.missionName);
+            missionDetial = (TextView) v.findViewById(R.id.missionDetial);
+            datetime = (TextView)v.findViewById(R.id.datetime);
+            expAt = (TextView)v.findViewById(R.id.expAt);
             missiondangerous = (ImageView) v.findViewById(R.id.missiondangerous);
             missionnumber = (TextView) v.findViewById(R.id.missionnumber);
-            try {
+            peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
                 missionbutton = (Button)v.findViewById(R.id.missionbutton);
-
-                missionbutton.setOnClickListener((View.OnClickListener) this);
-            } catch (Exception e) {
-                e.printStackTrace();
+            //處利日期
+            date = new Calendar[getItemCount()];
+            month = new int[getItemCount()];
+            day = new int[getItemCount()];
+            hour = new int[getItemCount()];
+            mm = new int[getItemCount()];
+            for(int i = 0;i<getItemCount();i++){
+                date[i] = Calendar.getInstance();
+                date[i].setTime(expAtD[i]);
+                month[i] = date[i].get(Calendar.MONTH) + 1;  //取出月，月份的編號是由0~11 故+1
+                day[i] = date[i].get(Calendar.DAY_OF_MONTH);  //取出日
+                hour[i] = date[i].get(Calendar.HOUR_OF_DAY);  //取出hour
+                mm[i] = date[i].get(Calendar.MINUTE);  //取出分
+                //處理日期
             }
         }
 
     }
-
-    public missionAdapter(String[] data ,String[] missionName , Drawable[] missiondangerous, int[] missionnumber) {
-        mData = data;
+    public missionAdapter(int[] id ,String[] missionName , String[] detial, Date[] expAt, int[] needNum, int[] currentNum, boolean[] missiondangerous, int[] missionnumber) {
+       this.id = id;
         this.missionName = missionName;
+        mData = detial;
+        this.expAtD = expAt;
+        this.needNum = needNum;
+        this.currentNum = currentNum;
         this.missiondangerous = missiondangerous;
         this.missionnumber = missionnumber;
     }
@@ -61,14 +82,21 @@ public class missionAdapter extends RecyclerView.Adapter<missionAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-            holder.missionDetial.setText(mData[position]);
+
+
             holder.missionName.setText(missionName[position]);
-            holder.missiondangerous.setImageDrawable(missiondangerous[position]);
+            holder.missionDetial.setText(mData[position]);
+            holder.datetime.setText(month[position]+"/"+day[position]);
+            holder.expAt.setText(hour[position]+":"+mm[position]);
+            holder.peoplenumber.setText(currentNum[position]+"/"+needNum[position]);
             holder.missionnumber.setText("" + missionnumber[position]);
+
+        if(missiondangerous[position]){
+            holder.missiondangerous.setVisibility(View.VISIBLE);}
             holder.missionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "要顯示的訊息第:"+position+"個", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "第"+position+"個", Toast.LENGTH_SHORT).show();
             }
         });
     }

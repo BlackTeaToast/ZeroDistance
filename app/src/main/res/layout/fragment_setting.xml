@@ -130,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Sign_out"
-        android:id="@+id/button12"
+        android:id="@+id/Sign_outbut"
         android:layout_gravity="bottom|center_horizontal" />
 
     <TextView

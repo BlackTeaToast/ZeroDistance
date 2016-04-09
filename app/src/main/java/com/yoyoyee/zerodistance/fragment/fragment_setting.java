@@ -1,5 +1,6 @@
 package com.yoyoyee.zerodistance.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.activity.LoginActivity;
 import com.yoyoyee.zerodistance.app.UsedData;
 
 /**
@@ -37,7 +40,16 @@ public class fragment_setting extends Fragment {
         textsize= (TextView) v.findViewById(R.id.textsize);
         ttsize =textsize.getTextSize();
         textsize.setText(""+((ttsize/5)+10));
-
+        Button Sign_outbut = (Button) v.findViewById(R.id.Sign_outbut);
+        Sign_outbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //                        .setAction("Action", null).show();
+                Intent in = new Intent(getActivity(), LoginActivity.class);
+                startActivity(in);
+            }
+        });
         //spinner
             Spinner languageSpinner = (Spinner) v.findViewById(R.id.languageSpinner);
             adapterPress = new ArrayAdapter<String>(getActivity(), R.layout.spinner,getResources().getStringArray(R.array.languageSppingArrary));

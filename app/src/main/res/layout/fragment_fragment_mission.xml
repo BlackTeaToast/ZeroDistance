@@ -87,9 +87,9 @@
             android:layout_row="0"
             android:layout_column="4"
             android:layout_rowWeight="0"
-            android:background="@android:drawable/star_big_on"
             android:layout_rowSpan="3"
-            android:layout_gravity="right" />
+            android:layout_gravity="right"
+            android:src="@drawable/ic_report_problem_black_48dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="06:20"
-            android:id="@+id/textView2"
+            android:id="@+id/expAt"
             style="@style/cardtext"
             android:layout_column="3"
             android:layout_row="1" />
