@@ -17,6 +17,7 @@ import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
@@ -70,6 +71,22 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Mission> missions = db.getMissions();
                 if (missions.size() > 0) {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
+                }
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
+        ClientFunctions.updateGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                SQLiteHandler db = AppController.getDB();
+                String TAG = AppController.class.getSimpleName();
+                ArrayList<Group> Group = db.getGroups();
+                if (Group.size() > 0) {
+                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
             }
 

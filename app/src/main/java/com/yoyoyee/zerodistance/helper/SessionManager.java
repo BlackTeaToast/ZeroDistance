@@ -31,13 +31,30 @@ public class SessionManager {
     private static final String KEY_USER_IS_TEACHER = "isTeacher";
 	private static final String KEY_USER_SCHOOL_ID = "schoolID";
 	private static final String KEY_USER_STUDENT_ID = "studentID";
+    private static final String KEY_USER_TEXTSIZE = "usertextsize";
+    private static final String KEY_USER_BECONTEXT = "becontext";
 
 	public SessionManager(Context context) {
 		this._context = context;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
 		editor = pref.edit();
 	}
+    public void setbecontext(boolean YN) {
+        editor.putBoolean(KEY_USER_BECONTEXT, YN);
+        editor.commit();
+    }
+    public boolean getbecontext(){
+        return pref.getBoolean(KEY_USER_BECONTEXT, true);
+    }
 
+    public void setUserTextSize(float usertextsize) {
+
+        editor.putFloat(KEY_USER_TEXTSIZE, usertextsize);
+        editor.commit();
+    }
+    public float getUserTextSize() {
+        return pref.getFloat(KEY_USER_TEXTSIZE, 25);
+    }
 	public void setLogin(boolean isLoggedIn) {
 
 		editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
@@ -136,4 +153,5 @@ public class SessionManager {
     public String getStudentID() {
         return pref.getString(KEY_USER_STUDENT_ID, "");
     }
+
 }

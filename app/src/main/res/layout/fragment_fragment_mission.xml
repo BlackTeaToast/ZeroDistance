@@ -89,7 +89,8 @@
             android:layout_rowWeight="0"
             android:layout_rowSpan="3"
             android:layout_gravity="right"
-            android:src="@drawable/ic_report_problem_black_48dp" />
+            android:src="@drawable/ic_report_problem_black_48dp"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="wrap_content"

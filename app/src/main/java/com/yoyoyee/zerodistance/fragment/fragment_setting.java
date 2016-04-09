@@ -20,12 +20,12 @@ import android.widget.TextView;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.LoginActivity;
 import com.yoyoyee.zerodistance.app.UsedData;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
 public class fragment_setting extends Fragment {
-    UsedData UD= new UsedData();
     int languageuse =0;//0中文 1英文
     private ArrayAdapter<String> adapterPress;
     private RadioButton textsizeLRB, textsizeMRB, textsizeSRB;//大中小字體
@@ -33,13 +33,14 @@ public class fragment_setting extends Fragment {
     private RadioGroup textsizeRG , showstyleRG;
     float ttsize;  //字體大小
     TextView textsize;
-
+    SessionFunctions SF= new SessionFunctions();//手機內設定
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_setting, container, false);
-
         textsize= (TextView) v.findViewById(R.id.textsize);
         ttsize =textsize.getTextSize();
         textsize.setText(""+((ttsize/5)+10));
+
+        //登出
         Button Sign_outbut = (Button) v.findViewById(R.id.Sign_outbut);
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +51,8 @@ public class fragment_setting extends Fragment {
                 startActivity(in);
             }
         });
+
+        //登出
         //spinner
             Spinner languageSpinner = (Spinner) v.findViewById(R.id.languageSpinner);
             adapterPress = new ArrayAdapter<String>(getActivity(), R.layout.spinner,getResources().getStringArray(R.array.languageSppingArrary));
@@ -76,6 +79,25 @@ public class fragment_setting extends Fragment {
         textsizeRG.setOnCheckedChangeListener(textsizeListener);
         showstyleRG = (RadioGroup) v.findViewById(R.id.showstyleRG);
         showstyleRG.setOnCheckedChangeListener(showstyleListener);
+        showcontent = (RadioButton) v.findViewById(R.id.showcontent);//顯示內容
+        showpay = (RadioButton) v.findViewById(R.id.showpay);//顯示任務
+        textsizeLRB = (RadioButton) v.findViewById(R.id.textsizeLRB);
+        textsizeMRB = (RadioButton) v.findViewById(R.id.textsizeMRB);
+        textsizeSRB = (RadioButton) v.findViewById(R.id.textsizeSRB);
+        if(SF.getbecontext()){
+            showcontent.setChecked(true);
+        }else{
+            showpay.setChecked(true);
+        }
+        if(SF.getUserTextSize()==25){
+            textsizeMRB.setChecked(true);
+        }else if (SF.getUserTextSize()==20){
+            textsizeSRB.setChecked(true);
+        }else if (SF.getUserTextSize()==30){
+            textsizeLRB.setChecked(true);
+        }
+
+
         //radio button
 
         return v;}
@@ -83,6 +105,7 @@ public class fragment_setting extends Fragment {
     RadioGroup.OnCheckedChangeListener textsizeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
+
             switch(checkedId){
                 case R.id.textsizeLRB:
                     ttsize=30;
@@ -94,8 +117,9 @@ public class fragment_setting extends Fragment {
                     ttsize=20;
                     break;
             }
-            textsize.setText(""+ttsize);
-            textsize.setTextSize(ttsize);
+            SF.setUserTextSize(ttsize);
+            textsize.setText("" + ttsize);
+            textsize.setTextSize(SF.getUserTextSize());
         }
 
     };
@@ -109,12 +133,13 @@ public class fragment_setting extends Fragment {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch(checkedId){
                 case R.id.showcontent:
-                    UD.textsize=0;
+                    SF.setbecontext(true);
                     break;
                 case R.id.showpay:
-                    UD.textsize=1;
+                    SF.setbecontext(false);
                     break;
             }
+
         }
 
     };

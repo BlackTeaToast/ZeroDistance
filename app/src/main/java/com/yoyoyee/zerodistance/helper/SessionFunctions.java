@@ -84,5 +84,16 @@ public class SessionFunctions {
     public String getStudentID() {
         return session.getStudentID();
     }
-
+    public void setUserTextSize(float UserTextSize){
+        session.setUserTextSize(UserTextSize);
+    }
+    public float getUserTextSize(){
+        return session.getUserTextSize();
+    }
+    public void setbecontext(boolean setbecontext){
+        session.setbecontext(setbecontext);
+    }
+    public boolean getbecontext(){
+        return session.getbecontext();
+    }
 }

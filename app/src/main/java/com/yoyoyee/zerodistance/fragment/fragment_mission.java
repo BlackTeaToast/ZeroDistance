@@ -23,6 +23,7 @@ import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.RecyclerItemClickListener;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.missionAdapter;
 
@@ -39,24 +40,35 @@ public class fragment_mission extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
        // Drawable[] missiondangerous={Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on")} ;
-        ArrayList<Mission> missions = QueryFunctions.getMissions();
+        ArrayList<Mission> missions = QueryFunctions.getUnfinishedMissions() ;
+        SessionFunctions SF = new SessionFunctions();
         int[] id = new int[missions.size()];//任務id
         String[] title = new String[missions.size()];//任務標題
-        String[] detial = new String[missions.size()];//任務內容
+        String[] detial = new String[missions.size()];//任務內容or獎勵
         Date[] expAt = new Date[missions.size()];//任務結束時間
         int[] needNum = new int[missions.size()]; //需要人數
         int[] currentNum = new int[missions.size()];//已有人數
         boolean[] missiondangerous = new boolean[missions.size()];//任務是否緊急
+        boolean becontext = SF.getbecontext();//true 為內容 false為獎勵
         for(int i = 0;i <missions.size();i++){
             id[i]= missions.get(i).id;
             title[i]= missions.get(i).title;
-            detial[i] = missions.get(i).content;
+            if(becontext){
+                detial[i] = missions.get(i).content;
+            }else{
+                detial[i] = missions.get(i).reward;
+            }
             expAt[i] = missions.get(i).expAt;
             needNum[i] = missions.get(i).needNum;
             currentNum[i] = missions.get(i).currentNum;
             missiondangerous[i] = missions.get(i).isUrgent;
+            if(title[i].length()>10){
+                title[i] = (String)title[i].subSequence(0, 7)+"...";
+            }
+            if(detial[i].length()>10){
+                detial[i] = (String)detial[i].subSequence(0, 15)+"...";
+            }
         }
-
         int missionnumber[]=new int[title.length];
         for(int i=0;i<title.length;i++){
             missionnumber[i]=i;
