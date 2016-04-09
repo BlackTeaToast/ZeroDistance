@@ -26,6 +26,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.DisplayMetrics;
@@ -44,6 +45,7 @@ import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -183,6 +185,7 @@ public class NewMissionActivity extends AppCompatActivity {
         spinnerPress.setAdapter(adapterPress);
         spinnerPay.setAdapter(adapterPay);
 
+        limit();//名稱字數限制
 
 
         //spinner的監聽
@@ -248,6 +251,11 @@ public class NewMissionActivity extends AppCompatActivity {
             buttonPicture.setVisibility(View.GONE);
             buttonTakePicture.setVisibility(View.GONE);
         }
+    }
+
+
+    public  void limit (){
+        editTextName.addTextChangedListener(new TextLenghLimiter(60));
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------
@@ -507,13 +515,13 @@ public class NewMissionActivity extends AppCompatActivity {
                                         new ClientResponse() {
                                             @Override
                                             public void onResponse(String response) {
-                                                Toast.makeText(v.getContext(), R.string.updata_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
                                             }
 
 
                                             @Override
                                             public void onErrorResponse(String response) {
-                                                Toast.makeText(v.getContext(), R.string.errorupdata_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
 
                                             }
                                         });

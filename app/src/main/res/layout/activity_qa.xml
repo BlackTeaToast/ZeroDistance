@@ -38,4 +38,14 @@
             android:layout_column="0" />
     </GridLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/for_Q_Button"
+        android:layout_toRightOf="@+id/for_Q_Button"
+        android:layout_toEndOf="@+id/for_Q_Button" />
+
 </RelativeLayout>

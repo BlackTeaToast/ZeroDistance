@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 
 public class AskActivity extends AppCompatActivity {
-    TextView TV;
-    EditText ET;
-    Button OK,NO;
+    protected TextView TV;
+    protected EditText ET;
+    protected Button OK,NO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,26 @@ public class AskActivity extends AppCompatActivity {
         NO.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent =getIntent();
+                OK.setText(String.valueOf(intent.getIntExtra("groupID", 0)));
+                if (intent.getBooleanExtra("isGroup",false)) {
+                    ClientFunctions.publishGroupQA(intent.getIntExtra("groupID", 0), ET.getText().toString(), new ClientResponse() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+
+                        }
+                    });
+
+                }
+                else
+                {
+                   // ClientFunctions.publishMissionQA();
+                }
                 finish();
             }
         });

@@ -38,7 +38,8 @@
             android:layout_margin="0dp"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:maxLines="2"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -73,7 +74,8 @@
             android:layout_margin="0dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:visibility="gone" />
 
         <Spinner
             android:layout_width="190dp"
@@ -92,7 +94,8 @@
             android:layout_marginRight="15dp"
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -217,21 +220,26 @@
             android:layout_toLeftOf="@+id/spinner"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_columnSpan="14"
+            android:layout_columnSpan="7"
             android:layout_gravity="left|center"
-            android:layout_margin="15dp" />
+            android:layout_margin="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/editTextWhere"
-            android:layout_column="0"
-            android:layout_row="17"
-            android:layout_columnSpan="14"
-            android:layout_gravity="center"
-            android:layout_margin="15dp" />
+            android:layout_column="7"
+            android:layout_row="16"
+            android:layout_columnSpan="7"
+            android:layout_gravity="center|right"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -303,7 +311,8 @@
             android:id="@+id/printf"
             android:layout_row="99"
             android:layout_column="1"
-            android:layout_columnSpan="11" />
+            android:layout_columnSpan="11"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -313,7 +322,8 @@
             android:id="@+id/printf2"
             android:layout_row="98"
             android:layout_column="1"
-            android:layout_columnSpan="11" />
+            android:layout_columnSpan="11"
+            android:visibility="gone" />
 
         <Button
             android:layout_width="wrap_content"

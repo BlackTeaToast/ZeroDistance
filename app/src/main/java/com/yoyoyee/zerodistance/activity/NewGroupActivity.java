@@ -11,14 +11,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.provider.Settings.*;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -27,10 +24,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -43,12 +38,12 @@ import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
-import java.io.File;
 import java.lang.System;
 import java.util.Calendar;
 
@@ -121,6 +116,7 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewGroupDate = (TextView) findViewById(R.id.textViewGroupDate);
         textViewcontent = (TextView) findViewById(R.id.textViewContent);
         textViewPicture= (TextView) findViewById(R.id.textViewPicture);
+        textViewPress= (TextView) findViewById(R.id.textViewPress);
         textViewPeopleNumber= (TextView) findViewById(R.id.textViewPeopleNumber);
         //editText定位區
         editTextName= (EditText) findViewById(R.id.editTextName);
@@ -149,10 +145,10 @@ public class NewGroupActivity extends AppCompatActivity {
         actionBar.setTitle(R.string.actionbar_new_group);
         //定義區------------------------------------------------------------------------------------
         //時間F
-
         calendar =Calendar.getInstance();
 
         stringPress =getResources().getStringArray(R.array.press_new_mission_and_group);
+        editTextName.addTextChangedListener(new TextLenghLimiter(60));
 
         //取的時間設定12或24小時制
         //設定文字
@@ -169,14 +165,16 @@ public class NewGroupActivity extends AppCompatActivity {
         buttonTakePicture.setText(R.string.takepicturebuttom_new_mission_and_group);*/
 
         Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
-
-
+        //spinner消失區
         imv.setVisibility(View.GONE);
+        textViewPress.setVisibility(View.GONE);
+        spinnerPress.setVisibility(View.GONE);
+        //------------------------------------------------------------------------------------------
+        /*
 
         adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission_and_group));
         adapterPress.setDropDownViewResource(R.layout.spinner);
         spinnerPress.setAdapter(adapterPress);
-
 
 
         //spinner的監聽
@@ -196,7 +194,7 @@ public class NewGroupActivity extends AppCompatActivity {
         });
         //監聽獎勵
 
-
+*/
         //圖片監聽
         //經由長按進行取消選取圖片動作
         imv.setOnLongClickListener(new View.OnLongClickListener() {
@@ -443,7 +441,7 @@ public class NewGroupActivity extends AppCompatActivity {
 
     //按完成鈕送出
     //防止空白資訊
-    public void onClickOkOutputDataGroup(View v){
+    public void onClickOkOutputDataGroup(final View v){
         if (editTextName.getText().toString().trim().equals("")) {
             Toast.makeText(this, R.string.errorname_new_group, Toast.LENGTH_SHORT).show();
         }
@@ -482,12 +480,13 @@ public class NewGroupActivity extends AppCompatActivity {
                                         new ClientResponse() {
                                             @Override
                                             public void onResponse(String response) {
-
+                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
                                             }
 
 
                                             @Override
                                             public void onErrorResponse(String response) {
+                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
