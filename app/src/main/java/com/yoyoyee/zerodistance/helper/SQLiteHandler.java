@@ -540,6 +540,96 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return missions;
     }
 
+    public ArrayList<Mission> getFinishedMissions() {
+
+        ArrayList<Mission> missions = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                if(cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0) {
+                    Mission mission = new Mission();
+                    mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                    mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                    mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                    mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                    mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                    mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                    mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                    mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                    mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                    mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                    mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                    mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                    mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                    mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                    mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                    missions.add(mission);
+                    Log.d(TAG, "getMissions: " );
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return missions;
+    }
+
+    public ArrayList<Mission> getUnfinishedMissions() {
+
+        ArrayList<Mission> missions = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + MissionsTable.TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                if(!(cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0)) {
+                    Mission mission = new Mission();
+                    mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                    mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                    mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                    mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                    mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                    mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                    mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                    mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                    mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                    mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                    mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                    mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                    mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                    mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                    mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                    missions.add(mission);
+                    Log.d(TAG, "getMissions: " );
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return missions;
+    }
+
     public ArrayList<Group> getGroups() {
 
         ArrayList<Group> groups = new ArrayList<>();
