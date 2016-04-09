@@ -75,12 +75,13 @@
                     android:layout_marginRight="0dp"
                     android:textSize="25dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="#2d66fa" />
+                    android:textColor="#2d66fa"
+                    android:layout_gravity="center_horizontal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2016/12/12"
+                    android:text="2016/12/12 13:55"
                     android:id="@+id/timeSentM"
                     android:layout_row="1"
                     android:layout_column="3"
@@ -139,7 +140,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2017/01/01"
+                    android:text="2017/01/01 12:51"
                     android:id="@+id/timeToDoM"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp" />
