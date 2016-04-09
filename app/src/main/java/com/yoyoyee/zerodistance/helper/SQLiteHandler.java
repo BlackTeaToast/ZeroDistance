@@ -677,7 +677,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            db.delete(MissionsTable.TABLE_NAME, null, null);
+            db.delete(QATable.TABLE_NAME, null, null);
             ContentValues values = new ContentValues();
             for(int i=0; i<QAsList.size(); i++) {
                 values.put(QATable.KEY_ID, QAsList.get(i).id); // Name
