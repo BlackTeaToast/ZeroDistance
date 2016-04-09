@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <GridLayout
         android:layout_width="match_parent"
         android:layout_height="124dp"
@@ -128,5 +130,11 @@
             android:layout_marginLeft="20dp" />
 
     </GridLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray"
+            android:id="@+id/theOPline" />
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
