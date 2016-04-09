@@ -32,8 +32,8 @@
             android:layout_height="200dp"
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/login_pic"
-            android:layout_marginBottom="15dp"
+            android:src="@drawable/login_pic4"
+            android:layout_marginBottom="25dp"
             android:scaleType="fitCenter" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@color/input_register_bg"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
@@ -54,7 +54,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@color/input_register_bg"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:padding="10dp"
