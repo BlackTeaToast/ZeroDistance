@@ -49,6 +49,20 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setCancelable(false);
 
         pDialog.setMessage("載入中 ...");
+
+
+        context = this;
+
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
+
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.container);
+        pager.setAdapter(adapter);
+
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
         showDialog();
         //更新手機資料庫
         ClientFunctions.updateMissions(new ClientResponse() {
@@ -85,18 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //更新手機資料庫
-
-        context = this;
-
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.container);
-        pager.setAdapter(adapter);
-
-        // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {

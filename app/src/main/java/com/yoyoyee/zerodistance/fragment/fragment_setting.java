@@ -20,7 +20,9 @@ import android.widget.TextView;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.LoginActivity;
 import com.yoyoyee.zerodistance.app.UsedData;
+import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
+import com.yoyoyee.zerodistance.helper.SessionManager;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -31,11 +33,17 @@ public class fragment_setting extends Fragment {
     private RadioButton textsizeLRB, textsizeMRB, textsizeSRB;//大中小字體
     private RadioButton showcontent, showpay;//顯示內容或獎勵
     private RadioGroup textsizeRG , showstyleRG;
+    private SQLiteHandler db;
+    private SessionManager session;
     float ttsize;  //字體大小
     TextView textsize , userid;
     SessionFunctions SF= new SessionFunctions();//手機內設定
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_setting, container, false);
+        // SQLite database handler
+        db = new SQLiteHandler(v.getContext());
+        // session manager
+        session = new SessionManager(v.getContext());
         textsize= (TextView) v.findViewById(R.id.textsize);
         ttsize =textsize.getTextSize();
         textsize.setText(""+((ttsize/5)+10));
@@ -46,10 +54,8 @@ public class fragment_setting extends Fragment {
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //                        .setAction("Action", null).show();
-                Intent in = new Intent(getActivity(), LoginActivity.class);
-                startActivity(in);
+                logoutUser();
+                getActivity().finish();
             }
         });
 
@@ -147,5 +153,12 @@ public class fragment_setting extends Fragment {
 
     //showstyle radio button 監聽
 
+    private void logoutUser() {
 
+        session.setLogin(false);
+
+        db.deleteUsers();
+        Intent in = new Intent(getActivity(), LoginActivity.class);
+        startActivity(in);
+    }
 }
