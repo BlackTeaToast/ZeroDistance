@@ -1,5 +1,6 @@
 package com.yoyoyee.zerodistance.helper;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.activity.AskActivity;
 
 /**
  * Created by 楊霖村 on 2016/4/6.
@@ -23,7 +25,8 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     //字型大小
     public  int size;
     private String[] q_Q_Titletext, q_Qtimetext, q_Qnametext, q_Qcontenttext, a_A_Titletext, a_Atimetext, a_Acontenttext;
-    private Boolean publisher;
+    private int[] q_a_ID;
+    private Boolean publisher,isGroup;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView q_Q_Title, q_Qname, q_Qtime, q_Qcontent;
         public TextView a_A_Title,  a_Atime, a_Acontent;
@@ -51,7 +54,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         }
     }
 
-    public QAAdapter(/*String[] q_Q_Titletext ,*/int size,Boolean publisher,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, /*String[] a_A_Titletext,*/String[] a_Atimetext,String[] a_Acontenttext) {
+    public QAAdapter(/*String[] q_Q_Titletext ,*/int[] q_a_ID,int size,Boolean publisher,Boolean isGroup,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, /*String[] a_A_Titletext,*/String[] a_Atimetext,String[] a_Acontenttext) {
       //  this.q_Q_Titletext = q_Q_Titletext;
         this.q_Qtimetext = q_Qtimetext;
         this.q_Qnametext = q_Qnametext;
@@ -61,6 +64,8 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         this.a_Acontenttext = a_Acontenttext;
         this.publisher =publisher;
         this.size =size;
+        this.q_a_ID =q_a_ID;
+        this.isGroup =isGroup;
 
      //   this.a_Anametext = a_Anametext;
     }
@@ -74,7 +79,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.q_Q_Title.setText(R.string.qanda_Q);
         holder.q_Qname.setText(q_Qnametext[position]);
         holder.q_Qtime.setText(q_Qtimetext[position]);
@@ -89,7 +94,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             holder.q_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    layOutClick(v);
+                    layOutClick(v,q_a_ID[position]);
                     return false;
                 }
             });
@@ -99,7 +104,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             holder.q_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    layOutClick(v);
+                    layOutClick(v,q_a_ID[position]);
                     return false;
                 }
             });
@@ -126,8 +131,23 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     public int getItemCount() {
     return q_Qnametext.length;
     }
-    public void layOutClick(View v){
-        Toast.makeText(v.getContext(), "長按成功", Toast.LENGTH_SHORT).show();
+
+    /**
+     * 按下按鈕後，會進行判斷，是否為發文者，是則可以進行回文，不適則否
+     * @param v
+     */
+    public void layOutClick(View v,int qaID){
+        if (publisher) {
+            Toast.makeText(v.getContext(),"我是發文者",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(v.getContext(), AskActivity.class);
+            intent.putExtra("isGroup",isGroup);
+            intent.putExtra("isAsk",false);
+            intent.putExtra("q_a_ID",qaID);
+            v.getContext().startActivity(intent);
+        }
+        else{
+            Toast.makeText(v.getContext(), "我是看的人", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

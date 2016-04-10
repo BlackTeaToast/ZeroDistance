@@ -59,7 +59,7 @@ public class QAActivity extends AppCompatActivity {
         publisher =intentData.getStringExtra("publisher");*/
         isGroup=true;
         group_or_mission_ID =1;
-
+        publisher=QueryFunctions.getUserUid();
         toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -86,6 +86,7 @@ public class QAActivity extends AppCompatActivity {
                     Intent intent = new Intent(QAActivity.this, AskActivity.class);
                     intent.putExtra("isGroup",isGroup);
                     intent.putExtra("group_missionID", group_or_mission_ID);
+                    intent.putExtra("isAsk",true);
                     startActivity(intent);
                 }
             });
@@ -143,6 +144,7 @@ public class QAActivity extends AppCompatActivity {
         int list =DataQas.size();
         Toast.makeText(this, "讀取完成，總共"+String.valueOf(list)+"則", Toast.LENGTH_SHORT).show();
         QA[] q =new QA[list];
+        int[] q_a_ID =new int[list];
         String[] q_Qtimetext =new String[list]; //= {"1/11 1:11", "12/11 11:11", "xx", "48/43", "154/45", "12/12"}, q_Qnametext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
         String[] q_Qnametext =new String[list];
         String[] q_Qcontenttext =new String[list];//= {"你說把愛漸漸放下會走更遠,或許命運的謙讓我遇見", "你好阿", "xx", "你好阿", "xx", "你好阿"}, a_Atimetext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
@@ -151,12 +153,13 @@ public class QAActivity extends AppCompatActivity {
         SimpleDateFormat format =new SimpleDateFormat("MM/dd HH:mm");
         for(int z=0;z<list;z++) {
             q[z]=DataQas.get(z);
+            q_a_ID[z] =q[z].id;
             q_Qtimetext[z] =format.format(q[z].createdAt);
             q_Qnametext[z] =q[z].userName;
             q_Qcontenttext[z] = q[z].question;
             a_Acontenttext [z]=q[z].answer;
         }
-        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/15, userID.equals(publisher),q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
+        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/q_a_ID,15, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
 
         LinearLayoutManager layoutManager;
