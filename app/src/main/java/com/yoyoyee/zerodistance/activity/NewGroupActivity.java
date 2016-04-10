@@ -138,7 +138,7 @@ public class NewGroupActivity extends AppCompatActivity {
         //ImageView
         imv =(ImageView)findViewById(R.id.imageViewPicture);
 
-
+        limitAndSet ();
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -193,7 +193,6 @@ public class NewGroupActivity extends AppCompatActivity {
             }
         });
         //監聽獎勵
-
 */
         //圖片監聽
         //經由長按進行取消選取圖片動作
@@ -222,6 +221,11 @@ public class NewGroupActivity extends AppCompatActivity {
             buttonPicture.setVisibility(View.GONE);
             buttonTakePicture.setVisibility(View.GONE);
         }
+    }
+    public void limitAndSet (){
+        editTextName.addTextChangedListener(new TextLenghLimiter(60));
+        editTextWhere.addTextChangedListener(new TextLenghLimiter(60));
+        editTextNumber.addTextChangedListener(new TextLenghLimiter(60));
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------

@@ -113,7 +113,6 @@ public class NewMissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_mission);
-
         //FindByID區--------------------------------------------------------------------------------
         //toolbar 定位區
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -139,29 +138,22 @@ public class NewMissionActivity extends AppCompatActivity {
         buttonOk= (Button) findViewById(R.id.buttonOK);
         buttonPicture= (Button) findViewById(R.id.buttonPicture);
         buttonTakePicture= (Button) findViewById(R.id.buttonTakePicture);
-
         //spinner 定位區
         spinnerPress = (Spinner) findViewById(R.id.spinnerPress);
         spinnerPay = (Spinner) findViewById(R.id.spinnerPay);
-
         //ImageView
         imv =(ImageView)findViewById(R.id.imageViewPicture);
-
-
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.actionbar_new_mission);
         //定義區------------------------------------------------------------------------------------
         //時間F
-
         calendar =Calendar.getInstance();
-
         stringPress =getResources().getStringArray(R.array.press_new_mission_and_group);
         stringPay =getResources().getStringArray(R.array.pay_new_mission);
         //取的時間設定12或24小時制
         //設定文字
-
         textViewName.setText(R.string.missionname_new_mission);
         textViewPress.setText(R.string.press_new_mission_and_group);
         textViewPay.setText(R.string.pay_new_mission);
@@ -174,10 +166,8 @@ public class NewMissionActivity extends AppCompatActivity {
         buttonPicture.setText(R.string.uploadpictruebuttom_new_mission_and_group);
         buttonTakePicture.setText(R.string.takepicturebuttom_new_mission_and_group);
         Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
-
         editTextOtherPay.setVisibility(View.GONE);
         imv.setVisibility(View.GONE);
-
         adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission_and_group));
         adapterPay = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.pay_new_mission));
         adapterPress.setDropDownViewResource(R.layout.spinner);
@@ -185,7 +175,7 @@ public class NewMissionActivity extends AppCompatActivity {
         spinnerPress.setAdapter(adapterPress);
         spinnerPay.setAdapter(adapterPay);
 
-        limit();//名稱字數限制
+        limitAndSet();//名稱字數限制以及字型大小限制
 
 
         //spinner的監聽
@@ -194,13 +184,11 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPress[position]);
-                press =(position==0)? false: true;
-
+                press = (position == 0) ? false : true;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         //監聽獎勵
@@ -208,25 +196,33 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Display.setText(stringPay[position]);
-
                 if (position == (getResources().getStringArray(R.array.pay_new_mission).length - 1)) {
                     editTextOtherPay.setVisibility(View.VISIBLE);
                     getPay = editTextOtherPay.getText().toString();
                 } else {
-                    getPay =stringPay[position];
+                    getPay = stringPay[position];
                     editTextOtherPay.setVisibility(View.GONE);
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
+        //此區為隱藏功能用--------------------------------------------------------------------------
+        hide(PICTURE_GONE);
+    }
+    public void hide(Boolean PICTURE_GONE){
+        if(PICTURE_GONE) {
+            textViewPicture.setVisibility(View.GONE);
+            buttonPicture.setVisibility(View.GONE);
+            buttonTakePicture.setVisibility(View.GONE);
+        }
+    }
+    public void imvListener(){//尚未啟用 有5.0版本問題
         //圖片監聽
         //經由長按進行取消選取圖片動作
+
         imv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -243,19 +239,12 @@ public class NewMissionActivity extends AppCompatActivity {
         });
 
 
-
-
-        //此區為隱藏功能用--------------------------------------------------------------------------
-        if(PICTURE_GONE) {
-            textViewPicture.setVisibility(View.GONE);
-            buttonPicture.setVisibility(View.GONE);
-            buttonTakePicture.setVisibility(View.GONE);
-        }
     }
 
-
-    public  void limit (){
+    public void limitAndSet (){
         editTextName.addTextChangedListener(new TextLenghLimiter(60));
+        editTextWhere.addTextChangedListener(new TextLenghLimiter(60));
+        editTextNumber.addTextChangedListener(new TextLenghLimiter(60));
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------
@@ -472,7 +461,6 @@ public class NewMissionActivity extends AppCompatActivity {
             }
         }
     }
-
     //按完成鈕送出
     //防止空白資訊
     public void onClickOkOutputData(final View v){
@@ -526,7 +514,6 @@ public class NewMissionActivity extends AppCompatActivity {
                                             }
                                         });
                                 this.finish();
-
                             }
                         }
                     }
@@ -536,13 +523,14 @@ public class NewMissionActivity extends AppCompatActivity {
     }
     //按取消鈕返回
     public void onClickCancel(View v){
-
     finish();
     }
 
 }
 //
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 /*預備軍
     }
         public void onClickDate(View v) {
