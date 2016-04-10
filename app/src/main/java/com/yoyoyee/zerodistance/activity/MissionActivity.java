@@ -301,7 +301,7 @@ public class MissionActivity extends AppCompatActivity {
         Date dateTemp = mission.getCreateAt();
         timeS = dateFormat.format(dateTemp);
         //須在改過，改成執行時間
-        dateTemp = mission.finishedAt;
+        dateTemp = mission.expAt;
         timeT = dateFormat.format(dateTemp);
         where = mission.getPlace();
         whatPrice = mission.getReward();
