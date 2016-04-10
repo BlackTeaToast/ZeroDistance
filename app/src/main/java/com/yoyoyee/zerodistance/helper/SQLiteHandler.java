@@ -830,4 +830,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return QAs;
     }
 
+    public void deleteAllMissions() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(MissionsTable.TABLE_NAME, null, null);
+        db.close();
+    }
+
+    public void deleteAllGroups() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(GroupsTable.TABLE_NAME, null, null);
+        db.close();
+    }
+
 }

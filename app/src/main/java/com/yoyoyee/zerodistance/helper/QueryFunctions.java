@@ -768,5 +768,17 @@ public class QueryFunctions {
         return QAs;
     }
 
+    public static void deleteAllMissions() {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        db.delete(MissionsTable.TABLE_NAME, null, null);
+        db.close();
+    }
+
+    public static void deleteAllGroups() {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        db.delete(GroupsTable.TABLE_NAME, null, null);
+        db.close();
+    }
+
 
 }
