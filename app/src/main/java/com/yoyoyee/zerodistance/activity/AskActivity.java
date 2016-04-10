@@ -20,6 +20,7 @@ public class AskActivity extends AppCompatActivity {
     protected Button OK,NO;
     protected Boolean isAsk,isGroup;
     protected int group_mission_ID,q_a_ID;
+    protected String a_Acontenttext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,9 @@ public class AskActivity extends AppCompatActivity {
         isAsk=intent.getBooleanExtra("isAsk",true);
         group_mission_ID=intent.getIntExtra("group_missionID", 0);
         q_a_ID =intent.getIntExtra("q_a_ID",0);
-        findIDAndSetUse(isAsk);
+        a_Acontenttext=intent.getStringExtra("content");
+        findIDAndSetUse(isAsk,a_Acontenttext);
+
         NO.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +89,7 @@ public class AskActivity extends AppCompatActivity {
         });
 
     }
-    protected void findIDAndSetUse(Boolean isAsk){
+    protected void findIDAndSetUse(Boolean isAsk,String a_Acontenttext){
         TV = (TextView)findViewById(R.id.askTitle);
         ET = (EditText)findViewById(R.id.askEditText);
         OK = (Button)findViewById(R.id.askOk);
@@ -97,9 +100,28 @@ public class AskActivity extends AppCompatActivity {
             NO.setText(R.string.ask_for_cancle);
         }
         else{
-            TV.setText(R.string.ans_for_title);
+            try {
+                if (!a_Acontenttext.equals("null")){
+                    TV.setText(R.string.ans_for_had_ans);
+                }
+                else {
+                    TV.setText(R.string.ans_for_title);
+                }
+            }
+            catch (Exception ex){
+                TV.setText(R.string.ans_for_title);
+            };
             OK.setText(R.string.ans_for_ok);
             NO.setText(R.string.ans_for_cancle);
         }
+        try {
+            if (!a_Acontenttext.equals("null")){
+                ET.setText(a_Acontenttext);
+            }
+            else {
+            }
+        }
+        catch (Exception ex){
+        };
     }
 }

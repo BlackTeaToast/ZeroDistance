@@ -2,15 +2,19 @@ package com.yoyoyee.zerodistance.activity;
 
         import android.app.ProgressDialog;
         import android.content.Context;
+        import android.content.DialogInterface;
         import android.content.Intent;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
         import android.support.v7.app.ActionBar;
+        import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
         import android.support.v7.widget.Toolbar;
+        import android.view.Menu;
+        import android.view.MenuItem;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
@@ -41,7 +45,7 @@ public class QAActivity extends AppCompatActivity {
     private String publisher;
     private Intent intentData;
     private ArrayList<QA> DataQas;
-
+    private Toolbar.OnMenuItemClickListener onMenuItemClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,42 +53,39 @@ public class QAActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qa);
         //toolbar
         intentData =getIntent();
-        isGroup=intentData.getBooleanExtra("isGroup",true);
+        isGroup=intentData.getBooleanExtra("isGroup", true);
         group_or_mission_ID=intentData.getIntExtra("id", 1);
         publisher =intentData.getStringExtra("publisher");
         toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
+        onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_QAtoolbar:
+                        Intent intent = new Intent(QAActivity.this, AskActivity.class);
+                        intent.putExtra("isGroup", isGroup);
+                        intent.putExtra("group_missionID", group_or_mission_ID);
+                        intent.putExtra("isAsk", true);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        };
         setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(onMenuItemClick);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.qAndA_Title));
+
         //字體大小
-        size = 15;
+        size = SessionFunctions.getUserTextSize();
+        allTextSizeSet(size);
         //設定字型大小
-        GO = (Button)findViewById(R.id.for_Q_Button);
+
         //按發問紐換頁功能
-        if(userID.equals(publisher))
-        {
-         GO.setVisibility(Button.GONE);//發文者沒有發問功能
-        }
-        else {
-            GO.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(QAActivity.this, AskActivity.class);
-                    intent.putExtra("isGroup",isGroup);
-                    intent.putExtra("group_missionID", group_or_mission_ID);
-                    intent.putExtra("isAsk",true);
-                    startActivity(intent);
-                }
-            });
-        }
 
-        //回答按鍵
 
-        //listview start
-     //   String[] q_Q_Titletext = {"Q", "Q", "Q", "Q","Q", "Q"},a_A_Titletext = {"A", "A", "A", "A", "A", "A"};
-        //listview end
     }
-
     private void loadQandAData(boolean isGroup,int ID){
             if (isGroup) {
                 final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -121,11 +122,10 @@ public class QAActivity extends AppCompatActivity {
                     }
                 });
             }
+    }
         /**
          * 抓資料進入手機的QAtable裡面，並且使用動態新增出來↓↓↓↓↓↓↓↓
          */
-
-    }
     protected void printListView () {
         int list =DataQas.size();
         Toast.makeText(this, "讀取完成，總共"+String.valueOf(list)+"則", Toast.LENGTH_SHORT).show();
@@ -145,7 +145,7 @@ public class QAActivity extends AppCompatActivity {
             q_Qcontenttext[z] = q[z].question;
             a_Acontenttext [z]=q[z].answer;
         }
-        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/q_a_ID,15, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
+        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/q_a_ID,size, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
 
         LinearLayoutManager layoutManager;
@@ -153,6 +153,26 @@ public class QAActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mList.setLayoutManager(layoutManager);
         mList.setAdapter(QAAdapter);
+    }
+    protected void allTextSizeSet(float size){
+
+    }
+
+
+
+
+
+    //圖案發文
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        if (userID.equals(publisher)){
+            return false;
+        }
+        else{
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            return true;
+        }
+
     }
     @Override
     protected void onResume(){
