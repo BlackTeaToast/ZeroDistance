@@ -271,7 +271,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         return false;
     }
     public void fabtime(){
-        new CountDownTimer(1500,500){
+        new CountDownTimer(1000,500){
 
             @Override
             public void onFinish() {
