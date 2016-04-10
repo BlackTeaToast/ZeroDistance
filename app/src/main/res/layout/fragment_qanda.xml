@@ -38,7 +38,9 @@
                     android:layout_gravity="bottom"
                     android:layout_column="0"
                     android:layout_row="0"
-                    android:background="#00000000" />
+                    android:background="#00000000"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#7bd380" />
 
                 <TextView
                 android:layout_width="103dp"
@@ -51,7 +53,9 @@
                 android:layout_gravity="fill"
                 android:layout_rowSpan="2"
                 android:gravity="bottom"
-                    android:background="#00000000" />
+                    android:background="#00000000"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,9 +66,10 @@
                 android:layout_gravity="bottom|right"
                 android:layout_column="2"
                 android:layout_row="2"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_columnWeight="10"
-                android:background="#00000000" />
+                android:background="#00000000"
+                android:textColor="#d9cccc" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,9 +80,10 @@
                 android:layout_gravity="right"
                 android:layout_column="2"
                 android:layout_row="3"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_columnWeight="4"
-                android:background="#00000000" />
+                android:background="#00000000"
+                android:textColor="#d9cccc" />
 
             </GridLayout>
 
@@ -97,20 +103,30 @@
                     android:layout_row="5"
                     android:layout_column="0"
                     android:layout_columnSpan="3"
-                    android:background="#00000000" />
+                    android:background="#00000000"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
             </LinearLayout>
         </LinearLayout>
 
+
+
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="359dp"
             android:layout_height="match_parent"
             android:id="@+id/a_Card_all"
             android:background="#00000000">
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="#50000000"
+                android:id="@+id/theOPline_1"
+                android:layout_marginTop="10dp" />
 
             <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+                android:layout_height="60dp"
             android:columnCount="5"
             android:rowCount="6"
             android:rowOrderPreserved="false"
@@ -153,8 +169,9 @@
                 android:layout_gravity="right"
                 android:layout_column="3"
                 android:layout_row="3"
-                android:layout_marginRight="5dp"
-                android:background="#00000000" />
+                android:layout_marginRight="10dp"
+                android:background="#00000000"
+                android:textColor="#d9cccc" />
 
             </GridLayout>
 
@@ -163,7 +180,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/a_CardContent"
-                android:background="#00000000">
+                android:background="#00000000"
+                android:layout_marginRight="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
