@@ -8,7 +8,6 @@
     tools:context=".activity.MainActivity"
     android:background="#000000">
 
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
