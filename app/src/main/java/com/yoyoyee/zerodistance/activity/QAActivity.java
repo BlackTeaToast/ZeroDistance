@@ -34,17 +34,12 @@ package com.yoyoyee.zerodistance.activity;
 public class QAActivity extends AppCompatActivity {
     private float size;//定義所有文字大小
     private Button GO;
-   // QAndA Q =new QAndA();
-    private Boolean isQ=true;
-    private Boolean reload;
     private Boolean isGroup;
     private Toolbar toolbar;
     private String userID =QueryFunctions.getUserUid() ;
-    private Button A;
     private int group_or_mission_ID;
     private String publisher;
     private Intent intentData;
-    private SQLiteDatabase db ;
     private ArrayList<QA> DataQas;
 
 
@@ -61,22 +56,16 @@ public class QAActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.qAndA_Title));
-
         //字體大小
         size = 15;
         //設定字型大小
         GO = (Button)findViewById(R.id.for_Q_Button);
-
         //按發問紐換頁功能
-
-
         if(userID.equals(publisher))
         {
          GO.setVisibility(Button.GONE);//發文者沒有發問功能
-
         }
         else {
-
             GO.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {

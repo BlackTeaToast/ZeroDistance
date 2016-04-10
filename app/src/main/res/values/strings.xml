@@ -32,7 +32,7 @@
     <string name="where_new_group">相約在哪：</string>
     <string name="errorname_new_group">尚未輸入揪團名稱</string>
     <string name="errorpeoplenumber_new_group">還沒寫要揪幾人</string>
-    <string name="errorwhere_new_group">還沒說到哪集合歐</string>
+    <string name="errorwhere_new_group">You don\'t set meeting place</string>
     <string name="errorcontent_new_group">還沒輸入要做什麼歐</string>
 
     <string name="press_new_mission_and_group">緊急程度：</string>
@@ -60,6 +60,14 @@
     <string name="idontwantpicture_new_mission_and_group">已取消選取</string>
     <string name="updata_new_mission_and_group">上傳成功</string>
     <string name="errorupdata_new_mission_and_group">上傳失敗</string>
+
+
+
+
+
+
+
+
     <string-array name="press_new_mission_and_group">
         <item>普通</item>
         <item>緊急</item>
@@ -99,7 +107,7 @@
 
     <string-array name="languageSppingArrary">
         <item>中文</item>
-        <item>English</item>
+        <item>英文</item>
     </string-array>
 
     <!--吱吱吱之-->

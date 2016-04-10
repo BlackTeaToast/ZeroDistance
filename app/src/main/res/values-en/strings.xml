@@ -37,7 +37,7 @@
     <string name="where_new_group">Meeting Place：</string>
     <string name="errorname_new_group">Your group name is space</string>
     <string name="errorpeoplenumber_new_group">How many people?</string>
-    <string name="errorwhere_new_group">You don't set meeting place</string>
+    <string name="errorwhere_new_group">You don\'t set meeting place</string>
     <string name="errorcontent_new_group">What are you want to do?</string>
 
     <string name="press_new_mission_and_group">Emergency Level：</string>
