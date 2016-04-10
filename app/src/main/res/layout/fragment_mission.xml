@@ -15,7 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/refresh_layout">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"
@@ -26,7 +29,7 @@
             android:layout_column="1"
             android:foregroundGravity="top">
         </android.support.v7.widget.RecyclerView>
-
+        </android.support.v4.widget.SwipeRefreshLayout>
     </GridLayout>
 
 

@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +23,15 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
+import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.RecyclerItemClickListener;
+import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.CardViewAdapter;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
@@ -36,15 +43,17 @@ import java.util.Date;
 public class fragment_mission extends Fragment {
     RecyclerView mList;
     FloatingActionButton fab;
+    private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
+    CardViewAdapter CardViewAdapter;
+    String[] detial;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
-       // Drawable[] missiondangerous={Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"), Drawable.createFromPath("@android:drawable/star_big_on"),Drawable.createFromPath("@android:drawable/star_big_on")} ;
         ArrayList<Mission> missions = QueryFunctions.getUnfinishedMissions();
         SessionFunctions SF = new SessionFunctions();
         int[] id = new int[missions.size()];//任務id
         String[] title = new String[missions.size()];//任務標題
-        String[] detial = new String[missions.size()];//任務內容or獎勵
+        detial = new String[missions.size()];//任務內容or獎勵
         Date[] expAt = new Date[missions.size()];//任務結束時間
         int[] needNum = new int[missions.size()]; //需要人數
         int[] currentNum = new int[missions.size()];//已有人數
@@ -74,7 +83,7 @@ public class fragment_mission extends Fragment {
             missionnumber[i]=i;
         }
         try {
-            CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
+            CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
@@ -99,11 +108,24 @@ public class fragment_mission extends Fragment {
         });
 
         //漂浮
+
+        // 頂端向下滑更新
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                CardViewAdapter.setItemCount(0);
+                mList.scrollToPosition(0);
+                CardViewAdapter.notifyDataSetChanged();
+                updataphoneDB();
+                mList.setAdapter(CardViewAdapter);
+                Toast.makeText(getContext(), "更新", Toast.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        // 頂端向下滑更新
+
         return v;
-
-        //listView 典籍
-
-        //listView 典籍
     }
     //設置字體大小
     private void setFontSize(){
@@ -111,4 +133,41 @@ public class fragment_mission extends Fragment {
         SessionFunctions SF= new SessionFunctions();
 
     }
+    private void updataphoneDB(){//更新手機資料
+        ClientFunctions.updateMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                SQLiteHandler db = AppController.getDB();
+                String TAG = AppController.class.getSimpleName();
+                ArrayList<Mission> missions = db.getMissions();
+                if (missions.size() > 0) {
+                    Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
+                }
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
+        ClientFunctions.updateGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                SQLiteHandler db = AppController.getDB();
+                String TAG = AppController.class.getSimpleName();
+                ArrayList<Group> Group = db.getGroups();
+                if (Group.size() > 0) {
+                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
+                }
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
+
+    }
+
 }

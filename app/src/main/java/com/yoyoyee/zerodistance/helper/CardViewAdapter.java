@@ -32,7 +32,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private Date[] expAtD;
     private Calendar[] date ;
     private int fragment;
-
+    private int Count;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView missionDetial, missionName, missionnumber, datetime, expAt, peoplenumber;
         public Button missionbutton;
@@ -64,6 +64,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 //處理日期
             }
             setFontSize(v);//設定字體大小
+
         }
 
     }
@@ -109,11 +110,19 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        return mData.length;
+        Count = mData.length;//長度
+        return Count;
     }
+    public int setItemCount(int Count){
+        this.Count = Count;
+        return Count;
+    }
+
+
+
+
     //設置字體大小
     private void setFontSize(View v){
         TextView textViewTemp;

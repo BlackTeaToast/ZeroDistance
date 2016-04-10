@@ -12,17 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="@color/ColorPrimaryToolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:textColor="@color/ColorTextToolbar">
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="@string/mainpage"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="14" />
+
 
         <!--<android.support.v7.widget.Toolbar-->
         <!--android:id="@+id/toolbar"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:layout_height="wrap_content"-->
         <!--android:background="?attr/colorPrimary"-->
-        <!--app:layout_scrollFlags="scroll|enterAlways"-->
         <!--app:popupTheme="@style/AppTheme.PopupOverlay">-->
-
         <!--</android.support.v7.widget.Toolbar>-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+
+
 
         <com.yoyoyee.zerodistance.helper.SlidingTabLayout
             android:id="@+id/tabs"
