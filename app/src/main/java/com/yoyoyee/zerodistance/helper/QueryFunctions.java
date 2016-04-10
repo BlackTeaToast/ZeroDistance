@@ -7,11 +7,15 @@ import android.util.Log;
 
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
+import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
+import com.yoyoyee.zerodistance.helper.table.GroupAcceptUserTable;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
+import com.yoyoyee.zerodistance.helper.table.MissionAcceptUserTable;
 import com.yoyoyee.zerodistance.helper.table.MissionsTable;
 import com.yoyoyee.zerodistance.helper.table.QATable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
@@ -790,5 +794,132 @@ public class QueryFunctions {
         db.close();
     }
 
+    public static void updateMissionAcceptUser(ArrayList<MissionAccept> maList) {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        db.beginTransaction();
+        try {
+            db.delete(MissionAcceptUserTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<maList.size(); i++) {
+                values.put(MissionAcceptUserTable.KEY_MISSION_ID, maList.get(i).missionID); // Name
+                values.put(MissionAcceptUserTable.KEY_USER_UID, maList.get(i).userUid); // Email
+                values.put(MissionAcceptUserTable.KEY_USER_NAME, maList.get(i).userName); // Email
+                values.put(MissionAcceptUserTable.KEY_ACCEPTED_AT, dateFormat.format(maList.get(i).acceptedAt)); // Created At
+
+                // Inserting Row
+                db.insert(MissionAcceptUserTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateMissionAcceptUser: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all MissionAcceptUser info from SQLite");
+        db.close();
+
+    }
+
+    public static void updateGroupAcceptUser(ArrayList<GroupAccept> gaList) {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        db.beginTransaction();
+        try {
+            db.delete(GroupAcceptUserTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<gaList.size(); i++) {
+                values.put(GroupAcceptUserTable.KEY_GROUP_ID, gaList.get(i).groupID); // Name
+                values.put(GroupAcceptUserTable.KEY_USER_UID, gaList.get(i).userUid); // Email
+                values.put(GroupAcceptUserTable.KEY_USER_NAME, gaList.get(i).userName); // Email
+                values.put(GroupAcceptUserTable.KEY_ACCEPTED_AT, dateFormat.format(gaList.get(i).acceptedAt)); // Created At
+
+                // Inserting Row
+                db.insert(GroupAcceptUserTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateGroupAcceptUser: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all GroupAcceptUser info from SQLite");
+        db.close();
+
+    }
+
+    public static ArrayList<MissionAccept> getMissionAceeptUser() {
+
+        ArrayList<MissionAccept> maList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + MissionAcceptUserTable.TABLE_NAME;
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                MissionAccept ma = new MissionAccept();
+                ma.missionID = cursor.getInt(MissionAcceptUserTable.COLUMNS_NUM_MISSION_ID);
+                ma.userUid = cursor.getString(MissionAcceptUserTable.COLUMNS_NUM_USER_UID);
+                ma.userName = cursor.getString(MissionAcceptUserTable.COLUMNS_NUM_USER_NAME);
+                ma.acceptedAt = dateFormat.parse(cursor.getString(MissionAcceptUserTable.COLUMNS_NUM_ACCEPTED_AT));
+
+                maList.add(ma);
+                Log.d(TAG, "getMissionAcceptUser: " + ma.missionID + ", " + ma.userUid + ", " + ma.userName + ", "
+                        + ma.acceptedAt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return maList;
+    }
+
+    public static ArrayList<GroupAccept> getGroupAceeptUser() {
+
+        ArrayList<GroupAccept> gaList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + GroupAcceptUserTable.TABLE_NAME;
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                GroupAccept ga = new GroupAccept();
+                ga.groupID = cursor.getInt(GroupAcceptUserTable.COLUMNS_NUM_GROUP_ID);
+                ga.userUid = cursor.getString(GroupAcceptUserTable.COLUMNS_NUM_USER_UID);
+                ga.userName = cursor.getString(GroupAcceptUserTable.COLUMNS_NUM_USER_NAME);
+                ga.acceptedAt = dateFormat.parse(cursor.getString(GroupAcceptUserTable.COLUMNS_NUM_ACCEPTED_AT));
+
+                gaList.add(ga);
+                Log.d(TAG, "getGroupAcceptUser: " + ga.groupID + ", " + ga.userUid + ", " + ga.userName + ", "
+                        + ga.acceptedAt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return gaList;
+    }
 
 }
