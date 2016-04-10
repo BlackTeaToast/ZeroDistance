@@ -167,6 +167,8 @@
     <string name="rate_personal">個別評分</string>
     <string name="is_joined">參加</string>
     <string name="not_joined">不參加</string>
+    <string name="is_already_joined">已參加</string>
+    <string name="not_aleady_joined">已取消參加</string>
 
     <!--=========================================================-->
 

@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -43,6 +45,7 @@ public class MissionActivity extends AppCompatActivity {
     int id ;//任務的編號 ; 錯誤則傳回0
     private Mission mission;//拿來抓misson
 
+    private Toast toast;//改善參加鈕的toast 重複出現問題
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
     private TextView need;
@@ -152,15 +155,32 @@ public class MissionActivity extends AppCompatActivity {
 
         //參加或取消
         joinButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (joined) {
                     joined = false;
                     joinButton.setText(R.string.is_joined);
+                    if(toast == null)
+                         toast.makeText(v.getContext(), R.string.not_aleady_joined ,Toast.LENGTH_SHORT).show();
+                    else {
+                        toast.cancel();
+                        toast.makeText(v.getContext(), R.string.not_aleady_joined ,Toast.LENGTH_SHORT).show();
+
+                    }
+
                 } else {
                     joined = true;
                     joinButton.setText(R.string.not_joined);
+                    if(toast == null)
+                        toast.makeText(v.getContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                    else {
+                        toast.cancel();
+                        toast.makeText(v.getContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+
             }
         });
 

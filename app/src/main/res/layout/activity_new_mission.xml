@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnCount="14"
-        android:rowCount="101">
+        android:rowCount="101"
+        android:background="@drawable/repeat_cube_bg">
 
         <include
             android:id="@+id/tool_bar"
@@ -37,7 +38,8 @@
             android:layout_margin="0dp"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -75,7 +77,8 @@
             android:layout_margin="0dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <Spinner
             android:layout_width="190dp"
@@ -94,7 +97,8 @@
             android:layout_marginRight="15dp"
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,7 +118,8 @@
             android:layout_margin="0dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <Spinner
             android:layout_width="190dp"
@@ -133,7 +138,8 @@
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -153,7 +159,8 @@
             android:layout_margin="0dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <EditText
             android:layout_width="match_parent"
@@ -201,7 +208,8 @@
             android:layout_margin="0dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -216,7 +224,9 @@
             android:layout_gravity="left|center"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#452e51"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -231,7 +241,9 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="0dp" />
+            android:layout_marginLeft="0dp"
+            android:background="#452e51"
+            android:textColor="#ffffff" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -248,7 +260,8 @@
             android:layout_alignParentStart="true"
             android:layout_columnSpan="7"
             android:layout_gravity="left|center"
-            android:layout_margin="15dp" />
+            android:layout_margin="15dp"
+            android:background="#c7ffffff" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -280,7 +293,8 @@
             android:layout_alignParentStart="true"
             android:layout_columnSpan="14"
             android:layout_gravity="left|center"
-            android:layout_margin="15dp" />
+            android:layout_margin="15dp"
+            android:background="#c7ffffff" />
 
         <EditText
             android:layout_width="match_parent"
@@ -315,7 +329,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#c7ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -331,7 +346,9 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
-            android:onClick="onClickPickimg" />
+            android:onClick="onClickPickimg"
+            android:background="#452e51"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -345,7 +362,9 @@
             android:layout_columnSpan="7"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="#452e51"
+            android:textColor="#ffffff" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -394,7 +413,9 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
-            android:onClick="onClickOkOutputData" />
+            android:onClick="onClickOkOutputData"
+            android:background="#452e51"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -410,7 +431,9 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:layout_columnSpan="7"
-            android:onClick="onClickCancel" />
+            android:onClick="onClickCancel"
+            android:textColor="#ffffff"
+            android:background="#452e51" />
 
     </GridLayout>
 
