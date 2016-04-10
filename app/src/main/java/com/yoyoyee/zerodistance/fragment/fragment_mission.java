@@ -44,6 +44,19 @@ import java.util.Date;
  * Created by 楊霖村 on 2016/4/4.
  */
 public class fragment_mission extends Fragment implements View.OnTouchListener {
+
+    //
+
+    int[] id;
+    String[] title;
+    Date[] expAt;
+    int[] needNum;
+    int[] currentNum;
+    boolean[] missiondangerous;
+    boolean becontext;
+    ArrayList<Mission> missions;
+    int missionnumber[];
+    //
     RecyclerView mList;
     FloatingActionButton fab;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
@@ -54,43 +67,17 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
-        ArrayList<Mission> missions = QueryFunctions.getUnfinishedMissions();
+        missions  = QueryFunctions.getUnfinishedMissions();
         SessionFunctions SF = new SessionFunctions();
+        getvlue();
 
-        int[] id = new int[missions.size()];//任務id
-        String[] title = new String[missions.size()];//任務標題
-        detial = new String[missions.size()];//任務內容or獎勵
-        Date[] expAt = new Date[missions.size()];//任務結束時間
-        int[] needNum = new int[missions.size()]; //需要人數
-        int[] currentNum = new int[missions.size()];//已有人數
-        boolean[] missiondangerous = new boolean[missions.size()];//任務是否緊急
-        boolean becontext = SF.getbecontext();//true 為內容 false為獎勵
-        for(int i = 0;i <missions.size();i++){
-            id[i]= missions.get(i).id;
-            title[i]= missions.get(i).title;
-            if(becontext){
-                detial[i] = missions.get(i).content;
-            }else{
-                detial[i] = missions.get(i).reward;
-            }
-            expAt[i] = missions.get(i).expAt;
-            needNum[i] = missions.get(i).needNum;
-            currentNum[i] = missions.get(i).currentNum;
-            missiondangerous[i] = missions.get(i).isUrgent;
-            title[i]=limitString(title[i], 0);//0為title , 1為detial
-            detial[i]=limitString(detial[i], 1);
-        }
-        int missionnumber[]=new int[title.length];
-        for(int i=0;i<title.length;i++){
-            missionnumber[i]=i;
-        }
         try {
             CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
-            mList.setAdapter(CardViewAdapter);
+            //mList.setAdapter(CardViewAdapter);  //設定內容
             mList.setOnTouchListener(this);//監聽動作
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,6 +168,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
+                getvlue();
                 mList.setAdapter(CardViewAdapter);
             }
 
@@ -199,6 +187,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
+                getvlue();
                 mList.setAdapter(CardViewAdapter);
             }
 
@@ -294,4 +283,33 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         }.start();
     }
 
+    public void getvlue(){
+    id = new int[missions.size()];//任務id
+     title = new String[missions.size()];//任務標題
+     detial = new String[missions.size()];//任務內容or獎勵
+     expAt = new Date[missions.size()];//任務結束時間
+     needNum = new int[missions.size()]; //需要人數
+     currentNum = new int[missions.size()];//已有人數
+     missiondangerous = new boolean[missions.size()];//任務是否緊急
+     becontext = SessionFunctions.getbecontext();//true 為內容 false為獎勵
+     for(int i = 0;i <missions.size();i++){
+         id[i]= missions.get(i).id;
+         title[i]= missions.get(i).title;
+         if(becontext){
+             detial[i] = missions.get(i).content;
+         }else{
+             detial[i] = missions.get(i).reward;
+         }
+         expAt[i] = missions.get(i).expAt;
+         needNum[i] = missions.get(i).needNum;
+         currentNum[i] = missions.get(i).currentNum;
+         missiondangerous[i] = missions.get(i).isUrgent;
+         title[i]=limitString(title[i], 0);//0為title , 1為detial
+         detial[i]=limitString(detial[i], 1);
+     }
+     missionnumber=new int[title.length];
+     for(int i=0;i<title.length;i++){
+         missionnumber[i]=i;
+     }
+ }
 }
