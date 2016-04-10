@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("主頁面");
+
+        actionBar.setTitle("ID: "+SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
 //設置toolbar標題
 
         // Assigning ViewPager View and setting the adapter

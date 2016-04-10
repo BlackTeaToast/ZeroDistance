@@ -122,7 +122,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
 
 
-
     //設置字體大小
     private void setFontSize(View v){
         TextView textViewTemp;
