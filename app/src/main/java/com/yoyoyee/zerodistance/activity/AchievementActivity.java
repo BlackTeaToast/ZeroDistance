@@ -44,6 +44,12 @@ public class AchievementActivity extends AppCompatActivity {
 
         //==================
 
+        //設置圖片
+        setImage();
+
+    }
+
+    private void setImage(){
         if(hardToWork)
             imageView1.setImageResource(R.drawable.price_hard_to_work);
         else
@@ -58,6 +64,6 @@ public class AchievementActivity extends AppCompatActivity {
             imageView3.setImageResource(R.drawable.price_emergency);
         else
             imageView3.setImageResource(R.drawable.price_emergency_null);
-
     }
+
 }
