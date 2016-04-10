@@ -144,7 +144,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
      * 按下按鈕後，會進行判斷，是否為發文者，是則可以進行回文，不適則否
      * @param v
      */
-    public void layOutClick(final View v, final int qaID,String a_Acontenttext,String userUID,ViewHolder hoder){
+    public void layOutClick(final View v, final int qaID,final String a_Acontenttext,String userUID,ViewHolder hoder){
         String myUID=QueryFunctions.getUserUid();
         if (publisher) {
             if (a_Acontenttext.equals("null")) {
@@ -156,7 +156,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case (R.id.popans_nogroup):
-                                intentGO(v,qaID);
+                                intentGO(v,qaID,a_Acontenttext);
                                 break;
                             case (R.id.popdel_nogroup):
 
@@ -175,7 +175,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case (R.id.popedit_hadans_group):
-                                intentGO(v,qaID);
+                                intentGO(v,qaID,a_Acontenttext);
                                 break;
                             case (R.id.popdel_hadans_group):
 
@@ -209,7 +209,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             //Toast.makeText(v.getContext(), "我是看的人", Toast.LENGTH_SHORT).show();
     }
 
-    private void intentGO(View v,int qaID){
+    private void intentGO(View v,int qaID,String a_Acontenttext){
         Intent intent = new Intent(v.getContext(), AskActivity.class);
         intent.putExtra("isGroup",isGroup);
         intent.putExtra("isAsk",false);
