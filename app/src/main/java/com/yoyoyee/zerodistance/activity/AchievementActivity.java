@@ -26,6 +26,9 @@ public class AchievementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_achievement);
         //findViewById
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
+        imageView1 = (ImageView)findViewById(R.id.achievement1);
+        imageView2 = (ImageView)findViewById(R.id.achievement2);
+        imageView3 = (ImageView)findViewById(R.id.achievement3);
 
 
 //設置toolbar標題
@@ -41,10 +44,20 @@ public class AchievementActivity extends AppCompatActivity {
 
         //==================
 
-        if(hardToWork){
+        if(hardToWork)
+            imageView1.setImageResource(R.drawable.price_hard_to_work);
+        else
+            imageView1.setImageResource(R.drawable.price_hard_to_work_null);
 
-        }
+        if(thunder)
+            imageView2.setImageResource(R.drawable.price_thunder);
+        else
+            imageView2.setImageResource(R.drawable.price_thunder_null);
 
+        if(enmergency)
+            imageView3.setImageResource(R.drawable.price_emergency);
+        else
+            imageView3.setImageResource(R.drawable.price_emergency_null);
 
     }
 }
