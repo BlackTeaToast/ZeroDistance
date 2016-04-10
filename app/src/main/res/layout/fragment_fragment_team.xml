@@ -23,20 +23,13 @@
             android:layout_row="0"
             android:layout_columnSpan="3"
             android:layout_rowSpan="3">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
 
 
-            <GridLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:rowCount="10"
-                android:columnCount="5"
-                android:clickable="false"
-                android:columnOrderPreserved="false"
-                android:contextClickable="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:touchscreenBlocksFocus="false"
-                android:useDefaultMargins="true">
 
 
                 <TextView
@@ -51,8 +44,21 @@
                     android:layout_rowSpan="2"
                     android:layout_columnSpan="2"
                     android:maxLines="1"
-                    android:ellipsize="marquee" />
-
+                    android:ellipsize="marquee"
+                    android:layout_weight="0.97" />
+            //上左
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rowCount="2"
+                android:columnCount="2"
+                android:clickable="false"
+                android:columnOrderPreserved="false"
+                android:contextClickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:touchscreenBlocksFocus="false"
+                android:useDefaultMargins="true">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +66,7 @@
                     android:text="@string/date"
                     android:id="@+id/dateread"
                     style="@style/cardtext"
-                    android:layout_column="3"
+                    android:layout_column="0"
                     android:layout_row="0" />
 
                 <TextView
@@ -69,7 +75,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="3/30"
                     android:id="@+id/datetime"
-                    android:layout_column="4"
+                    android:layout_column="1"
                     android:layout_row="0"
                     android:layout_rowWeight="0"
                     android:layout_rowSpan="1"
@@ -77,7 +83,8 @@
                     android:clickable="false"
                     android:gravity="center_vertical"
                     style="@style/cardtext"
-                    android:layout_gravity="left" />
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,7 +94,7 @@
                     android:id="@+id/timeread"
                     android:layout_gravity="left"
                     style="@style/cardtext"
-                    android:layout_column="3"
+                    android:layout_column="0"
                     android:layout_row="1" />
 
                 <TextView
@@ -97,9 +104,11 @@
                     android:text="06:20"
                     android:id="@+id/expAt"
                     style="@style/cardtext"
-                    android:layout_column="4"
-                    android:layout_row="1" />
-            </GridLayout>//上半部
+                    android:layout_column="1"
+                    android:layout_row="1"
+                    android:layout_marginRight="15dp" />
+            </GridLayout>//上右
+        </LinearLayout>//上半部
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
