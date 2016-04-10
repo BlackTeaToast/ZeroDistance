@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/noans_group">
+        <item
+            android:id="@+id/popans_nogroup"
+            android:title="@string/ans_pop" />
+        <item
+            android:id="@+id/popdel_nogroup"
+            android:title="@string/del_pop"/>
+    </group>
+    <group android:id="@+id/hadans_group">
+        <item
+            android:id="@+id/popedit_hadans_group"
+            android:title="@string/edit_pop" />
+        <item
+            android:id="@+id/popdel_hadans_group"
+            android:title="@string/del_pop"/>
+    </group>
+
+</menu>

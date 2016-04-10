@@ -50,11 +50,11 @@
             android:text="成功完成\n10個任務"
             android:id="@+id/textView2"
             android:textSize="20dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="50dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/achievement1"
             android:layout_toEndOf="@+id/achievement1"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="40dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/achievement3"
             android:layout_toStartOf="@+id/achievement3"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="30dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,11 +75,11 @@
             android:text="在截止時限內\n完成10個任務"
             android:id="@+id/textView6"
             android:textSize="20dp"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="50dp"
             android:layout_alignBottom="@+id/achievement2"
             android:layout_toRightOf="@+id/achievement2"
             android:layout_toEndOf="@+id/achievement2"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="25dp" />
 
     </RelativeLayout>
 
