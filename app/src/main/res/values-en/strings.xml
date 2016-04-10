@@ -41,6 +41,7 @@
     <string name="errorcontent_new_group">What are you want to do?</string>
 
     <string name="press_new_mission_and_group">Emergency Level：</string>
+
     <string name="peoplenumber_new_mission_and_group">Number of People：</string>
     <string name="buttomdate_new_mission_and_group">Choose Date</string>
     <string name="buttomtime_new_mission_and_group">Choose Time</string>

@@ -32,7 +32,7 @@
     <string name="where_new_group">相約在哪：</string>
     <string name="errorname_new_group">尚未輸入揪團名稱</string>
     <string name="errorpeoplenumber_new_group">還沒寫要揪幾人</string>
-    <string name="errorwhere_new_group">You don\'t set meeting place</string>
+    <string name="errorwhere_new_group">尚未輸入相約地點</string>
     <string name="errorcontent_new_group">還沒輸入要做什麼歐</string>
 
     <string name="press_new_mission_and_group">緊急程度：</string>
@@ -117,7 +117,7 @@
     <string name="ans_for_title">回答</string>
     <string name="ans_for_ok">確認</string>
     <string name="ans_for_cancle">取消</string>
-    <string name="qAndA_Title">QandA</string>
+    <string name="qAndA_Title">Q and A</string>
     <string name="answer_for_title">回答</string>
     <string name="qanda_Q">Q：</string>
     <string name="qanda_A">A：</string>
