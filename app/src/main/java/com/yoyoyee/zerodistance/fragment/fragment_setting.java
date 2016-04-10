@@ -170,24 +170,24 @@ public class fragment_setting extends Fragment {
         TextView textViewTemp;
         SessionFunctions SF= new SessionFunctions();
         textViewTemp = (TextView) v.findViewById(R.id.languageread);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById (R.id.showstyleread);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById(R.id.textsize);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
 //        textViewTemp = (TextView) v.findViewById(R.id.userid);
 //        textViewTemp.setTextSize(SF.getUserTextSize()-5);
         textViewTemp =(RadioButton) v.findViewById(R.id.showcontent);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (RadioButton) v.findViewById(R.id.showpay);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =(RadioButton) v.findViewById(R.id.textsizeLRB);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (RadioButton) v.findViewById(R.id.textsizeMRB);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =  (RadioButton) v.findViewById(R.id.textsizeSRB);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (Button) v.findViewById(R.id.Sign_outbut);
-        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
     }
 }

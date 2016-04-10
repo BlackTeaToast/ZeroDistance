@@ -15,6 +15,7 @@ import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.GroupActivity;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.CardViewAdapter;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
@@ -75,6 +76,7 @@ public class fragment_team extends Fragment {
             //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
             //                        .setAction("Action", null).show();
             Intent in = new Intent(getActivity(), GroupActivity.class);
+            in.putExtra("id", SessionFunctions.getUserUid());
             startActivity(in);
         }
     });

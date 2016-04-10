@@ -184,7 +184,7 @@ public class SlidingTabLayout  extends HorizontalScrollView {
             }
 
             tabTitleView.setText(adapter.getPageTitle(i));
-            tabTitleView.setTextSize(8+(SF.getUserTextSize()/5)); //字體
+            tabTitleView.setTextSize(10+(SF.getUserTextSize()/5)); //字體
             tabView.setOnClickListener(tabClickListener);
             String desc = mContentDescriptions.get(i, null);
             if (desc != null) {

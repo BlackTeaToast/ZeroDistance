@@ -105,7 +105,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //                        .setAction("Action", null).show();
                 Intent in = new Intent(getActivity(), NewMissionActivity.class);
-
+                in.putExtra("id", SessionFunctions.getUserUid());
+                Toast.makeText(getContext(), ""+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
                 startActivity(in);
             }
         });
@@ -213,39 +214,39 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         switch ((int)SessionFunctions.getUserTextSize()) {
             case 20:{
                 if(type==0){
-                    if(context.length()>10){//限制字數
-                        context = (String)context.subSequence(0, 9)+"...";
-                        Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
+                    if(context.length()>4){//限制字數
+                        context = (String)context.subSequence(0, 4)+"...";
+                      //  Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
                     }
                 }
                 if(type==1){
-                    if(context.length()>33){//限制字數
-                        context = (String)context.subSequence(0, 33)+"...";
+                    if(context.length()>14){//限制字數
+                        context = (String)context.subSequence(0, 14)+"...";
                     }
                 }
                 break;}
             case 15:{
                 if(type==0){
-                    if(context.length()>12){//限制字數
-                        context = (String)context.subSequence(0, 7)+"...";
+                    if(context.length()>6){//限制字數
+                        context = (String)context.subSequence(0, 6)+"...";
                     }
                 }
                 if(type==1){
-                    if(context.length()>39){//限制字數
-                        context = (String)context.subSequence(0, 39)+"...";
+                    if(context.length()>20){//限制字數
+                        context = (String)context.subSequence(0, 20)+"...";
                     }
                 }
 
                 break;}
             case 10:{
                 if(type==0){
-                    if(context.length()>14){//限制字數
-                        context = (String)context.subSequence(0, 14)+"...";
+                    if(context.length()>11){//限制字數
+                        context = (String)context.subSequence(0, 11)+"...";
                     }
                 }
                 if(type==1){
-                    if(context.length()>45){//限制字數
-                        context = (String)context.subSequence(0, 45)+"...";
+                    if(context.length()>22){//限制字數
+                        context = (String)context.subSequence(0, 22)+"...";
                     }
                 }
                 break;}
