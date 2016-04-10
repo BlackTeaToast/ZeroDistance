@@ -43,7 +43,7 @@ public class QAActivity extends AppCompatActivity {
     private Button A;
     private int group_or_mission_ID;
     private String publisher;
-    private Intent intentData =getIntent();
+    private Intent intentData;
     private SQLiteDatabase db ;
     private ArrayList<QA> DataQas;
 
@@ -53,13 +53,10 @@ public class QAActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qa);
         //toolbar
-        /*
+        intentData =getIntent();
         isGroup=intentData.getBooleanExtra("isGroup",true);
         group_or_mission_ID=intentData.getIntExtra("id", 1);
-        publisher =intentData.getStringExtra("publisher");*/
-        isGroup=true;
-        group_or_mission_ID =1;
-        publisher=QueryFunctions.getUserUid();
+        publisher =intentData.getStringExtra("publisher");
         toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

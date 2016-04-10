@@ -168,7 +168,6 @@ public class MissionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isGroup = false;//是任務
                 String publisher  = mission.getUserID();//發布者ID
-
                 Intent it = new Intent();
                 it.setClass(MissionActivity.this, QAActivity.class);
                 it.putExtra("isGroup", isGroup);
