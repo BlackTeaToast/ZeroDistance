@@ -53,9 +53,12 @@ public class QAActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qa);
         //toolbar
-       /* isGroup=intentData.getBooleanExtra("isGroup",true);
-        group_or_mission_ID=intentData.getIntExtra("id", 0);
+        /*
+        isGroup=intentData.getBooleanExtra("isGroup",true);
+        group_or_mission_ID=intentData.getIntExtra("id", 1);
         publisher =intentData.getStringExtra("publisher");*/
+        isGroup=true;
+        group_or_mission_ID =1;
 
         toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +72,7 @@ public class QAActivity extends AppCompatActivity {
 
         //按發問紐換頁功能
 
+
         if(userID.equals(publisher))
         {
          GO.setVisibility(Button.GONE);//發文者沒有發問功能
@@ -80,8 +84,8 @@ public class QAActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(QAActivity.this, AskActivity.class);
-                    intent.putExtra("isGroup",true);
-                    intent.putExtra("ID", 1);
+                    intent.putExtra("isGroup",isGroup);
+                    intent.putExtra("group_missionID", group_or_mission_ID);
                     startActivity(intent);
                 }
             });
@@ -102,8 +106,6 @@ public class QAActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        TextView print = (TextView) findViewById(R.id.textView3);
-                        print.setText(response);
                         DataQas = QueryFunctions.getQAs();
                         printListView();
                     }
@@ -111,28 +113,24 @@ public class QAActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(String response) {
                         progressDialog.dismiss();
-                        TextView print = (TextView) findViewById(R.id.textView3);
-                        print.setText(response);
+                        Toast.makeText(QAActivity.this, "讀取失敗，請確認網路連線", Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else {
+            } else if(!isGroup)  {
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.show(QAActivity.this,"讀取中","請稍後",true);
+                progressDialog.show();
                 ClientFunctions.updateMissionQA(ID, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
                         DataQas = QueryFunctions.getQAs();
                         printListView();
-                        TextView print = (TextView) findViewById(R.id.textView3);
-                        print.setText(response);
                     }
 
                     @Override
                     public void onErrorResponse(String response) {
                         progressDialog.dismiss();
-                        TextView print = (TextView) findViewById(R.id.textView3);
-                        print.setText(response);
+                        Toast.makeText(QAActivity.this, "讀取失敗，請確認網路連線", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -143,7 +141,7 @@ public class QAActivity extends AppCompatActivity {
     }
     protected void printListView () {
         int list =DataQas.size();
-        GO.setText(String.valueOf(list));
+        Toast.makeText(this, "讀取完成，總共"+String.valueOf(list)+"則", Toast.LENGTH_SHORT).show();
         QA[] q =new QA[list];
         String[] q_Qtimetext =new String[list]; //= {"1/11 1:11", "12/11 11:11", "xx", "48/43", "154/45", "12/12"}, q_Qnametext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
         String[] q_Qnametext =new String[list];
@@ -158,7 +156,7 @@ public class QAActivity extends AppCompatActivity {
             q_Qcontenttext[z] = q[z].question;
             a_Acontenttext [z]=q[z].answer;
         }
-        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/ userID.equals(publisher),q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
+        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/15, userID.equals(publisher),q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
 
         LinearLayoutManager layoutManager;
@@ -170,7 +168,7 @@ public class QAActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        loadQandAData(true, 1);
+        loadQandAData(isGroup, group_or_mission_ID);
     }
 
 

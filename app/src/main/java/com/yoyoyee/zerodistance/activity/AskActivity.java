@@ -40,7 +40,7 @@ public class AskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =getIntent();
                 if (intent.getBooleanExtra("isGroup",false)) {
-                    ClientFunctions.publishGroupQA(intent.getIntExtra("ID", 0), ET.getText().toString(), new ClientResponse() {
+                    ClientFunctions.publishGroupQA(intent.getIntExtra("group_missionID", 0), ET.getText().toString(), new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(AskActivity.this,"發問成功", Toast.LENGTH_SHORT).show();
@@ -54,9 +54,9 @@ public class AskActivity extends AppCompatActivity {
                     });
 
                 }
-                else
+                else if (intent.getBooleanExtra("isGroup",false))
                 {
-                    ClientFunctions.publishMissionQA(intent.getIntExtra("ID", 0), ET.getText().toString(), new ClientResponse() {
+                    ClientFunctions.publishMissionQA(intent.getIntExtra("group_missionID", 0), ET.getText().toString(), new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(AskActivity.this,"發問成功", Toast.LENGTH_SHORT).show();

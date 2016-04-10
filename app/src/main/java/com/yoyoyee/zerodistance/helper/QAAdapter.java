@@ -21,15 +21,15 @@ import com.yoyoyee.zerodistance.R;
  */
 public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     //字型大小
-    public  int size = 15;
+    public  int size;
     private String[] q_Q_Titletext, q_Qtimetext, q_Qnametext, q_Qcontenttext, a_A_Titletext, a_Atimetext, a_Acontenttext;
     private Boolean publisher;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView q_Q_Title, q_Qname, q_Qtime, q_Qcontent;
         public TextView a_A_Title,  a_Atime, a_Acontent;
-        public Button Reply;
-        public GridLayout layoutA,layoutQ;
+        public LinearLayout a_Card_all,q_Card_all;
         public LinearLayout layoutcontent;
+        public TextView number;
         public ViewHolder(View v) {
             super(v);
             q_Q_Title = (TextView) v.findViewById(R.id.q_Q_Title);
@@ -37,12 +37,12 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             q_Qtime = (TextView) v.findViewById(R.id.q_Qtime);
             q_Qcontent = (TextView) v.findViewById(R.id.q_Qcontent);
             a_A_Title = (TextView) v.findViewById(R.id.a_A_Title);
-         //   a_Aname = (TextView) v.findViewById(R.id.a_Aname);
             a_Atime = (TextView) v.findViewById(R.id.a_Atime);
             a_Acontent = (TextView) v.findViewById(R.id.a_Acontent);
+            number = (TextView) v.findViewById(R.id.textViewNumber);
 
-            layoutA = (GridLayout) v.findViewById(R.id.a_Card);
-            layoutQ = (GridLayout) v.findViewById(R.id.q_Card);
+            a_Card_all = (LinearLayout) v.findViewById(R.id.a_Card_all);
+            q_Card_all = (LinearLayout) v.findViewById(R.id.q_Card_all);
             layoutcontent= (LinearLayout) v.findViewById(R.id.q_CardContent);
 
 
@@ -51,7 +51,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         }
     }
 
-    public QAAdapter(/*String[] q_Q_Titletext ,*/Boolean publisher,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, /*String[] a_A_Titletext,*/String[] a_Atimetext,String[] a_Acontenttext) {
+    public QAAdapter(/*String[] q_Q_Titletext ,*/int size,Boolean publisher,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, /*String[] a_A_Titletext,*/String[] a_Atimetext,String[] a_Acontenttext) {
       //  this.q_Q_Titletext = q_Q_Titletext;
         this.q_Qtimetext = q_Qtimetext;
         this.q_Qnametext = q_Qnametext;
@@ -60,6 +60,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         this.a_Atimetext = a_Atimetext;
         this.a_Acontenttext = a_Acontenttext;
         this.publisher =publisher;
+        this.size =size;
 
      //   this.a_Anametext = a_Anametext;
     }
@@ -82,17 +83,10 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
        // holder.a_Aname.setText(a_Atimetext[position]);
         holder.a_Atime.setText(a_Atimetext[position]);
         holder.a_Acontent.setText(a_Acontenttext[position]);
-
+        holder.number.setText(String.valueOf(position+1));
         if (a_Acontenttext[position].equals("null")){
-            holder.layoutA.setVisibility(View.GONE);
-            holder.layoutQ.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    layOutClick(v);
-                    return false;
-                }
-            });
-            holder.layoutcontent.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.a_Card_all.setVisibility(View.GONE);
+            holder.q_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     layOutClick(v);
@@ -101,7 +95,14 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             });
         }
         else {
-
+            holder.a_Card_all.setVisibility(View.VISIBLE);
+            holder.q_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    layOutClick(v);
+                    return false;
+                }
+            });
         }
 
         //設定字型大小

@@ -9,127 +9,159 @@
         android:layout_height="match_parent">
 
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/q_Card_all">
 
-        <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:columnCount="5"
-        android:rowCount="6"
-        android:rowOrderPreserved="false"
-        android:useDefaultMargins="false"
-            android:id="@+id/q_Card">
+            <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:columnCount="5"
+            android:rowCount="6"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="false"
+                android:id="@+id/q_Card">
 
-        <TextView
-            android:layout_width="103dp"
-            android:layout_height="45dp"
-            android:layout_column="0"
-            android:id="@+id/q_Q_Title"
-            android:layout_row="2"
-            android:layout_columnWeight="1"
-            android:text="Q"
-            android:layout_gravity="fill"
-            android:layout_rowSpan="2"
-            android:gravity="bottom" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/textViewNumber"
+                    android:layout_gravity="bottom"
+                    android:layout_column="0"
+                    android:layout_row="0" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="名字"
-            android:id="@+id/q_Qname"
-            android:layout_gravity="bottom|right"
-            android:layout_column="2"
-            android:layout_row="2"
-            android:layout_marginRight="5dp"
-            android:layout_columnWeight="10" />
+                <TextView
+                android:layout_width="103dp"
+                android:layout_height="45dp"
+                android:layout_column="0"
+                android:id="@+id/q_Q_Title"
+                android:layout_row="2"
+                android:layout_columnWeight="1"
+                android:text="Q"
+                android:layout_gravity="fill"
+                android:layout_rowSpan="2"
+                android:gravity="bottom" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="時間"
-            android:id="@+id/q_Qtime"
-            android:layout_gravity="right"
-            android:layout_column="2"
-            android:layout_row="3"
-            android:layout_marginRight="5dp"
-            android:layout_columnWeight="4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="名字"
+                android:id="@+id/q_Qname"
+                android:layout_gravity="bottom|right"
+                android:layout_column="2"
+                android:layout_row="2"
+                android:layout_marginRight="5dp"
+                android:layout_columnWeight="10" />
 
-        </GridLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="時間"
+                android:id="@+id/q_Qtime"
+                android:layout_gravity="right"
+                android:layout_column="2"
+                android:layout_row="3"
+                android:layout_marginRight="5dp"
+                android:layout_columnWeight="4" />
+
+            </GridLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/q_CardContent">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="內容"
+                    android:id="@+id/q_Qcontent"
+                    android:layout_row="5"
+                    android:layout_column="0"
+                    android:layout_columnSpan="3" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/q_CardContent">
+            android:layout_height="match_parent"
+            android:id="@+id/a_Card_all">
+
+            <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:columnCount="5"
+            android:rowCount="6"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="false"
+                android:id="@+id/a_Card">
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="內容"
-                android:id="@+id/q_Qcontent"
-                android:layout_row="5"
+                android:layout_width="103dp"
+                android:layout_height="45dp"
                 android:layout_column="0"
-                android:layout_columnSpan="3" />
+                android:id="@+id/a_A_Title"
+                android:layout_row="2"
+                android:layout_columnWeight="1"
+                android:text="A"
+                android:layout_gravity="fill"
+                android:layout_rowSpan="2"
+                android:layout_marginLeft="20dp"
+                android:gravity="bottom" />
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+                <!--android:text="名字"-->
+                <!--android:id="@+id/a_Aname"-->
+                <!--android:layout_gravity="bottom|right"-->
+                <!--android:layout_column="2"-->
+                <!--android:layout_row="2"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:layout_columnSpan="29" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="時間"
+                android:id="@+id/a_Atime"
+                android:layout_gravity="right"
+                android:layout_column="3"
+                android:layout_row="3"
+                android:layout_marginRight="5dp" />
+
+            </GridLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/a_CardContent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="內容"
+                    android:id="@+id/a_Acontent"
+                    android:layout_row="5"
+                    android:layout_column="0"
+                    android:layout_marginLeft="20dp" />
+
+            </LinearLayout>
         </LinearLayout>
 
-        <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="124dp"
-        android:columnCount="5"
-        android:rowCount="6"
-        android:rowOrderPreserved="false"
-        android:useDefaultMargins="false"
-            android:id="@+id/a_Card">
-
-        <TextView
-            android:layout_width="103dp"
-            android:layout_height="45dp"
-            android:layout_column="0"
-            android:id="@+id/a_A_Title"
-            android:layout_row="2"
-            android:layout_columnWeight="1"
-            android:text="A"
-            android:layout_gravity="fill"
-            android:layout_rowSpan="2"
-            android:layout_marginLeft="20dp"
-            android:gravity="bottom" />
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-            <!--android:text="名字"-->
-            <!--android:id="@+id/a_Aname"-->
-            <!--android:layout_gravity="bottom|right"-->
-            <!--android:layout_column="2"-->
-            <!--android:layout_row="2"-->
-            <!--android:layout_marginRight="5dp"-->
-            <!--android:layout_columnSpan="29" />-->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="時間"
-            android:id="@+id/a_Atime"
-            android:layout_gravity="right"
-            android:layout_column="3"
-            android:layout_row="3"
-            android:layout_marginRight="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="內容"
-            android:id="@+id/a_Acontent"
-            android:layout_row="5"
-            android:layout_column="0"
-            android:layout_marginLeft="20dp" />
-
-    </GridLayout>
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
