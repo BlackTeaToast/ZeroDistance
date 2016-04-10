@@ -93,7 +93,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
        // holder.a_Aname.setText(a_Atimetext[position]);
         holder.a_Atime.setText(a_Atimetext[position]);
         holder.a_Acontent.setText(a_Acontenttext[position]);
-        holder.number.setText(String.valueOf(position+1));
+        holder.number.setText("#"+String.valueOf(position+1));
         if (a_Acontenttext[position].equals("null")){
             holder.a_Card_all.setVisibility(View.GONE);
             holder.q_Card_all.setOnClickListener(new View.OnClickListener() {
