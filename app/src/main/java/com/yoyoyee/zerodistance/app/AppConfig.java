@@ -40,4 +40,7 @@ public class AppConfig {
 	// Server publish QA answer url
 	public static String URL_PUBLISH_QA_ANSWER = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishQAAnswer";
 
+    // Server publish mission accept url
+    public static String URL_PUBLISH_MISSION_ACCEPT = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMissionAccept";
+
 }

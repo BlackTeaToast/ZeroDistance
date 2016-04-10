@@ -148,7 +148,7 @@ public class TurnActivity extends AppCompatActivity {
                         if (groups.size() > 0) {
                             Log.d(TAG, "onResponse: " + groups.get(0).getTitle() + " " + groups.get(0).createdAt + " " + groups.get(0).finishedAt);
                             Group group = QueryFunctions.getGroup(groups.get(0).id);
-                            Log.d(TAG, "onResponse: " + group.getTitle() + " " + group.createdAt + " " + group.finishedAt);
+                            Log.d(TAG, "onResponse: " + group.getTitle() + " " + group.userName + " " + group.createdAt + " " + group.finishedAt);
                         }
 
 
