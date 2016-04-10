@@ -81,6 +81,7 @@ public class MissionActivity extends AppCompatActivity {
     private boolean joined;//是否有餐與
     private String imagePath;
 
+
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
@@ -113,6 +114,7 @@ public class MissionActivity extends AppCompatActivity {
         deleteButton = (Button)findViewById(R.id.deleteButtonM);
         rateButton = (Button)findViewById(R.id.ratebuttonM);
 
+
         //-------------------------------------------------------------------------------
 
         //關掉評分區，等待被選取
@@ -128,15 +130,15 @@ public class MissionActivity extends AppCompatActivity {
                     gridLayout.setVisibility(View.VISIBLE);
 
                     //因應人數改變評分文字與按鈕
-                    if (needNumber > 1) {
+                    if (acceptNumber > 1) {
                         TextView rateTotal = (TextView) findViewById(R.id.rateTotalM);
-                        rateTotal.setText("統一評分");
+                        rateTotal.setText(R.string.rate_total);
                         //將個別評分開啟
                         buttonVisible = (Button) findViewById(R.id.ratebuttonM);
                         buttonVisible.setVisibility(View.VISIBLE);
                     } else {
                         TextView rateTotal = (TextView) findViewById(R.id.rateTotalM);
-                        rateTotal.setText("評分");
+                        rateTotal.setText(R.string.rate_total_one);
                         //將個別評分關閉
                         buttonVisible = (Button) findViewById(R.id.ratebuttonM);
                         buttonVisible.setVisibility(View.GONE);
@@ -154,10 +156,10 @@ public class MissionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (joined) {
                     joined = false;
-                    joinButton.setText("參加");
+                    joinButton.setText(R.string.is_joined);
                 } else {
                     joined = true;
-                    joinButton.setText("不參加");
+                    joinButton.setText(R.string.not_joined);
                 }
             }
         });
@@ -183,6 +185,11 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "點選了編輯" ,Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(MissionActivity.this, NewMissionActivity.class);
+                it.putExtra("id", id);
+                it.putExtra("isEdit", true);
+                startActivity(it);
+
             }
         });
 
@@ -323,7 +330,7 @@ public class MissionActivity extends AppCompatActivity {
 
         //誰看到這個版面與是否參與
         whoSeeID = SessionFunctions.getUserUid();
-        isTeacher = SessionFunctions.isTeacher();
+        isTeacher = mission.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
         //須在改過
         joined = false;
 
@@ -341,6 +348,9 @@ public class MissionActivity extends AppCompatActivity {
 
         //設定字型大小
         setFontSize();
+
+        //設定語言
+        setFont();
 
         //顯示標題文字，更改語言時使用
 
@@ -408,9 +418,9 @@ public class MissionActivity extends AppCompatActivity {
             buttonVisible.setVisibility(View.VISIBLE);
             //設定參與按鈕顯示
             if(joined)
-                buttonVisible.setText("不參加");
+                buttonVisible.setText(R.string.not_joined);
             else
-                buttonVisible.setText("參加");
+                buttonVisible.setText(R.string.is_joined);
             //把已完成鈕關掉
             checkBox.setVisibility(View.GONE);
             //把編輯跟刪除關掉
@@ -489,6 +499,48 @@ public class MissionActivity extends AppCompatActivity {
 
     //設置文字，更改語言時使用
     private void setFont(){
+        TextView textViewTemp;
+        //委託人
+        textViewTemp = (TextView)findViewById(R.id.whoSentTitleM);
+        textViewTemp.setText(R.string.who_is_publisher);
+        //發文時間
+        textViewTemp = (TextView)findViewById(R.id.timeSentTitleM);
+        textViewTemp.setText(R.string.when_update);
+        //執行時間
+        textViewTemp = (TextView)findViewById(R.id.timeToDoTitleM);
+        textViewTemp.setText(R.string.when_to_do);
+        //執行地點
+        textViewTemp = (TextView)findViewById(R.id.whereTitleM);
+        textViewTemp.setText(R.string.where_to_do);
+        //獎勵
+        textViewTemp = (TextView)findViewById(R.id.priceTitleM);
+        textViewTemp.setText(R.string.what_price);
+        //人數
+        textViewTemp = (TextView)findViewById(R.id.needTitleM);
+        textViewTemp.setText(R.string.how_many_people);
+        //參與者
+        textViewTemp = (TextView)findViewById(R.id.usersTitleM);
+        textViewTemp.setText(R.string.who_is_joined);
+        //已完成
+        checkBox.setText(R.string.is_finished);
+        //評分(統一、個別)
+        textViewTemp = (TextView)findViewById(R.id.rateTotalM);
+        if(acceptNumber>1)
+        textViewTemp.setText(R.string.rate_total);
+        else
+        textViewTemp.setText(R.string.rate_total_one);
+
+        Button ButtonTemp;
+        ButtonTemp = (Button)findViewById(R.id.ratebuttonM);
+        ButtonTemp.setText(R.string.rate_personal);
+        //按鈕群(參加鈕、Q&A、編輯、刪除)
+        ButtonTemp = (Button)findViewById(R.id.qAndAButtonM);
+        ButtonTemp.setText(R.string.q_and_a);
+        ButtonTemp = (Button)findViewById(R.id.editButtonM);
+        ButtonTemp.setText(R.string.edit_button);
+        ButtonTemp = (Button)findViewById(R.id.deleteButtonM);
+        ButtonTemp.setText(R.string.delete_button);
+
 
     }
 

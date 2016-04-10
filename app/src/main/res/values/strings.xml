@@ -146,8 +146,27 @@
     <!--=========以上翻譯過=========================================================-->
 
 
+    <!--=========================================================-->
+    <!--PatrickC-->
+    <string name="who_is_publisher">發佈者</string>
+    <string name="when_update">發文時間</string>
+    <string name="when_to_do">執行時間</string>
+    <string name="where_to_do">執行地點</string>
+    <string name="what_price">獎勵</string>
+    <string name="how_many_people">人數</string>
+    <string name="who_is_joined">參與者</string>
+    <string name="is_finished">已完成</string>
+    <string name="q_and_a">Q&amp;A</string>
+    <string name="edit_button">編輯</string>
+    <string name="delete_button">刪除</string>
+    <string name="rate_total">統一評分</string>
+    <string name="rate_total_one">評分</string>
+    <string name="rate_personal">個別評分</string>
+    <string name="is_joined">參加</string>
+    <string name="not_joined">不參加</string>
 
-    <!--==================================================================-->
+    <!--=========================================================-->
+
 
 
 </resources>

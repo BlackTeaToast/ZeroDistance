@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.io.IOException;
@@ -29,15 +32,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GroupActivity extends AppCompatActivity {
 
     //變數區====================================
     //取得傳入的intent
-    private Intent it  = this.getIntent();
+
     //取得任務id
-    //int id = it.getIntExtra("id", 0);//任務的編號 ; 錯誤則傳回0
-    private Mission mission;//拿來抓misson
+    int id ;//揪團的編號 ; 錯誤則傳回0
+    private Group group;//拿來抓misson
 
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
@@ -70,6 +74,7 @@ public class GroupActivity extends AppCompatActivity {
     private boolean joined;//是否有餐與
     private String imagePath;
 
+
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
@@ -79,6 +84,8 @@ public class GroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+        Intent it  = this.getIntent();
+        id= it.getIntExtra("id", 0);
 
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
@@ -103,10 +110,10 @@ public class GroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (joined) {
                     joined = false;
-                    joinButton.setText("參加");
+                    joinButton.setText(R.string.is_joined);
                 } else {
                     joined = true;
-                    joinButton.setText("不參加");
+                    joinButton.setText(R.string.not_joined);
                 }
             }
         });
@@ -180,6 +187,7 @@ public class GroupActivity extends AppCompatActivity {
 
     //讀取值
     private void readValue(){
+        /*
         // 需先讀進以下變數才能正常顯示============================
         title = "鸚鵡";
         needNumber = 8;
@@ -219,6 +227,47 @@ public class GroupActivity extends AppCompatActivity {
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
 
         // =========================================================
+        */
+        //取得misson
+        group = QueryFunctions.getGroup(id);
+
+        // 需先讀進以下變數才能正常顯示============================
+        title = group.getTitle();
+        needNumber = group.getNeedNum();
+        acceptNumber = group.getCurrentNum();
+        //須在改過，改成發布者名
+        who = group.getUserID();
+        //設置時間
+        Date dateTemp = group.getCreateAt();
+        timeS = dateFormat.format(dateTemp);
+        //須在改過，改成執行時間
+        dateTemp = group.expAt;
+        timeT = dateFormat.format(dateTemp);
+        where = group.getPlace();
+
+        //字體大小
+        size = SessionFunctions.getUserTextSize();
+
+        //設置餐與者
+        user = new ArrayList<>();
+        user.add("PatrickC");
+        user.add("Treetops");
+        user.add("Deep Moon");
+        user.add("小毽子在飛呀");
+        user.add("血色的狂氣-不滅的葛路米");
+
+        //抓取內容
+        doWhat =group.getContent();
+
+        //誰看到這個版面與是否參與
+        whoSeeID = SessionFunctions.getUserUid();
+        isPublisher = group.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
+        //須在改過
+        joined = false;
+
+        //有圖片的話設置URL
+        imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
+
 
     }
 
@@ -286,9 +335,9 @@ public class GroupActivity extends AppCompatActivity {
             buttonVisible.setVisibility(View.VISIBLE);
             //設定參與按鈕顯示
             if(joined)
-                buttonVisible.setText("不參加");
+                buttonVisible.setText(R.string.not_joined);
             else
-                buttonVisible.setText("參加");
+                buttonVisible.setText(R.string.is_joined);
             //把編輯跟刪除關掉
             buttonVisible = (Button)findViewById(R.id.editButtonG);
             buttonVisible.setVisibility(View.GONE);
@@ -353,6 +402,34 @@ public class GroupActivity extends AppCompatActivity {
 
     //設置文字，更改語言時使用
     private void setFont(){
+        TextView textViewTemp;
+        //委託人
+        textViewTemp = (TextView)findViewById(R.id.whoSentTitleG);
+        textViewTemp.setText(R.string.who_is_publisher);
+        //發文時間
+        textViewTemp = (TextView)findViewById(R.id.timeSentTitleG);
+        textViewTemp.setText(R.string.when_update);
+        //執行時間
+        textViewTemp = (TextView)findViewById(R.id.timeToDoTitleG);
+        textViewTemp.setText(R.string.when_to_do);
+        //執行地點
+        textViewTemp = (TextView)findViewById(R.id.whereTitleG);
+        textViewTemp.setText(R.string.where_to_do);
+        //人數
+        textViewTemp = (TextView)findViewById(R.id.needTitleG);
+        textViewTemp.setText(R.string.how_many_people);
+        //參與者
+        textViewTemp = (TextView)findViewById(R.id.usersTitleG);
+        textViewTemp.setText(R.string.who_is_joined);
+
+        //按鈕群(參加鈕、Q&A、編輯、刪除)
+        Button ButtonTemp;
+        ButtonTemp = (Button)findViewById(R.id.qAndAButtonG);
+        ButtonTemp.setText(R.string.q_and_a);
+        ButtonTemp = (Button)findViewById(R.id.editButtonG);
+        ButtonTemp.setText(R.string.edit_button);
+        ButtonTemp = (Button)findViewById(R.id.deleteButtonG);
+        ButtonTemp.setText(R.string.delete_button);
 
     }
 

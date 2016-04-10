@@ -127,7 +127,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#555397"
+                android:background="#4d4d65"
                 android:id="@+id/linearLayout3"
                 android:layout_marginTop="10dp" >
 
@@ -138,7 +138,7 @@
                     android:text="執行時間"
                     android:id="@+id/timeToDoTitleM"
                     android:textSize="30dp"
-                    android:textColor="#ffaa00"
+                    android:textColor="#47d016"
                     android:layout_marginLeft="5dp" />
 
                 <TextView
@@ -155,7 +155,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#555397"
+                android:background="#4d4d65"
                 android:id="@+id/linearLayout2"
                 android:layout_marginTop="10dp" >
 
@@ -183,7 +183,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#555397"
+                android:background="#4d4d65"
                 android:id="@+id/price"
                 android:layout_marginTop="10dp">
 
@@ -213,7 +213,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/many"
                 android:layout_marginTop="10dp"
-                android:background="#555397">
+                android:background="#4d4d65">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -240,7 +240,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.05"
-                android:background="#555397"
+                android:background="#4d4d65"
                 android:id="@+id/who"
                 android:layout_marginTop="10dp"
                 android:contextClickable="false">
