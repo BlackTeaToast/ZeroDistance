@@ -60,14 +60,6 @@
     <string name="idontwantpicture_new_mission_and_group">已取消選取</string>
     <string name="updata_new_mission_and_group">上傳成功</string>
     <string name="errorupdata_new_mission_and_group">上傳失敗</string>
-
-
-
-
-
-
-
-
     <string-array name="press_new_mission_and_group">
         <item>普通</item>
         <item>緊急</item>
@@ -107,7 +99,7 @@
 
     <string-array name="languageSppingArrary">
         <item>中文</item>
-        <item>英文</item>
+        <item>English</item>
     </string-array>
 
     <!--吱吱吱之-->

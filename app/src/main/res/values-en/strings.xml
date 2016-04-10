@@ -14,25 +14,109 @@
     <string name="btn_register_student">Student</string>
     <string name="btn_register_teacher">Teacher</string>
     <string name="hint_nick_name">Nick Name</string>
-    <string name="hint_student_id">Student ID</string>
-    <!--</resources>
-    =======
-<resources>
-    <string name="app_name">Zero Distance</string>
-    <string name="action_settings">Settings</string>
-    <string name="hint_email">信箱</string>
-    <string name="hint_password">密碼</string>
-    <string name="hint_name">暱稱</string>
-    <string name="btn_login">登入</string>
-    <string name="btn_register">註冊</string>
-    <string name="btn_link_to_register">Not a member? Sign up now.</string>
-    <string name="btn_link_to_login">Already registred! Login Me.</string>
-    <string name="welcome">Welcome</string>
-    <string name="btn_logout">登出</string>
-    <string name="name">Fullname</string>
-    <string name="btn_register_student">學生</string>
-    <string name="btn_register_teacher">老師</string>
-</resources>
+    <string name="hint_student_id">School Student ID</string>
 
+    <!--==================================================================-->
+
+    <!--Tree使用-->
+    <string name="missionname_new_mission">Mission Name：</string>
+    <string name="actionbar_new_mission">Creat Mission：</string>
+    <string name="pay_new_mission">Award：</string>
+    <string name="content_new_mission">Mission Content：</string>
+    <string name="date_new_mission">Mission Date：</string>
+    <string name="where_new_mission">Meeting Place：</string>
+    <string name="errornoname_new_mission">Your mission name is space</string>
+    <string name="errornocontent_new_mission">Your mission content is space</string>
+    <string name="errorwhere_new_mission">Your place is space</string>
+
+
+    <string name="groupname_new_group">Group Name：</string>
+    <string name="actionbar_new_group">Creat Group</string>
+    <string name="date_new_group">Date：</string>
+    <string name="content_new_group">Group Content：</string>
+    <string name="where_new_group">Meeting Place：</string>
+    <string name="errorname_new_group">Your group name is space</string>
+    <string name="errorpeoplenumber_new_group">How many people?</string>
+    <string name="errorwhere_new_group">You don't set meeting place</string>
+    <string name="errorcontent_new_group">What are you want to do?</string>
+
+    <string name="press_new_mission_and_group">Emergency Level：</string>
+    <string name="peoplenumber_new_mission_and_group">Number of People：</string>
+    <string name="buttomdate_new_mission_and_group">Choose Date</string>
+    <string name="buttomtime_new_mission_and_group">Choose Time</string>
+    <string name="year_new_mission_and_group">/</string>
+    <string name="month_new_mission_and_group">/</string>
+    <string name="day_new_mission_and_group"> </string>
+    <string name="hour_new_mission_and_group">:</string>
+    <string name="minute_new_mission_and_group"> </string>
+    <string name="okbuttom_new_mission_and_group">Finish</string>
+    <string name="cancelbuttom_new_mission_and_group">Cencle</string>
+    <string name="uploadpicture_new_mission_and_group">Choose Image：</string>
+    <string name="uploadpictruebuttom_new_mission_and_group">From File</string>
+    <string name="takepicturebuttom_new_mission_and_group">Take the picture</string>
+    <string name="notakepicture_new_mission_and_group">Cancle</string>
+    <string name="AM_new_mission_and_group">AM</string>
+    <string name="PM_new_mission_and_group">PM</string>
+    <string name="errornoDate_new_mission_and_group">Choose day,please~</string>
+    <string name="errornoTime_new_mission_and_group">Choose time ,please~</string>
+    <string name="restorereadpermission_new_mission_and_group">無法讀取圖片資訊\n請至設定->應用程式->校園0距離->權限，將儲存權限打開</string>
+    <string name="errorpeoplenumber_new_mission_and_group">How many poeple do you want?</string>
+    <string name="takepicturemessage_new_mission_and_group">Touch for long to cencle image</string>
+    <string name="idontwantpicture_new_mission_and_group">You cencle</string>
+    <string name="updata_new_mission_and_group">Upload Successfully!!</string>
+    <string name="errorupdata_new_mission_and_group">Upload fail</string>
+    <string-array name="press_new_mission_and_group">
+        <item>Normal</item>
+        <item>Emergency</item>
+    </string-array>
+    <string-array name="pay_new_mission">
+        <item>Drink</item>
+        <item>Dessert</item>
+        <item>Nothing</item>
+        <item>The other</item>
+    </string-array>
+    <!--==================================================================-->
+
+    <!--楊-->
+    <string name="section_format">test：</string>
+    <string name="title_activity_new_tool_bar">NewToolBar</string>
+    <string name="peoplenumber">Number of Poeple:</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="language">Language:</string>
+    <string name="textsizeL">Large</string>
+    <string name="textsizeM">Normal</string>
+    <string name="textsizeS">Small</string>
+    <string name="showstyles">Show what:</string>
+    <string name="textsize">Word size:</string>
+    <string name="Sign_out">Logout</string>
+    <string name="showcontent">Show Content</string>
+    <string name="showpay">Show Award</string>
+    <string name="mainpage">Home</string>
+    <style name="cardtext">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="settext">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <string-array name="languageSppingArrary">
+        <item>中文</item>
+        <item>English</item>
+    </string-array>
+
+    <!--==================================================================-->
+
+    <!--吱吱吱之-->
+    <string name="ask_for_title">Ask Question</string>
+    <string name="ask_for_ok">Finish</string>
+    <string name="ask_for_cancle">Cencle</string>
+    <string name="ans_for_title">Answer</string>
+    <string name="ans_for_ok">Finish</string>
+    <string name="ans_for_cancle">Cencle</string>
+    <string name="qAndA_Title">QandA</string>
+    <string name="answer_for_title">Answer</string>
+    <string name="qanda_Q">Q：</string>
+    <string name="qanda_A">A：</string>
 >>>>>>> Stashed changes-->
 </resources>
