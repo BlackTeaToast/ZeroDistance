@@ -114,5 +114,13 @@
             android:layout_alignTop="@+id/btnUnitTest"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="achievement"
+            android:id="@+id/buttonPrice"
+            android:layout_below="@+id/buttonQA"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </RelativeLayout>

@@ -31,6 +31,7 @@ public class TurnActivity extends AppCompatActivity {
     private Button btnQA;
     private Button btnUnitTest;
     private Button buttonLogout;
+    private Button buttonAchievement;
     private TextView tvExplain;
     private TextView tvView;
     private SQLiteHandler db;
@@ -51,6 +52,8 @@ public class TurnActivity extends AppCompatActivity {
         btnQA = (Button) findViewById(R.id.buttonQA);
         btnUnitTest = (Button) findViewById(R.id.btnUnitTest);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        buttonAchievement = (Button) findViewById(R.id.buttonPrice);
+
         tvExplain = (TextView) findViewById(R.id.textViewTurnActExplain);
         tvView = (TextView) findViewById(R.id.textViewTurnActView);
 
@@ -107,6 +110,14 @@ public class TurnActivity extends AppCompatActivity {
                 Intent intent = new Intent(TurnActivity.this, QAActivity.class);
                 startActivity(intent);
                 tvView.setText("轉跳的頁面為"+btnQA.getText());
+            }
+        });
+        buttonAchievement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TurnActivity.this, AchievementActivity.class);
+                startActivity(intent);
+                tvView.setText("轉跳的頁面為"+buttonAchievement.getText());
             }
         });
         btnUnitTest.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +202,7 @@ public class TurnActivity extends AppCompatActivity {
                 logoutUser();
             }
         });
+
 
     }
     @Override

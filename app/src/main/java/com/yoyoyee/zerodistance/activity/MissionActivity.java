@@ -188,6 +188,8 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "點選了刪除" ,Toast.LENGTH_SHORT).show();
+                it = new Intent(MissionActivity.this, AchievementActivity.class);
+                startActivity(it);
             }
         });
 
@@ -267,6 +269,7 @@ public class MissionActivity extends AppCompatActivity {
                 "  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，" +
                 "進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，" +
                 "最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。";
+
 
         //誰看到這個版面與是否參與
         whoSeeID = "鸚鵡養殖專家";

@@ -97,11 +97,6 @@ public class GroupActivity extends AppCompatActivity {
 
         //-------------------------------------------------------------------------------
 
-        //設置toolbar標題
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(title);
-
         //參加或取消
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +224,11 @@ public class GroupActivity extends AppCompatActivity {
 
     //顯示值
     private void setValue(){
+        //設置toolbar標題
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(title);
+
         //設定字型大小
         setFontSize();
 

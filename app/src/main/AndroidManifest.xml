@@ -47,6 +47,7 @@
         <activity android:name=".activity.GroupActivity" />
         <activity android:name=".activity.MissionActivity" />
         <activity android:name=".activity.NewMissionActivity" />
+        <activity android:name=".activity.AchievementActivity"/>
         <activity android:name=".activity.NewGroupActivity" />
         <activity android:name=".activity.QAActivity" />
         <activity android:name=".activity.TurnActivity" />
