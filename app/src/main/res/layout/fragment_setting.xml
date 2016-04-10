@@ -26,7 +26,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/textsize"
                 android:id="@+id/textsizeread"
-                style="@style/settext" />
+                style="@style/settext"
+                android:textColor="#fafafa" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +35,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
                 android:id="@+id/textsize"
-                style="@style/settext" />
+                style="@style/settext"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <RadioGroup
@@ -50,7 +52,8 @@
                 android:id="@+id/textsizeLRB"
                 android:layout_alignParentLeft="true"
                 android:layout_weight="1"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:textColor="#fefcfc" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -61,7 +64,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:textColor="#ffffff" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -70,7 +74,8 @@
                 android:id="@+id/textsizeSRB"
                 android:layout_alignParentRight="true"
                 android:layout_weight="1"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="#ffffff" />
         </RadioGroup>
 
         <LinearLayout
@@ -84,7 +89,8 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/language"
                 android:id="@+id/languageread"
-                style="@style/settext" />
+                style="@style/settext"
+                android:textColor="#ffffff" />
 
             <Spinner
                 android:layout_width="match_parent"
@@ -97,7 +103,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/showstyles"
-            android:id="@+id/showstyleread" />
+            android:id="@+id/showstyleread"
+            android:textColor="#ffffff" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -110,7 +117,8 @@
             android:layout_height="wrap_content"
             android:text="@string/showcontent"
             android:id="@+id/showcontent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ffffff" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -118,7 +126,8 @@
                 android:text="@string/showpay"
                 android:id="@+id/showpay"
                 android:layout_gravity="right"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ffffff" />
 
         </RadioGroup>
 
