@@ -67,17 +67,17 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
-        missions  = QueryFunctions.getUnfinishedMissions();
+
         SessionFunctions SF = new SessionFunctions();
-        getvlue();
+        makecard();
 
         try {
-            CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
+           // CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
-            //mList.setAdapter(CardViewAdapter);  //設定內容
+            mList.setAdapter(CardViewAdapter);  //設定內容
             mList.setOnTouchListener(this);//監聽動作
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,8 +167,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 if (missions.size() > 0) {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                 }
+                totalvuledel();
                 mSwipeRefreshLayout.setRefreshing(false);
-                getvlue();
+                makecard();
                 mList.setAdapter(CardViewAdapter);
             }
 
@@ -186,8 +187,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
+                totalvuledel();
                 mSwipeRefreshLayout.setRefreshing(false);
-                getvlue();
+                makecard();
                 mList.setAdapter(CardViewAdapter);
             }
 
@@ -282,9 +284,18 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
         }.start();
     }
-
-    public void getvlue(){
-    id = new int[missions.size()];//任務id
+    public void totalvuledel(){
+        id = null;
+        title = null;
+        detial = null;
+        expAt = null;
+        needNum = null;
+        currentNum = null;
+        missiondangerous = null;
+    }
+    public void makecard(){
+        missions  = QueryFunctions.getUnfinishedMissions();
+     id = new int[missions.size()];//任務id
      title = new String[missions.size()];//任務標題
      detial = new String[missions.size()];//任務內容or獎勵
      expAt = new Date[missions.size()];//任務結束時間
@@ -307,9 +318,15 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
          title[i]=limitString(title[i], 0);//0為title , 1為detial
          detial[i]=limitString(detial[i], 1);
      }
-     missionnumber=new int[title.length];
-     for(int i=0;i<title.length;i++){
+     missionnumber=new int[missions.size()];
+     for(int i=0;i<missions.size();i++){
          missionnumber[i]=i;
      }
+        try {
+            Toast.makeText(getContext(), "現在有"+missions.size()+"個", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
  }
 }
