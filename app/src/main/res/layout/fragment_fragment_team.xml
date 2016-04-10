@@ -45,7 +45,8 @@
                     android:layout_columnSpan="2"
                     android:maxLines="1"
                     android:ellipsize="marquee"
-                    android:layout_weight="0.97" />
+                    android:layout_weight="0.97"
+                    android:textColor="#366fe9" />
             //上左
             <GridLayout
                 android:layout_width="wrap_content"
@@ -67,7 +68,8 @@
                     android:id="@+id/dateread"
                     style="@style/cardtext"
                     android:layout_column="0"
-                    android:layout_row="0" />
+                    android:layout_row="0"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,7 +86,8 @@
                     android:gravity="center_vertical"
                     style="@style/cardtext"
                     android:layout_gravity="right"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginRight="15dp"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -95,7 +98,8 @@
                     android:layout_gravity="left"
                     style="@style/cardtext"
                     android:layout_column="0"
-                    android:layout_row="1" />
+                    android:layout_row="1"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -106,7 +110,8 @@
                     style="@style/cardtext"
                     android:layout_column="1"
                     android:layout_row="1"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginRight="15dp"
+                    android:textColor="#000000" />
             </GridLayout>//上右
         </LinearLayout>//上半部
             <LinearLayout
@@ -139,7 +144,8 @@
                         android:autoText="true"
                         android:layout_columnSpan="1"
                         android:layout_rowSpan="1"
-                        android:layout_gravity="left" />
+                        android:layout_gravity="left"
+                        android:textColor="#000000" />
                 </GridLayout>//下左
                 <GridLayout
                     android:layout_width="wrap_content"
@@ -165,7 +171,8 @@
                         android:layout_column="0"
                         style="@style/cardtext"
                         android:layout_marginRight="45dp"
-                        android:layout_gravity="right" />
+                        android:layout_gravity="right"
+                        android:textColor="#ca0def" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -178,7 +185,8 @@
                         android:layout_column="0"
                         android:layout_row="1"
                         android:layout_gravity="right"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ca0def" />
 
                     <TextView
                         android:layout_width="wrap_content"
