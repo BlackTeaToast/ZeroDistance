@@ -21,6 +21,7 @@
     <color name="tabsScrollColor">#8a140e</color>
     <color name="gogoColor">#FFC872FC</color>
     <color name="gowhereColor">#FF9002FC</color>
+    <color name="ColorPrimaryToolbar_Old">#FF452E51</color>
 
     <!--Tree使用區-->
     <color name="spinnertext_new_mission">#46A3FF</color>
