@@ -12,7 +12,10 @@
     <string name="name">Fullname</string>
     <string name="btn_register_student">學生</string>
     <string name="btn_register_teacher">老師</string>
+    <!--=============以上翻譯過=====================================================-->
 
+
+    <!--==================================================================-->
     <!--Tree使用-->
     <string name="missionname_new_mission">任務名稱：</string>
     <string name="actionbar_new_mission">建立任務：</string>
@@ -78,14 +81,17 @@
         <item>無</item>
         <item>其他</item>
     </string-array>
+    <!--=========以上翻譯過=========================================================-->
 
+
+    <!--==================================================================-->
     <!--楊-->
     <string name="section_format">test：</string>
     <string name="title_activity_new_tool_bar">NewToolBar</string>
     <string name="hint_nick_name">暱稱</string>
     <string name="hint_student_id">學號</string>
     <string name="btn_link_to_login">已經註冊了嗎？馬上登入看看吧！</string>
-    <string name="peoplenumber">參與人數:</string>
+    <string name="peoplenumber">人</string>
     <string name="date">日期:</string>
     <string name="time">時間:</string>
     <string name="language">語言:</string>
@@ -109,7 +115,10 @@
         <item>中文</item>
         <item>英文</item>
     </string-array>
+    <!--=========以上翻譯過=========================================================-->
 
+
+    <!--==================================================================-->
     <!--吱吱吱之-->
     <string name="ask_for_title">發問</string>
     <string name="ask_for_ok">確認</string>
@@ -121,7 +130,11 @@
     <string name="answer_for_title">回答</string>
     <string name="qanda_Q">Q：</string>
     <string name="qanda_A">A：</string>
+    <!--=========以上翻譯過=========================================================-->
 
+
+
+    <!--==================================================================-->
 
 
 </resources>
