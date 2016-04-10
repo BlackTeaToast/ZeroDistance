@@ -301,6 +301,7 @@ public class ClientFunctions {
                             try {
                                 missionList.add(new Mission(mission.getInt("id"),
                                         mission.getString("user_uid"),
+                                        mission.getString("user_name"),
                                         mission.getInt("school_id"),
                                         mission.getString("title"),
                                         mission.getInt("is_urgent")!=0,
@@ -389,6 +390,7 @@ public class ClientFunctions {
                             try {
                                 groupList.add(new Group(group.getInt("id"),
                                         group.getString("user_uid"),
+                                        group.getString("user_name"),
                                         group.getInt("school_id"),
                                         group.getString("title"),
                                         group.getInt("need_num"),

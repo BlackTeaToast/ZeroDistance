@@ -9,6 +9,7 @@ public class Group {
 
     public int id;             //任務id
     public String userUid;         //擁有者id
+    public String userName;
     public int schoolID;       //學校id
     public String title;          //任務名稱
     public int needNum;           //需求人數
@@ -25,11 +26,12 @@ public class Group {
 
     }
 
-    public Group(int id, String userUid, int schoolID, String title, int needNum, int currentNum,
+    public Group(int id, String userUid, String userName, int schoolID, String title, int needNum, int currentNum,
                  String place, String content, Date createdAt, Date expAt, boolean isRunning,
                  boolean isFinished, Date finishedAt) {
         this.id = id;
         this.userUid = userUid;
+        this.userName = userName;
         this.schoolID = schoolID;
         this.title = title;
         this.needNum = needNum;
@@ -57,6 +59,14 @@ public class Group {
 
     public void setUserID(String userID) {
         this.userUid = userID;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public int getSchoolID() {

@@ -9,6 +9,7 @@ public class Mission {
 
     public int id;             //任務id
     public String userUid;         //擁有者id
+    public String userName;
     public int schoolID;       //學校id
     public String title;          //任務名稱
     public Boolean isUrgent;      //是否緊急
@@ -27,11 +28,12 @@ public class Mission {
 
     }
 
-    public Mission(int id, String userUid, int schoolID, String title, boolean isUrgent,
+    public Mission(int id, String userUid, String userName, int schoolID, String title, boolean isUrgent,
                    int needNum, int currentNum, String place, String content, String reward, Date createdAt,
                    Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
         this.id = id;
         this.userUid = userUid;
+        this.userName = userName;
         this.schoolID = schoolID;
         this.title = title;
         this.isUrgent = isUrgent;
@@ -61,6 +63,14 @@ public class Mission {
 
     public void setUserID(String userID) {
         this.userUid = userID;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public int getSchoolID() {

@@ -290,6 +290,7 @@ public class QueryFunctions {
             for(int i=0; i<missionsList.size(); i++) {
                 values.put(MissionsTable.KEY_ID, missionsList.get(i).id); // Name
                 values.put(MissionsTable.KEY_USER_UID, missionsList.get(i).userUid); // Email
+                values.put(MissionsTable.KEY_USER_NAME, missionsList.get(i).userName); // Email
                 values.put(MissionsTable.KEY_SCHOOL_ID, missionsList.get(i).schoolID); // Email
                 values.put(MissionsTable.KEY_TITLE, missionsList.get(i).title); // Created At
                 values.put(MissionsTable.KEY_IS_URGENT, missionsList.get(i).content); // Created At
@@ -330,6 +331,7 @@ public class QueryFunctions {
             for(int i=0; i<groupsList.size(); i++) {
                 values.put(GroupsTable.KEY_ID, groupsList.get(i).id); // Name
                 values.put(GroupsTable.KEY_USER_UID, groupsList.get(i).userUid); // Email
+                values.put(GroupsTable.KEY_USER_NAME, groupsList.get(i).userName); // Email
                 values.put(GroupsTable.KEY_SCHOOL_ID, groupsList.get(i).schoolID); // Email
                 values.put(GroupsTable.KEY_TITLE, groupsList.get(i).title); // Created At
                 values.put(GroupsTable.KEY_NEED_NUM, groupsList.get(i).needNum); // Created At
@@ -374,6 +376,7 @@ public class QueryFunctions {
 
             mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
             mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+            mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
             mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
             mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
             mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
@@ -414,6 +417,7 @@ public class QueryFunctions {
 
             group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
             group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+            group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
             group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
             group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
             group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
@@ -452,6 +456,7 @@ public class QueryFunctions {
                 Mission mission = new Mission();
                 mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
                 mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
                 mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
                 mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
                 mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
@@ -496,6 +501,7 @@ public class QueryFunctions {
                     Mission mission = new Mission();
                     mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
                     mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                    mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
                     mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
                     mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
                     mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
@@ -541,6 +547,7 @@ public class QueryFunctions {
                     Mission mission = new Mission();
                     mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
                     mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                    mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
                     mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
                     mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
                     mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
@@ -585,6 +592,7 @@ public class QueryFunctions {
                 Group group = new Group();
                 group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
                 group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
                 group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
                 group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
                 group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
@@ -627,6 +635,7 @@ public class QueryFunctions {
                     Group group = new Group();
                     group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
                     group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                    group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
                     group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
                     group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
                     group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
@@ -670,6 +679,7 @@ public class QueryFunctions {
                     Group group = new Group();
                     group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
                     group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                    group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
                     group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
                     group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
                     group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);

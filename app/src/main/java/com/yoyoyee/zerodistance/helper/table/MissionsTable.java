@@ -9,6 +9,7 @@ public class MissionsTable {
 
     public static final String KEY_ID = "id";
     public static final String KEY_USER_UID = "user_uid";
+    public static final String KEY_USER_NAME = "user_name";
     public static final String KEY_SCHOOL_ID = "school_id";
     public static final String KEY_TITLE = "title";
     public static final String KEY_IS_URGENT = "is_urgent";
@@ -25,23 +26,25 @@ public class MissionsTable {
 
     public static final int COLUMNS_NUM_ID = 0;
     public static final int COLUMNS_NUM_USER_UID = 1;
-    public static final int COLUMNS_NUM_SCHOOL_ID = 2;
-    public static final int COLUMNS_NUM_TITLE = 3;
-    public static final int COLUMNS_NUM_IS_URGENT = 4;
-    public static final int COLUMNS_NUM_NEED_NUM = 5;
-    public static final int COLUMNS_NUM_CURRENT_NUM = 6;
-    public static final int COLUMNS_NUM_PLACE = 7;
-    public static final int COLUMNS_NUM_CONTENT = 8;
-    public static final int COLUMNS_NUM_REWARD = 9;
-    public static final int COLUMNS_NUM_CREATED_AT = 10;
-    public static final int COLUMNS_NUM_EXP_AT = 11;
-    public static final int COLUMNS_NUM_IS_RUNNING = 12;
-    public static final int COLUMNS_NUM_IS_FINISHED = 13;
-    public static final int COLUMNS_NUM_FINISHED_AT = 14;
+    public static final int COLUMNS_NUM_USER_NAME = 2;
+    public static final int COLUMNS_NUM_SCHOOL_ID = 3;
+    public static final int COLUMNS_NUM_TITLE = 4;
+    public static final int COLUMNS_NUM_IS_URGENT = 5;
+    public static final int COLUMNS_NUM_NEED_NUM = 6;
+    public static final int COLUMNS_NUM_CURRENT_NUM = 7;
+    public static final int COLUMNS_NUM_PLACE = 8;
+    public static final int COLUMNS_NUM_CONTENT = 9;
+    public static final int COLUMNS_NUM_REWARD = 10;
+    public static final int COLUMNS_NUM_CREATED_AT = 11;
+    public static final int COLUMNS_NUM_EXP_AT = 12;
+    public static final int COLUMNS_NUM_IS_RUNNING = 13;
+    public static final int COLUMNS_NUM_IS_FINISHED = 14;
+    public static final int COLUMNS_NUM_FINISHED_AT = 15;
 
     public static final String CREATE_MISSIONS_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + KEY_ID + " INTEGER NOT NULL PRIMARY KEY, "
             + KEY_USER_UID + " TEXT NOT NULL, "
+            + KEY_USER_NAME + " TEXT NOT NULL, "
             + KEY_SCHOOL_ID + " INTEGER NOT NULL, "
             + KEY_TITLE + " TEXT NOT NULL, "
             + KEY_IS_URGENT + " tinyint(1) NOT NULL DEFAULT '0', "
