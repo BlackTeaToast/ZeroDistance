@@ -37,7 +37,6 @@ package com.yoyoyee.zerodistance.activity;
 
 public class QAActivity extends AppCompatActivity {
     private float size;//定義所有文字大小
-    private Button GO;
     private Boolean isGroup;
     private Toolbar toolbar;
     private String userID =QueryFunctions.getUserUid() ;
@@ -136,6 +135,7 @@ public class QAActivity extends AppCompatActivity {
         String[] q_Qcontenttext =new String[list];//= {"你說把愛漸漸放下會走更遠,或許命運的謙讓我遇見", "你好阿", "xx", "你好阿", "xx", "你好阿"}, a_Atimetext = {"我難過", "打屁屁", "878787", "打屁屁", "878787", "打屁屁"};
         String[] a_Atimetext=new String[list];
         String[] a_Acontenttext=new String[list]; //= {"滾", "你有病嘛", "閃邊", "87", "P0", "好啦好啦"}
+        String[] userUID=new String[list];
         SimpleDateFormat format =new SimpleDateFormat("MM/dd HH:mm");
         for(int z=0;z<list;z++) {
             q[z]=DataQas.get(z);
@@ -144,8 +144,9 @@ public class QAActivity extends AppCompatActivity {
             q_Qnametext[z] =q[z].userName;
             q_Qcontenttext[z] = q[z].question;
             a_Acontenttext [z]=q[z].answer;
+            userUID[z] =q[z].userUid;
         }
-        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/q_a_ID,size, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext);
+        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/q_a_ID,size, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext,userUID);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
 
         LinearLayoutManager layoutManager;

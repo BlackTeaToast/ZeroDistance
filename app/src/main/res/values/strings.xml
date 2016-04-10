@@ -86,7 +86,10 @@
 
 
     <string name="ans_for_had_ans">編輯回答</string>
-    
+
+    <string name="edit_pop">編輯</string>
+    <string name="ans_pop">回答</string>
+    <string name="del_pop">刪除</string>
     
     
     
