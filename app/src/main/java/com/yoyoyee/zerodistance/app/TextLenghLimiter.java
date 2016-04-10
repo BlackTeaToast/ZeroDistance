@@ -6,6 +6,8 @@ import android.text.TextWatcher;
 /**
  * Created by futur on 2016/4/9.
  *
+ * 用法範例
+ * editTextName.addTextChangedListener(new TextNextLineLimiter(60));
  * 用來限制自述使用的
  */
 public class TextLenghLimiter implements TextWatcher {

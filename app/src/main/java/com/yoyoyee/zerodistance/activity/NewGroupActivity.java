@@ -23,7 +23,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.TextLenghLimiter;
+import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -226,6 +229,7 @@ public class NewGroupActivity extends AppCompatActivity {
         editTextName.addTextChangedListener(new TextLenghLimiter(60));
         editTextWhere.addTextChangedListener(new TextLenghLimiter(60));
         editTextNumber.addTextChangedListener(new TextLenghLimiter(60));
+        editTextName.addTextChangedListener(new TextNextLineLimiter());
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------

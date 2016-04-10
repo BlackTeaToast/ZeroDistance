@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.TextLenghLimiter;
+import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -245,6 +246,7 @@ public class NewMissionActivity extends AppCompatActivity {
         editTextName.addTextChangedListener(new TextLenghLimiter(60));
         editTextWhere.addTextChangedListener(new TextLenghLimiter(60));
         editTextNumber.addTextChangedListener(new TextLenghLimiter(60));
+        editTextName.addTextChangedListener(new TextNextLineLimiter());
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------
