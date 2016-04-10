@@ -173,6 +173,8 @@ public class MissionActivity extends AppCompatActivity {
                 it.setClass(MissionActivity.this, QAActivity.class);
                 it.putExtra("isGroup", isGroup);
                 it.putExtra("publisher", publisher );
+                it.putExtra("id",id);
+
                 startActivity(it);
             }
         });
