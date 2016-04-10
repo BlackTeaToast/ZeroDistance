@@ -1,7 +1,9 @@
 package com.yoyoyee.zerodistance.helper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -23,7 +25,7 @@ import com.yoyoyee.zerodistance.activity.AskActivity;
  */
 public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
     //字型大小
-    public  int size;
+    public  float size;
     private String[] q_Q_Titletext, q_Qtimetext, q_Qnametext, q_Qcontenttext, a_A_Titletext, a_Atimetext, a_Acontenttext;
     private int[] q_a_ID;
     private Boolean publisher,isGroup;
@@ -54,7 +56,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
         }
     }
 
-    public QAAdapter(/*String[] q_Q_Titletext ,*/int[] q_a_ID,int size,Boolean publisher,Boolean isGroup,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, /*String[] a_A_Titletext,*/String[] a_Atimetext,String[] a_Acontenttext) {
+    public QAAdapter(/*String[] q_Q_Titletext ,*/int[] q_a_ID,float size,Boolean publisher,Boolean isGroup,String[] q_Qtimetext ,String[] q_Qnametext ,String[] q_Qcontenttext, /*String[] a_A_Titletext,*/String[] a_Atimetext,String[] a_Acontenttext) {
       //  this.q_Q_Titletext = q_Q_Titletext;
         this.q_Qtimetext = q_Qtimetext;
         this.q_Qnametext = q_Qnametext;
@@ -94,7 +96,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             holder.q_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    layOutClick(v,q_a_ID[position]);
+                    layOutClick(v,q_a_ID[position],a_Acontenttext[position]);
                     return false;
                 }
             });
@@ -104,7 +106,14 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             holder.q_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    layOutClick(v,q_a_ID[position]);
+                    layOutClick(v, q_a_ID[position], a_Acontenttext[position]);
+                    return false;
+                }
+            });
+            holder.a_Card_all.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    layOutClick(v,q_a_ID[position],a_Acontenttext[position]);
                     return false;
                 }
             });
@@ -136,18 +145,37 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
      * 按下按鈕後，會進行判斷，是否為發文者，是則可以進行回文，不適則否
      * @param v
      */
-    public void layOutClick(View v,int qaID){
+    public void layOutClick(final View v,int qaID,String a_Acontenttext){
         if (publisher) {
-            Toast.makeText(v.getContext(),"我是發文者",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(v.getContext(),"我是發文者",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(v.getContext(), AskActivity.class);
             intent.putExtra("isGroup",isGroup);
             intent.putExtra("isAsk",false);
             intent.putExtra("q_a_ID",qaID);
+            intent.putExtra("content",a_Acontenttext);
             v.getContext().startActivity(intent);
         }
         else{
-            Toast.makeText(v.getContext(), "我是看的人", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(v.getContext(), "我是看的人", Toast.LENGTH_SHORT).show();
         }
+       /*final String[] items = new String[]{"北京","上海","深圳"};
+        new AlertDialog.Builder(v.getContext()).setTitle("城市列表").setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                switch (which) {
+                    case 0:
+                        Toast.makeText(v.getContext(), "您选中了："+items[0], Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Toast.makeText(v.getContext(), "您选中了："+items[1], Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(v.getContext(), "您选中了："+items[2], Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }).show();*/
     }
 
 }

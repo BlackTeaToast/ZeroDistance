@@ -385,13 +385,7 @@ public class NewMissionActivity extends AppCompatActivity {
                 .create()
                 .show();
     }
-    //忘了，待處理
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
 
-    }
     //從檔案讀取圖片(由onClickPickimg進行呼叫)
     public void Pickimg(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
