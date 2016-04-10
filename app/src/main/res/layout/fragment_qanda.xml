@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    CardView:cardBackgroundColor="#00000000">
+    CardView:cardBackgroundColor="#8FFFFFFF">
 
     <LinearLayout
         android:orientation="vertical"
