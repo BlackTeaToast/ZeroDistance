@@ -19,6 +19,7 @@
     <color name="ColorPrimaryToolbar">#e22d133b</color>
     <color name="ColorTextToolbar">#d09eea</color>
     <color name="tabsScrollColor">#8a140e</color>
+    <color name="gogoColor">#FFC872FC</color>
 
     <!--Tree使用區-->
     <color name="spinnertext_new_mission">#46A3FF</color>

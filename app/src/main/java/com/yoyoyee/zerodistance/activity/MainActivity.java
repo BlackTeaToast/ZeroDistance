@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("ID: "+SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
+        actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
 //設置toolbar標題
 
         // Assigning ViewPager View and setting the adapter
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(getApplicationContext(), R.color.tabsScrollColor);
+                return ContextCompat.getColor(getApplicationContext(), R.color.gogoColor);
             }
         });
 
