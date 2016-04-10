@@ -37,6 +37,12 @@ public class AppConfig {
 	// Server get group qa url
 	public static String URL_GET_GROUP_QA = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getGroupQA";
 
+    // Server get mission accept user url
+    public static String URL_GET_MISSION_ACCEPT_USER = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionAcceptUser";
+
+    // Server get group accept user url
+    public static String URL_GET_GROUP_ACCEPT_USER = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getGroupAcceptUser";
+
 	// Server publish QA answer url
 	public static String URL_PUBLISH_QA_ANSWER = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishQAAnswer";
 

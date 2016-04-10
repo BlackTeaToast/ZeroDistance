@@ -123,46 +123,12 @@ public class TurnActivity extends AppCompatActivity {
         btnUnitTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClientFunctions.updateMissions(new ClientResponse() {
-                    @Override
-                    public void onResponse(String response) {
-                        ArrayList<Mission> missions = QueryFunctions.getMissions();
-                        if (missions.size() > 0) {
-                            Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
-                        }
 
-                        Mission mission = QueryFunctions.getMission(missions.get(0).id);
-                        Log.d(TAG, "onResponse: " + mission.getTitle() + " " + mission.createdAt + " " + mission.finishedAt);
-                    }
-
-                    @Override
-                    public void onErrorResponse(String response) {
-
-                    }
-                });
-
-                ClientFunctions.updateGroups(new ClientResponse() {
-                    @Override
-                    public void onResponse(String response) {
-                        ArrayList<Group> groups = QueryFunctions.getGroups();
-                        if (groups.size() > 0) {
-                            Log.d(TAG, "onResponse: " + groups.get(0).getTitle() + " " + groups.get(0).createdAt + " " + groups.get(0).finishedAt);
-                            Group group = QueryFunctions.getGroup(groups.get(0).id);
-                            Log.d(TAG, "onResponse: " + group.getTitle() + " " + group.userName + " " + group.createdAt + " " + group.finishedAt);
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onErrorResponse(String response) {
-
-                    }
-                });
-                /*ClientFunctions.publishMissionQA(30, "ANDROID TEST", new ClientResponse() {
+                ClientFunctions.updateMissionAcceptUser(29, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        QueryFunctions.getMissionAceeptUser();
                     }
 
                     @Override
@@ -170,22 +136,12 @@ public class TurnActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
-                ClientFunctions.publishGroupQA(1, "sad sad", new ClientResponse() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onErrorResponse(String response) {
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                    }
-                });*/
-                ClientFunctions.updateMissionQA(30, new ClientResponse() {
+                ClientFunctions.updateGroupAcceptUser(1, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                        QueryFunctions.getQAs();
+                        QueryFunctions.getGroupAceeptUser();
                     }
 
                     @Override
@@ -193,6 +149,7 @@ public class TurnActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         });
 
