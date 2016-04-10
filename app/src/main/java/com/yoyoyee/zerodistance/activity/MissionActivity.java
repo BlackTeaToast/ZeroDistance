@@ -303,7 +303,7 @@ public class MissionActivity extends AppCompatActivity {
         needNumber = mission.getNeedNum();
         acceptNumber = mission.getCurrentNum();
         //須在改過，改成發布者名
-        who = mission.getUserID();
+        who = mission.getUserName();
         //設置時間
         Date dateTemp = mission.getCreateAt();
         timeS = dateFormat.format(dateTemp);
