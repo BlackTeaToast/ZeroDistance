@@ -16,7 +16,6 @@ import com.yoyoyee.zerodistance.R;
  * Created by 楊霖村 on 2016/4/4.
  */
 public class fragment_achievement extends Fragment {
-    Toolbar toolbar;
     boolean hardToWork;
     boolean enmergency;
     boolean thunder;
@@ -27,7 +26,6 @@ public class fragment_achievement extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_achievement, container, false);
         //findViewById
-        toolbar = (Toolbar)v.findViewById(R.id.mission_tool_bar);
         imageView1 = (ImageView)v.findViewById(R.id.achievement1);
         imageView2 = (ImageView)v.findViewById(R.id.achievement2);
         imageView3 = (ImageView)v.findViewById(R.id.achievement3);

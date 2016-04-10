@@ -38,9 +38,9 @@ public class MissionActivity extends AppCompatActivity {
 
     //變數區====================================
     //取得傳入的intent
-    private Intent it  = this.getIntent();
+
     //取得任務id
-    //int id = it.getIntExtra("id", 0);//任務的編號 ; 錯誤則傳回0
+    int id ;//任務的編號 ; 錯誤則傳回0
     private Mission mission;//拿來抓misson
 
     private float size;//定義所有文字的大小
@@ -90,6 +90,8 @@ public class MissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mission);
+        Intent it  = this.getIntent();
+        id= it.getIntExtra("id", 0);
 
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
@@ -167,7 +169,7 @@ public class MissionActivity extends AppCompatActivity {
                 boolean isGroup = false;//是任務
                 String publisher  = mission.getUserID();//發布者ID
 
-                it = new Intent();
+                Intent it = new Intent();
                 it.setClass(MissionActivity.this, QAActivity.class);
                 it.putExtra("isGroup", isGroup);
                 it.putExtra("publisher", publisher );
@@ -188,7 +190,7 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "點選了刪除" ,Toast.LENGTH_SHORT).show();
-                it = new Intent(MissionActivity.this, AchievementActivity.class);
+              Intent  it = new Intent(MissionActivity.this, AchievementActivity.class);
                 startActivity(it);
             }
         });
@@ -207,7 +209,7 @@ public class MissionActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         //設定
-        readValue();
+        readValue(id);
         //顯示
         setValue();
 
@@ -236,8 +238,11 @@ public class MissionActivity extends AppCompatActivity {
     }
 
     //讀取並設置值
-    private void readValue(){
+    private void readValue(int id){
 
+        /*
+        //取得misson
+        mission = QueryFunctions.getMission(id);
         // 需先讀進以下變數才能正常顯示============================
         title = "鸚鵡";
         needNumber = 8;
@@ -250,7 +255,7 @@ public class MissionActivity extends AppCompatActivity {
         isFinished = false;
 
         //字體大小
-        size = 15;
+        size = SessionFunctions.getUserTextSize();
 
         //設置餐與者
         user = new ArrayList<>();
@@ -280,8 +285,8 @@ public class MissionActivity extends AppCompatActivity {
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
 
         // =========================================================
+*/
 
-        /*
         //取得misson
         mission = QueryFunctions.getMission(id);
 
@@ -302,7 +307,7 @@ public class MissionActivity extends AppCompatActivity {
         isFinished = mission.isFinished;
 
         //字體大小
-        size = 15;
+        size = SessionFunctions.getUserTextSize();
 
         //設置餐與者
         user = new ArrayList<>();
@@ -323,7 +328,7 @@ public class MissionActivity extends AppCompatActivity {
 
         //有圖片的話設置URL
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
-*/
+
     }
 
     //更改View中的值並顯示
