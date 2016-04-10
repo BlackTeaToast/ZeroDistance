@@ -1,8 +1,10 @@
 package com.yoyoyee.zerodistance.activity;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
@@ -15,20 +17,25 @@ import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 
 public class AskActivity extends AppCompatActivity {
-    protected TextView TV;
     protected EditText ET;
     protected Button OK,NO;
     protected Boolean isAsk,isGroup;
     protected int group_mission_ID,q_a_ID;
     protected String a_Acontenttext;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask);
         Intent intent =getIntent();
         isGroup=intent.getBooleanExtra("isGroup", false);
-        isAsk=intent.getBooleanExtra("isAsk",true);
+        isAsk=intent.getBooleanExtra("isAsk", true);
         group_mission_ID=intent.getIntExtra("group_missionID", 0);
+        //toolbar 定位區
+        toolbar= (Toolbar) findViewById(R.id.ask_Toolbar);
+
+
+        //----------------------------------------------------------------------------------------------------------
         q_a_ID =intent.getIntExtra("q_a_ID",0);
         a_Acontenttext=intent.getStringExtra("content");
         findIDAndSetUse(isAsk,a_Acontenttext);
@@ -90,26 +97,39 @@ public class AskActivity extends AppCompatActivity {
 
     }
     protected void findIDAndSetUse(Boolean isAsk,String a_Acontenttext){
-        TV = (TextView)findViewById(R.id.askTitle);
         ET = (EditText)findViewById(R.id.askEditText);
         OK = (Button)findViewById(R.id.askOk);
         NO = (Button)findViewById(R.id.askCancle);
         if(isAsk) {
-            TV.setText(R.string.ask_for_title);
+            //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle(R.string.ask_for_title);
+
+
             OK.setText(R.string.ask_for_ok);
             NO.setText(R.string.ask_for_cancle);
         }
         else{
             try {
                 if (!a_Acontenttext.equals("null")){
-                    TV.setText(R.string.ans_for_had_ans);
+                    //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
+                    setSupportActionBar(toolbar);
+                    ActionBar actionBar = getSupportActionBar();
+                    actionBar.setTitle(R.string.ans_for_had_ans);
                 }
                 else {
-                    TV.setText(R.string.ans_for_title);
+                    //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
+                    setSupportActionBar(toolbar);
+                    ActionBar actionBar = getSupportActionBar();
+                    actionBar.setTitle(R.string.ans_for_title);
                 }
             }
             catch (Exception ex){
-                TV.setText(R.string.ans_for_title);
+                //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
+                setSupportActionBar(toolbar);
+                ActionBar actionBar = getSupportActionBar();
+                actionBar.setTitle(R.string.ans_for_title);
             };
             OK.setText(R.string.ans_for_ok);
             NO.setText(R.string.ans_for_cancle);
