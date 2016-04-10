@@ -36,6 +36,7 @@ public class fragment_setting extends Fragment {
     private SQLiteHandler db;
     private SessionManager session;
     float ttsize;  //字體大小
+    static float sizeS=10,sizeM=15, sizeL=20;
     TextView textsize , userid;
     SessionFunctions SF= new SessionFunctions();//手機內設定
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,13 +105,13 @@ public class fragment_setting extends Fragment {
 
             switch(checkedId){
                 case R.id.textsizeLRB:
-                    ttsize=30;
+                    ttsize=sizeL;
                     break;
                 case R.id.textsizeMRB:
-                    ttsize=25;
+                    ttsize=sizeM;
                     break;
                 case R.id.textsizeSRB:
-                    ttsize=20;
+                    ttsize=sizeS;
                     break;
             }
             SF.setUserTextSize(ttsize);
@@ -157,11 +158,11 @@ public class fragment_setting extends Fragment {
         }else{
             showpay.setChecked(true);
         }
-        if(SF.getUserTextSize()==25){
+        if(SF.getUserTextSize()==sizeM){
             textsizeMRB.setChecked(true);
-        }else if (SF.getUserTextSize()==20){
+        }else if (SF.getUserTextSize()==sizeS){
             textsizeSRB.setChecked(true);
-        }else if (SF.getUserTextSize()==30){
+        }else if (SF.getUserTextSize()==sizeL){
             textsizeLRB.setChecked(true);
         }
     }
