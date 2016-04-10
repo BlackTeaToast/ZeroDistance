@@ -105,11 +105,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "id為"+id[position]+"  序列為"+"第"+position+"個", Toast.LENGTH_SHORT).show();
                 Intent in = new Intent(v.getContext(), MissionActivity.class);
-                in.putExtra("id", id[position]);
+              //  in.putExtra("id", id[position]);
+                in.putExtra("id", 2);
                 v.getContext().startActivity(in);
             }
         });
     }
+
     @Override
     public int getItemCount() {
         Count = mData.length;//長度
