@@ -72,6 +72,7 @@ public class MissionActivity extends AppCompatActivity {
     private Button qAndAButton;
     private Button editButton;
     private Button deleteButton;
+    private Button finishButton;
 
     private String title;
     private String who;
@@ -116,7 +117,7 @@ public class MissionActivity extends AppCompatActivity {
         editButton = (Button)findViewById(R.id.editButtonM);
         deleteButton = (Button)findViewById(R.id.deleteButtonM);
         rateButton = (Button)findViewById(R.id.ratebuttonM);
-
+        finishButton = (Button)findViewById(R.id.finishButton) ;
 
         //-------------------------------------------------------------------------------
 
@@ -220,6 +221,26 @@ public class MissionActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "點選了刪除" ,Toast.LENGTH_SHORT).show();
               Intent  it = new Intent(MissionActivity.this, AchievementActivity.class);
                 startActivity(it);
+            }
+        });
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(rating!=0){
+                    finishButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    finishButton.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), R.string.rating_finished,Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 

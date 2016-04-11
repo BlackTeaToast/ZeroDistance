@@ -77,7 +77,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="75dp">
+            android:layout_height="75dp"
+            android:layout_marginTop="40dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,7 +91,10 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/languageSpinner" />
+                android:id="@+id/languageSpinner"
+                android:background="#eff6fa"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp" />
         </LinearLayout>
 
         <TextView
@@ -98,13 +102,15 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/showstyles"
-            android:id="@+id/showstyleread" />
+            android:id="@+id/showstyleread"
+            android:layout_marginTop="10dp" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/showstyleRG">
+            android:id="@+id/showstyleRG"
+            android:layout_marginTop="20dp">
 
             <RadioButton
             android:layout_width="wrap_content"
@@ -132,7 +138,8 @@
         android:layout_height="wrap_content"
         android:text="@string/Sign_out"
         android:id="@+id/Sign_outbut"
-        android:layout_gravity="bottom|center_horizontal" />
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@drawable/button_misson" />
 
     <TextView
         android:layout_width="wrap_content"

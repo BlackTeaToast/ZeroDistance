@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 
 import com.yoyoyee.zerodistance.R;
 
@@ -23,12 +25,19 @@ public class fragment_achievement extends Fragment {
     ImageView imageView1;
     ImageView imageView2;
     ImageView imageView3;
+    TextView textView1;
+    TextView textView2;
+    TextView textView3;
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_achievement, container, false);
         //findViewById
         imageView1 = (ImageView)v.findViewById(R.id.achievement1);
         imageView2 = (ImageView)v.findViewById(R.id.achievement2);
         imageView3 = (ImageView)v.findViewById(R.id.achievement3);
+        textView1 = (TextView)v.findViewById(R.id.achievementText1);
+        textView2 = (TextView)v.findViewById(R.id.achievementText2);
+        textView3 = (TextView)v.findViewById(R.id.achievementText3);
 
 
         //設置區域==========
@@ -58,4 +67,11 @@ public class fragment_achievement extends Fragment {
         else
             imageView3.setImageResource(R.drawable.price_emergency_null);
     }
+
+    private void setFont(){
+        textView1.setText(R.string.achievement1);
+        textView2.setText(R.string.achievement2);
+        textView3.setText(R.string.achievement3);
+    }
+
 }

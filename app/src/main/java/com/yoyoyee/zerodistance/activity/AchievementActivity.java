@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
 
@@ -19,6 +20,9 @@ public class AchievementActivity extends AppCompatActivity {
     ImageView imageView1;
     ImageView imageView2;
     ImageView imageView3;
+    TextView textView1;
+    TextView textView2;
+    TextView textView3;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -27,14 +31,16 @@ public class AchievementActivity extends AppCompatActivity {
         imageView1 = (ImageView)findViewById(R.id.achievement1);
         imageView2 = (ImageView)findViewById(R.id.achievement2);
         imageView3 = (ImageView)findViewById(R.id.achievement3);
-
+        textView1 = (TextView)findViewById(R.id.achievementText1);
+        textView2 = (TextView)findViewById(R.id.achievementText2);
+        textView3 = (TextView)findViewById(R.id.achievementText3);
 
 //設置toolbar標題
 
 
         //設置區域==========
-        hardToWork = true;
-        enmergency = true;
+        hardToWork = false;
+        enmergency = false;
         thunder = false;
 
         //==================
@@ -59,6 +65,12 @@ public class AchievementActivity extends AppCompatActivity {
             imageView3.setImageResource(R.drawable.price_emergency);
         else
             imageView3.setImageResource(R.drawable.price_emergency_null);
+    }
+
+    private void setFont(){
+        textView1.setText(R.string.achievement1);
+        textView2.setText(R.string.achievement2);
+        textView3.setText(R.string.achievement3);
     }
 
 }
