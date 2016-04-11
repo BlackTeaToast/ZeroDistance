@@ -304,19 +304,20 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
      missiondangerous = new boolean[missions.size()];//任務是否緊急
      becontext = SessionFunctions.getbecontext();//true 為內容 false為獎勵
      for(int i = 0;i <missions.size();i++){
-         id[i]= missions.get(i).id;
-         title[i]= missions.get(i).title;
-         if(becontext){
-             detial[i] = missions.get(i).content;
-         }else{
-             detial[i] = missions.get(i).reward;
-         }
-         expAt[i] = missions.get(i).expAt;
-         needNum[i] = missions.get(i).needNum;
-         currentNum[i] = missions.get(i).currentNum;
-         missiondangerous[i] = missions.get(i).isUrgent;
-         title[i]=limitString(title[i], 0);//0為title , 1為detial
-         detial[i]=limitString(detial[i], 1);
+
+             id[i]= missions.get(missions.size()-i-1).id;
+             title[i]= missions.get(missions.size()-i-1).title;
+             if(becontext){
+                 detial[i] = missions.get(missions.size()-i-1).content;
+             }else{
+                 detial[i] = missions.get(missions.size()-i-1).reward;
+             }
+             expAt[i] = missions.get(missions.size()-i-1).expAt;
+             needNum[i] = missions.get(missions.size()-i-1).needNum;
+             currentNum[i] = missions.get(missions.size()-i-1).currentNum;
+             missiondangerous[i] = missions.get(missions.size()-i-1).isUrgent;
+             title[i]=limitString(title[i], 0);//0為title , 1為detial
+             detial[i]=limitString(detial[i], 1);
      }
      missionnumber=new int[missions.size()];
      for(int i=0;i<missions.size();i++){
@@ -329,4 +330,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         }
         CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
  }
+    public void isUrgent(){
+        for(int i = 0;i <missions.size();i++){
+
+        }
+    }
 }
