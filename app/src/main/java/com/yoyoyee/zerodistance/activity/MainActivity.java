@@ -13,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager pager;
     SlidingTabLayout tabs;
     private ProgressDialog pDialog;
+    public static boolean PD=false;
     private SQLiteHandler db;
     CharSequence Titles[]={"任務","揪團","未完成","已完成","成就","設定"};
     @Override
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setMessage("載入中 ...");
         context = this;
 
-        showDialog();
+
         //更新手機資料庫
         updataphoneDB();
         //更新資料
@@ -72,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.container);
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-        pager.setAdapter(adapter);
+
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -89,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(pager);
-        hideDialog();
+
+
 
     }
     protected void onStart(){
@@ -110,15 +112,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void showDialog() {
-        if (!pDialog.isShowing())
+        if (!pDialog.isShowing()){
             pDialog.show();
+            PD=true;
+        }
     }
 
     private void hideDialog() {
-        if (pDialog.isShowing())
+        if (pDialog.isShowing()){
             pDialog.dismiss();
+            PD=false;
+        }
     }
+    private void delphoneDB(){
+        QueryFunctions.deleteAllMissions();
+        QueryFunctions.deleteAllGroups();
+    }
+
     private void updataphoneDB(){//更新手機資料
+        delphoneDB();//資料都先削掉
+        showDialog();
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -132,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(String response) {
+                Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -144,15 +158,21 @@ public class MainActivity extends AppCompatActivity {
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
-
+                MakeTabAndContext();
+                hideDialog();
             }
 
             @Override
             public void onErrorResponse(String response) {
-
+                Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+    private void MakeTabAndContext(){
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
+        pager.setAdapter(adapter);
+        tabs.setViewPager(pager);
     }
 
 }

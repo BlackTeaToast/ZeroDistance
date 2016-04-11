@@ -1,5 +1,7 @@
 package com.yoyoyee.zerodistance.fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.activity.MainActivity;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
 import com.yoyoyee.zerodistance.app.AppController;
@@ -54,8 +57,11 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     int[] currentNum;
     boolean[] missiondangerous;
     boolean becontext;
+    ArrayList<Mission>  missionsUrgent;
+    ArrayList<Mission>  missionsNotUrgent;
     ArrayList<Mission> missions;
     int missionnumber[];
+    private ProgressDialog pDialog;
     //
     RecyclerView mList;
     FloatingActionButton fab;
@@ -64,12 +70,21 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     String[] detial;
     LinearLayoutManager layoutManager;//CARD layout
     GridLayout card_view;
+    public fragment_mission(){
+        updataphoneDB();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
 
         SessionFunctions SF = new SessionFunctions();
-        makecard();
+
+        pDialog = new ProgressDialog(v.getContext());
+        pDialog.setCancelable(false);
+        pDialog.setMessage("載入中 ...");
+        showDialog();
+
+        //makecard();
 
         try {
            // CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
@@ -158,6 +173,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     }
     private void updataphoneDB(){//更新手機資料
+
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -189,8 +205,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 }
                 totalvuledel();
                 mSwipeRefreshLayout.setRefreshing(false);
-                makecard();
                 mList.setAdapter(CardViewAdapter);
+                hideDialog();
             }
 
             @Override
@@ -294,7 +310,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         missiondangerous = null;
     }
     public void makecard(){
-        missions  = QueryFunctions.getUnfinishedMissions();
+        missionsUrgent = QueryFunctions.getUnfinishedMissions();
+        missionsNotUrgent = QueryFunctions.getUnfinishedMissions();
+        missions  = QueryFunctions.getMissions();
      id = new int[missions.size()];//任務id
      title = new String[missions.size()];//任務標題
      detial = new String[missions.size()];//任務內容or獎勵
@@ -319,20 +337,35 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
              title[i]=limitString(title[i], 0);//0為title , 1為detial
              detial[i]=limitString(detial[i], 1);
      }
+        isUrgentCount();
      missionnumber=new int[missions.size()];
      for(int i=0;i<missions.size();i++){
          missionnumber[i]=i;
      }
         try {
-            Toast.makeText(getContext(), "現在有"+missions.size()+"個", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "現在有"+missions.size()+"個", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
         CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
  }
-    public void isUrgent(){
+    public int isUrgentCount(){
+        int Count=0;
         for(int i = 0;i <missions.size();i++){
-
+            if(missions.get(i).isUrgent==true){
+                Count+=1;
+            }
         }
+        Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
+        return Count;
+    }
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 }
