@@ -297,7 +297,7 @@ public class QueryFunctions {
                 values.put(MissionsTable.KEY_USER_NAME, missionsList.get(i).userName); // Email
                 values.put(MissionsTable.KEY_SCHOOL_ID, missionsList.get(i).schoolID); // Email
                 values.put(MissionsTable.KEY_TITLE, missionsList.get(i).title); // Created At
-                values.put(MissionsTable.KEY_IS_URGENT, missionsList.get(i).content); // Created At
+                values.put(MissionsTable.KEY_IS_URGENT, missionsList.get(i).isUrgent); // Created At
                 values.put(MissionsTable.KEY_NEED_NUM, missionsList.get(i).needNum); // Created At
                 values.put(MissionsTable.KEY_CURRENT_NUM, missionsList.get(i).currentNum); // Created At
                 values.put(MissionsTable.KEY_PLACE, missionsList.get(i).place);
