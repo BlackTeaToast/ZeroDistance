@@ -80,6 +80,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private Boolean time12or24=false; //設定true為24小時制，false12小時制
     private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
     private Boolean PICTURE_GONE=true;//隱藏拍照功能
+    private Boolean isOtherPay=false;//獎勵是否為其他
 
     private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
     private Bitmap bitmapOutPut;//要輸出出去的原圖
@@ -199,10 +200,11 @@ public class NewMissionActivity extends AppCompatActivity {
                 Display.setText(stringPay[position]);
                 if (position == (getResources().getStringArray(R.array.pay_new_mission).length - 1)) {
                     editTextOtherPay.setVisibility(View.VISIBLE);
-                    getPay = editTextOtherPay.getText().toString();
+                    isOtherPay=true;
                 } else {
                     getPay = stringPay[position];
                     editTextOtherPay.setVisibility(View.GONE);
+                    isOtherPay=false;
                 }
             }
 
@@ -212,6 +214,9 @@ public class NewMissionActivity extends AppCompatActivity {
         });
         //此區為隱藏功能用--------------------------------------------------------------------------
         hide(PICTURE_GONE);
+    }
+    public void setTextandSize(){
+
     }
     public void hide(Boolean PICTURE_GONE){
         if(PICTURE_GONE) {
@@ -487,6 +492,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                 Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
                             } else {
                                 //    missionData.content = editTextcontent.getText().toString();
+                                if (isOtherPay){getPay = editTextOtherPay.getText().toString();}
                                 calendar.set(year, month, day, hour, minute);
                                 ClientFunctions.publishMission(
                                         editTextName.getText().toString(),

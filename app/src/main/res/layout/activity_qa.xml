@@ -30,7 +30,10 @@
             android:layout_row="0"
             android:layout_column="0"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
+            android:layout_marginRight="15dp"
+            android:background="#00ffffff"
+            android:touchscreenBlocksFocus="false" />
+
     </GridLayout>
 
 </RelativeLayout>

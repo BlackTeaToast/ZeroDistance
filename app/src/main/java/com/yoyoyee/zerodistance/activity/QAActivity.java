@@ -146,7 +146,7 @@ public class QAActivity extends AppCompatActivity {
             a_Acontenttext [z]=q[z].answer;
             userUID[z] =q[z].userUid;
         }
-        QAAdapter QAAdapter = new QAAdapter(/*q_Q_Titletext,*/q_a_ID,size, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, /*a_A_Titletext,*/ a_Atimetext, a_Acontenttext,userUID);
+        QAAdapter QAAdapter = new QAAdapter(q_a_ID,size, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, a_Atimetext, a_Acontenttext,userUID);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
 
         LinearLayoutManager layoutManager;
@@ -156,13 +156,7 @@ public class QAActivity extends AppCompatActivity {
         mList.setAdapter(QAAdapter);
     }
     protected void allTextSizeSet(float size){
-
     }
-
-
-
-
-
     //圖案發文
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -173,7 +167,6 @@ public class QAActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.menu_main, menu);
             return true;
         }
-
     }
     @Override
     protected void onResume(){
