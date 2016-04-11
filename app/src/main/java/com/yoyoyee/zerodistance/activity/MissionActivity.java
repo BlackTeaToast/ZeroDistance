@@ -291,7 +291,7 @@ public class MissionActivity extends AppCompatActivity {
         //設定
         readValue();
 
-        showDialog();
+
         //如果有圖片則顯示圖片
         if(imagePath!=null) {
             imageView.setVisibility(View.VISIBLE);
@@ -315,6 +315,7 @@ public class MissionActivity extends AppCompatActivity {
             imageView.setVisibility(View.GONE);
         }
         hideDialog();
+
     }
 
     //讀取並設置值

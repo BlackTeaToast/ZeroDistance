@@ -207,7 +207,7 @@ public class GroupActivity extends AppCompatActivity {
         //讀取值
         readValue();
 
-        showDialog();
+
         //如果有圖片則顯示圖片
         if(imagePath!=null) {
             imageView.setVisibility(View.VISIBLE);
