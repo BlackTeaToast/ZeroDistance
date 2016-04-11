@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     public static Context context;
     ViewPagerAdapter adapter;
-    Toolbar toolbar;
     Toolbar tool_bar;
     ViewPager pager;
     SlidingTabLayout tabs;
@@ -70,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 //設置toolbar標題
 
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
+//            TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName);
+//            TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
+//            UserNames.setText(SessionFunctions.getUserNickName());
+//            UserSchool.setText("dsdsd");
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");

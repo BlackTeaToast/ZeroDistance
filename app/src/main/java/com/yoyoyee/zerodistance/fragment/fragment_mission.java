@@ -356,7 +356,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     public int isUrgentCount(){
         int Count=0;
         for(int i = 0;i <missions.size();i++){
-            if(missions.get(i).isUrgent==true){
+            if(missiondangerous[i]){
                 Count+=1;
             }
         }
