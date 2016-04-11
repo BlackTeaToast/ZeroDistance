@@ -1,6 +1,8 @@
 package com.yoyoyee.zerodistance.client;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,14 +24,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 /**
@@ -502,7 +507,7 @@ public class ClientFunctions {
                 params.put("uid", session.getUserUid());
                 params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
-                params.put("is_urgent", String.valueOf(isUrgent));
+                params.put("is_urgent", isUrgent?"1":"0");
                 params.put("need_num", String.valueOf(needNum));
                 params.put("place", place);
                 params.put("content", content);
@@ -1249,6 +1254,27 @@ public class ClientFunctions {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void uploadImage(String imagePath) {
+        String tag_string_req = "req_upload_image";
+
+        Map<String,String> params = new HashMap<>();
+        params.put("uid", session.getUserUid());
+
+        MultipartRequest mulReq = new MultipartRequest("http://192.168.1.50:3000/", new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(AppController.getInstance(), response, Toast.LENGTH_SHORT);
+            }
+        }, new File(imagePath), params);
+        AppController.getInstance().addToRequestQueue(mulReq, tag_string_req);
+
     }
 
 }

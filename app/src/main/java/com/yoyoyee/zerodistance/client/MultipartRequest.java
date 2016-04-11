@@ -52,7 +52,7 @@ public class MultipartRequest extends Request<String> {
     }
 
     private void buildMultipartEntity() {
-        entity.addPart(FILE_PART_NAME, new FileBody(mFilePart, ContentType.create("image/jpeg"), mFilePart.getName()));
+        entity.addPart(FILE_PART_NAME, new FileBody(mFilePart, ContentType.MULTIPART_FORM_DATA, mFilePart.getName()));
         if (mStringPart != null) {
             for (Map.Entry<String, String> entry : mStringPart.entrySet()) {
                 entity.addTextBody(entry.getKey(), entry.getValue());

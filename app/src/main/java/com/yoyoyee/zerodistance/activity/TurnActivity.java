@@ -1,9 +1,23 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,17 +26,15 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.client.MultipartRequest;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
-import com.yoyoyee.zerodistance.helper.datatype.Group;
-import com.yoyoyee.zerodistance.helper.datatype.Mission;
-
-import java.util.ArrayList;
 
 public class TurnActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
+    final int requireCodefromSdcard=101,requireCodefromCamara=100;
     private Button btnMain;
     private Button btnMission;
     private Button btnNewMission;
@@ -50,10 +62,9 @@ public class TurnActivity extends AppCompatActivity {
         btnGroup = (Button) findViewById(R.id.buttonGroup);
         btnNewGroup = (Button) findViewById(R.id.buttonNewGroup);
         btnQA = (Button) findViewById(R.id.buttonQA);
-        btnUnitTest = (Button) findViewById(R.id.btnUnitTest);
+        btnUnitTest = (Button) findViewById(R.id.buttonUnitTest);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
         buttonAchievement = (Button) findViewById(R.id.buttonPrice);
-
         tvExplain = (TextView) findViewById(R.id.textViewTurnActExplain);
         tvView = (TextView) findViewById(R.id.textViewTurnActView);
 
@@ -124,7 +135,7 @@ public class TurnActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ClientFunctions.updateMissionAcceptUser(29, new ClientResponse() {
+                /*ClientFunctions.updateMissionAcceptUser(29, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
@@ -148,7 +159,33 @@ public class TurnActivity extends AppCompatActivity {
                     public void onErrorResponse(String response) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
+
+                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+                    int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+                        //申请WRITE_EXTERNAL_STORAGE權限，
+                        if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission_and_group), new DialogInterface.OnClickListener() {
+                                @TargetApi(Build.VERSION_CODES.M)
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                        }
+                        else {
+                            ActivityCompat.requestPermissions(getParent() , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
+                            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                                Pickimg();
+                            }
+                        }
+                    }
+                    else
+                        Pickimg();
+                }
+                else{
+                    Pickimg();
+                }
 
             }
         });
@@ -181,5 +218,63 @@ public class TurnActivity extends AppCompatActivity {
         Intent intent = new Intent(TurnActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void Pickimg(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
+        }
+        Intent intent =new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, requireCodefromSdcard);
+
+
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton(getResources().getString(R.string.okbuttom_new_mission_and_group), okListener)
+                .setNegativeButton(getResources().getString(R.string.cancelbuttom_new_mission_and_group), null)
+                .create()
+                .show();
+    }
+
+    protected void onActivityResult(int requireCode,int resultCode,Intent data){
+        super.onActivityResult(requireCode, resultCode, data);
+        switch (requireCode) {
+            case requireCodefromCamara: {
+
+            }
+            case requireCodefromSdcard: {
+                if (resultCode == Activity.RESULT_OK ) {
+                    BitmapFactory.Options option = new BitmapFactory.Options();
+                    //option.inJustDecodeBounds =true;//只讀圖檔資訊
+                    option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
+                    Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
+
+                    // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
+
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+                        Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
+                    ClientFunctions.uploadImage(picturePath);
+
+                }
+                else {
+                    Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 }
