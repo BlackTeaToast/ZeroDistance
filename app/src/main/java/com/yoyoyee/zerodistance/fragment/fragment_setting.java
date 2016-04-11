@@ -188,6 +188,6 @@ public class fragment_setting extends Fragment {
         textViewTemp =  (RadioButton) v.findViewById(R.id.textsizeSRB);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (Button) v.findViewById(R.id.Sign_outbut);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp.setTextSize(SF.getUserTextSize());
     }
 }

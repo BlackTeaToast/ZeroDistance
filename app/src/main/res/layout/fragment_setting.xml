@@ -134,12 +134,14 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="37dp"
         android:text="@string/Sign_out"
         android:id="@+id/Sign_outbut"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/button_misson" />
+        android:background="@drawable/buttom4"
+
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
