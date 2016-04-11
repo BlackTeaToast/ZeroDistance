@@ -39,7 +39,8 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -78,7 +79,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <Spinner
             android:layout_width="190dp"
@@ -98,7 +100,7 @@
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#eff6fa" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -119,7 +121,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <Spinner
             android:layout_width="190dp"
@@ -139,7 +142,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#eff6fa" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -160,7 +163,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <EditText
             android:layout_width="match_parent"
@@ -209,10 +213,11 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:text="日期"
             android:id="@+id/buttonDate"
@@ -225,7 +230,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#452e51"
+            android:background="@drawable/buttom3"
             android:textColor="#ffffff" />
 
         <Button
@@ -242,7 +247,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="0dp"
-            android:background="#452e51"
+            android:background="@drawable/buttom3"
             android:textColor="#ffffff" />
 
         <TextView
@@ -261,7 +266,8 @@
             android:layout_columnSpan="7"
             android:layout_gravity="left|center"
             android:layout_margin="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -294,7 +300,8 @@
             android:layout_columnSpan="14"
             android:layout_gravity="left|center"
             android:layout_margin="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <EditText
             android:layout_width="match_parent"
@@ -330,7 +337,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#c7ffffff" />
+            android:background="#00ffffff"
+            android:textColor="#3a58a4" />
 
         <Button
             android:layout_width="wrap_content"
@@ -414,7 +422,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:onClick="onClickOkOutputData"
-            android:background="#452e51"
+            android:background="@drawable/buttom3"
             android:textColor="#ffffff" />
 
         <Button
@@ -433,7 +441,7 @@
             android:layout_columnSpan="7"
             android:onClick="onClickCancel"
             android:textColor="#ffffff"
-            android:background="#452e51" />
+            android:background="@drawable/buttom3" />
 
     </GridLayout>
 

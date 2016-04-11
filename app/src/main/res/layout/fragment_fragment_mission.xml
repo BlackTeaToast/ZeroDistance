@@ -49,7 +49,10 @@
                     android:maxLines="1"
                     android:ellipsize="marquee"
                     android:layout_weight="0.97"
-                    android:textColor="#366fe9" />
+                    android:textStyle="bold"
+                    android:textColor="#366fe9"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp" />
                 //上左
                 <GridLayout
                     android:layout_width="wrap_content"
@@ -122,8 +125,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:weightSum="1">
+
             <GridLayout
-                android:layout_width="wrap_content"
+                android:layout_width="198dp"
                 android:layout_height="match_parent"
                 android:rowCount="1"
                 android:columnCount="1"
@@ -135,7 +139,10 @@
                 android:touchscreenBlocksFocus="false"
                 android:useDefaultMargins="true"
                 android:layout_gravity="left"
-                android:layout_weight="1">
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:background="#4cfdfce0"
+                android:layout_weight="0.33">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -149,7 +156,15 @@
             android:layout_rowSpan="1"
             android:layout_gravity="left"
             android:textColor="#000000" />
-            </GridLayout>//下左
+            </GridLayout>
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="match_parent"
+                android:layout_weight="0.31" />
+
+            //下左
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
