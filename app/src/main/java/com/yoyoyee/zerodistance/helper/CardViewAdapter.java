@@ -6,15 +6,18 @@ package com.yoyoyee.zerodistance.helper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         public TextView missionDetial, missionName, missionnumber, datetime, expAt, peoplenumber;
         public Button missionbutton;
         public ImageView missiondangerous;
+        public RelativeLayout card;
         public ViewHolder(View v) {
             super(v);
 
@@ -50,7 +54,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             missiondangerous = (ImageView) v.findViewById(R.id.missiondangerous);
             missionnumber = (TextView) v.findViewById(R.id.missionnumber);
             peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
-                missionbutton = (Button)v.findViewById(R.id.missionbutton);
+            missionbutton = (Button)v.findViewById(R.id.missionbutton);
+            card = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
             //處利日期
             date = new Calendar[getItemCount()];
             month = new int[getItemCount()];
@@ -112,9 +117,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.expAt.setText(hour[position]+":"+mm[position]);
             holder.peoplenumber.setText(currentNum[position]+"/"+needNum[position]+"人");
             holder.missionnumber.setText("" + missionnumber[position]);
-
         if(missiondangerous[position]){
-            holder.missiondangerous.setVisibility(View.VISIBLE);}
+            holder.missiondangerous.setVisibility(View.VISIBLE);
+
+        }
             holder.missionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
