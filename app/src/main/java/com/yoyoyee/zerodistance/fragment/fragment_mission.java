@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -42,6 +43,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -348,7 +350,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
+        Resources res =this.getResources();
+        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission/*,res*/);
  }
     public int isUrgentCount(){
         int Count=0;
