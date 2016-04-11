@@ -182,6 +182,8 @@
     <string name="achievement1">"    成功獲得\n10個三星評價"</string>
     <string name="achievement2">在截止時限內\n完成10個任務</string>
     <string name="achievement3">"    完成10個    \n    緊急任務    "</string>
+    <string name="reading_error">請檢查網路狀態</string>
+    <string name="no_one_join_now">目前尚未有人參與</string>
     <!--=========================================================-->
 
 

@@ -1,10 +1,12 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.support.v4.media.RatingCompat;
 import android.support.v7.app.ActionBar;
 import android.view.ViewGroup.LayoutParams;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +45,7 @@ public class MissionActivity extends AppCompatActivity {
     //取得傳入的intent
 
     //取得任務id
-    int id ;//任務的編號 ; 錯誤則傳回0
+    private int id ;//任務的編號 ; 錯誤則傳回0
     private Mission mission;//拿來抓misson
     private ArrayList<MissionAccept> missonAccept;
 
@@ -86,6 +88,9 @@ public class MissionActivity extends AppCompatActivity {
     private boolean joined;//是否有餐與
     private String imagePath;
 
+    //拿來停止，直到某件事做完才繼續執行用
+    private ProgressDialog pDialog;
+    public static boolean PD=false;
 
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -98,6 +103,10 @@ public class MissionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mission);
         Intent it  = this.getIntent();
         id= it.getIntExtra("id", 0);
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Loading ...");
 
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
@@ -161,28 +170,44 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (joined) {
-                    joined = false;
-                    joinButton.setText(R.string.is_joined);
 
-                    Toast.makeText(v.getContext(), R.string.not_aleady_joined, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
 
+                    //重新整理
+                    readValue(id);
 
                 } else {
-                    joined = true;
-                    joinButton.setText(R.string.not_joined);
-
-                    Toast.makeText(v.getContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                    //參加
                     ClientFunctions.publishMissionAccept(id, new ClientResponse() {
                         @Override
+                        //確定參加完成後
                         public void onResponse(String response) {
+
+                            //更新手機資料庫
+                            ClientFunctions.updateMissions(new ClientResponse() {
+                                @Override
+                                public void onResponse(String response) {
+                                    //確定更新完之後，重新讀取
+                                    readValue(id);
+                                    Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onErrorResponse(String response) {
+
+                                }
+                            });
+
 
                         }
 
                         @Override
                         public void onErrorResponse(String response) {
-
+                            Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
                         }
                     });
+
+
                 }
 
 
@@ -228,6 +253,7 @@ public class MissionActivity extends AppCompatActivity {
             }
         });
 
+        //評分之後
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -240,6 +266,7 @@ public class MissionActivity extends AppCompatActivity {
             }
         });
 
+        //點選評分完成鈕
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,8 +290,6 @@ public class MissionActivity extends AppCompatActivity {
         super.onResume();
         //設定
         readValue(id);
-        //顯示
-        setValue();
 
         //如果有圖片則顯示圖片
         if(imagePath!=null) {
@@ -339,22 +364,38 @@ public class MissionActivity extends AppCompatActivity {
 
         // =========================================================
 */
-
-        //取得misson
-        mission = QueryFunctions.getMission(id);
         //更新接受此任務的人
+        showDialog();
+        //更新手機資料庫的參與者
         ClientFunctions.updateMissionAcceptUser(id, new ClientResponse() {
             @Override
             public void onResponse(String response) {
+                //將手機資料庫的參與者取得
+                missonAccept = QueryFunctions.getMissionAceeptUser();
+                //設置餐與者
+                user = new ArrayList<>();
+                if(missonAccept.size()!=0)
+                    for(int i=0 ; i<missonAccept.size() ; i++){
+                        user.add(missonAccept.get(i).userName);
+                    }
+                else{
+                    user.add(getResources().getString(R.string.no_one_join_now));
+                }
 
+                //設定自己是否是參與者
+                joined = isJoined();
+                //顯示
+                setValue();
+                hideDialog();
             }
 
             @Override
             public void onErrorResponse(String response) {
-
+                Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
             }
         });
-        missonAccept = QueryFunctions.getMissionAceeptUser();
+
+        mission = QueryFunctions.getMission(id);
 
         // 需先讀進以下變數才能正常顯示============================
         title = mission.getTitle();
@@ -375,15 +416,6 @@ public class MissionActivity extends AppCompatActivity {
         //字體大小
         size = SessionFunctions.getUserTextSize();
 
-        //設置餐與者
-        user = new ArrayList<>();
-        if(missonAccept.size()!=0)
-            for(int i=0 ; i<missonAccept.size() ; i++){
-                user.add(missonAccept.get(i).userName);
-            }
-        else{
-            user.add("目前沒有人參加");
-        }
 
         //抓取內容
         doWhat =mission.getContent();
@@ -391,8 +423,6 @@ public class MissionActivity extends AppCompatActivity {
         //誰看到這個版面與是否參與
         whoSeeID = SessionFunctions.getUserUid();
         isTeacher = mission.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
-        //須在改過
-        joined = isJoined();
 
         //有圖片的話設置URL
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
@@ -412,8 +442,17 @@ public class MissionActivity extends AppCompatActivity {
         //設定語言
         setFont();
 
-        //顯示標題文字，更改語言時使用
 
+        //把參與者丟上去
+        int howMany = user.size();
+        String userTemp = "";
+        //將ArrayList裡的資料讀出
+        for(int i=0 ; i<howMany ; i++){
+            userTemp += user.get(i);
+            if(i!=howMany-1)
+                userTemp += "\n";
+        }
+        users.setText(userTemp);
 
         //設置人數
         need.setText(String.valueOf(acceptNumber) + "/" + String.valueOf(needNumber));
@@ -430,23 +469,12 @@ public class MissionActivity extends AppCompatActivity {
         //獎勵種類
         price.setText(whatPrice);
 
-        //參與者
-        int howMany = user.size();
-        String userTemp = "";
-        //將ArrayList裡的資料讀出
-        for(int i=0 ; i<howMany ; i++){
-            userTemp += user.get(i);
-            if(i!=howMany-1)
-                userTemp += "\n";
-        }
-        users.setText(userTemp);
-
-        //設置老師與學生的差別
+        //設置老師與學生的差別，以及是否參加
         setTeacherOrStudent();
 
     }
 
-    //設置老師與學生的差別
+    //設置老師與學生的差別，包含參加鈕的文字
     private void setTeacherOrStudent(){
         //設置已完成是否被勾選
         checkBox.setChecked(isFinished);
@@ -633,6 +661,20 @@ public class MissionActivity extends AppCompatActivity {
         {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing()){
+            pDialog.show();
+            PD=true;
+        }
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing()){
+            pDialog.dismiss();
+            PD=false;
         }
     }
 
