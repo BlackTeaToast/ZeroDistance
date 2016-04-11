@@ -316,7 +316,8 @@
                     android:layout_height="match_parent"
                     android:id="@+id/checkedM"
                     android:background="#72fdff7c"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

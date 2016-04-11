@@ -108,6 +108,7 @@ public class MissionActivity extends AppCompatActivity {
         pDialog.setCancelable(false);
         pDialog.setMessage("Loading ...");
 
+
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
         checkBox = (CheckBox)findViewById(R.id.checkFinishM);
@@ -131,8 +132,6 @@ public class MissionActivity extends AppCompatActivity {
 
         //-------------------------------------------------------------------------------
 
-        //關掉評分區，等待被選取
-        gridLayout.setVisibility(View.GONE);
 
         //如果點選了才開啟評分區
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -345,6 +344,7 @@ public class MissionActivity extends AppCompatActivity {
                 //設定自己是否是參與者
                 joined = isJoined();
                 //顯示
+
                 setValue();
                 hideDialog();
             }
