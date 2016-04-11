@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.GroupActivity;
+import com.yoyoyee.zerodistance.activity.NewGroupActivity;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.CardViewAdapter;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
@@ -78,7 +79,7 @@ public class fragment_team extends Fragment{
         public void onClick(View view) {
             //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
             //                        .setAction("Action", null).show();
-            Intent in = new Intent(getActivity(), GroupActivity.class);
+            Intent in = new Intent(getActivity(), NewGroupActivity.class);
             in.putExtra("id", SessionFunctions.getUserUid());
             Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
             startActivity(in);
