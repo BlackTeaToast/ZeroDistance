@@ -174,7 +174,7 @@ public class MissionActivity extends AppCompatActivity {
                     Toast.makeText(v.getContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
 
                     //重新整理
-                    readValue(id);
+                    readValue();
 
                 } else {
                     //參加
@@ -188,7 +188,7 @@ public class MissionActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     //確定更新完之後，重新讀取
-                                    readValue(id);
+                                    readValue();
                                     Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
                                 }
 
@@ -203,7 +203,7 @@ public class MissionActivity extends AppCompatActivity {
 
                         @Override
                         public void onErrorResponse(String response) {
-                            Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.join_error ,Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -289,8 +289,9 @@ public class MissionActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         //設定
-        readValue(id);
+        readValue();
 
+        showDialog();
         //如果有圖片則顯示圖片
         if(imagePath!=null) {
             imageView.setVisibility(View.VISIBLE);
@@ -313,57 +314,15 @@ public class MissionActivity extends AppCompatActivity {
         else{
             imageView.setVisibility(View.GONE);
         }
+        hideDialog();
     }
 
     //讀取並設置值
-    private void readValue(int id){
-
-        /*
-        //取得misson
-        mission = QueryFunctions.getMission(id);
-        // 需先讀進以下變數才能正常顯示============================
-        title = "鸚鵡";
-        needNumber = 8;
-        acceptNumber = 5;
-        who = "鸚鵡養殖專家";
-        timeS = "2016/12/12 15:11";
-        timeT = "2017/01/01 12:00";
-        where = "你家";
-        whatPrice = "飲料";
-        isFinished = false;
-
-        //字體大小
-        size = SessionFunctions.getUserTextSize();
-
-        //設置餐與者
-        user = new ArrayList<>();
-        user.add("PatrickC");
-        user.add("Treetops");
-        user.add("Deep Moon");
-        user.add("小毽子在飛呀");
-        user.add("血色的狂氣-不滅的葛路米");
-
-        //抓取內容
-        doWhat = "    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：" +
-                "此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。" +
-                "結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。                     " +
-                "\n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，" +
-                "又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”" +
-                "  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，" +
-                "進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，" +
-                "最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。";
-
-
-        //誰看到這個版面與是否參與
-        whoSeeID = "鸚鵡養殖專家";
-        isTeacher = true;
-        joined = false;
+    private void readValue(){
 
         //有圖片的話設置URL
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
 
-        // =========================================================
-*/
         //更新接受此任務的人
         showDialog();
         //更新手機資料庫的參與者
@@ -424,9 +383,6 @@ public class MissionActivity extends AppCompatActivity {
         whoSeeID = SessionFunctions.getUserUid();
         isTeacher = mission.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
 
-        //有圖片的話設置URL
-        imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
-
     }
 
     //更改View中的值並顯示
@@ -441,7 +397,6 @@ public class MissionActivity extends AppCompatActivity {
 
         //設定語言
         setFont();
-
 
         //把參與者丟上去
         int howMany = user.size();

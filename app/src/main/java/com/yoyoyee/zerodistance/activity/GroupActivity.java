@@ -1,5 +1,6 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,9 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
+import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.io.IOException;
@@ -41,7 +45,8 @@ public class GroupActivity extends AppCompatActivity {
 
     //取得任務id
     int id ;//揪團的編號 ; 錯誤則傳回0
-    private Group group;//拿來抓misson
+    private Group group;//拿來抓group
+    private ArrayList<GroupAccept> groupAccept;
 
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
@@ -74,6 +79,9 @@ public class GroupActivity extends AppCompatActivity {
     private boolean joined;//是否有餐與
     private String imagePath;
 
+    //拿來停止，直到某件事做完才繼續執行用
+    private ProgressDialog pDialog;
+    public static boolean PD=false;
 
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -86,6 +94,10 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
         Intent it  = this.getIntent();
         id= it.getIntExtra("id", 0);
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Loading ...");
 
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
@@ -106,15 +118,51 @@ public class GroupActivity extends AppCompatActivity {
 
         //參加或取消
         joinButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (joined) {
-                    joined = false;
-                    joinButton.setText(R.string.is_joined);
+
+                    Toast.makeText(v.getContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
+
+                    //重新整理
+                    readValue();
+
                 } else {
-                    joined = true;
-                    joinButton.setText(R.string.not_joined);
+                    //參加
+                    ClientFunctions.publishGroupAccept(id, new ClientResponse() {
+                        @Override
+                        //確定參加完成後
+                        public void onResponse(String response) {
+
+                            //更新手機資料庫
+                            ClientFunctions.updateGroups(new ClientResponse() {
+                                @Override
+                                public void onResponse(String response) {
+                                    //確定更新完之後，重新讀取
+                                    readValue();
+                                    Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onErrorResponse(String response) {
+
+                                }
+                            });
+
+
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+                            Toast.makeText(getApplicationContext(), R.string.join_error ,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
                 }
+
+
             }
         });
 
@@ -122,14 +170,15 @@ public class GroupActivity extends AppCompatActivity {
         qAndAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPublisher) {
-                    isPublisher = false;
-                    setPublisherOrNot();
-                }
-                else {
-                    isPublisher = true;
-                    setPublisherOrNot();
-                }
+                boolean isGroup = true;//是揪團
+                String publisher  = group.getUserID();//發布者ID
+                Intent it = new Intent();
+                it.setClass(GroupActivity.this, QAActivity.class);
+                it.putExtra("isGroup", isGroup);
+                it.putExtra("publisher", publisher );
+                it.putExtra("id",id);
+
+                startActivity(it);
             }
         });
 
@@ -157,8 +206,6 @@ public class GroupActivity extends AppCompatActivity {
         super.onResume();
         //讀取值
         readValue();
-        //顯示
-        setValue();
 
         //如果有圖片則顯示圖片
         if(imagePath!=null) {
@@ -187,48 +234,42 @@ public class GroupActivity extends AppCompatActivity {
 
     //讀取值
     private void readValue(){
-        /*
-        // 需先讀進以下變數才能正常顯示============================
-        title = "鸚鵡";
-        needNumber = 8;
-        acceptNumber = 5;
-        who = "鸚鵡養殖專家";
-        timeS = "2016/12/12";
-        timeT = "2017/01/01";
-        where = "你家";
-
-        //字體大小
-        size = 15;
-
-        //設置餐與者
-        user = new ArrayList<>();
-        user.add("PatrickC");
-        user.add("Treetops");
-        user.add("Deep Moon");
-        user.add("小毽子在飛呀");
-        user.add("血色的狂氣-不滅的葛路米");
-
-        //抓取內容
-        doWhat = "    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：" +
-                "此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。" +
-                "結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。                     " +
-                "\n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，" +
-                "又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”" +
-                "  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，" +
-                "進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，" +
-                "最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。";
-
-        //誰看到這個版面與是否參與
-        whoSeeID = "鸚鵡養殖專家";
-        isPublisher = true;
-        joined = false;
 
         //有圖片的話設置URL
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
 
-        // =========================================================
-        */
-        //取得misson
+        //更新接受此任務的人
+        showDialog();
+        //更新手機資料庫的參與者
+        ClientFunctions.updateGroupAcceptUser(id, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                //將手機資料庫的參與者取得
+                groupAccept = QueryFunctions.getGroupAceeptUser();
+                //設置餐與者
+                user = new ArrayList<>();
+                if(groupAccept.size()!=0)
+                    for(int i=0 ; i<groupAccept.size() ; i++){
+                        user.add(groupAccept.get(i).userName);
+                    }
+                else{
+                    user.add(getResources().getString(R.string.no_one_join_now));
+                }
+
+                //設定自己是否是參與者
+                joined = isJoined();
+                //顯示
+                setValue();
+                hideDialog();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //取得group
         group = QueryFunctions.getGroup(id);
 
         // 需先讀進以下變數才能正常顯示============================
@@ -248,26 +289,12 @@ public class GroupActivity extends AppCompatActivity {
         //字體大小
         size = SessionFunctions.getUserTextSize();
 
-        //設置餐與者
-        user = new ArrayList<>();
-        user.add("PatrickC");
-        user.add("Treetops");
-        user.add("Deep Moon");
-        user.add("小毽子在飛呀");
-        user.add("血色的狂氣-不滅的葛路米");
-
         //抓取內容
         doWhat =group.getContent();
 
         //誰看到這個版面與是否參與
         whoSeeID = SessionFunctions.getUserUid();
         isPublisher = group.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
-        //須在改過
-        joined = false;
-
-        //有圖片的話設置URL
-        imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
-
 
     }
 
@@ -281,7 +308,19 @@ public class GroupActivity extends AppCompatActivity {
         //設定字型大小
         setFontSize();
 
-        //顯示標題文字，更改語言時使用
+        //設定語言
+        setFont();
+
+        //參與者
+        int howMany = user.size();
+        String userTemp = "";
+        //將ArrayList裡的資料讀出
+        for(int i=0 ; i<howMany ; i++){
+            userTemp += user.get(i);
+            if(i!=howMany-1)
+                userTemp += "\n";
+        }
+        users.setText(userTemp);
 
         //設置人數
         need.setText(String.valueOf(acceptNumber) + "/" + String.valueOf(needNumber));
@@ -295,17 +334,6 @@ public class GroupActivity extends AppCompatActivity {
         timeToDo.setText(timeT);
         //執行地點
         place.setText(where);
-
-        //參與者
-        int howMany = user.size();
-        String userTemp = "";
-        //將ArrayList裡的資料讀出
-        for(int i=0 ; i<howMany ; i++){
-            userTemp += user.get(i);
-            if(i!=howMany-1)
-                userTemp += "\n";
-        }
-        users.setText(userTemp);
 
         //設置發佈者與非發佈者的差別
         setPublisherOrNot();
@@ -350,6 +378,17 @@ public class GroupActivity extends AppCompatActivity {
             buttonVisible.getParent().requestLayout();//ViewParent的requestLayout方法可以重新安排子視圖
 
         }
+    }
+
+    //回傳觀看者是否參加
+    private boolean isJoined(){
+        boolean temp = false;
+        for(int i=0 ; i<groupAccept.size() ; i++){
+            if(whoSeeID.equals(groupAccept.get(i).userUid)){
+                temp = true;
+            }
+        }
+        return temp;
     }
 
     //設置字體大小
@@ -451,6 +490,20 @@ public class GroupActivity extends AppCompatActivity {
         {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing()){
+            pDialog.show();
+            PD=true;
+        }
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing()){
+            pDialog.dismiss();
+            PD=false;
         }
     }
 

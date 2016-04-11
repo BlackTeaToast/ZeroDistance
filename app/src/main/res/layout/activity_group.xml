@@ -26,10 +26,10 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:id="@+id/groupMainLinear"
-            android:background="#2f3338">
+            android:background="@drawable/repeat_cube_bg">
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -37,20 +37,20 @@
                 android:id="@+id/whoSent"
                 android:layout_weight="0.01"
                 android:layout_marginTop="10dp"
-                android:background="#565498"
+                android:background="#bb555397"
                 android:clickable="false">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="發文者:"
+                    android:text="委託人:"
                     android:id="@+id/whoSentTitleG"
                     android:layout_row="0"
                     android:layout_column="0"
                     android:textSize="30dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="#f2da40"
+                    android:textColor="#f2da3f"
                     android:layout_marginLeft="5dp" />
 
                 <TextView
@@ -64,8 +64,7 @@
                     android:textSize="25dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_marginBottom="8dp"
-                    android:textColor="#dbdbdb"
-                    android:contextClickable="false" />
+                    android:textColor="#ffffff" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,19 +77,19 @@
                     android:layout_marginRight="0dp"
                     android:textSize="25dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="#c5d5ff"
+                    android:textColor="#a9deff"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2016/12/12"
+                    android:text="2016/12/12 13:55"
                     android:id="@+id/timeSentG"
                     android:layout_row="1"
                     android:layout_column="3"
                     android:layout_marginRight="5dp"
                     android:textSize="20dp"
-                    android:textColor="#dbdbdb" />
+                    android:textColor="#ffffff" />
 
             </GridLayout>
 
@@ -115,12 +114,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。                     \n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。t"
+                    android:text="    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。                     \n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。"
                     android:id="@+id/contentG"
                     android:textSize="22dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:textColor="#ffffff" />
+                    android:textColor="#000000"
+                    android:background="#7dffffff"
+                    android:minLines="5" />
 
             </LinearLayout>
 
@@ -128,7 +129,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#4d4d65"
+                android:background="#cf4d4d65"
                 android:id="@+id/linearLayout3"
                 android:layout_marginTop="10dp" >
 
@@ -140,23 +141,25 @@
                     android:id="@+id/timeToDoTitleG"
                     android:textSize="30dp"
                     android:textColor="#47d016"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2017/01/01"
+                    android:text="2017/01/01 12:51"
                     android:id="@+id/timeToDoG"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#dbdbdb" />
+                    android:textColor="#ffffff"
+                    android:layout_marginBottom="5dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#4d4d65"
+                android:background="#cf4d4d65"
                 android:id="@+id/linearLayout2"
                 android:layout_marginTop="10dp" >
 
@@ -167,8 +170,9 @@
                     android:text="執行地點"
                     android:id="@+id/whereTitleG"
                     android:textSize="30dp"
-                    android:textColor="#ff4545"
-                    android:layout_marginLeft="5dp" />
+                    android:textColor="#ff5757"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -177,7 +181,8 @@
                     android:id="@+id/whereG"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#dbdbdb" />
+                    android:textColor="#ffffff"
+                    android:layout_marginBottom="5dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -186,7 +191,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/many"
                 android:layout_marginTop="10dp"
-                android:background="#4d4d65">
+                android:background="#cf4d4d65">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -195,8 +200,9 @@
                     android:id="@+id/needTitleG"
                     android:textSize="30dp"
                     android:text="人數"
-                    android:textColor="#057d45"
-                    android:layout_marginLeft="5dp" />
+                    android:textColor="#00df76"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -205,17 +211,19 @@
                     android:id="@+id/needG"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#dbdbdb" />
+                    android:textColor="#ffffff"
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.09"
-                android:background="#4d4d65"
+                android:layout_weight="0.05"
+                android:background="#cf4d4d65"
                 android:id="@+id/who"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:contextClickable="false">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -224,8 +232,9 @@
                     android:id="@+id/usersTitleG"
                     android:textSize="30dp"
                     android:gravity="center_vertical"
-                    android:textColor="#2087cc"
-                    android:layout_marginLeft="5dp" />
+                    android:textColor="#45b4ff"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -238,7 +247,7 @@
                     android:clickable="false"
                     android:contextClickable="false"
                     android:layout_marginBottom="5dp"
-                    android:textColor="#dbdbdb" />
+                    android:textColor="#ffffff" />
             </LinearLayout>
 
             <LinearLayout
@@ -246,8 +255,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/bottomLinear"
-                android:background="#fbeca3"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -262,7 +279,12 @@
                         android:text="參加"
                         android:id="@+id/joinOrNotG"
                         android:textSize="25dp"
-                        android:layout_weight="0.5" />
+                        android:layout_weight="0.5"
+                        android:textColor="#eff6fa"
+                        android:background="@drawable/button_misson"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="-5dp"
+                        android:layout_marginBottom="10dp" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -271,7 +293,12 @@
                         android:text="Q&amp;A"
                         android:id="@+id/qAndAButtonG"
                         android:textSize="25dp"
-                        android:layout_weight="0.5" />
+                        android:layout_weight="0.5"
+                        android:textColor="#eff6fa"
+                        android:background="@drawable/button_misson"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
 
                 </LinearLayout>
 
@@ -285,14 +312,24 @@
                         android:layout_height="wrap_content"
                         android:text="編輯"
                         android:id="@+id/editButtonG"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:textColor="#eff6fa"
+                        android:background="@drawable/button_misson"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp" />
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="刪除"
                         android:id="@+id/deleteButtonG"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:textColor="#eff6fa"
+                        android:background="@drawable/button_misson"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp" />
                 </LinearLayout>
 
             </LinearLayout>
