@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 
 public class LoginActivity extends Activity {
@@ -51,6 +52,11 @@ public class LoginActivity extends Activity {
             Intent intent = new Intent(LoginActivity.this, TurnActivity.class);
             startActivity(intent);
             finish();
+        }
+
+        //如果有暫存過Emaill，則先填入
+        if(!SessionFunctions.getUserEmail().equals("")){
+            inputEmail.setText(SessionFunctions.getUserEmail());
         }
 
         // Login button Click Event
