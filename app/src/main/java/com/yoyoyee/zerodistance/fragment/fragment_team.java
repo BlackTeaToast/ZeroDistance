@@ -1,15 +1,19 @@
 package com.yoyoyee.zerodistance.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.GroupActivity;
@@ -26,33 +30,31 @@ import java.util.Date;
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
-public class fragment_team extends Fragment {
+public class fragment_team extends Fragment{
+   //
+   int[] id;
+    String[] title;
+    Date[] expAt;
+    int[] needNum;
+    int[] currentNum;
+    boolean[] missiondangerous;
+    boolean becontext;
+    String[] detial;
+    ArrayList<Group> missions;
+    int missionnumber[];
+    private ProgressDialog pDialog;
+    //
+
+
     RecyclerView mList;
     FloatingActionButton fab;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_team, container, false);
-        ArrayList<Group> Group = QueryFunctions.getGroups();
-        int[] id = new int[Group.size()];//任務id
-        String[] title = new String[Group.size()];//任務標題
-        String[] detial = new String[Group.size()];//任務內容
-        Date[] expAt = new Date[Group.size()];//任務結束時間
-        int[] needNum = new int[Group.size()]; //需要人數
-        int[] currentNum = new int[Group.size()];//已有人數
-        boolean[] missiondangerous = new boolean[Group.size()];//任務是否緊急
-        for(int i = 0;i <Group.size();i++){
-            id[i]= Group.get(i).id;
-            title[i]= Group.get(i).title;
-            detial[i] = Group.get(i).content;
-            expAt[i] = Group.get(i).expAt;
-            needNum[i] = Group.get(i).needNum;
-            currentNum[i] = Group.get(i).currentNum;
-            missiondangerous[i] = false;
-        }
 
-        int missionnumber[]=new int[title.length];
-        for(int i=0;i<title.length;i++){
-            missionnumber[i]=i;
-        }
+        makecard();
+
+        ArrayList<Group> Group = QueryFunctions.getGroups();
+
         try {
 
             CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
@@ -62,6 +64,7 @@ public class fragment_team extends Fragment {
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
             mList.setAdapter(CardViewAdapter);
+           // mList.setOnTouchListener(this);//監聽動作
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,11 +80,122 @@ public class fragment_team extends Fragment {
             //                        .setAction("Action", null).show();
             Intent in = new Intent(getActivity(), GroupActivity.class);
             in.putExtra("id", SessionFunctions.getUserUid());
+            Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
             startActivity(in);
         }
     });
 
         //漂浮
         return v;
+    }
+
+    public void makecard() {
+        missions = QueryFunctions.getGroups();
+        id = new int[missions.size()];//任務id
+        title = new String[missions.size()];//任務標題
+        detial = new String[missions.size()];//任務內容or獎勵
+        expAt = new Date[missions.size()];//任務結束時間
+        needNum = new int[missions.size()]; //需要人數
+        currentNum = new int[missions.size()];//已有人數
+        missiondangerous = new boolean[missions.size()];//任務是否緊急
+        becontext = SessionFunctions.getbecontext();//true 為內容 false為獎勵
+        for (int i = 0; i < missions.size(); i++) {
+
+            id[i] = missions.get(missions.size() - i - 1).id;
+            title[i] = missions.get(missions.size() - i - 1).title;
+            detial[i] = missions.get(missions.size() - i - 1).content;
+            expAt[i] = missions.get(missions.size() - i - 1).expAt;
+            needNum[i] = missions.get(missions.size() - i - 1).needNum;
+            currentNum[i] = missions.get(missions.size() - i - 1).currentNum;
+            missiondangerous[i] = false;
+            title[i] = limitString(title[i], 0);//0為title , 1為detial
+            detial[i] = limitString(detial[i], 1);
+        }
+
+        missionnumber = new int[missions.size()];
+        for (int i = 0; i < missions.size(); i++) {
+            missionnumber[i] = i;
+        }
+    }
+    private String limitString(String context, int type){//0為title , 1為detial
+        switch ((int)SessionFunctions.getUserTextSize()) {
+            case 20:{
+                if(type==0){
+                    if(context.length()>4){//限制字數
+                        context = (String)context.subSequence(0, 4)+"...";
+                        //  Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(type==1){
+                    if(context.length()>14){//限制字數
+                        context = (String)context.subSequence(0, 14)+"...";
+                    }
+                }
+                break;}
+            case 15:{
+                if(type==0){
+                    if(context.length()>6){//限制字數
+                        context = (String)context.subSequence(0, 6)+"...";
+                    }
+                }
+                if(type==1){
+                    if(context.length()>20){//限制字數
+                        context = (String)context.subSequence(0, 20)+"...";
+                    }
+                }
+
+                break;}
+            case 10:{
+                if(type==0){
+                    if(context.length()>11){//限制字數
+                        context = (String)context.subSequence(0, 11)+"...";
+                    }
+                }
+                if(type==1){
+                    if(context.length()>22){//限制字數
+                        context = (String)context.subSequence(0, 22)+"...";
+                    }
+                }
+                break;}
+        }
+        return context;
+    }
+    public boolean onTouch(View v, MotionEvent event) {
+
+        switch( event.getAction() ) {
+
+            case MotionEvent.ACTION_DOWN:  // 按下
+            {
+                // 設定 TextView 內容, 大小, 位置
+                break;}
+
+            case MotionEvent.ACTION_MOVE:  // 拖曳移動
+            {
+//                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
+                fab.setVisibility(View.INVISIBLE);
+                fabtime();
+                // 設定 TextView 內容, 大小, 位置
+                break;}
+
+            case MotionEvent.ACTION_UP:  // 放開
+            {
+                // 設定 TextView 內容
+                break;}
+        }
+        return false;
+    }
+    public void fabtime(){
+        new CountDownTimer(1000,500){
+
+            @Override
+            public void onFinish() {
+                fab.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+        }.start();
     }
 }

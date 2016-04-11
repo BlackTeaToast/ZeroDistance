@@ -4,6 +4,7 @@ package com.yoyoyee.zerodistance.helper;
  * Created by 楊霖村 on 2016/3/30.
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
@@ -28,11 +29,13 @@ import java.util.Date;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
     private String[] mData ,missionName;
     private boolean[] missiondangerous;
-    private int[] id, needNum, currentNum, missionnumber, month, day, hour, mm;
+    private int[] id, needNum, currentNum, missionnumber, month, day, hourInt, mmInt;
+    private String[] hour, mm;
     private Date[] expAtD;
     private Calendar[] date ;
     private int fragment;
     private int Count;
+    Intent in;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView missionDetial, missionName, missionnumber, datetime, expAt, peoplenumber;
         public Button missionbutton;
@@ -52,15 +55,27 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             date = new Calendar[getItemCount()];
             month = new int[getItemCount()];
             day = new int[getItemCount()];
-            hour = new int[getItemCount()];
-            mm = new int[getItemCount()];
+            hourInt = new int[getItemCount()];
+            hour = new String[getItemCount()];
+            mmInt = new int[getItemCount()];
+            mm = new String[getItemCount()];
             for(int i = 0;i<getItemCount();i++){
                 date[i] = Calendar.getInstance();
                 date[i].setTime(expAtD[i]);
                 month[i] = date[i].get(Calendar.MONTH) + 1;  //取出月，月份的編號是由0~11 故+1
                 day[i] = date[i].get(Calendar.DAY_OF_MONTH);  //取出日
-                hour[i] = date[i].get(Calendar.HOUR_OF_DAY);  //取出hour
-                mm[i] = date[i].get(Calendar.MINUTE);  //取出分
+                hourInt[i] = date[i].get(Calendar.HOUR_OF_DAY);  //取出hour
+                if(hourInt[i]<10){
+                    hour[i]="0"+hourInt[i];
+                }else{
+                    hour[i]=""+hourInt[i];
+                }
+                mmInt[i] = date[i].get(Calendar.MINUTE);  //取出分
+                if(mmInt[i]<10){
+                    mm[i]="0"+mmInt[i];
+                }else {
+                    mm[i]=""+mmInt[i];
+                }
                 //處理日期
             }
             setFontSize(v);//設定字體大小
@@ -104,7 +119,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "id為"+id[position]+"  序列為"+"第"+position+"個", Toast.LENGTH_SHORT).show();
-                Intent in = new Intent(v.getContext(), MissionActivity.class);
+                doIntent(v.getContext());
                 in.putExtra("id", id[position]);
 //                in.putExtra("id", 2);
                 v.getContext().startActivity(in);
@@ -121,7 +136,19 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         this.Count = Count;
         return Count;
     }
-
+    public Intent doIntent(Context c){
+        in=null;
+        switch (fragment){
+            case R.layout.fragment_fragment_mission:{
+                in = new Intent(c, MissionActivity.class);
+            }
+            break;
+            case R.layout.fragment_fragment_team:{
+                in = new Intent(c, GroupActivity.class);
+            }
+        }
+        return in;
+    }
 
 
     //設置字體大小

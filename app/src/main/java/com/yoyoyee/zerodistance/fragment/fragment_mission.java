@@ -61,13 +61,14 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     ArrayList<Mission>  missionsNotUrgent;
     ArrayList<Mission> missions;
     int missionnumber[];
+    String[] detial;
     private ProgressDialog pDialog;
     //
     RecyclerView mList;
     FloatingActionButton fab;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
     CardViewAdapter CardViewAdapter;
-    String[] detial;
+
     LinearLayoutManager layoutManager;//CARD layout
     GridLayout card_view;
     public fragment_mission(){
@@ -108,7 +109,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 //                        .setAction("Action", null).show();
                 Intent in = new Intent(getActivity(), NewMissionActivity.class);
                 in.putExtra("id", SessionFunctions.getUserUid());
-                Toast.makeText(getContext(), ""+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
                 startActivity(in);
             }
         });
