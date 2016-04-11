@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
 //            UserSchool.setText("dsdsd");
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
+        LayoutInflater layout=this.getLayoutInflater();
+        View view=layout.inflate(R.layout.maintool_bar, null);
+//        view.findViewById(R.id.)
         actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
 //設置toolbar標題
 
