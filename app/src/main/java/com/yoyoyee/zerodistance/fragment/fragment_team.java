@@ -51,7 +51,6 @@ public class fragment_team extends Fragment{
     FloatingActionButton fab;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_team, container, false);
-
         makecard();
 
         ArrayList<Group> Group = QueryFunctions.getGroups();

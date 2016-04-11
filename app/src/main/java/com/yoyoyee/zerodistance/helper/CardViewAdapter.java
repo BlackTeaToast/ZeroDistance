@@ -110,7 +110,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.missionDetial.setText(mData[position]);
             holder.datetime.setText(month[position]+"/"+day[position]);
             holder.expAt.setText(hour[position]+":"+mm[position]);
-            holder.peoplenumber.setText(currentNum[position]+"/"+needNum[position]);
+            holder.peoplenumber.setText(currentNum[position]+"/"+needNum[position]+"人");
             holder.missionnumber.setText("" + missionnumber[position]);
 
         if(missiondangerous[position]){
