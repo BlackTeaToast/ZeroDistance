@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
+        pager.setOffscreenPageLimit(6);
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
     }
