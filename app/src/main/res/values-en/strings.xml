@@ -100,7 +100,14 @@
     <style name="settext">
         <item name="android:textSize">25sp</item>
     </style>
-
+    <string-array name="tabstyle">
+        <item>Missions</item>
+        <item>Groups</item>
+        <item>Unfinished</item>
+        <item>Finished</item>
+        <item>Achievement</item>
+        <item>Setting</item>
+    </string-array>
     <string-array name="languageSppingArrary">
         <item>中文</item>
         <item>English</item>

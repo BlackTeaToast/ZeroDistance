@@ -47,11 +47,13 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     public static boolean PD=false;
     private SQLiteHandler db;
-    CharSequence Titles[]={"任務","揪團","未完成","已完成","成就","設定"};
+    String Titles[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Titles = getResources().getStringArray(R.array.tabstyle);
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);

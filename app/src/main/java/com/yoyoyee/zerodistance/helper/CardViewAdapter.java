@@ -161,8 +161,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById(R.id.timeread);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+//        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
+//        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView)v.findViewById(R.id.datetime);
