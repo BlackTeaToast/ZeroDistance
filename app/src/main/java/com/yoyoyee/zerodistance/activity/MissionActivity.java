@@ -27,6 +27,7 @@ import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,8 +45,8 @@ public class MissionActivity extends AppCompatActivity {
     //取得任務id
     int id ;//任務的編號 ; 錯誤則傳回0
     private Mission mission;//拿來抓misson
+    private ArrayList<MissionAccept> missonAccept;
 
-    private Toast toast;//改善參加鈕的toast 重複出現問題
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
     private TextView need;
@@ -75,7 +76,7 @@ public class MissionActivity extends AppCompatActivity {
     private Button finishButton;
 
     private String title;
-    private String who;
+    private String who;//發布者
     private String timeS;//timeSent
     private String timeT;//timeToDo
     private String where;//place
@@ -162,23 +163,26 @@ public class MissionActivity extends AppCompatActivity {
                 if (joined) {
                     joined = false;
                     joinButton.setText(R.string.is_joined);
-                    if(toast == null)
-                         toast.makeText(v.getContext(), R.string.not_aleady_joined ,Toast.LENGTH_SHORT).show();
-                    else {
-                        toast.cancel();
-                        toast.makeText(v.getContext(), R.string.not_aleady_joined ,Toast.LENGTH_SHORT).show();
 
-                    }
+                    Toast.makeText(v.getContext(), R.string.not_aleady_joined, Toast.LENGTH_SHORT).show();
+
 
                 } else {
                     joined = true;
                     joinButton.setText(R.string.not_joined);
-                    if(toast == null)
-                        toast.makeText(v.getContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
-                    else {
-                        toast.cancel();
-                        toast.makeText(v.getContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
-                    }
+
+                    Toast.makeText(v.getContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                    ClientFunctions.publishMissionAccept(id, new ClientResponse() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+
+                        }
+                    });
                 }
 
 
@@ -338,6 +342,19 @@ public class MissionActivity extends AppCompatActivity {
 
         //取得misson
         mission = QueryFunctions.getMission(id);
+        //更新接受此任務的人
+        ClientFunctions.updateMissionAcceptUser(id, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
+        missonAccept = QueryFunctions.getMissionAceeptUser();
 
         // 需先讀進以下變數才能正常顯示============================
         title = mission.getTitle();
@@ -360,11 +377,13 @@ public class MissionActivity extends AppCompatActivity {
 
         //設置餐與者
         user = new ArrayList<>();
-        user.add("PatrickC");
-        user.add("Treetops");
-        user.add("Deep Moon");
-        user.add("小毽子在飛呀");
-        user.add("血色的狂氣-不滅的葛路米");
+        if(missonAccept.size()!=0)
+            for(int i=0 ; i<missonAccept.size() ; i++){
+                user.add(missonAccept.get(i).userName);
+            }
+        else{
+            user.add("目前沒有人參加");
+        }
 
         //抓取內容
         doWhat =mission.getContent();
@@ -373,7 +392,7 @@ public class MissionActivity extends AppCompatActivity {
         whoSeeID = SessionFunctions.getUserUid();
         isTeacher = mission.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
         //須在改過
-        joined = false;
+        joined = isJoined();
 
         //有圖片的話設置URL
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
@@ -476,6 +495,17 @@ public class MissionActivity extends AppCompatActivity {
             buttonVisible.getParent().requestLayout();//ViewParent的requestLayout方法可以重新安排子視圖
 
         }
+    }
+
+    //回傳觀看者是否參加
+    private boolean isJoined(){
+        boolean temp = false;
+        for(int i=0 ; i<missonAccept.size() ; i++){
+            if(whoSeeID.equals(missonAccept.get(i).userUid)){
+                temp = true;
+            }
+        }
+        return temp;
     }
 
     //設置字體大小
