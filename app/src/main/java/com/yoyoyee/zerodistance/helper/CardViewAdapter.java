@@ -7,6 +7,7 @@ package com.yoyoyee.zerodistance.helper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -38,12 +39,14 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private Calendar[] date ;
     private int fragment;
     private int Count;
+
     Intent in;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView missionDetial, missionName, missionnumber, datetime, expAt, peoplenumber;
         public Button missionbutton;
         public ImageView missiondangerous;
         public RelativeLayout card;
+        public CardView CardView;
         public ViewHolder(View v) {
             super(v);
 
@@ -56,6 +59,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
             missionbutton = (Button)v.findViewById(R.id.missionbutton);
             card = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
+            CardView = (CardView) v.findViewById(R.id.CardView);
             //處利日期
             date = new Calendar[getItemCount()];
             month = new int[getItemCount()];
@@ -117,9 +121,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.expAt.setText(hour[position]+":"+mm[position]);
             holder.peoplenumber.setText(currentNum[position]+"/"+needNum[position]+"人");
             holder.missionnumber.setText("" + missionnumber[position]);
+
         if(missiondangerous[position]){
             holder.missiondangerous.setVisibility(View.VISIBLE);
-
+            holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
         }
             holder.missionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
