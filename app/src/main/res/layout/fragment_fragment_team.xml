@@ -162,57 +162,28 @@
 
                 //下左
 
-                <GridLayout
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:rowCount="2"
-                    android:columnCount="1"
-                    android:clickable="false"
-                    android:columnOrderPreserved="false"
-                    android:contextClickable="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:touchscreenBlocksFocus="false"
-                    android:useDefaultMargins="true"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="4/10"
+                    android:id="@+id/peoplenumber"
+                    android:gravity="right"
+                    style="@style/cardtext"
+                    android:layout_column="0"
+                    android:layout_row="0"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#ca0def" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/missionnumber"
                     android:layout_gravity="right"
-                    android:layout_weight="1">
-                    <!--<TextView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-                        <!--android:text="@string/peoplenumber"-->
-                        <!--android:id="@+id/peopleNumberread"-->
-                        <!--android:layout_row="0"-->
-                        <!--android:layout_column="0"-->
-                        <!--style="@style/cardtext"-->
-                        <!--android:layout_marginRight="45dp"-->
-                        <!--android:layout_gravity="right"-->
-                        <!--android:textColor="#ca0def" />-->
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="4/10"
-                        android:id="@+id/peoplenumber"
-                        android:gravity="right"
-                        style="@style/cardtext"
-                        android:layout_column="0"
-                        android:layout_row="1"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:textColor="#ca0def" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Small Text"
-                        android:id="@+id/missionnumber"
-                        android:layout_gravity="right"
-                        android:visibility="gone" />
-
-                </GridLayout>
+                    android:visibility="gone" />
 
                 //下右
             </LinearLayout>
