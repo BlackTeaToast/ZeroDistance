@@ -70,17 +70,17 @@ public class MainActivity extends AppCompatActivity {
 
 //設置toolbar標題
 
-        tool_bar = (Toolbar)findViewById(R.id.tool_bar);
-//            TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName);
-//            TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
-//            UserNames.setText(SessionFunctions.getUserNickName());
-//            UserSchool.setText("dsdsd");
-        setSupportActionBar(tool_bar);
-        ActionBar actionBar = getSupportActionBar();
+
         LayoutInflater layout=this.getLayoutInflater();
         View view=layout.inflate(R.layout.maintool_bar, null);
-//        view.findViewById(R.id.)
-        actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
+        TextView UserNames = (TextView)view.findViewById(R.id.UserName);
+        TextView UserSchool = (TextView)view.findViewById(R.id.UserSchool);
+        UserNames.setText(SessionFunctions.getUserNickName());
+        tool_bar = (Toolbar)findViewById(R.id.tool_bar);
+        setSupportActionBar(tool_bar);
+        ActionBar actionBar = getSupportActionBar();
+
+        //actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
 //設置toolbar標題
 
         // Assigning ViewPager View and setting the adapter
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(String response) {
                 Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
-
+                hideDialog();
             }
         });
         ClientFunctions.updateGroups(new ClientResponse() {
@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(String response) {
                 Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
+                hideDialog();
             }
         });
 
