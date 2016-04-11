@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
 /**
  * Created by PatrickC on 2016/4/10.
@@ -35,8 +36,11 @@ public class AchievementActivity extends AppCompatActivity {
         textView2 = (TextView)findViewById(R.id.achievementText2);
         textView3 = (TextView)findViewById(R.id.achievementText3);
 
-//設置toolbar標題
 
+    }
+
+    protected void onResume(){
+        super.onResume();
 
         //設置區域==========
         hardToWork = false;
@@ -44,9 +48,9 @@ public class AchievementActivity extends AppCompatActivity {
         thunder = false;
 
         //==================
-
         //設置圖片
         setImage();
+        setFont();
 
     }
 
@@ -68,9 +72,13 @@ public class AchievementActivity extends AppCompatActivity {
     }
 
     private void setFont(){
+        float size = SessionFunctions.getUserTextSize();
         textView1.setText(R.string.achievement1);
+        textView1.setTextSize(size);
         textView2.setText(R.string.achievement2);
+        textView2.setTextSize(size);
         textView3.setText(R.string.achievement3);
+        textView3.setTextSize(size);
     }
 
 }

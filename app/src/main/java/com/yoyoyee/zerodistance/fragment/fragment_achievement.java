@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -41,15 +42,17 @@ public class fragment_achievement extends Fragment {
 
 
         //設置區域==========
-        hardToWork = true;
-        enmergency = true;
+        hardToWork = false;
+        enmergency = false;
         thunder = false;
 
         //==================
 
         //設置圖片
         setImage();
+        setFont();
         return v;}
+
 
     private void setImage(){
         if(hardToWork)
@@ -69,9 +72,13 @@ public class fragment_achievement extends Fragment {
     }
 
     private void setFont(){
+        float size = SessionFunctions.getUserTextSize();
         textView1.setText(R.string.achievement1);
+
         textView2.setText(R.string.achievement2);
+
         textView3.setText(R.string.achievement3);
+
     }
 
 }
