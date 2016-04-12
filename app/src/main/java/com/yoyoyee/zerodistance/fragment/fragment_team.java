@@ -205,8 +205,31 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
         }.start();
     }
-    private void updataphoneDB(){//更新手機資料
 
+    //更新
+    private void updataphoneDB(){//更新手機資料
+        updataMissionDB();
+    }
+    private void updataMissionDB(){  //成功會更新Group
+        ClientFunctions.updateGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                SQLiteHandler db = AppController.getDB();
+                String TAG = AppController.class.getSimpleName();
+                ArrayList<Group> Group = db.getGroups();
+                if (Group.size() > 0) {
+                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
+                }
+                updataGroupDB();//更新揪團
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void updataGroupDB(){
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -224,11 +247,12 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
             @Override
             public void onErrorResponse(String response) {
-
-                Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
             }
         });
     }
+    //更新
+
     public void totalvuledel(){
         id = null;
         title = null;

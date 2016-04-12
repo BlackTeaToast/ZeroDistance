@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean PD=false;
     private SQLiteHandler db;
     String Titles[];
+    int upDataCount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,10 +146,10 @@ public class MainActivity extends AppCompatActivity {
         delphoneDB();//資料都先削掉
         showDialog();
         //fabtime();
-        updatamissionDB(); //成功會更新Group
+        updataMissionDB(); //成功會更新Group
 
     }
-    private void updatamissionDB(){  //成功會更新Group
+    private void updataMissionDB(){  //成功會更新Group
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -159,12 +160,17 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                 }
                 updataGroupDB();//更新揪團
+                upDataCount=0;
             }
 
             @Override
             public void onErrorResponse(String response) {
+                if(upDataCount>=5){
                 CustomToast.showToast(context, "更新失敗ON", 1500);
-                 hideDialog();
+            }else{
+                upDataCount+=1;
+                    updataMissionDB();
+            }
             }
         });
     }
@@ -186,7 +192,12 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(String response) {
                 //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
                 hideDialog();
-                CustomToast.showToast(context, "更新失敗ON", 1500);
+                if(upDataCount>=5){
+                    CustomToast.showToast(context, "更新失敗ON", 1500);
+                }else{
+                    upDataCount+=1;
+                    updataGroupDB();
+                }
             }
         });
     }
