@@ -80,7 +80,7 @@ public class ClientFunctions {
                         String isTeacher = user.getString("is_teacher");
                         String name = user.getString("name");
                         String nickName = user.getString("nick_name");
-                        String schoolID = user.getString("school_id");
+                        final String schoolID = user.getString("school_id");
                         String studentID = user.getString("student_id");
                         String email = user.getString("email");
                         String createdAt = user.getString("created_at");
@@ -95,6 +95,18 @@ public class ClientFunctions {
                         session.setUserStudentID(studentID);
                         session.setUserSchoolID(Integer.valueOf(schoolID));
                         session.setUserAccessKey(accessKey);
+
+                        ClientFunctions.updateSchools(new ClientResponse() {
+                            @Override
+                            public void onResponse(String response) {
+                                session.setUserSchoolName(QueryFunctions.getSchoolName(Integer.valueOf(schoolID)));
+                            }
+
+                            @Override
+                            public void onErrorResponse(String response) {
+
+                            }
+                        });
 
                         // Inserting row in users table
                         db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,

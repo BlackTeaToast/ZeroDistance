@@ -30,10 +30,10 @@ public class SessionManager {
 	private static final String KEY_USER_NICK_NAME = "nickName";
     private static final String KEY_USER_IS_TEACHER = "isTeacher";
 	private static final String KEY_USER_SCHOOL_ID = "schoolID";
+    private static final String KEY_USER_SCHOOL_NAME = "schoolName";
 	private static final String KEY_USER_STUDENT_ID = "studentID";
     private static final String KEY_USER_TEXTSIZE = "usertextsize";
     private static final String KEY_USER_BECONTEXT = "becontext";
-    private static final String KEY_USER_SCHOOL_NAME = "userschoolname";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -154,11 +154,14 @@ public class SessionManager {
     public String getStudentID() {
         return pref.getString(KEY_USER_STUDENT_ID, "");
     }
-    public void setUserSchoolName(String UserSchoolName){
-        editor.putString(KEY_USER_SCHOOL_NAME, UserSchoolName);
+
+    public void setUserSchoolName(String schoolName) {
+        editor.putString(KEY_USER_SCHOOL_NAME, schoolName);
         editor.commit();
     }
-    public String getUserSchoolName(){
-        return pref.getString(KEY_USER_SCHOOL_NAME, "NULL");
+
+    public String getUserSchoolName() {
+        return pref.getString(KEY_USER_SCHOOL_NAME, "");
     }
+
 }

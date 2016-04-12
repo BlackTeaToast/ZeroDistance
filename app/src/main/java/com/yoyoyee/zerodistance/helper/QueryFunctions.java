@@ -224,7 +224,7 @@ public class QueryFunctions {
 
     public static String getSchoolName(int id) {
 
-        String name = new String();
+        String name;
         String selectQuery = "SELECT name FROM " + SchoolsTable.TABLE_NAME +
                 " WHERE id = ?";
 

@@ -102,4 +102,12 @@ public class SessionFunctions {
     public static boolean getbecontext(){
         return session.getbecontext();
     }
+
+    public void setUserSchoolName(String schoolName) {
+        session.setUserSchoolName(schoolName);
+    }
+
+    public String getUserSchoolName() {
+        return session.getUserSchoolName();
+    }
 }
