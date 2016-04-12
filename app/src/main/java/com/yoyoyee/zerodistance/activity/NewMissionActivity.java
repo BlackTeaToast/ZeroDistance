@@ -6,31 +6,25 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.provider.Settings.*;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
-import android.util.DisplayMetrics;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,18 +39,17 @@ import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
-import java.io.File;
 import java.lang.System;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class NewMissionActivity extends AppCompatActivity {
@@ -97,7 +90,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private String getThatString;
     private String getPay;
 
-    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber;
+    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
     private Uri uriImg;
@@ -115,6 +108,7 @@ public class NewMissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_mission);
+
         //FindByID區--------------------------------------------------------------------------------
         //toolbar 定位區
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -128,6 +122,7 @@ public class NewMissionActivity extends AppCompatActivity {
         textViewcontent = (TextView) findViewById(R.id.textViewContent);
         textViewPicture= (TextView) findViewById(R.id.textViewPicture);
         textViewPeopleNumber= (TextView) findViewById(R.id.textViewPeopleNumber);
+        textViewWhere= (TextView) findViewById(R.id.textViewWhere);
         //editText定位區
         editTextName= (EditText) findViewById(R.id.editTextName);
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
@@ -170,6 +165,7 @@ public class NewMissionActivity extends AppCompatActivity {
         Display2.setText(Integer.toString(Build.VERSION.SDK_INT));
         editTextOtherPay.setVisibility(View.GONE);
         imv.setVisibility(View.GONE);
+
         adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission_and_group));
         adapterPay = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.pay_new_mission));
         adapterPress.setDropDownViewResource(R.layout.spinner);
@@ -177,7 +173,10 @@ public class NewMissionActivity extends AppCompatActivity {
         spinnerPress.setAdapter(adapterPress);
         spinnerPay.setAdapter(adapterPay);
 
-        limitAndSet();//名稱字數限制以及字型大小限制
+        limitLong();//名稱字數限制以及字型大小限制
+        allTextSize(SessionFunctions.getUserTextSize());
+        startService(new Intent(this, TapService.class));
+
 
 
         //spinner的監聽
@@ -212,12 +211,22 @@ public class NewMissionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        Intent intent=getIntent();
+        Boolean isEdit=intent.getBooleanExtra("isEdit", false);
+        if (isEdit){
+            try{
+                int id=intent.getIntExtra("ID",0);
+
+            }
+            catch (Exception ex){
+                System.out.println("EDIT不能抓取資料進入");
+            }
+
+        }
         //此區為隱藏功能用--------------------------------------------------------------------------
         hide(PICTURE_GONE);
     }
-    public void setTextandSize(){
 
-    }
     public void hide(Boolean PICTURE_GONE){
         if(PICTURE_GONE) {
             textViewPicture.setVisibility(View.GONE);
@@ -247,11 +256,30 @@ public class NewMissionActivity extends AppCompatActivity {
 
     }
 
-    public void limitAndSet (){
+    public void  limitLong (){
         editTextName.addTextChangedListener(new TextLenghLimiter(60));
         editTextWhere.addTextChangedListener(new TextLenghLimiter(60));
         editTextNumber.addTextChangedListener(new TextLenghLimiter(60));
         editTextName.addTextChangedListener(new TextNextLineLimiter());
+    }
+
+    public void allTextSize(float size){
+        textViewName.setTextSize(size+5);
+        textViewPress.setTextSize(size+5);
+        textViewPay.setTextSize(size+5);
+        textViewPicture.setTextSize(size+5);
+        textViewcontent.setTextSize(size+5);
+        textViewMissionDate.setTextSize(size+5);
+        textViewPeopleNumber.setTextSize(size+5);
+        buttonTime.setTextSize(size+5);
+        buttonDate.setTextSize(size+5);
+        buttonPicture.setTextSize(size+5);
+        buttonTakePicture.setTextSize(size+5);
+        textViewWhere.setTextSize(size+5);
+        buttonOk.setTextSize(size);
+        buttonCancel.setTextSize(size);
+        buttonTime.setTextSize(size);
+        buttonDate.setTextSize(size);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------
@@ -489,7 +517,7 @@ public class NewMissionActivity extends AppCompatActivity {
                         } else {
                             //待添加TIME
                             if (editTextcontent.getText().toString().trim().equals("")) {
-                                Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, String.valueOf(press)/*R.string.errornocontent_new_mission*/, Toast.LENGTH_SHORT).show();
                             } else {
                                 //    missionData.content = editTextcontent.getText().toString();
                                 if (isOtherPay){getPay = editTextOtherPay.getText().toString();}

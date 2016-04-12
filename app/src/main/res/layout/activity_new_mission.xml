@@ -100,7 +100,8 @@
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#eff6fa" />
+            android:background="#00eff6fa"
+            android:popupBackground="@color/spinner"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -142,7 +143,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#eff6fa" />
+            android:background="#00eff6fa"
+            android:popupBackground="@color/spinner"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -217,7 +219,7 @@
             android:textColor="#3a58a4" />
 
         <Button
-            android:layout_width="105dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="日期"
             android:id="@+id/buttonDate"
@@ -407,41 +409,50 @@
             android:layout_columnSpan="11"
             android:visibility="gone" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/okbuttom_new_mission_and_group"
-            android:id="@+id/buttonOK"
-            android:layout_margin="0dp"
-            android:layout_gravity="left|center|fill_vertical"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_column="0"
-            android:layout_columnSpan="7"
+            android:layout_columnSpan="14"
             android:layout_row="100"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:onClick="onClickOkOutputData"
-            android:background="@drawable/buttom3"
-            android:textColor="#ffffff" />
+            android:layout_margin="15dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancelbuttom_new_mission_and_group"
-            android:id="@+id/buttonCancel"
-            android:layout_column="7"
-            android:layout_row="100"
-            android:layout_margin="0dp"
-            android:layout_gravity="center|fill_vertical|right"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_columnSpan="7"
-            android:onClick="onClickCancel"
-            android:textColor="#ffffff"
-            android:background="@drawable/buttom3" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/okbuttom_new_mission_and_group"
+                android:id="@+id/buttonOK"
+                android:layout_gravity="center"
+                android:layout_column="0"
+                android:layout_columnSpan="7"
+                android:layout_row="100"
+                android:layout_marginLeft="43dp"
+                android:onClick="onClickOkOutputData"
+                android:background="@drawable/buttom3"
+                android:textColor="#ffffff"
+                android:layout_marginStart="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancelbuttom_new_mission_and_group"
+                android:id="@+id/buttonCancel"
+                android:layout_column="7"
+                android:layout_row="100"
+                android:layout_gravity="center"
+                android:layout_marginRight="43dp"
+                android:layout_columnSpan="7"
+                android:onClick="onClickCancel"
+                android:textColor="#ffffff"
+                android:background="@drawable/buttom3"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="43dp" />
+        </RelativeLayout>
 
     </GridLayout>
 

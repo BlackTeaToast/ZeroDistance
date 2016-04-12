@@ -46,7 +46,12 @@
             android:launchMode="singleTop" />
         <activity android:name=".activity.GroupActivity" />
         <activity android:name=".activity.MissionActivity" />
-        <activity android:name=".activity.NewMissionActivity" />
+        <activity android:name=".activity.NewMissionActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+        </activity>
         <activity android:name=".activity.AchievementActivity"/>
         <activity android:name=".activity.NewGroupActivity" />
         <activity android:name=".activity.QAActivity" />
@@ -58,6 +63,13 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.AskActivity"></activity>
+        <service android:name=".app.TapService">
+        <intent-filter>
+            <action android:name="android.intent.actio" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </service>
     </application>
 
 </manifest>

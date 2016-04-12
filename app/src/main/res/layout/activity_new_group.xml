@@ -145,21 +145,23 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="left|center"
-            android:layout_columnSpan="14"
-            android:layout_margin="15dp" />
+            android:layout_columnSpan="7"
+            android:layout_margin="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/buttomdate_new_mission_and_group"
             android:id="@+id/buttonDate"
-            android:layout_column="0"
-            android:layout_row="14"
-            android:layout_columnSpan="7"
+            android:layout_column="7"
+            android:layout_row="12"
+            android:layout_columnSpan="3"
             android:onClick="onClickDate"
             android:layout_margin="0dp"
             android:layout_gravity="left|center"
-            android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp" />
 
@@ -168,11 +170,11 @@
             android:layout_height="wrap_content"
             android:text="@string/buttomtime_new_mission_and_group"
             android:id="@+id/buttonTime"
-            android:layout_column="7"
-            android:layout_row="14"
+            android:layout_column="10"
+            android:layout_row="12"
             android:onClick="onClickTime"
             android:layout_gravity="center|right"
-            android:layout_columnSpan="7"
+            android:layout_columnSpan="4"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp" />

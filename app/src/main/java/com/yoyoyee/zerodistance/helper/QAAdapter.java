@@ -2,6 +2,7 @@ package com.yoyoyee.zerodistance.helper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.opengl.Visibility;
 import android.support.v7.app.AlertDialog;
@@ -117,7 +118,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     layOutClick(v, q_a_ID[position], a_Acontenttext[position], userUID[position], holder);
                 }
             });
-        }
+        };
         //設定字型大小
         //Q
         holder.q_Q_Title.setTextSize(size + 9);

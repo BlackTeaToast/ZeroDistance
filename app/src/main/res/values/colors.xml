@@ -22,6 +22,7 @@
     <color name="gogoColor">#FFC872FC</color>
     <color name="gowhereColor">#FF9002FC</color>
     <color name="ColorPrimaryToolbar_Old">#FF452E51</color>
+    <color name="spinner">#00ffffff</color>
 
 
     <!--Tree使用區-->
