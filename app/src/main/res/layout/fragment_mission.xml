@@ -44,6 +44,9 @@
         android:layout_row="0"
         app:elevation="8dp"
         app:pressedTranslationZ="12dp"
-        app:background="@color/gowhereColor"
-        app:backgroundTint="@color/gowhereColor"/>
+        card_view:backgroundTint="#8bfea3">
+
+    </android.support.design.widget.FloatingActionButton>
+
+
 </GridLayout>
