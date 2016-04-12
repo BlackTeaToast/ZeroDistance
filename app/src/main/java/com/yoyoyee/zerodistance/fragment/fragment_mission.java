@@ -64,13 +64,13 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     ArrayList<Mission> missions;
     int missionnumber[];
     String[] detial;
-    private ProgressDialog pDialog;
     //
     RecyclerView mList;
     FloatingActionButton fab;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
     CardViewAdapter CardViewAdapter;
 
+    int upDataCount;
     LinearLayoutManager layoutManager;//CARD layout
     GridLayout card_view;
     public fragment_mission(){
@@ -82,10 +82,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
         SessionFunctions SF = new SessionFunctions();
 
-        pDialog = new ProgressDialog(v.getContext());
-        pDialog.setCancelable(true);
-        pDialog.setMessage("載入中 ...");
-        showDialog();
 
         //makecard();
 
@@ -141,10 +137,10 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                CardViewAdapter.setItemCount(0);
-                mList.scrollToPosition(0);
-                CardViewAdapter.notifyDataSetChanged();
-                updataphoneDB();
+                    CardViewAdapter.setItemCount(0);
+                    mList.scrollToPosition(0);
+                    CardViewAdapter.notifyDataSetChanged();
+                    updataphoneDB();
             }
         });
         // 頂端向下滑更新
@@ -176,7 +172,10 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     }
     private void updataphoneDB(){//更新手機資料
-
+        totalvuledel();
+        updataMissionDB();
+    }
+    private void updataMissionDB(){
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -186,17 +185,23 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 if (missions.size() > 0) {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                 }
-                totalvuledel();
-                mSwipeRefreshLayout.setRefreshing(false);
-                makecard();
-                mList.setAdapter(CardViewAdapter);
+                upDataCount=0;
+                updataGroups();
+                Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onErrorResponse(String response) {
-           //     Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
+                if(upDataCount>=10){
+                    Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
+                }else{
+                    upDataCount+=1;
+                    updataMissionDB();
+                }
             }
         });
+    }
+    private void updataGroups(){
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -206,19 +211,21 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
-                totalvuledel();
+                makecard();
                 mSwipeRefreshLayout.setRefreshing(false);
                 mList.setAdapter(CardViewAdapter);
-                hideDialog();
             }
 
             @Override
             public void onErrorResponse(String response) {
-
-               // Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
+                if(upDataCount>=10){
+                    Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
+                }else{
+                    upDataCount+=1;
+                    updataGroups();
+                }
             }
         });
-
     }
     private String limitString(String context, int type){//0為title , 1為detial
         switch ((int)SessionFunctions.getUserTextSize()) {
@@ -363,14 +370,5 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         }
         Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
         return Count;
-    }
-    private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
     }
 }

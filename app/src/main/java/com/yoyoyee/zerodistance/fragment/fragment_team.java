@@ -55,6 +55,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     CardViewAdapter CardViewAdapter;
     LinearLayoutManager layoutManager;
     //
+    int upDataCount=0;
 
 
     RecyclerView mList;
@@ -208,6 +209,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
     //更新
     private void updataphoneDB(){//更新手機資料
+        totalvuledel();
         updataMissionDB();
     }
     private void updataMissionDB(){  //成功會更新Group
@@ -220,12 +222,18 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
+                upDataCount=0;
                 updataGroupDB();//更新揪團
             }
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
+                if(upDataCount>=10){
+                    Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
+                }else{
+                    upDataCount+=1;
+                    updataMissionDB();
+                }
             }
         });
     }
@@ -239,15 +247,20 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
-                totalvuledel();
                 mSwipeRefreshLayout.setRefreshing(false);
                 makecard();
                 mList.setAdapter(CardViewAdapter);
+                upDataCount=0;
             }
 
             @Override
             public void onErrorResponse(String response) {
-                  Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
+                if(upDataCount>=10){
+                    Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
+                }else{
+                    upDataCount+=1;
+                    updataGroupDB();
+                }
             }
         });
     }

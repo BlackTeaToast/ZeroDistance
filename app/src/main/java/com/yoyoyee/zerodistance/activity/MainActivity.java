@@ -2,6 +2,7 @@ package com.yoyoyee.zerodistance.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.CustomToast;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        startService(new Intent(this, TapService.class));
         Titles = getResources().getStringArray(R.array.tabstyle);
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -159,14 +161,15 @@ public class MainActivity extends AppCompatActivity {
                 if (missions.size() > 0) {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                 }
-                updataGroupDB();//更新揪團
                 upDataCount=0;
+                updataGroupDB();//更新揪團
             }
 
             @Override
             public void onErrorResponse(String response) {
                 if(upDataCount>=5){
-                CustomToast.showToast(context, "更新失敗ON", 1500);
+                CustomToast.showToast(context, "更新失敗任務(主)", 1500);
+                    hideDialog();
             }else{
                 upDataCount+=1;
                     updataMissionDB();
@@ -191,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(String response) {
                 //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
-                hideDialog();
                 if(upDataCount>=5){
-                    CustomToast.showToast(context, "更新失敗ON", 1500);
+                    CustomToast.showToast(context, "更新失敗揪團(主)", 1500);
+                    hideDialog();
                 }else{
                     upDataCount+=1;
                     updataGroupDB();
