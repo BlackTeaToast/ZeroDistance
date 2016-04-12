@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnCount="14"
-        android:rowCount="101">
+        android:rowCount="101"
+        android:background="@drawable/repeat_cube_bg">
 
         <include
             android:id="@+id/tool_bar"
@@ -163,7 +164,9 @@
             android:layout_margin="0dp"
             android:layout_gravity="left|center"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/buttom4"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -177,7 +180,9 @@
             android:layout_columnSpan="4"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/buttom4"
+            android:textColor="#ffffff" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -277,7 +282,9 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
-            android:onClick="onClickPickimg" />
+            android:onClick="onClickPickimg"
+            android:background="@drawable/buttom4"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -291,7 +298,9 @@
             android:layout_columnSpan="7"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/buttom4"
+            android:textColor="#ffffff" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -340,7 +349,9 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
-            android:onClick="onClickOkOutputDataGroup" />
+            android:onClick="onClickOkOutputDataGroup"
+            android:background="@drawable/button_misson"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="wrap_content"
@@ -356,7 +367,9 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:layout_columnSpan="7"
-            android:onClick="onClickCancelGroup" />
+            android:onClick="onClickCancelGroup"
+            android:background="@drawable/button_misson"
+            android:textColor="#ffffff" />
 
     </GridLayout>
 
