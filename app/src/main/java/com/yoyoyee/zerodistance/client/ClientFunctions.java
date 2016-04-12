@@ -1382,6 +1382,138 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public static void publishUpdateMission(final int missionID, final String title,
+                                            final boolean isUrgent, final int needNum,
+                                            final String place, final String content,
+                                            final String reward, final Date expAt,
+                                            final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_update_mission";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_PUBLISH_UPDATE_MISSION, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("修改任務成功");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("title", title);
+                params.put("is_urgent", isUrgent?"1":"0");
+                params.put("need_num", String.valueOf(needNum));
+                params.put("place", place);
+                params.put("content", content);
+                params.put("reward", reward);
+                params.put("exp_at", sdf.format(expAt));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void publishUpdateGroup(final int groupID, final String title, final int needNum,
+                                          final String place, final String content,
+                                          final Date expAt, final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_update_group";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_PUBLISH_UPDATE_GROUP, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("修改揪團成功");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("title", title);
+                params.put("need_num", String.valueOf(needNum));
+                params.put("place", place);
+                params.put("content", content);
+                params.put("exp_at", sdf.format(expAt));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     public static void uploadImage(int missionID, String imagePath) {
         String tag_string_req = "req_upload_image";
 
