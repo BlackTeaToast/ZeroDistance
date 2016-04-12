@@ -504,9 +504,11 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             //確定參加完成後
             public void onResponse(String response) {
+                //確定有成功參加
                 updateError = true;
                 updateCount = 5;
                 //更新手機資料庫
+                Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
                 updateMissions();
 
             }
