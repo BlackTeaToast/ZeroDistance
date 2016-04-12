@@ -44,6 +44,5 @@
         android:layout_row="0"
         app:elevation="8dp"
         app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/ColorPrimaryToolbar_Old"
-        android:cropToPadding="true" />
+        card_view:backgroundTint="#aeed3d" />
 </GridLayout>
