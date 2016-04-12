@@ -71,12 +71,13 @@ public class MainActivity extends AppCompatActivity {
 //設置toolbar標題
 
 
-        LayoutInflater layout=this.getLayoutInflater();
-        View view=layout.inflate(R.layout.maintool_bar, null);
-        TextView UserNames = (TextView)view.findViewById(R.id.UserName);
-        TextView UserSchool = (TextView)view.findViewById(R.id.UserSchool);
-        UserNames.setText(SessionFunctions.getUserNickName());
+//        LayoutInflater layout=this.getLayoutInflater();
+//        View view=layout.inflate(R.layout.maintool_bar, null);
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
+        TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName); //  tool_bar.findViewById(R.id.UserName) 會null
+        TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
+        UserNames.setText(SessionFunctions.getUserNickName()+"");
+        UserSchool.setText(SessionFunctions.getUserSchoolID()+"");
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
 
