@@ -188,7 +188,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 }
                 upDataCount=0;
                 updataGroups();
-                Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
             }
 
             @Override

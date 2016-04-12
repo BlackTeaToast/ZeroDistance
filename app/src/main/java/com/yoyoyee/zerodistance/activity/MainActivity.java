@@ -67,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setMessage("載入中 ...");
         context = this;
 
-        //更新手機資料庫
-        updataphoneDB();
-        //更新資料
 
 
 //設置toolbar標題
@@ -110,9 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    protected void onStart(){
-        super.onStart();
 
+
+    public void onResume(){
+        super.onResume();
+        //更新手機資料庫
+        //更新資料
+        updataphoneDB();
     }
 
     /**
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(String response) {
                 if(upDataCount>=5){
-                CustomToast.showToast(context, "更新失敗任務(主)", 1500);
+                CustomToast.showToast(context, "更新失敗任務(主)", 500);
                     hideDialog();
             }else{
                 upDataCount+=1;
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(String response) {
                 //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
                 if(upDataCount>=5){
-                    CustomToast.showToast(context, "更新失敗揪團(主)", 1500);
+                    CustomToast.showToast(context, "更新失敗揪團(主)", 500);
                     hideDialog();
                 }else{
                     upDataCount+=1;

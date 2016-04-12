@@ -244,7 +244,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
-                Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
                 mSwipeRefreshLayout.setRefreshing(false);
                 makecard();
                 mList.setAdapter(CardViewAdapter);
@@ -254,7 +254,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
             @Override
             public void onErrorResponse(String response) {
                 if(upDataCount>=5){
-                    Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
                 }else{
                     upDataCount+=1;
                     updataGroupDB();

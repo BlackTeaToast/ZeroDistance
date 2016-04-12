@@ -140,7 +140,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         holder.missionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "id為"+id[position]+"  序列為"+"第"+position+"個", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(v.getContext(), "id為"+id[position]+"  序列為"+"第"+position+"個", Toast.LENGTH_SHORT).show();
                 doIntent(v.getContext());
                 in.putExtra("id", id[position]);
 //                in.putExtra("id", 2);
