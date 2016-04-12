@@ -56,7 +56,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="鸚鵡養殖專家"
                     android:id="@+id/whoSentM"
                     android:layout_row="1"
                     android:layout_column="0"
@@ -83,13 +82,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2016/12/12 13:55"
                     android:id="@+id/timeSentM"
                     android:layout_row="1"
                     android:layout_column="3"
                     android:layout_marginRight="5dp"
                     android:textSize="20dp"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:text="xxxx/xx/xx xx:xx" />
 
             </GridLayout>
 
@@ -114,7 +113,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="    一個人去買鸚鵡，看到一隻鸚鵡前標：此鸚鵡會兩門語言，售價二百元。另一隻鸚鵡前則標道：此鸚鵡會四門語言，售價四百元。該買哪只呢？兩隻都毛色光鮮，非常靈活可愛。這人轉啊轉，拿不定主意。結果突然發現一隻老掉了牙的鸚鵡，毛色暗淡散亂，標價八百元。                     \n   這人趕緊將老闆叫來：這隻鸚鵡是不是會說八門語言？店主說：不。這人奇怪了：那為什麼又老又丑，又沒有能力，會值這個數呢？店主回答：“因為另外兩隻鸚鵡叫這隻鸚鵡老闆。”  這故事告訴我們，真正的領導人，不一定自己能力有多強，只要懂信任，懂授權，懂珍惜，就能團結比自己更強的力量，進而提升自己的身價。\n        相反許多能力非常強的人卻因為過於完美主義，事必躬親，什麼人都不如自己，最後只能做最好的公關人員、銷售代表，成不了優秀的領導人。"
                     android:id="@+id/contentM"
                     android:textSize="22dp"
                     android:layout_marginLeft="5dp"
@@ -147,7 +145,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2017/01/01 12:51"
                     android:id="@+id/timeToDoM"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
@@ -177,7 +174,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="你家"
                     android:id="@+id/whereM"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
@@ -207,7 +203,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="飲料"
                     android:id="@+id/priceM"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
@@ -237,7 +232,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5/8"
                     android:id="@+id/needM"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
@@ -270,7 +264,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="PatrickC\nTreetops\nDeep Moon\n小毽子在飛呀\n血色的狂氣-不滅的葛路米"
                     android:id="@+id/usersM"
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
