@@ -3,6 +3,7 @@ package com.yoyoyee.zerodistance.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,7 @@ import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.CustomToast;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
@@ -57,11 +59,10 @@ public class MainActivity extends AppCompatActivity {
         Titles = getResources().getStringArray(R.array.tabstyle);
         // Progress dialog
         pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
+        pDialog.setCancelable(true);
 
         pDialog.setMessage("載入中 ...");
         context = this;
-
 
         //更新手機資料庫
         updataphoneDB();
@@ -143,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     private void updataphoneDB(){//更新手機資料
         delphoneDB();//資料都先削掉
         showDialog();
+        fabtime();
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -156,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
-                hideDialog();
+                CustomToast.showToast(context, "更新失敗ON", 1500);
+               // hideDialog();
             }
         });
         ClientFunctions.updateGroups(new ClientResponse() {
@@ -170,13 +172,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
                 MakeTabAndContext();
-                hideDialog();
             }
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
-                hideDialog();
+             //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
+
+                CustomToast.showToast(context, "更新失敗ON", 1500);
             }
         });
 
@@ -186,6 +188,26 @@ public class MainActivity extends AppCompatActivity {
         pager.setOffscreenPageLimit(6);
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
+    }
+    public void fabtime(){
+        final int[] i = {0};
+        new CountDownTimer(5000,200){
+
+            @Override
+            public void onFinish() {
+                if(pDialog.isShowing()){
+                    pDialog.dismiss();
+                    CustomToast.showToast(context, "關閉pDialog"+i[0], 200);
+                }
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                i[0] +=1;
+              //  CustomToast.showToast(context, ""+i[0], 200);
+            }
+
+        }.start();
     }
 
 }

@@ -83,7 +83,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         SessionFunctions SF = new SessionFunctions();
 
         pDialog = new ProgressDialog(v.getContext());
-        pDialog.setCancelable(false);
+        pDialog.setCancelable(true);
         pDialog.setMessage("載入中 ...");
         showDialog();
 
@@ -194,7 +194,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
             }
         });
         ClientFunctions.updateGroups(new ClientResponse() {
@@ -215,7 +215,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             @Override
             public void onErrorResponse(String response) {
 
-                Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), "更新失敗", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -352,6 +352,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         }
         Resources res =this.getResources();
         CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission/*,res*/);
+
  }
     public int isUrgentCount(){
         int Count=0;

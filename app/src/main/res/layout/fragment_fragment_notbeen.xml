@@ -1,0 +1,214 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="5dp"
+    android:id="@+id/custVIew">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fr_fr_mi">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_columnSpan="3"
+            android:layout_rowSpan="3">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/missionName"
+                    android:layout_column="0"
+                    android:textSize="25dp"
+                    android:layout_row="0"
+                    android:layout_rowSpan="2"
+                    android:layout_columnSpan="2"
+                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:layout_weight="0.97"
+                    android:textStyle="bold"
+                    android:textColor="#366fe9"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp" />
+                //上左
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rowCount="2"
+                    android:columnCount="2"
+                    android:clickable="false"
+                    android:columnOrderPreserved="false"
+                    android:contextClickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:touchscreenBlocksFocus="false"
+                    android:useDefaultMargins="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/date"
+                        android:id="@+id/dateread"
+                        style="@style/cardtext"
+                        android:layout_column="0"
+                        android:layout_row="0"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="3/30"
+                        android:id="@+id/datetime"
+                        android:layout_column="1"
+                        android:layout_row="0"
+                        android:layout_rowWeight="0"
+                        android:layout_rowSpan="1"
+                        android:allowUndo="false"
+                        android:clickable="false"
+                        android:gravity="center_vertical"
+                        style="@style/cardtext"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="15dp"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/time"
+                        android:id="@+id/timeread"
+                        android:layout_gravity="left"
+                        style="@style/cardtext"
+                        android:layout_column="0"
+                        android:layout_row="1"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="06:20"
+                        android:id="@+id/expAt"
+                        style="@style/cardtext"
+                        android:layout_column="1"
+                        android:layout_row="1"
+                        android:layout_marginRight="15dp"
+                        android:textColor="#000000" />
+                </GridLayout>//上右
+            </LinearLayout>//上半部
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:rowCount="1"
+                    android:columnCount="1"
+                    android:clickable="false"
+                    android:columnOrderPreserved="false"
+                    android:contextClickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:touchscreenBlocksFocus="false"
+                    android:useDefaultMargins="true"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:background="#4cfdfce0"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="打屁屁"
+                        android:id="@+id/missionDetial"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:autoText="true"
+                        android:layout_columnSpan="1"
+                        android:layout_rowSpan="1"
+                        android:layout_gravity="left"
+                        android:textColor="#000000" />
+                </GridLayout>
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="87dp"
+                    android:layout_weight="0.18" />
+
+                //下左
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="4/10"
+                    android:id="@+id/peoplenumber"
+                    android:gravity="right"
+                    style="@style/cardtext"
+                    android:layout_column="0"
+                    android:layout_row="0"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#ca0def" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/missionnumber"
+                    android:layout_gravity="right"
+                    android:visibility="gone" />
+
+                //下右
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="370dp"
+            android:layout_height="150dp"
+            android:id="@+id/missionbutton"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3.21"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_column="0"
+            android:layout_columnSpan="3"
+            android:layout_row="0"
+            android:layout_rowSpan="3"
+            android:visibility="visible"
+            android:background="#00000000" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
