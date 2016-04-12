@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName); //  tool_bar.findViewById(R.id.UserName) 會null
         TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
         UserNames.setText(SessionFunctions.getUserNickName()+"");
-        UserSchool.setText(SessionFunctions.getUserSchoolID()+"");
+        UserSchool.setText(SessionFunctions.getUserschoolName()+"");
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
 
@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Setting the ViewPager For the SlidingTabsLayout
-
-
-
     }
 
 
@@ -149,8 +146,28 @@ public class MainActivity extends AppCompatActivity {
         delphoneDB();//資料都先削掉
         showDialog();
         //fabtime();
-        updataMissionDB(); //成功會更新Group
+        updataSchoolDB();//成功會更新Mission
 
+    }
+    private void updataSchoolDB(){
+        ClientFunctions.updateSchools(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                upDataCount=0;
+                updataMissionDB();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(upDataCount>=5){
+                    CustomToast.showToast(context, "更新失敗學校(主)", 500);
+                    hideDialog();
+                }else{
+                    upDataCount+=1;
+                    updataSchoolDB();
+                }
+            }
+        });
     }
     private void updataMissionDB(){  //成功會更新Group
         ClientFunctions.updateMissions(new ClientResponse() {

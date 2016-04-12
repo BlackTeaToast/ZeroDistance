@@ -12,6 +12,12 @@ public class SessionFunctions {
     public static void setIsTeacher(boolean isTeacher) {
         session.setIsTeacher(isTeacher);;
     }
+    public static String getUserschoolName() {
+        return session.getUserSchoolName();
+    }
+    public static void setUserschoolName(String schoolName) {
+        session.setUserSchoolName(schoolName);
+    }
 
     public static boolean isTeacher() {
         return session.isTeacher();
