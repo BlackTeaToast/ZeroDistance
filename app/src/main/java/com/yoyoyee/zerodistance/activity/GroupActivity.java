@@ -43,7 +43,7 @@ public class GroupActivity extends AppCompatActivity {
     //變數區====================================
     //更新成功或失敗讀取用
     private int updateCount = 0;
-
+    private boolean updateError;
 
     //取得任務id
     int id ;//揪團的編號 ; 錯誤則傳回0
@@ -125,45 +125,18 @@ public class GroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (joined) {
 
-                    Toast.makeText(v.getContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
-
-                    //重新整理
-                    readValue();
+                    dontWantJoin();
 
                 } else {
                     //參加
-                    ClientFunctions.publishGroupAccept(id, new ClientResponse() {
-                        @Override
-                        //確定參加完成後
-                        public void onResponse(String response) {
+                    updateCount = 10;
+                    updateError = true;
+                    wantJoin();
 
-                            //更新手機資料庫
-                            ClientFunctions.updateGroups(new ClientResponse() {
-                                @Override
-                                public void onResponse(String response) {
-                                    //確定更新完之後，重新讀取
-                                    readValue();
-                                    Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onErrorResponse(String response) {
-
-                                }
-                            });
-
-
-                        }
-
-                        @Override
-                        public void onErrorResponse(String response) {
-                            Toast.makeText(getApplicationContext(), R.string.join_error ,Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
+                    if(updateError){
+                        Toast.makeText(getApplicationContext(), R.string.join_error ,Toast.LENGTH_SHORT).show();
+                    }
                 }
-
 
             }
         });
@@ -208,8 +181,12 @@ public class GroupActivity extends AppCompatActivity {
         super.onResume();
 
         updateCount = 5;
+        updateError = true;
         //讀取值
         readValue();
+
+        if(updateError==true)
+            Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
 
 
         //如果有圖片則顯示圖片
@@ -265,6 +242,8 @@ public class GroupActivity extends AppCompatActivity {
                 //設定自己是否是參與者
                 joined = isJoined();
                 //顯示
+                //成功讀取
+                updateError = false;
                 updateCount = 0;
                 setValue();
                 hideDialog();
@@ -272,7 +251,7 @@ public class GroupActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+
                 hideDialog();
                 if(updateCount>0){
                     updateCount--;
@@ -518,5 +497,55 @@ public class GroupActivity extends AppCompatActivity {
             PD=false;
         }
     }
+
+    //參加
+    private void wantJoin(){
+        ClientFunctions.publishMissionAccept(id, new ClientResponse() {
+            @Override
+            //確定參加完成後
+            public void onResponse(String response) {
+
+                //更新手機資料庫
+                ClientFunctions.updateMissions(new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        //確定更新完之後，重新讀取
+                        //確定有成功參加，且成功更新手機資料庫
+                        updateError = false;
+                        updateCount = 5;
+                        readValue();
+                        Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+                        if(updateCount>0){
+                            updateCount--;
+                            wantJoin();
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    wantJoin();
+                }
+
+            }
+        });
+    }
+
+    //不參加
+    private void dontWantJoin(){
+        Toast.makeText(getApplicationContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
+
+        //重新整理
+        readValue();
+    }
+
 
 }
