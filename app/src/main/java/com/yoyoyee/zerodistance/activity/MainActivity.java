@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
                 MakeTabAndContext();
-                hideDialog();
             }
 
             @Override
@@ -210,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
         pager.setOffscreenPageLimit(6);
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
+        hideDialog();
     }
     public void fabtime(){
         final int[] i = {0};

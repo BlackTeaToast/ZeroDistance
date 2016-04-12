@@ -161,9 +161,9 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 in = new Intent(c, GroupActivity.class);
             }
             case R.layout.fragment_fragment_havebeen:{
-                in = null;
+                in = new Intent(c, GroupActivity.class);
             }case R.layout.fragment_fragment_notbeen:{
-                in = null;
+                in = new Intent(c, GroupActivity.class);
             }
         }
         return in;

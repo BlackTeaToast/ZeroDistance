@@ -225,7 +225,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=10){
+                if(upDataCount>=5){
                     Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
                 }else{
                     upDataCount+=1;
@@ -253,7 +253,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=10){
+                if(upDataCount>=5){
                     Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
                 }else{
                     upDataCount+=1;
