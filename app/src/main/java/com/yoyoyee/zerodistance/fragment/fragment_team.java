@@ -67,8 +67,6 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_team, container, false);
 //        makecard();
-
-
         try {
 
             //CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
@@ -155,8 +153,6 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
             needNum[i] = missions.get(missions.size() - i - 1).needNum;
             currentNum[i] = missions.get(missions.size() - i - 1).currentNum;
             missiondangerous[i] = false;
-            title[i] = limitString(title[i], 0);//0為title , 1為detial
-            detial[i] = limitString(detial[i], 1);
         }
 
         missionnumber = new int[missions.size()];
@@ -166,49 +162,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         Resources res =this.getResources();
         CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_team/*,res*/);
     }
-    private String limitString(String context, int type){//0為title , 1為detial
-        switch ((int)SessionFunctions.getUserTextSize()) {
-            case 20:{
-                if(type==0){
-                    if(context.length()>4){//限制字數
-                        context = (String)context.subSequence(0, 4)+"...";
-                        //  Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(type==1){
-                    if(context.length()>14){//限制字數
-                        context = (String)context.subSequence(0, 14)+"...";
-                    }
-                }
-                break;}
-            case 15:{
-                if(type==0){
-                    if(context.length()>6){//限制字數
-                        context = (String)context.subSequence(0, 6)+"...";
-                    }
-                }
-                if(type==1){
-                    if(context.length()>20){//限制字數
-                        context = (String)context.subSequence(0, 20)+"...";
-                    }
-                }
 
-                break;}
-            case 10:{
-                if(type==0){
-                    if(context.length()>11){//限制字數
-                        context = (String)context.subSequence(0, 11)+"...";
-                    }
-                }
-                if(type==1){
-                    if(context.length()>22){//限制字數
-                        context = (String)context.subSequence(0, 22)+"...";
-                    }
-                }
-                break;}
-        }
-        return context;
-    }
     public boolean onTouch(View v, MotionEvent event) {
 
         try {

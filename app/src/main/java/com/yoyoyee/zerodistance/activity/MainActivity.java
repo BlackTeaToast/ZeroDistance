@@ -144,7 +144,11 @@ public class MainActivity extends AppCompatActivity {
     private void updataphoneDB(){//更新手機資料
         delphoneDB();//資料都先削掉
         showDialog();
-        fabtime();
+        //fabtime();
+        updatamissionDB(); //成功會更新Group
+
+    }
+    private void updatamissionDB(){  //成功會更新Group
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -154,14 +158,17 @@ public class MainActivity extends AppCompatActivity {
                 if (missions.size() > 0) {
                     Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
                 }
+                updataGroupDB();//更新揪團
             }
 
             @Override
             public void onErrorResponse(String response) {
                 CustomToast.showToast(context, "更新失敗ON", 1500);
-               // hideDialog();
+                 hideDialog();
             }
         });
+    }
+    private void updataGroupDB(){
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -172,17 +179,18 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
                 MakeTabAndContext();
+                hideDialog();
             }
 
             @Override
             public void onErrorResponse(String response) {
-             //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
-
+                //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
+                hideDialog();
                 CustomToast.showToast(context, "更新失敗ON", 1500);
             }
         });
-
     }
+
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
         pager.setOffscreenPageLimit(6);
@@ -196,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if(pDialog.isShowing()){
-                    pDialog.dismiss();
+                   // pDialog.dismiss();
                     CustomToast.showToast(context, "關閉pDialog"+i[0], 200);
                 }
             }

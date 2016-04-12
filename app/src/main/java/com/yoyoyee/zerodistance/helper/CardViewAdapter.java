@@ -31,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
-    private String[] mData ,missionName;
+    private String[] detial ,title;
     private boolean[] missiondangerous;
     private int[] id, needNum, currentNum, missionnumber, month, day, hourInt, mmInt;
     private String[] hour, mm;
@@ -86,17 +86,19 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                     mm[i]=""+mmInt[i];
                 }
                 //處理日期
+
+                title[i] = limitString(title[i], 0);//0為title , 1為detial
+                detial[i] = limitString(detial[i], 1);
             }
             setFontSize(v);//設定字體大小
-
         }
 
     }
 
-    public CardViewAdapter(int[] id ,String[] missionName , String[] detial, Date[] expAt, int[] needNum, int[] currentNum, boolean[] missiondangerous, int[] missionnumber, int fragment) {
+    public CardViewAdapter(int[] id ,String[] title , String[] detial, Date[] expAt, int[] needNum, int[] currentNum, boolean[] missiondangerous, int[] missionnumber, int fragment) {
        this.id = id;
-        this.missionName = missionName;
-        mData = detial;
+        this.title = title;
+        this.detial = detial;
         this.expAtD = expAt;
         this.needNum = needNum;
         this.currentNum = currentNum;
@@ -109,14 +111,15 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(fragment, parent, false);
         ViewHolder vh = new ViewHolder(v);
+
         return vh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-            holder.missionName.setText(missionName[position]);
-            holder.missionDetial.setText(mData[position]);
+            holder.missionName.setText(title[position]);
+            holder.missionDetial.setText(detial[position]);
             holder.datetime.setText(month[position]+"/"+day[position]);
             holder.expAt.setText(hour[position]+":"+mm[position]);
             holder.peoplenumber.setText(currentNum[position]+"/"+needNum[position]+"人");
@@ -140,7 +143,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        Count = mData.length;//長度
+        Count = detial.length;//長度
         return Count;
     }
     public int setItemCount(int Count){
@@ -161,6 +164,50 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         return in;
     }
 
+    //字數限制
+    private String limitString(String context, int type){//0為title , 1為detial
+        switch ((int)SessionFunctions.getUserTextSize()) {
+            case 20:{
+                if(type==0){
+                    if(context.length()>4){//限制字數
+                        context = (String)context.subSequence(0, 4)+"...";
+                        //  Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(type==1){
+                    if(context.length()>14){//限制字數
+                        context = (String)context.subSequence(0, 14)+"...";
+                    }
+                }
+                break;}
+            case 15:{
+                if(type==0){
+                    if(context.length()>6){//限制字數
+                        context = (String)context.subSequence(0, 6)+"...";
+                    }
+                }
+                if(type==1){
+                    if(context.length()>20){//限制字數
+                        context = (String)context.subSequence(0, 20)+"...";
+                    }
+                }
+
+                break;}
+            case 10:{
+                if(type==0){
+                    if(context.length()>11){//限制字數
+                        context = (String)context.subSequence(0, 11)+"...";
+                    }
+                }
+                if(type==1){
+                    if(context.length()>22){//限制字數
+                        context = (String)context.subSequence(0, 22)+"...";
+                    }
+                }
+                break;}
+        }
+        return context;
+    }
 
     //設置字體大小
     private void setFontSize(View v){
