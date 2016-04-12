@@ -263,7 +263,9 @@ public class MissionActivity extends AppCompatActivity {
 
         updateError = true;
         updateCount = 5;
+
        //設定
+        showDialog();
         readValue();
 
          //如果有圖片則顯示圖片
@@ -299,7 +301,7 @@ public class MissionActivity extends AppCompatActivity {
         imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
 
         //更新接受此任務的人
-        showDialog();
+
         //更新手機資料庫的參與者
         ClientFunctions.updateMissionAcceptUser(id, new ClientResponse() {
             @Override
@@ -329,12 +331,12 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(String response) {
 
-                hideDialog();
                 if(updateCount>0){
                     updateCount--;
                     readValue();
                 }
                 if(updateError == true){
+                    hideDialog();
                     Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
                     updateError = false;
                 }
@@ -654,6 +656,7 @@ public class MissionActivity extends AppCompatActivity {
     private void dontWantJoin(){
         Toast.makeText(getApplicationContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
 
+        showDialog();
         //重新整理
         readValue();
     }
@@ -666,6 +669,7 @@ public class MissionActivity extends AppCompatActivity {
                 //確定有成功參加，且成功更新手機資料庫
                 updateError = true;
                 updateCount = 5;
+                showDialog();
                 readValue();
 
             }
