@@ -44,6 +44,7 @@ import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
@@ -90,7 +91,7 @@ public class NewGroupActivity extends AppCompatActivity {
     private String getThatString;
     private String getPay;
 
-    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewGroupDate, textViewcontent,textViewPicture,textViewPeopleNumber;
+    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewGroupDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
     private Uri uriImg;
@@ -121,6 +122,8 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewPicture= (TextView) findViewById(R.id.textViewPicture);
         textViewPress= (TextView) findViewById(R.id.textViewPress);
         textViewPeopleNumber= (TextView) findViewById(R.id.textViewPeopleNumber);
+        textViewWhere = (TextView) findViewById(R.id.textViewWhere);
+        textViewDate= (TextView) findViewById(R.id.textViewGroupDate);
         //editText定位區
         editTextName= (EditText) findViewById(R.id.editTextName);
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
@@ -172,6 +175,8 @@ public class NewGroupActivity extends AppCompatActivity {
         imv.setVisibility(View.GONE);
         textViewPress.setVisibility(View.GONE);
         spinnerPress.setVisibility(View.GONE);
+
+        allTextSize(SessionFunctions.getUserTextSize());
         //------------------------------------------------------------------------------------------
         /*
 
@@ -230,6 +235,22 @@ public class NewGroupActivity extends AppCompatActivity {
         editTextWhere.addTextChangedListener(new TextLenghLimiter(60));
         editTextNumber.addTextChangedListener(new TextLenghLimiter(60));
         editTextName.addTextChangedListener(new TextNextLineLimiter());
+    }
+    public void allTextSize(float size){
+        textViewName.setTextSize(size+5);
+        textViewPicture.setTextSize(size+5);
+        textViewcontent.setTextSize(size+5);
+        textViewDate.setTextSize(size+5);
+        textViewPeopleNumber.setTextSize(size+5);
+        buttonTime.setTextSize(size+5);
+        buttonDate.setTextSize(size+5);
+        buttonPicture.setTextSize(size+5);
+        buttonTakePicture.setTextSize(size+5);
+        textViewWhere.setTextSize(size+5);
+        buttonOk.setTextSize(size);
+        buttonCancel.setTextSize(size);
+        buttonTime.setTextSize(size);
+        buttonDate.setTextSize(size);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // TimePickerDialog設置彈出視窗-----------------------------------------------------------------
@@ -369,12 +390,8 @@ public class NewGroupActivity extends AppCompatActivity {
                 .show();
     }
     //忘了，待處理
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
 
-    }
+
     //從檔案讀取圖片(由onClickPickimg進行呼叫)
     public void Pickimg(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)

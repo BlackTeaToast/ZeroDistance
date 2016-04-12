@@ -44,12 +44,17 @@ import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.QA;
 
 
 import java.lang.System;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class NewMissionActivity extends AppCompatActivity {
@@ -74,6 +79,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
     private Boolean PICTURE_GONE=true;//隱藏拍照功能
     private Boolean isOtherPay=false;//獎勵是否為其他
+    private Boolean isEdit=false;
 
     private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
     private Bitmap bitmapOutPut;//要輸出出去的原圖
@@ -175,8 +181,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
         limitLong();//名稱字數限制以及字型大小限制
         allTextSize(SessionFunctions.getUserTextSize());
-        startService(new Intent(this, TapService.class));
-
+        isEdit();
 
 
         //spinner的監聽
@@ -211,18 +216,7 @@ public class NewMissionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        Intent intent=getIntent();
-        Boolean isEdit=intent.getBooleanExtra("isEdit", false);
-        if (isEdit){
-            try{
-                int id=intent.getIntExtra("ID",0);
 
-            }
-            catch (Exception ex){
-                System.out.println("EDIT不能抓取資料進入");
-            }
-
-        }
         //此區為隱藏功能用--------------------------------------------------------------------------
         hide(PICTURE_GONE);
     }
@@ -254,6 +248,46 @@ public class NewMissionActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void isEdit(){
+        Intent intent=getIntent();
+        isEdit=intent.getBooleanExtra("isEdit", false);
+        int id=intent.getIntExtra("id",0);
+        if (isEdit){
+            Mission mission =QueryFunctions.getMission(id);
+            SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmm");
+            Date date=mission.getExpAt();
+            String dateString =format.format(date);
+            year=Integer.valueOf(dateString.substring(0,4));
+            month=Integer.valueOf(dateString.substring(4,6));
+            day=Integer.valueOf(dateString.substring(6,8));
+            hour=Integer.valueOf(dateString.substring(8,10));
+            minute=Integer.valueOf(dateString.substring(10,12));
+            String tempAMPM;
+            if (hour>=12 && hour<24){
+                if (hour>12) {
+                    tempAMPM = new String(getResources().getString(R.string.PM_new_mission_and_group));
+                    hour-=12;
+                }
+                else {
+                    tempAMPM = new String(getResources().getString(R.string.PM_new_mission_and_group));
+                }
+            }
+            else{
+                tempAMPM =new String(getResources().getString(R.string.AM_new_mission_and_group));
+            }
+            buttonTime.setText(hour + getResources().getString(R.string.hour_new_mission_and_group) + minute + getResources().getString(R.string.minute_new_mission_and_group)+" "+tempAMPM);
+            buttonDate.setText(year + getResources().getString(R.string.year_new_mission_and_group) + (month+1) + getResources().getString(R.string.month_new_mission_and_group) + day + getResources().getString(R.string.day_new_mission_and_group));
+            editTextName.setText(mission.getTitle());
+            editTextWhere.setText(mission.getPlace());
+            editTextNumber.setText(String.valueOf(mission.getNeedNum()));
+            editTextcontent.setText(mission.getContent());
+            editTextOtherPay.setText(mission.getReward());
+            oneTimesDate=false;
+            oneTimesTime=false;
+
+        }
     }
 
     public void  limitLong (){
@@ -521,29 +555,37 @@ public class NewMissionActivity extends AppCompatActivity {
                             } else {
                                 //    missionData.content = editTextcontent.getText().toString();
                                 if (isOtherPay){getPay = editTextOtherPay.getText().toString();}
-                                calendar.set(year, month, day, hour, minute);
-                                ClientFunctions.publishMission(
-                                        editTextName.getText().toString(),
-                                        press,
-                                        Integer.valueOf(editTextNumber.getText().toString()),
-                                        editTextWhere.getText().toString(),
-                                        editTextcontent.getText().toString(),
-                                        getPay,
-                                        calendar.getTime(),
-                                        new ClientResponse() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
-                                            }
+                                if(!isEdit) {
+                                    calendar.set(year, month, day, hour, minute);
+                                    ClientFunctions.publishMission(
+                                            editTextName.getText().toString(),
+                                            press,
+                                            Integer.valueOf(editTextNumber.getText().toString()),
+                                            editTextWhere.getText().toString(),
+                                            editTextcontent.getText().toString(),
+                                            getPay,
+                                            calendar.getTime(),
+                                            new ClientResponse() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+                                                    NewMissionActivity.this.finish();
+                                                }
 
 
-                                            @Override
-                                            public void onErrorResponse(String response) {
-                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+                                                @Override
+                                                public void onErrorResponse(String response) {
+                                                    Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
 
-                                            }
-                                        });
-                                this.finish();
+                                                }
+                                            });
+                                }
+                                else{
+
+                                    /**
+                                     * 編輯上傳
+                                     */
+                                }
                             }
                         }
                     }
