@@ -268,7 +268,7 @@ public class TurnActivity extends AppCompatActivity {
                     String picturePath = cursor.getString(columnIndex);
                     cursor.close();
                         Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
-                    ClientFunctions.uploadImage(picturePath);
+                    ClientFunctions.uploadImage(81, picturePath);
 
                 }
                 else {

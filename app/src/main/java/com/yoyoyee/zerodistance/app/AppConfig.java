@@ -52,4 +52,13 @@ public class AppConfig {
     // Server publish group accept url
     public static String URL_PUBLISH_GROUP_ACCEPT = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishGroupAccept";
 
+	// Server delete mission url
+	public static String URL_DELETE_MISSION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/delete/deleteMission";
+
+	// Server delete mission url
+	public static String URL_DELETE_GROUP = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/delete/deleteGroup";
+
+	// Server publish group accept url
+	public static String URL_PUBLISH_MISSION_IMAGE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMissionImage";
+
 }

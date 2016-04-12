@@ -84,7 +84,7 @@
 
         <Spinner
             android:layout_width="190dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/spinnerPress"
             android:spinnerMode="dropdown"
             android:layout_row="6"
@@ -96,12 +96,13 @@
             android:entries="@array/press_new_mission_and_group"
             android:layout_columnSpan="7"
             android:layout_gravity="center"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="20dp"
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="#00eff6fa"
-            android:popupBackground="@color/spinner"/>
+            android:popupBackground="@color/spinner"
+            android:background="#7feff6fa"
+            android:layout_marginLeft="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -127,7 +128,7 @@
 
         <Spinner
             android:layout_width="190dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/spinnerPay"
             android:spinnerMode="dropdown"
             android:layout_row="8"
@@ -141,10 +142,11 @@
             android:layout_gravity="center"
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="15dp"
-            android:background="#00eff6fa"
-            android:popupBackground="@color/spinner"/>
+            android:background="#7feff6fa"
+            android:popupBackground="@color/spinner"
+            android:layout_marginLeft="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -428,7 +430,7 @@
                 android:layout_row="100"
                 android:layout_marginLeft="43dp"
                 android:onClick="onClickOkOutputData"
-                android:background="@drawable/buttom3"
+                android:background="@drawable/button_misson"
                 android:textColor="#ffffff"
                 android:layout_marginStart="43dp"
                 android:layout_alignParentTop="true"
@@ -447,7 +449,7 @@
                 android:layout_columnSpan="7"
                 android:onClick="onClickCancel"
                 android:textColor="#ffffff"
-                android:background="@drawable/buttom3"
+                android:background="@drawable/button_misson"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"

@@ -28,7 +28,6 @@ import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
-import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -500,14 +499,16 @@ public class GroupActivity extends AppCompatActivity {
 
     //參加
     private void wantJoin(){
-        ClientFunctions.publishMissionAccept(id, new ClientResponse() {
+        ClientFunctions.publishGroupAccept(id, new ClientResponse() {
             @Override
             //確定參加完成後
             public void onResponse(String response) {
+                //確定有成功參加
                 updateError = true;
                 updateCount = 5;
                 //更新手機資料庫
-                updateMissions();
+                Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
+                updateGroup();
 
             }
 
@@ -537,8 +538,8 @@ public class GroupActivity extends AppCompatActivity {
         readValue();
     }
 
-    private void updateMissions(){
-        ClientFunctions.updateMissions(new ClientResponse() {
+    private void updateGroup(){
+        ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
                 //確定更新完之後，重新讀取
@@ -554,7 +555,7 @@ public class GroupActivity extends AppCompatActivity {
             public void onErrorResponse(String response) {
                 if(updateCount>0){
                     updateCount--;
-                    updateMissions();
+                    updateGroup();
                 }
 
                 if(updateError){
