@@ -176,13 +176,10 @@ public class MissionActivity extends AppCompatActivity {
 
                 } else {
                     //參加
-                    updateCount = 10;
+                    updateCount = 5;
                     updateError = true;
                     wantJoin();
 
-                    if(updateError){
-                        Toast.makeText(getApplicationContext(), R.string.join_error ,Toast.LENGTH_SHORT).show();
-                    }
                 }
 
 
@@ -269,9 +266,6 @@ public class MissionActivity extends AppCompatActivity {
        //設定
         readValue();
 
-        if(updateError==true)
-            Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
-
          //如果有圖片則顯示圖片
         if(imagePath!=null) {
             imageView.setVisibility(View.VISIBLE);
@@ -334,11 +328,15 @@ public class MissionActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(String response) {
-                Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+
                 hideDialog();
                 if(updateCount>0){
                     updateCount--;
                     readValue();
+                }
+                if(updateError == true){
+                    Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+                    updateError = false;
                 }
             }
         });
@@ -628,27 +626,10 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             //確定參加完成後
             public void onResponse(String response) {
-
+                updateError = true;
+                updateCount = 5;
                 //更新手機資料庫
-                ClientFunctions.updateMissions(new ClientResponse() {
-                    @Override
-                    public void onResponse(String response) {
-                        //確定更新完之後，重新讀取
-                        //確定有成功參加，且成功更新手機資料庫
-                        updateError = false;
-                        updateCount = 5;
-                        readValue();
-                        Toast.makeText(getApplicationContext(), R.string.is_already_joined ,Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onErrorResponse(String response) {
-                        if(updateCount>0){
-                            updateCount--;
-                            wantJoin();
-                        }
-                    }
-                });
+                updateMissions();
 
             }
 
@@ -658,6 +639,12 @@ public class MissionActivity extends AppCompatActivity {
                     updateCount--;
                     wantJoin();
                 }
+
+                if(updateError){
+                        updateError = false;
+                        Toast.makeText(getApplicationContext(), R.string.join_error ,Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -669,6 +656,33 @@ public class MissionActivity extends AppCompatActivity {
 
         //重新整理
         readValue();
+    }
+
+    private void updateMissions(){
+        ClientFunctions.updateMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                //確定更新完之後，重新讀取
+                //確定有成功參加，且成功更新手機資料庫
+                updateError = true;
+                updateCount = 5;
+                readValue();
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    updateMissions();
+                }
+
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }
