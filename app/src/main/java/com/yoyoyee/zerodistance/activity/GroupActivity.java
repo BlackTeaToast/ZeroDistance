@@ -1,15 +1,21 @@
 package com.yoyoyee.zerodistance.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,6 +37,7 @@ import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -43,6 +50,82 @@ public class GroupActivity extends AppCompatActivity {
     //更新成功或失敗讀取用
     private int updateCount = 0;
     private boolean updateError;
+
+    //創建選單按鈕
+    public boolean onPrepareOptionsMenu(Menu menu){
+        super.onPrepareOptionsMenu(menu);
+
+        //把前一個選單資料先清除
+        menu.clear();
+        getMenuInflater().inflate(R.menu.menu_mission, menu);
+
+        if(isPublisher){
+
+            //把編輯跟刪除打開
+            menu.setGroupVisible(R.id.mission_toolbar_group_more, true);
+
+            //把參加鈕關掉
+            menu.setGroupVisible(R.id.mission_toolbar_group_join, false);
+            menu.setGroupVisible(R.id.mission_toolbar_group_not_join, false);
+
+        }
+        else{
+
+            if(joined) {
+                //有參加時，顯示不參加鈕
+                menu.setGroupVisible(R.id.mission_toolbar_group_join, false);
+                menu.setGroupVisible(R.id.mission_toolbar_group_not_join, true);
+
+            }
+            else {
+                //沒參加時，顯示參加鈕
+                menu.setGroupVisible(R.id.mission_toolbar_group_join, true);
+                menu.setGroupVisible(R.id.mission_toolbar_group_not_join, false);
+
+            }
+
+            //把編輯跟刪除關掉
+            menu.setGroupVisible(R.id.mission_toolbar_group_more, false);
+
+        }
+        return true;
+
+    }
+
+    //設定選單按下之動作
+    public boolean onOptionsItemSelected(MenuItem item){
+        super.onOptionsItemSelected(item);
+        switch (item.getGroupId()) {
+            //點選Q&A
+            case R.id.mission_toolbar_group_QA:
+                boolean isGroup = true;//是揪團
+                String publisher  = group.getUserID();//發布者ID
+                Intent it = new Intent();
+                it.setClass(GroupActivity.this, QAActivity.class);
+                it.putExtra("isGroup", isGroup);
+                it.putExtra("publisher", publisher );
+                it.putExtra("id",id);
+
+                startActivity(it);
+
+                break;
+
+            //點選參加
+            case R.id.mission_toolbar_group_join:
+                areYouSureToJoin();
+                break;
+
+            //點選不參加
+            case R.id.mission_toolbar_group_not_join:
+                areYouSureToNotJoin();
+                break;
+
+            case R.id.mission_toolbar_group_more:
+                showEditAndDelete();
+                break;
+        }
+        return true;
+    }
 
     //取得任務id
     int id ;//揪團的編號 ; 錯誤則傳回0
@@ -124,13 +207,10 @@ public class GroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (joined) {
 
-                    dontWantJoin();
+                    areYouSureToNotJoin();
 
                 } else {
-                    //參加
-                    updateCount = 5;
-                    updateError = true;
-                    wantJoin();
+                    areYouSureToJoin();
 
                 }
 
@@ -167,10 +247,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //刪除
-
-                updateCount = 5;
-                updateError = true;
-                deleteGroup();
+                areYouSureToDelete();
             }
         });
 
@@ -187,38 +264,13 @@ public class GroupActivity extends AppCompatActivity {
         showDialog();
         readValue();
 
-
-        //如果有圖片則顯示圖片
-        if(imagePath!=null) {
-            imageView.setVisibility(View.VISIBLE);
-            //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
-            //建立一個AsyncTask執行緒進行圖片讀取動作，並帶入圖片連結網址路徑
-            new AsyncTask<String, Void, Bitmap>() {
-                @Override
-                protected Bitmap doInBackground(String... params) {
-                    String url = params[0];
-                    return getBitmapFromURL(url);
-                }
-
-                @Override
-                protected void onPostExecute(Bitmap result) {
-                    imageView.setImageBitmap(result);
-                    super.onPostExecute(result);
-                }
-            }.execute(imagePath);
-        }
-        else{
-            imageView.setVisibility(View.GONE);
-        }
-
-
     }
 
     //讀取值
     private void readValue(){
 
         //有圖片的話設置URL
-        imagePath = "https://9559e92bf486a841acd42998e93115b5aa646a77.googledrive.com/host/0B79Cex31nQeXMTFWdmxTTUMwdFE/images/Macaw01.jpg";
+        imagePath = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImage";
 
         //更新接受此任務的人
 
@@ -299,6 +351,31 @@ public class GroupActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(title);
 
+        //如果有圖片則顯示圖片
+        if(imagePath!=null) {
+
+            imageView.setVisibility(View.VISIBLE);
+            //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
+            //建立一個AsyncTask執行緒進行圖片讀取動作，並帶入圖片連結網址路徑
+            new AsyncTask<String, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(String... params) {
+                    String url = params[0];
+                    return getBitmapFromURL(url);
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    imageView.setImageBitmap(result);
+                    super.onPostExecute(result);
+                }
+            }.execute(imagePath);
+
+        }
+        else{
+            imageView.setVisibility(View.GONE);
+        }
+
         //設定字型大小
         setFontSize();
 
@@ -336,6 +413,11 @@ public class GroupActivity extends AppCompatActivity {
 
     //設置發佈者與非發佈者的差別
     private void setPublisherOrNot(){
+
+        //重新設定OptionsMenu，呼叫onPrepareOptionsMenu
+        invalidateOptionsMenu();
+
+        /*
         if(isPublisher){
             //把編輯跟刪除打開
             buttonVisible = (Button)findViewById(R.id.editButtonG);
@@ -372,6 +454,7 @@ public class GroupActivity extends AppCompatActivity {
             buttonVisible.getParent().requestLayout();//ViewParent的requestLayout方法可以重新安排子視圖
 
         }
+        */
     }
 
     //回傳觀看者是否參加
@@ -604,5 +687,140 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
+    //確認是否要刪除Dialog
+    private void areYouSureToDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GroupActivity.this);
+        builder.setTitle(R.string.delete);
+        builder.setMessage(R.string.are_you_sure_to_delete);
+        builder.setIcon(R.drawable.ic_delete_black_24dp);
+
+
+        //取消鈕
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        //確認鈕
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //刪除
+                updateCount = 5;
+                updateError = true;
+                deleteGroup();
+            }
+        });
+
+        builder.create().show();
+
+    }
+
+    //確認參加Dialog
+    private void areYouSureToJoin(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GroupActivity.this);
+        builder.setTitle(R.string.is_joined);
+        builder.setMessage(R.string.are_you_sure_to_join);
+        builder.setIcon(R.drawable.ic_person_add_black_48dp);
+
+
+        //取消鈕
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        //確認鈕
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //參加
+                updateCount = 5;
+                updateError = true;
+                wantJoin();
+            }
+        });
+
+        builder.create().show();
+
+    }
+
+    //確認取消參加Dialog
+    private void areYouSureToNotJoin(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GroupActivity.this);
+        builder.setTitle(R.string.not_joined);
+        builder.setMessage(R.string.are_you_sure_to_not_join);
+        builder.setIcon(R.drawable.ic_person_black_48dp);
+
+
+        //取消鈕
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        //確認鈕
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //取消參加
+                dontWantJoin();
+            }
+        });
+
+        builder.create().show();
+
+    }
+    //顯示編輯與刪除選單
+    private void showEditAndDelete(){
+        View viewTemp = findViewById(R.id.misson_toolbar_more);
+        final PopupMenu popupmenu = new PopupMenu(GroupActivity.this, viewTemp);
+        popupmenu.inflate(R.menu.menu_popup_asker); // API 14以上才支援此方法.
+
+        popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() { // 設定popupmenu項目點擊傾聽者.
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //點選編輯
+                    case (R.id.popedit):
+                        Intent it = new Intent(GroupActivity.this, NewGroupActivity.class);
+                        it.putExtra("id", id);
+                        it.putExtra("isEdit", true);
+                        startActivity(it);
+
+                        break;
+
+                    //點選刪除
+                    case (R.id.popdel):
+                        areYouSureToDelete();
+                        break;
+                }
+                return true;
+            }
+
+        });
+        //設置setForceShowIcon為true，強制顯示圖案
+        try {
+            Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+            mFieldPopup.setAccessible(true);
+            MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
+            mPopup.setForceShowIcon(true);
+        } catch (Exception e) {
+
+        }
+        popupmenu.show();
+
+
+    }
 
 }

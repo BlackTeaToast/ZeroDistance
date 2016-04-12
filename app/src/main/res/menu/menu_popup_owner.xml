@@ -3,18 +3,22 @@
     <group android:id="@+id/noans_group">
         <item
             android:id="@+id/popans_nogroup"
-            android:title="@string/ans_pop" />
+            android:title="@string/ans_pop"
+            android:icon="@drawable/ic_announcement_black_24dp"/>
         <item
             android:id="@+id/popdel_nogroup"
-            android:title="@string/del_pop"/>
+            android:title="@string/del_pop"
+            android:icon="@drawable/ic_delete_black_24dp"/>
     </group>
     <group android:id="@+id/hadans_group">
         <item
             android:id="@+id/popedit_hadans_group"
-            android:title="@string/edit_pop" />
+            android:title="@string/edit_pop"
+            android:icon="@drawable/ic_mode_edit_black_24dp"/>/>
         <item
             android:id="@+id/popdel_hadans_group"
-            android:title="@string/del_pop"/>
+            android:title="@string/del_pop"
+            android:icon="@drawable/ic_delete_black_24dp"/>/>
     </group>
 
 </menu>

@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.opengl.Visibility;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.AskActivity;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by 楊霖村 on 2016/4/6.
@@ -166,6 +169,15 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                         return false;
                     }
                 });
+                //設置setForceShowIcon為true，強制顯示圖案
+                try {
+                    Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+                    mFieldPopup.setAccessible(true);
+                    MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
+                    mPopup.setForceShowIcon(true);
+                } catch (Exception e) {
+
+                }
                 popupmenu.show();
             } else {
                 final PopupMenu popupmenu = new PopupMenu(v.getContext(), hoder.q_Card_all);
@@ -185,6 +197,15 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                         return false;
                     }
                 });
+                //設置setForceShowIcon為true，強制顯示圖案
+                try {
+                    Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+                    mFieldPopup.setAccessible(true);
+                    MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
+                    mPopup.setForceShowIcon(true);
+                } catch (Exception e) {
+
+                }
                 popupmenu.show();
             }
         }
@@ -205,6 +226,15 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     return false;
                 }
             });
+            //設置setForceShowIcon為true，強制顯示圖案
+            try {
+                Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+                mFieldPopup.setAccessible(true);
+                MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
+                mPopup.setForceShowIcon(true);
+            } catch (Exception e) {
+
+            }
             popupmenu.show();
         }
             //Toast.makeText(v.getContext(), "我是看的人", Toast.LENGTH_SHORT).show();

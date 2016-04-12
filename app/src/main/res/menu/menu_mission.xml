@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/mission_toolbar_group_QA">
+    <item android:id="@+id/misson_toolbar_QA"
+        android:title="@string/q_and_a"
+        android:orderInCategory="10"
+        android:icon="@drawable/ic_question_answer_white_48dp"
+        app:showAsAction="always" />
+    </group>
+
+
+    <group android:id="@+id/mission_toolbar_group_join">
+    <item android:id="@+id/misson_toolbar_join"
+        android:title="@string/is_joined"
+        android:orderInCategory="20"
+        android:icon="@drawable/ic_person_add_white_48dp"
+        app:showAsAction="always" />
+    </group>
+
+    <group android:id="@+id/mission_toolbar_group_not_join">
+    <item android:id="@+id/misson_toolbar_notJoin"
+        android:title="@string/not_joined"
+        android:orderInCategory="20"
+        android:icon="@drawable/ic_person_white_48dp"
+        app:showAsAction="always" />
+    </group>
+
+    <group android:id="@+id/mission_toolbar_group_more">
+    <item android:id="@+id/misson_toolbar_more"
+        android:title="more"
+        android:orderInCategory="30"
+        android:icon="@drawable/ic_more_vert_white_48dp"
+        app:showAsAction="always" />
+    </group>
+
+</menu>

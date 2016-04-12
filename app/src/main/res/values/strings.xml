@@ -187,6 +187,12 @@
     <string name="no_one_join_now">目前尚未有人參與</string>
     <string name="delete_error">刪除失敗</string>
     <string name="delete_success">刪除成功</string>
+    <string name="delete">刪除</string>
+    <string name="are_you_sure_to_delete">確定要刪除嗎</string>
+    <string name="are_you_sure_to_join">確定要參加嗎</string>
+    <string name="are_you_sure_to_not_join">確定要取消參加嗎</string>
+    <string name="yes">確定</string>
+    <string name="cancel">取消</string>
     <!--=========================================================-->
 
 

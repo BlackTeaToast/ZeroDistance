@@ -99,7 +99,8 @@
                 android:layout_weight="0.01"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true" />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -382,7 +383,8 @@
                         android:background="@drawable/button_misson"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="-5dp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -396,7 +398,8 @@
                         android:background="@drawable/button_misson"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -415,7 +418,8 @@
                         android:background="@drawable/button_misson"
                         android:layout_marginBottom="10dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginLeft="15dp" />
+                        android:layout_marginLeft="15dp"
+                        android:visibility="gone" />
 
                     <Button
                         android:layout_width="match_parent"
@@ -427,7 +431,8 @@
                         android:background="@drawable/button_misson"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>
