@@ -129,7 +129,15 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.missiondangerous.setVisibility(View.VISIBLE);
             holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
         }
-            holder.missionbutton.setOnClickListener(new View.OnClickListener() {
+        else{
+            try {
+                holder.missiondangerous.setVisibility(View.INVISIBLE);
+                holder.CardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        holder.missionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "id為"+id[position]+"  序列為"+"第"+position+"個", Toast.LENGTH_SHORT).show();

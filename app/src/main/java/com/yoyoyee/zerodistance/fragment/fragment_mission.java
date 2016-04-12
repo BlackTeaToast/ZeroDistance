@@ -175,6 +175,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         totalvuledel();
         updataMissionDB();
     }
+
     private void updataMissionDB(){
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
@@ -270,7 +271,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         }
         return context;
     }
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
