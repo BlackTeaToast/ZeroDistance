@@ -137,7 +137,7 @@
                     android:useDefaultMargins="true"
                     android:layout_gravity="left"
                     android:layout_weight="1"
-                    android:background="#4cfdfce0"
+                    android:background="#9cffffff"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp">
                     <TextView
