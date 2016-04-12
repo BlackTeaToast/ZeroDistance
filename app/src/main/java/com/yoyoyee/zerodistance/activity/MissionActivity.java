@@ -313,7 +313,7 @@ public class MissionActivity extends AppCompatActivity {
         else{
             imageView.setVisibility(View.GONE);
         }
-        hideDialog();
+
 
     }
 
@@ -352,6 +352,7 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(String response) {
                 Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
+                hideDialog();
             }
         });
 
