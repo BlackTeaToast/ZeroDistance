@@ -132,7 +132,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         else{
             try {
                 holder.missiondangerous.setVisibility(View.INVISIBLE);
-                holder.CardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                holder.CardView.setCardBackgroundColor(Color.parseColor("##fafafa"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
