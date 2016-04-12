@@ -166,7 +166,11 @@ public class GroupActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "點選了刪除" ,Toast.LENGTH_SHORT).show();
+                //刪除
+
+                updateCount = 5;
+                updateError = true;
+                deleteGroup();
             }
         });
 
@@ -538,6 +542,7 @@ public class GroupActivity extends AppCompatActivity {
         readValue();
     }
 
+    //更新手機揪團資料庫
     private void updateGroup(){
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
@@ -562,6 +567,39 @@ public class GroupActivity extends AppCompatActivity {
                     updateError = false;
                     Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    //刪除任務
+    private void deleteGroup(){
+        ClientFunctions.deleteGroup(id, new ClientResponse() {
+            @Override
+            //確定刪除完成後
+            public void onResponse(String response) {
+                //確定有成功刪除
+                updateError = true;
+                updateCount = 5;
+                //提示該揪團或任務已刪除
+                Toast.makeText(getApplicationContext(), R.string.delete_success ,Toast.LENGTH_SHORT).show();
+
+                //關掉
+                finish();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    deleteGroup();
+                }
+
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.delete_error ,Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }

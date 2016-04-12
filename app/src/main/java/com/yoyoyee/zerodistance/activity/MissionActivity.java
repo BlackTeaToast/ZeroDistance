@@ -219,9 +219,11 @@ public class MissionActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "點選了刪除" ,Toast.LENGTH_SHORT).show();
-              Intent  it = new Intent(MissionActivity.this, AchievementActivity.class);
-                startActivity(it);
+                //刪除
+
+                updateCount = 5;
+                updateError = true;
+                deleteMisson();
             }
         });
 
@@ -663,6 +665,7 @@ public class MissionActivity extends AppCompatActivity {
         readValue();
     }
 
+    //更新手機揪團資料庫
     private void updateMissions(){
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
@@ -671,8 +674,11 @@ public class MissionActivity extends AppCompatActivity {
                 //確定有成功參加，且成功更新手機資料庫
                 updateError = true;
                 updateCount = 5;
+
+                //沒有被刪掉才重新整理
                 showDialog();
                 readValue();
+
 
             }
 
@@ -687,6 +693,39 @@ public class MissionActivity extends AppCompatActivity {
                     updateError = false;
                     Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    //刪除任務
+    private void deleteMisson(){
+        ClientFunctions.deleteMission(id, new ClientResponse() {
+            @Override
+            //確定刪除完成後
+            public void onResponse(String response) {
+                //確定有成功刪除
+                updateError = true;
+                updateCount = 5;
+                //提示該揪團或任務已刪除
+                Toast.makeText(getApplicationContext(), R.string.delete_success ,Toast.LENGTH_SHORT).show();
+
+                //關掉
+                finish();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    deleteMisson();
+                }
+
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.delete_error ,Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }

@@ -185,6 +185,8 @@
     <string name="achievement3">"    完成10個    \n    緊急任務    "</string>
     <string name="reading_error">請檢查網路狀態</string>
     <string name="no_one_join_now">目前尚未有人參與</string>
+    <string name="delete_error">刪除失敗</string>
+    <string name="delete_success">刪除成功</string>
     <!--=========================================================-->
 
 
