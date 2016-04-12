@@ -120,14 +120,10 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                try {
                     CardViewAdapter.setItemCount(0);
                     mList.scrollToPosition(0);
                     CardViewAdapter.notifyDataSetChanged();
                     updataphoneDB();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         });
         // 頂端向下滑更新

@@ -33,13 +33,4 @@
     </GridLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_gravity="bottom|right"
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_column="0"
-        android:layout_row="0"/>
 </GridLayout>
