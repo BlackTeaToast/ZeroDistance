@@ -41,7 +41,9 @@ import java.util.Date;
 public class GroupActivity extends AppCompatActivity {
 
     //變數區====================================
-    //取得傳入的intent
+    //更新成功或失敗讀取用
+    private int updateCount = 0;
+
 
     //取得任務id
     int id ;//揪團的編號 ; 錯誤則傳回0
@@ -204,6 +206,8 @@ public class GroupActivity extends AppCompatActivity {
     //寫在這裡面有重新整理的功效
     protected void onResume(){
         super.onResume();
+
+        updateCount = 5;
         //讀取值
         readValue();
 
@@ -261,6 +265,7 @@ public class GroupActivity extends AppCompatActivity {
                 //設定自己是否是參與者
                 joined = isJoined();
                 //顯示
+                updateCount = 0;
                 setValue();
                 hideDialog();
             }
@@ -269,6 +274,10 @@ public class GroupActivity extends AppCompatActivity {
             public void onErrorResponse(String response) {
                 Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
                 hideDialog();
+                if(updateCount>0){
+                    updateCount--;
+                    readValue();
+                }
             }
         });
 

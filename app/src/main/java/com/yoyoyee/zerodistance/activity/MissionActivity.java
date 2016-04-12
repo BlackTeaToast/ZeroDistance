@@ -42,7 +42,8 @@ import java.util.Date;
 public class MissionActivity extends AppCompatActivity {
 
     //變數區====================================
-    //取得傳入的intent
+    //更新成功或失敗讀取用
+    private int updateCount = 0;
 
     //取得任務id
     private int id ;//任務的編號 ; 錯誤則傳回0
@@ -287,11 +288,12 @@ public class MissionActivity extends AppCompatActivity {
     //寫在這個裡面同時有重新整理的功效
     protected void onResume(){
         super.onResume();
-        //設定
+
+        updateCount = 5;
+       //設定
         readValue();
 
-
-        //如果有圖片則顯示圖片
+         //如果有圖片則顯示圖片
         if(imagePath!=null) {
             imageView.setVisibility(View.VISIBLE);
             //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
@@ -344,7 +346,7 @@ public class MissionActivity extends AppCompatActivity {
                 //設定自己是否是參與者
                 joined = isJoined();
                 //顯示
-
+                updateCount = 0;
                 setValue();
                 hideDialog();
             }
@@ -353,6 +355,10 @@ public class MissionActivity extends AppCompatActivity {
             public void onErrorResponse(String response) {
                 Toast.makeText(getApplicationContext(), R.string.reading_error ,Toast.LENGTH_SHORT).show();
                 hideDialog();
+                if(updateCount>0){
+                    updateCount--;
+                    readValue();
+                }
             }
         });
 
