@@ -222,6 +222,23 @@ public class QueryFunctions {
         return name;
     }
 
+    public static String getSchoolName(int id) {
+
+        String name = new String();
+        String selectQuery = "SELECT name FROM " + SchoolsTable.TABLE_NAME +
+                " WHERE id = ?";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+        name = cursor.getString(0);
+
+        cursor.close();
+        db.close();
+        return name;
+    }
+
     public static int getSchoolID(String area, String county, String school) {
         int schoolID;
         SQLiteDatabase db = DB.getReadableDatabase();

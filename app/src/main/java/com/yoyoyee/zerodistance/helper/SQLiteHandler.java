@@ -287,6 +287,23 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return name;
     }
 
+    public String getSchoolName(int id) {
+
+        String name = new String();
+        String selectQuery = "SELECT name FROM " + SchoolsTable.TABLE_NAME +
+                " WHERE id = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+        name = cursor.getString(0);
+
+        cursor.close();
+        db.close();
+        return name;
+    }
+
 	public int getSchoolID(String area, String county, String school) {
 		int schoolID;
 		SQLiteDatabase db = this.getReadableDatabase();
