@@ -320,7 +320,7 @@ public class TurnActivity extends AppCompatActivity {
                         Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
                     pDialog.setMessage("上傳中 ...");
                     showDialog();
-                    ClientFunctions.uploadImage(81, picturePath, new ClientResponse() {
+                    ClientFunctions.uploadMissionImage(81, picturePath, new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
                             hideDialog();
