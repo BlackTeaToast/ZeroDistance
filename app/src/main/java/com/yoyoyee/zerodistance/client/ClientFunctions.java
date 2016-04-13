@@ -553,7 +553,8 @@ public class ClientFunctions {
                     if (!error) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
-                        clientResponse.onResponse("上傳揪團成功");
+                        String insertID = jObj.getString("insert_id");
+                        clientResponse.onResponse(insertID);
 
                     } else {
 
