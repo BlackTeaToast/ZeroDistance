@@ -255,6 +255,8 @@ public class NewMissionActivity extends AppCompatActivity {
         isEdit=intent.getBooleanExtra("isEdit", false);
         int id=intent.getIntExtra("id",0);
         if (isEdit){
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle(R.string.actionbar_edit_mission);
             Mission mission =QueryFunctions.getMission(id);
             SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmm");
             Date date=mission.getExpAt();

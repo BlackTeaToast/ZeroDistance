@@ -19,6 +19,7 @@
     <!--Tree使用-->
     <string name="missionname_new_mission">任務名稱：</string>
     <string name="actionbar_new_mission">建立任務：</string>
+    <string name="actionbar_edit_mission">編輯任務：</string>
     <string name="pay_new_mission">支付獎勵：</string>
     <string name="content_new_mission">任務內容：</string>
     <string name="date_new_mission">任務日期：</string>

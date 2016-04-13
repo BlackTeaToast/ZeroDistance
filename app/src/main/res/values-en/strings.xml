@@ -20,7 +20,8 @@
 
     <!--Tree使用-->
     <string name="missionname_new_mission">Mission Name：</string>
-    <string name="actionbar_new_mission">Creat Mission：</string>
+    <string name="actionbar_new_mission">Create Mission：</string>
+    <string name="actionbar_edit_mission">Edit Mission：</string>
     <string name="pay_new_mission">Award：</string>
     <string name="content_new_mission">Mission Content：</string>
     <string name="date_new_mission">Mission Date：</string>
@@ -31,7 +32,7 @@
 
 
     <string name="groupname_new_group">Group Name：</string>
-    <string name="actionbar_new_group">Creat Group</string>
+    <string name="actionbar_new_group">Create Group</string>
     <string name="date_new_group">Date：</string>
     <string name="content_new_group">Group Content：</string>
     <string name="where_new_group">Meeting Place：</string>
