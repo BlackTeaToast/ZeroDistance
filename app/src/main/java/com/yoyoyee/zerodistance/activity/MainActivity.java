@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentController;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteHandler db;
     String Titles[];
     int upDataCount=0;
+    boolean beupData= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setMessage("載入中 ...");
         context = this;
 
-
+        updataphoneDB();//手機資料
 
 //設置toolbar標題
 
@@ -111,7 +113,12 @@ public class MainActivity extends AppCompatActivity {
         //更新手機資料庫
         //更新資料
         showDialog();
-        updataMissionDB();
+        if(!beupData){
+            updataMissionDB();
+            
+        }
+        beupData=false;
+
     }
 
     /**
@@ -149,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         //fabtime();
         updataSchoolDB();//成功會更新Mission
         updataMissionDB();
-
+        beupData=true;
     }
     private void updataSchoolDB(){
         ClientFunctions.updateSchools(new ClientResponse() {
@@ -225,9 +232,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-        pager.setOffscreenPageLimit(6);
+        pager.setOffscreenPageLimit(6);//儲存頁面數
+
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
+       // pager.setCurrentItem(2);  //預設出現頁面
         hideDialog();
     }
     public void fabtime(){
