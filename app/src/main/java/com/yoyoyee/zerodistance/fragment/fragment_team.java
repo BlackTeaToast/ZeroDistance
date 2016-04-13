@@ -48,8 +48,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     boolean[] missiondangerous;
     boolean becontext;
     String[] detial;
-    ArrayList<Group> missions;
-    int missionnumber[];
+    ArrayList<Group> Group;
     private ProgressDialog pDialog;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
     CardViewAdapter CardViewAdapter;
@@ -132,32 +131,15 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     }
 
     public void makecard() {
-        missions = QueryFunctions.getGroups();
-        id = new int[missions.size()];//任務id
-        title = new String[missions.size()];//任務標題
-        detial = new String[missions.size()];//任務內容or獎勵
-        expAt = new Date[missions.size()];//任務結束時間
-        needNum = new int[missions.size()]; //需要人數
-        currentNum = new int[missions.size()];//已有人數
-        missiondangerous = new boolean[missions.size()];//任務是否緊急
-        becontext = SessionFunctions.getbecontext();//true 為內容 false為獎勵
-        for (int i = 0; i < missions.size(); i++) {
+        Group  = QueryFunctions.getGroups();
+        Group[] group = new Group[Group.size()];
+        for(int i = 0;i <Group.size();i++){
+                group[i] = new Group(Group.get(Group.size()-i-1).id, Group.get(Group.size()-i-1).title
+                        , Group.get(Group.size()-i-1).content, Group.get(Group.size()-i-1).expAt
+                        , Group.get(Group.size()-i-1).needNum, Group.get(Group.size()-i-1).currentNum);
 
-            id[i] = missions.get(missions.size() - i - 1).id;
-            title[i] = missions.get(missions.size() - i - 1).title;
-            detial[i] = missions.get(missions.size() - i - 1).content;
-            expAt[i] = missions.get(missions.size() - i - 1).expAt;
-            needNum[i] = missions.get(missions.size() - i - 1).needNum;
-            currentNum[i] = missions.get(missions.size() - i - 1).currentNum;
-            missiondangerous[i] = false;
         }
-
-        missionnumber = new int[missions.size()];
-        for (int i = 0; i < missions.size(); i++) {
-            missionnumber[i] = i;
-        }
-        Resources res =this.getResources();
-        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_team/*,res*/);
+        CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/);
     }
 
     public boolean onTouch(View v, MotionEvent event) {

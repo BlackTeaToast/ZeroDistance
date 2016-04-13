@@ -110,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //更新手機資料庫
         //更新資料
-        updataphoneDB();
+        showDialog();
+        updataMissionDB();
     }
 
     /**
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         showDialog();
         //fabtime();
         updataSchoolDB();//成功會更新Mission
+        updataMissionDB();
 
     }
     private void updataSchoolDB(){
@@ -154,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 upDataCount=0;
-                updataMissionDB();
             }
 
             @Override

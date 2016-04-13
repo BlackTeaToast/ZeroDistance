@@ -23,6 +23,7 @@ public class Mission {
     public boolean isRunning;     //是否執行中
     public boolean isFinished;     //是否完成
     public Date finishedAt;
+    private boolean isMission=true;       //是否為任務
 
     public Mission() {
 
@@ -47,6 +48,15 @@ public class Mission {
         this.isRunning = isRunning;
         this.isFinished = isFinished;
         this.finishedAt = finishedAt;
+    }
+    public Mission(int id, String title, String content, Date expAt, int needNum, int currentNum, boolean isUrgent) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.expAt = expAt;
+        this.needNum = needNum;
+        this.currentNum = currentNum;
+        this.isUrgent = isUrgent;
     }
 
     public int getId() {
@@ -169,7 +179,53 @@ public class Mission {
         this.isFinished = isFinshed;
     }
 
+    public String getUserUid() {
+        return userUid;
+    }
 
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
+    }
+
+    public Boolean getUrgent() {
+        return isUrgent;
+    }
+
+    public void setUrgent(Boolean urgent) {
+        isUrgent = urgent;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public boolean isMission() {
+        return isMission;
+    }
 
 
 }

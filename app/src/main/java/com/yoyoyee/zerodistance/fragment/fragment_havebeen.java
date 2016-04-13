@@ -163,7 +163,7 @@ public class fragment_havebeen extends Fragment {//
             missionnumber[i] = i;
         }
         Resources res =this.getResources();
-        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_team/*,res*/);
+//        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_team/*,res*/);
     }
     private void updataphoneDB(){//更新手機資料
         totalvuledel();

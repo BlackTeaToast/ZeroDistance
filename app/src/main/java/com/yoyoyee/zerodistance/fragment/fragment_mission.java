@@ -74,16 +74,19 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     LinearLayoutManager layoutManager;//CARD layout
     GridLayout card_view;
     public fragment_mission(){
-        updataphoneDB();
+       // totalvuledel();
+//        updataphoneDB();
+     // makecard();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
 
         SessionFunctions SF = new SessionFunctions();
 
+    makecard();
 
-        //makecard();
 
         try {
            // CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
@@ -180,15 +183,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Mission> missions = db.getMissions();
-                if (missions.size() > 0) {
-                    Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
-                }
                 upDataCount=0;
                 updataGroups();
-              //  Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -206,15 +203,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Group> Group = db.getGroups();
-                if (Group.size() > 0) {
-                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
-                }
                 makecard();
-                mSwipeRefreshLayout.setRefreshing(false);
-                mList.setAdapter(CardViewAdapter);
             }
 
             @Override
@@ -228,49 +217,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             }
         });
     }
-    private String limitString(String context, int type){//0為title , 1為detial
-        switch ((int)SessionFunctions.getUserTextSize()) {
-            case 20:{
-                if(type==0){
-                    if(context.length()>4){//限制字數
-                        context = (String)context.subSequence(0, 4)+"...";
-                      //  Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(type==1){
-                    if(context.length()>14){//限制字數
-                        context = (String)context.subSequence(0, 14)+"...";
-                    }
-                }
-                break;}
-            case 15:{
-                if(type==0){
-                    if(context.length()>6){//限制字數
-                        context = (String)context.subSequence(0, 6)+"...";
-                    }
-                }
-                if(type==1){
-                    if(context.length()>20){//限制字數
-                        context = (String)context.subSequence(0, 20)+"...";
-                    }
-                }
 
-                break;}
-            case 10:{
-                if(type==0){
-                    if(context.length()>11){//限制字數
-                        context = (String)context.subSequence(0, 11)+"...";
-                    }
-                }
-                if(type==1){
-                    if(context.length()>22){//限制字數
-                        context = (String)context.subSequence(0, 22)+"...";
-                    }
-                }
-                break;}
-        }
-        return context;
-    }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -319,56 +266,53 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         currentNum = null;
         missiondangerous = null;
     }
-    public void makecard(){
-        missionsUrgent = QueryFunctions.getUnfinishedMissions();
-        missionsNotUrgent = QueryFunctions.getUnfinishedMissions();
-        missions  = QueryFunctions.getMissions();
-     id = new int[missions.size()];//任務id
-     title = new String[missions.size()];//任務標題
-     detial = new String[missions.size()];//任務內容or獎勵
-     expAt = new Date[missions.size()];//任務結束時間
-     needNum = new int[missions.size()]; //需要人數
-     currentNum = new int[missions.size()];//已有人數
-     missiondangerous = new boolean[missions.size()];//任務是否緊急
-     becontext = SessionFunctions.getbecontext();//true 為內容 false為獎勵
-     for(int i = 0;i <missions.size();i++){
+    public void bedangerfirst(){
+        boolean[] dangerboolean=new boolean[getUrgentCount()];
+        boolean[] oldboolean=new boolean[missions.size()-getUrgentCount()];
+        for(int i = 0;i <missions.size();i++){
+            if(missions.get(missions.size()-i-1).isUrgent){
+                dangerboolean[i] = missions.get(missions.size()-i-1).isUrgent;
+            }else{
+                oldboolean[i] = missions.get(missions.size()-i-1).isUrgent;
+            }
+        }
 
-             id[i]= missions.get(missions.size()-i-1).id;
-             title[i]= missions.get(missions.size()-i-1).title;
-             if(becontext){
-                 detial[i] = missions.get(missions.size()-i-1).content;
-             }else{
-                 detial[i] = missions.get(missions.size()-i-1).reward;
-             }
-             expAt[i] = missions.get(missions.size()-i-1).expAt;
-             needNum[i] = missions.get(missions.size()-i-1).needNum;
-             currentNum[i] = missions.get(missions.size()-i-1).currentNum;
-             missiondangerous[i] = missions.get(missions.size()-i-1).isUrgent;
-             title[i]=limitString(title[i], 0);//0為title , 1為detial
-             detial[i]=limitString(detial[i], 1);
-     }
-        isUrgentCount();
-     missionnumber=new int[missions.size()];
-     for(int i=0;i<missions.size();i++){
-         missionnumber[i]=i;
-     }
-        try {
-//            Toast.makeText(getContext(), "現在有"+missions.size()+"個", Toast.LENGTH_SHORT).show();
+    }
+
+    public void makecard(){
+        missions  = QueryFunctions.getMissions();
+        Mission[] mission = new Mission[missions.size()];
+        for(int i = 0;i <missions.size();i++){
+                if((becontext)){
+                    mission[i] = new Mission(missions.get(missions.size()-i-1).id, missions.get(missions.size()-i-1).title
+                            , missions.get(missions.size()-i-1).content, missions.get(missions.size()-i-1).expAt
+                            , missions.get(missions.size()-i-1).needNum, missions.get(missions.size()-i-1).currentNum
+                            , missions.get(missions.size()-i-1).isUrgent);
+                }else {//獎勵
+                    mission[i] = new Mission(missions.get(missions.size()-i-1).id, missions.get(missions.size()-i-1).title
+                            , missions.get(missions.size()-i-1).reward, missions.get(missions.size()-i-1).expAt
+                            , missions.get(missions.size()-i-1).needNum, missions.get(missions.size()-i-1).currentNum
+                            , missions.get(missions.size()-i-1).isUrgent);
+                }
+        }
+
+            CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
+
+        try {           //如果是第一次就部會執行
+            mSwipeRefreshLayout.setRefreshing(false);
+            mList.setAdapter(CardViewAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Resources res =this.getResources();
-        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission/*,res*/);
-
- }
-    public int isUrgentCount(){
+    }
+    public int getUrgentCount(){
         int Count=0;
         for(int i = 0;i <missions.size();i++){
             if(missiondangerous[i]){
                 Count+=1;
             }
         }
-        Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
+       Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
         return Count;
     }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by p1235 on 2016/3/29.
  */
-public class Group {
+public class Group extends Mission{
 
     public int id;             //任務id
     public String userUid;         //擁有者id
@@ -21,7 +21,7 @@ public class Group {
     public boolean isRunning;     //是否執行中
     public boolean isFinished;     //是否完成
     public Date finishedAt;
-
+    private boolean isMission=false;       //是否為任務
     public Group() {
 
     }
@@ -43,6 +43,14 @@ public class Group {
         this.isRunning = isRunning;
         this.isFinished = isFinished;
         this.finishedAt = finishedAt;
+    }
+    public Group(int id, String title, String content, Date expAt, int needNum, int currentNum) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.expAt = expAt;
+        this.needNum = needNum;
+        this.currentNum = currentNum;
     }
 
     public int getId() {
@@ -149,6 +157,46 @@ public class Group {
         this.isFinished = isFinshed;
     }
 
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public boolean isMission() {
+        return isMission;
+    }
 
 
 
