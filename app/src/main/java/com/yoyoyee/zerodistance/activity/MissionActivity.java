@@ -12,7 +12,10 @@ import android.support.v4.media.RatingCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,6 +37,8 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.ImageViewAdapter;
+import com.yoyoyee.zerodistance.helper.QAAdapter;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -176,7 +181,7 @@ public class MissionActivity extends AppCompatActivity {
     private String doWhat;//content
     private String whoSeeID;//看到的人的ID,拿來判斷是否參與
     private boolean joined;//是否有餐與
-    private String imagePath;
+    private ArrayList<String> imageURL;
 
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
@@ -310,8 +315,7 @@ public class MissionActivity extends AppCompatActivity {
     private void readValue(){
 
         //有圖片的話設置URL
-        imagePath = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImage";
-
+        //imagePath = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImage";
 
         //更新接受此任務的人
 
@@ -333,12 +337,13 @@ public class MissionActivity extends AppCompatActivity {
 
                 //設定自己是否是參與者
                 joined = isJoined();
-                //顯示
+
                 //更新成功
-                updateError = false;
-                updateCount = 0;
-                setValue();
-                hideDialog();
+                updateError = true;
+                updateCount = 5;
+                //更新圖片數量並且讀入url
+                getMissionImageCount();
+
             }
 
             @Override
@@ -396,30 +401,19 @@ public class MissionActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(title);
 
-        //如果有圖片則顯示圖片
-        if(imagePath!=null) {
+        //imageViewAdapter 顯示圖片 ; 使用fragment_imageview.xml 當作每個 holder 來使用==========
+        ImageViewAdapter imageViewAdapter = new ImageViewAdapter(imageURL);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.imageRecyclerView);
 
-            imageView.setVisibility(View.VISIBLE);
-            //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
-            //建立一個AsyncTask執行緒進行圖片讀取動作，並帶入圖片連結網址路徑
-            new AsyncTask<String, Void, Bitmap>() {
-                @Override
-                protected Bitmap doInBackground(String... params) {
-                    String url = params[0];
-                    return getBitmapFromURL(url);
-                }
+        LinearLayoutManager layoutManager;
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
-                @Override
-                protected void onPostExecute(Bitmap result) {
-                    imageView.setImageBitmap(result);
-                    super.onPostExecute(result);
-                }
-            }.execute(imagePath);
-
-        }
-        else{
-            imageView.setVisibility(View.GONE);
-        }
+        //使用默認動畫
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(imageViewAdapter);
+        //================================================================================
 
         //設定字型大小
         setFontSize();
@@ -603,26 +597,6 @@ public class MissionActivity extends AppCompatActivity {
 
     }
 
-    //讀取網路圖片，型態為Bitmap
-    //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
-    private Bitmap getBitmapFromURL(String imageUrl)
-    {
-        try
-        {
-            URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(input);
-            return bitmap;
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     private void showDialog() {
         if (!pDialog.isShowing()){
@@ -880,6 +854,57 @@ public class MissionActivity extends AppCompatActivity {
 
 
     }
+
+    //讀取有幾張圖片
+    private void getMissionImageCount(){
+
+        ClientFunctions.getMissionImageCount(id, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                //將count設置為response 傳回之值
+                int count;
+                count = Integer.valueOf(response);
+                //成功獲取照片數量
+                //依數量設置url
+                setImageUrl(count);
+
+                //全部皆已成功
+                updateCount = 0;
+                updateError = false;
+                //顯示
+                setValue();
+                hideDialog();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    getMissionImageCount();
+                }
+
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.pic_reading_error_ ,Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+    //依數量設置圖片url
+    public void setImageUrl(int howMany){
+        imageURL = new ArrayList<>();
+
+        //需再刪掉
+        howMany = 2;
+
+        //需再改掉
+        for(int i=0 ; i<howMany ; i++)
+            imageURL.add(ClientFunctions.getMissionImageUrl(81, i));
+            howMany--;
+    }
+
 
 
 
