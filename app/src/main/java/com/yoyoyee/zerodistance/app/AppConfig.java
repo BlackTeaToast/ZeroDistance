@@ -70,4 +70,7 @@ public class AppConfig {
     // Server get mission image url
     public static String URL_GET_MISSION_IMAGE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImage";
 
+    // Server get mission image url
+    public static String URL_GET_MISSION_IMAGE_COUNT = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImageCount";
+
 }

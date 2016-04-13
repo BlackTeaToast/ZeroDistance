@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -81,8 +82,36 @@ public class TurnActivity extends AppCompatActivity {
         tvView = (TextView) findViewById(R.id.textViewTurnActView);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        String t = ClientFunctions.getMissionImageUrl(81,0);
+        final String t = ClientFunctions.getMissionImageUrl(81,1);
+        ClientFunctions.getMissionImageCount(81, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "onResponse: " + response);
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
         Log.d(TAG, "onCreate: " + t);
+            imageView.setVisibility(View.VISIBLE);
+            //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
+            //建立一個AsyncTask執行緒進行圖片讀取動作，並帶入圖片連結網址路徑
+            new AsyncTask<String, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(String... params) {
+                    String url = params[0];
+                    return getImageBitmap(t);
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    imageView.setImageBitmap(result);
+                    super.onPostExecute(result);
+                }
+            }.execute(t);
+
         //imageView.setImageBitmap(getImageBitmap(t));
 
         // Progress dialog
