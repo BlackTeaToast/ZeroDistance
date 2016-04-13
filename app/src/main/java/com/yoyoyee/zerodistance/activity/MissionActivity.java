@@ -383,7 +383,8 @@ public class MissionActivity extends AppCompatActivity {
 
         //誰看到這個版面與是否參與
         whoSeeID = SessionFunctions.getUserUid();
-        isTeacher = mission.getUserID().equals(SessionFunctions.getUserUid());//是否是發佈者
+        isTeacher = mission.getUserID().equals(SessionFunctions.getUserUid()) && SessionFunctions.isTeacher() ;//是否是老師
+
 
     }
 
