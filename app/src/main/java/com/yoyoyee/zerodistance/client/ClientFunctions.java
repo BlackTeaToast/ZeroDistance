@@ -1514,9 +1514,9 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void uploadImage(final int missionID, final String imagePath,
+    public static void uploadMissionImage(final int missionID, final String imagePath,
                                    final ClientResponse clientResponse) {
-        String tag_string_req = "req_upload_image";
+        String tag_string_req = "req_upload_mission_image";
 
         Map<String,String> params = new HashMap<>();
         params.put("uid", session.getUserUid());
