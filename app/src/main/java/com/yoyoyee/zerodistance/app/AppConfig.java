@@ -64,6 +64,9 @@ public class AppConfig {
     // Server update group url
     public static String URL_PUBLISH_UPDATE_GROUP = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/updateGroup";
 
+	// Server update question url
+	public static String URL_PUBLISH_UPDATE_QUESTION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/updateQuestion";
+
 	// Server publish group accept url
 	public static String URL_PUBLISH_MISSION_IMAGE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMissionImage";
 
