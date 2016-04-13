@@ -122,5 +122,13 @@
             android:id="@+id/buttonPrice"
             android:layout_below="@+id/buttonQA"
             android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/buttonMission"
+            android:layout_toEndOf="@+id/buttonMission" />
     </RelativeLayout>
 </RelativeLayout>

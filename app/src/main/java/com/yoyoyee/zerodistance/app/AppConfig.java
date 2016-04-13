@@ -67,4 +67,7 @@ public class AppConfig {
 	// Server publish group accept url
 	public static String URL_PUBLISH_MISSION_IMAGE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/publishMissionImage";
 
+    // Server get mission image url
+    public static String URL_GET_MISSION_IMAGE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImage";
+
 }

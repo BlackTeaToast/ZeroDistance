@@ -3,12 +3,14 @@ package com.yoyoyee.zerodistance.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -18,8 +20,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,12 @@ import com.yoyoyee.zerodistance.client.MultipartRequest;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class TurnActivity extends AppCompatActivity {
 
@@ -46,6 +56,8 @@ public class TurnActivity extends AppCompatActivity {
     private Button buttonAchievement;
     private TextView tvExplain;
     private TextView tvView;
+    private ImageView imageView;
+    private ProgressDialog pDialog;
     private SQLiteHandler db;
     private SessionManager session;
 
@@ -67,6 +79,15 @@ public class TurnActivity extends AppCompatActivity {
         buttonAchievement = (Button) findViewById(R.id.buttonPrice);
         tvExplain = (TextView) findViewById(R.id.textViewTurnActExplain);
         tvView = (TextView) findViewById(R.id.textViewTurnActView);
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        String t = ClientFunctions.getMissionImageUrl(81,0);
+        Log.d(TAG, "onCreate: " + t);
+        //imageView.setImageBitmap(getImageBitmap(t));
+
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
 
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -268,13 +289,76 @@ public class TurnActivity extends AppCompatActivity {
                     String picturePath = cursor.getString(columnIndex);
                     cursor.close();
                         Toast.makeText(this, picturePath, Toast.LENGTH_LONG).show();
-                    ClientFunctions.uploadImage(81, picturePath);
+                    pDialog.setMessage("上傳中 ...");
+                    showDialog();
+                    ClientFunctions.uploadImage(81, picturePath, new ClientResponse() {
+                        @Override
+                        public void onResponse(String response) {
+                            hideDialog();
+                            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+                            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                        }
+                    });
 
                 }
                 else {
                     Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
             }
+        }
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+    private Bitmap getImageBitmap(String url) {
+        Bitmap bm = null;
+        try {
+            URL aURL = new URL(url);
+
+            bm = BitmapFactory.decodeStream(aURL.openConnection().getInputStream());
+
+            return bm;
+        } catch (Exception e) {
+            Log.d(TAG, "Error getting bitmap", e);
+            return null;
+        }
+
+    }
+    public static Bitmap GetURLBitmap(URL url)
+    {
+        try
+        {
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream isCover = conn.getInputStream();
+            Bitmap bmpCover = BitmapFactory.decodeStream(isCover);
+            isCover.close();
+            return bmpCover;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is,"");
+            return d;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

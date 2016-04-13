@@ -1514,7 +1514,8 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    public static void uploadImage(int missionID, String imagePath) {
+    public static void uploadImage(final int missionID, final String imagePath,
+                                   final ClientResponse clientResponse) {
         String tag_string_req = "req_upload_image";
 
         Map<String,String> params = new HashMap<>();
@@ -1527,17 +1528,22 @@ public class ClientFunctions {
                 +missionID, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
             }
         }, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(AppController.getInstance(), response, Toast.LENGTH_SHORT);
+                clientResponse.onResponse(response);
             }
         }, new File(imagePath), params);
         AppController.getInstance().addToRequestQueue(mulReq, tag_string_req);
 
     }
 
-
+    public static String getMissionImageUrl(int missionID, int imageNum) {
+        return new String(AppConfig.URL_GET_MISSION_IMAGE + "?uid=" + session.getUserUid() + "&access_key="
+                + session.getUserAccessKey() + "&mission_id=" + String.valueOf(missionID)
+                + "&image_num=" + String.valueOf(imageNum));
+    }
 }
