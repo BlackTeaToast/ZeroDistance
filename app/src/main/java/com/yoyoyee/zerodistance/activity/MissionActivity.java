@@ -186,6 +186,7 @@ public class MissionActivity extends AppCompatActivity {
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
     public static boolean PD=false;
+    private boolean notRead = false;//在finish( ) 之前 update手機資料庫且不執行readValue
 
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -281,6 +282,8 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), R.string.rating_finished,Toast.LENGTH_SHORT).show();
+                notRead = true;
+                updateMissions();
                 finish();
             }
         });
@@ -660,12 +663,14 @@ public class MissionActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 //確定更新完之後，重新讀取
                 //確定有成功參加，且成功更新手機資料庫
-                updateError = true;
-                updateCount = 5;
 
                 //沒有被刪掉才重新整理
-                showDialog();
-                readValue();
+                if(!notRead) {
+                    showDialog();
+                    updateError = true;
+                    updateCount = 5;
+                    readValue();
+                }
 
 
             }
@@ -697,6 +702,8 @@ public class MissionActivity extends AppCompatActivity {
                 //提示該揪團或任務已刪除
                 Toast.makeText(getApplicationContext(), R.string.delete_success ,Toast.LENGTH_SHORT).show();
 
+                notRead = true;
+                updateMissions();
                 //關掉
                 finish();
             }
