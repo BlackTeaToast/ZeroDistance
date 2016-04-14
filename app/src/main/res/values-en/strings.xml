@@ -19,23 +19,23 @@
     <!--==================================================================-->
 
     <!--Tree使用-->
-    <string name="missionname_new_mission">Mission Name：</string>
+    <string name="missionname_new_mission">Name：</string>
     <string name="actionbar_new_mission">Create Mission：</string>
     <string name="actionbar_edit_mission">Edit Mission：</string>
     <string name="pay_new_mission">Award：</string>
-    <string name="content_new_mission">Mission Content：</string>
-    <string name="date_new_mission">Mission Date：</string>
-    <string name="where_new_mission">Meeting Place：</string>
+    <string name="content_new_mission">Content：</string>
+    <string name="date_new_mission">Date：</string>
+    <string name="where_new_mission">Place：</string>
     <string name="errornoname_new_mission">Your mission name is space</string>
     <string name="errornocontent_new_mission">Your mission content is space</string>
     <string name="errorwhere_new_mission">Your place is space</string>
 
 
-    <string name="groupname_new_group">Group Name：</string>
+    <string name="groupname_new_group">Name：</string>
     <string name="actionbar_new_group">Create Group</string>
     <string name="date_new_group">Date：</string>
-    <string name="content_new_group">Group Content：</string>
-    <string name="where_new_group">Meeting Place：</string>
+    <string name="content_new_group">Content：</string>
+    <string name="where_new_group">Place：</string>
     <string name="errorname_new_group">Your group name is space</string>
     <string name="errorpeoplenumber_new_group">How many people?</string>
     <string name="errorwhere_new_group">You did\'t set meeting place</string>
@@ -43,9 +43,9 @@
 
     <string name="press_new_mission_and_group">Emergency Level：</string>
 
-    <string name="peoplenumber_new_mission_and_group">Number of People：</string>
-    <string name="buttomdate_new_mission_and_group">Choose Date</string>
-    <string name="buttomtime_new_mission_and_group">Choose Time</string>
+    <string name="peoplenumber_new_mission_and_group">People：</string>
+    <string name="buttomdate_new_mission_and_group">Day</string>
+    <string name="buttomtime_new_mission_and_group">Time</string>
     <string name="year_new_mission_and_group">/</string>
     <string name="month_new_mission_and_group">/</string>
     <string name="day_new_mission_and_group"> </string>
@@ -54,8 +54,8 @@
     <string name="okbuttom_new_mission_and_group">Finish</string>
     <string name="cancelbuttom_new_mission_and_group">Cencle</string>
     <string name="uploadpicture_new_mission_and_group">Choose Image：</string>
-    <string name="uploadpictruebuttom_new_mission_and_group">From File</string>
-    <string name="takepicturebuttom_new_mission_and_group">Take the picture</string>
+    <string name="uploadpictruebuttom_new_mission_and_group">File</string>
+    <string name="takepicturebuttom_new_mission_and_group">Add New</string>
     <string name="notakepicture_new_mission_and_group">Cancle</string>
     <string name="AM_new_mission_and_group">AM</string>
     <string name="PM_new_mission_and_group">PM</string>
