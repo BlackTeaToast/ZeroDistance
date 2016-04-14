@@ -24,7 +24,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -99,13 +101,14 @@ public class NewMissionActivity extends AppCompatActivity {
     private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
-    private Uri uriImg;
+    private Uri uriImg=null;
 
     final int theme = 5; //TimePickerDialog的主題，有0~6;
     final int requireCodefromSdcard=101,requireCodefromCamara=100;
 
     private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow;
     private int year, month, day, hour, minute;
+    private int missionID;
     private int hourAMPM;
     private int pay;
 
@@ -182,7 +185,11 @@ public class NewMissionActivity extends AppCompatActivity {
         limitLong();//名稱字數限制以及字型大小限制
         allTextSize(SessionFunctions.getUserTextSize());
         isEdit();
+        startService(new Intent(this, TapService.class));
 
+
+
+        //edit的監聽
 
         //spinner的監聽
         //監聽緊急程度
@@ -218,7 +225,7 @@ public class NewMissionActivity extends AppCompatActivity {
         });
 
         //此區為隱藏功能用--------------------------------------------------------------------------
-        hide(PICTURE_GONE);
+        //hide(PICTURE_GONE);
     }
 
     public void hide(Boolean PICTURE_GONE){
@@ -253,11 +260,11 @@ public class NewMissionActivity extends AppCompatActivity {
     public void isEdit(){
         Intent intent=getIntent();
         isEdit=intent.getBooleanExtra("isEdit", false);
-        int id=intent.getIntExtra("id",0);
+        missionID =intent.getIntExtra("id",0);
         if (isEdit){
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle(R.string.actionbar_edit_mission);
-            Mission mission =QueryFunctions.getMission(id);
+            Mission mission =QueryFunctions.getMission(missionID);
             SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmm");
             Date date=mission.getExpAt();
             String dateString =format.format(date);
@@ -462,9 +469,11 @@ public class NewMissionActivity extends AppCompatActivity {
             //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
         }
-        Intent intent =new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, requireCodefromSdcard);
+        else {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, requireCodefromSdcard);
+        }
     }
     //開啟相機(由useCamara進行呼叫)
     private void openCamara(){
@@ -556,9 +565,11 @@ public class NewMissionActivity extends AppCompatActivity {
                                 Toast.makeText(this, String.valueOf(press)/*R.string.errornocontent_new_mission*/, Toast.LENGTH_SHORT).show();
                             } else {
                                 //    missionData.content = editTextcontent.getText().toString();
-                                if (isOtherPay){getPay = editTextOtherPay.getText().toString();}
+                                if (isOtherPay){
+                                    getPay = editTextOtherPay.getText().toString();
+                                }
+                                calendar.set(year, month, day, hour, minute);
                                 if(!isEdit) {
-                                    calendar.set(year, month, day, hour, minute);
                                     ClientFunctions.publishMission(
                                             editTextName.getText().toString(),
                                             press,
@@ -570,12 +581,29 @@ public class NewMissionActivity extends AppCompatActivity {
                                             new ClientResponse() {
                                                 @Override
                                                 public void onResponse(String response) {
-                                                    Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
-                                                    NewMissionActivity.this.finish();
-                                                }
+                                                    //ClientFunctions.uploadMissionImage();
+                                                    if (!String.valueOf(uriImg).equals(null)){
+                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), String.valueOf(uriImg), new ClientResponse() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+                                                                Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                                                                NewMissionActivity.this.finish();
+                                                            }
+                                                            @Override
+                                                            public void onErrorResponse(String response) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                    else
+                                                    {
+                                                        Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                                                        NewMissionActivity.this.finish();
+                                                    }
 
 
-                                                @Override
+                                            }
+                                    @Override
                                                 public void onErrorResponse(String response) {
                                                     Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
 
@@ -583,10 +611,27 @@ public class NewMissionActivity extends AppCompatActivity {
                                             });
                                 }
                                 else{
+                                    ClientFunctions.publishUpdateMission(
+                                            missionID,
+                                            editTextName.getText().toString(),
+                                            press,
+                                            Integer.valueOf(editTextNumber.getText().toString()),
+                                            editTextWhere.getText().toString(),
+                                            editTextcontent.getText().toString(),
+                                            getPay,
+                                            calendar.getTime(),
+                                            new ClientResponse() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Toast.makeText(NewMissionActivity.this, "編輯成功", Toast.LENGTH_SHORT).show();
+                                                }
 
-                                    /**
-                                     * 編輯上傳
-                                     */
+                                                @Override
+                                                public void onErrorResponse(String response) {
+
+                                                }
+                                            }
+                                    );
                                 }
                             }
                         }
