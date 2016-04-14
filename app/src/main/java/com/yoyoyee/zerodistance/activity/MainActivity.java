@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         showDialog();
         if(!beupData){
             updataMissionDB();
-            
+
         }
         beupData=false;
 

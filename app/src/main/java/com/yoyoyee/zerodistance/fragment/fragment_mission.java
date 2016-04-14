@@ -62,6 +62,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     ArrayList<Mission>  missionsUrgent;
     ArrayList<Mission>  missionsNotUrgent;
     ArrayList<Mission> missions;
+    Mission[] mission;
     int missionnumber[];
     String[] detial;
     //
@@ -266,22 +267,32 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         currentNum = null;
         missiondangerous = null;
     }
+    //任務排序 (緊急任務先)
     public void bedangerfirst(){
-        boolean[] dangerboolean=new boolean[getUrgentCount()];
-        boolean[] oldboolean=new boolean[missions.size()-getUrgentCount()];
+        Mission[] dangerlist=new Mission[getUrgentCount()];
+        int dagnerCount=0;
+        Mission[] noddangerlist=new Mission[missions.size()-getUrgentCount()];
+        int nodangerCount=0;
         for(int i = 0;i <missions.size();i++){
-            if(missions.get(missions.size()-i-1).isUrgent){
-                dangerboolean[i] = missions.get(missions.size()-i-1).isUrgent;
+            if(mission[i].isUrgent){
+                dangerlist[dagnerCount] = mission[i];
+                dagnerCount+=1;
             }else{
-                oldboolean[i] = missions.get(missions.size()-i-1).isUrgent;
+                noddangerlist[nodangerCount] = mission[i];
+                nodangerCount+=1;
             }
         }
-
+        for(int i = 0;i <getUrgentCount();i++){
+            mission[i]=dangerlist[i];
+        }for(int i = getUrgentCount();i <missions.size();i++){
+            mission[i]=noddangerlist[i-getUrgentCount()];
+        }
     }
+//任務排序 (緊急任務先)
 
     public void makecard(){
         missions  = QueryFunctions.getMissions();
-        Mission[] mission = new Mission[missions.size()];
+        mission = new Mission[missions.size()];
         for(int i = 0;i <missions.size();i++){
                 if((becontext)){
                     mission[i] = new Mission(missions.get(missions.size()-i-1).id, missions.get(missions.size()-i-1).title
@@ -295,7 +306,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                             , missions.get(missions.size()-i-1).isUrgent);
                 }
         }
-
+        bedangerfirst();    //任務排序 (緊急任務先)
             CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
 
         try {           //如果是第一次就部會執行
@@ -307,12 +318,12 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     }
     public int getUrgentCount(){
         int Count=0;
-        for(int i = 0;i <missions.size();i++){
-            if(missiondangerous[i]){
-                Count+=1;
+            for(int i = 0;i <missions.size();i++){
+                if(missions.get(i).isUrgent){
+                    Count+=1;
+                }
             }
-        }
-       Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
         return Count;
     }
 }
