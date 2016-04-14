@@ -170,7 +170,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     public void  onResume(){
         super.onResume();
-        Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
         CardViewAdapter.setItemCount(0);
         mList.scrollToPosition(0);
         makecard();
@@ -242,6 +242,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             {
 //                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
                 fab.setVisibility(View.INVISIBLE);
+                fabtime();
                 break;}
 
             case MotionEvent.ACTION_UP:  // 放開
@@ -250,6 +251,20 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 break;}
         }
         return false;
+    }
+    public void fabtime(){
+        new CountDownTimer(1000,500){
+
+            @Override
+            public void onFinish() {
+                fab.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+        }.start();
     }
     public void totalvuledel(){
         id = null;

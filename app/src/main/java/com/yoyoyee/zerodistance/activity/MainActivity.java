@@ -225,11 +225,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-       // pager.setOffscreenPageLimit(6);//儲存頁面數
+        pager.setOffscreenPageLimit(6);//儲存頁面數
 
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
-       // pager.setCurrentItem(2);  //預設出現頁面
+        pager.setCurrentItem(2);  //預設出現頁面
         hideDialog();
     }
 
