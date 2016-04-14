@@ -182,6 +182,7 @@ public class MissionActivity extends AppCompatActivity {
     private String whoSeeID;//看到的人的ID,拿來判斷是否參與
     private boolean joined;//是否有餐與
     private ArrayList<String> imageURL;
+    private int stars = 0;//星星數量
 
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
@@ -273,6 +274,7 @@ public class MissionActivity extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
                     //調整評分
+                stars = (int) rating;
 
             }
         });
@@ -281,12 +283,7 @@ public class MissionActivity extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), R.string.rating_finished,Toast.LENGTH_SHORT).show();
-
-                //更新手機資料庫，並且finish()
-                notRead = true;
-                updateMissions();
-
+                areYouSureToGiveStar();
             }
         });
 
@@ -824,6 +821,43 @@ public class MissionActivity extends AppCompatActivity {
 
     }
 
+    //確認是否要給予幾顆星Dialog
+    private void areYouSureToGiveStar(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MissionActivity.this);
+        builder.setTitle(R.string.give_score);
+        String message = getString(R.string.give) + " "+stars+" " + getString(R.string.star);
+        builder.setMessage(message);
+
+        if(stars == 0)
+            builder.setIcon(R.drawable.ic_thumb_down_black_24dp);
+        else
+            builder.setIcon(R.drawable.ic_thumb_up_black_24dp);
+
+        //取消鈕
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        //確認鈕
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                Toast.makeText(MissionActivity.this, R.string.rating_finished,Toast.LENGTH_SHORT).show();
+                //更新手機資料庫，並且finish()
+                notRead = true;
+                updateMissions();
+            }
+        });
+
+        builder.create().show();
+
+    }
+
     //顯示編輯與刪除選單
     private void showEditAndDelete(){
         View viewTemp = findViewById(R.id.misson_toolbar_more);
@@ -908,14 +942,13 @@ public class MissionActivity extends AppCompatActivity {
     public void setImageUrl(int howMany){
         imageURL = new ArrayList<>();
 
-        //需再刪掉
-        howMany = 2;
+        for(int i=0 ; i<howMany ; i++) {
+            imageURL.add(ClientFunctions.getMissionImageUrl(id, i));
+        }
 
-        //需再改掉
-        for(int i=0 ; i<howMany ; i++)
-            imageURL.add(ClientFunctions.getMissionImageUrl(81, i));
-            howMany--;
     }
+
+
 
 
 

@@ -195,6 +195,9 @@
     <string name="yes">確定</string>
     <string name="cancel">取消</string>
     <string name="pic_reading_error_">圖片讀取錯誤</string>
+    <string name="give_score">給予評分</string>
+    <string name="give">給予</string>
+    <string name="star">顆星</string>
     <!--=========================================================-->
 
 

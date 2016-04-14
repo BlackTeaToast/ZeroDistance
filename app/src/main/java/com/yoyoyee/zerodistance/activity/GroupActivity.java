@@ -850,13 +850,10 @@ public class GroupActivity extends AppCompatActivity {
     public void setImageUrl(int howMany){
         imageURL = new ArrayList<>();
 
-        //需再刪掉
-        howMany = 2;
+        for(int i=0 ; i<howMany ; i++) {
+            imageURL.add(ClientFunctions.getMissionImageUrl(id, i));
+        }
 
-        //需再改掉
-        for(int i=0 ; i<howMany ; i++)
-            imageURL.add(ClientFunctions.getMissionImageUrl(81, i));
-        howMany--;
     }
 
 
