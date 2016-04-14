@@ -44,12 +44,16 @@ import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 
 import java.lang.System;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class NewGroupActivity extends AppCompatActivity {
@@ -72,7 +76,8 @@ public class NewGroupActivity extends AppCompatActivity {
     private Boolean firstTakePicture=true;//是否第一次拍照
     private Boolean time12or24=false; //設定true為24小時制，false12小時制
     private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
-    private Boolean PICTURE_GONE=true;//隱藏拍照功能
+    private Boolean PICTURE_GONE=false;//隱藏拍照功能
+    private Boolean isEdit=false;
 
     private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
     private Bitmap bitmapOutPut;//要輸出出去的原圖
@@ -99,7 +104,7 @@ public class NewGroupActivity extends AppCompatActivity {
     final int theme = 5; //TimePickerDialog的主題，有0~6;
     final int requireCodefromSdcard=101,requireCodefromCamara=100;
 
-    private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow;
+    private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow,groupID;
     private int year, month, day, hour, minute;
     private int hourAMPM;
     private int pay;
@@ -144,7 +149,7 @@ public class NewGroupActivity extends AppCompatActivity {
         //ImageView
         imv =(ImageView)findViewById(R.id.imageViewPicture);
 
-        limitAndSet ();
+
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -176,7 +181,13 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewPress.setVisibility(View.GONE);
         spinnerPress.setVisibility(View.GONE);
 
+
+
+
+        limitAndSet();
         allTextSize(SessionFunctions.getUserTextSize());
+        isEdit();
+        imvListener();
         //------------------------------------------------------------------------------------------
         /*
 
@@ -202,8 +213,21 @@ public class NewGroupActivity extends AppCompatActivity {
         });
         //監聽獎勵
 */
+
+
+
+
+        //此區為隱藏功能用--------------------------------------------------------------------------
+        if(PICTURE_GONE) {
+            textViewPicture.setVisibility(View.GONE);
+            buttonPicture.setVisibility(View.GONE);
+            buttonTakePicture.setVisibility(View.GONE);
+        }
+    }
+    public void imvListener(){//尚未啟用 有5.0版本問題
         //圖片監聽
         //經由長按進行取消選取圖片動作
+
         imv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -216,18 +240,50 @@ public class NewGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
             }
         });
 
 
-
-
-        //此區為隱藏功能用--------------------------------------------------------------------------
-        if(PICTURE_GONE) {
-            textViewPicture.setVisibility(View.GONE);
-            buttonPicture.setVisibility(View.GONE);
-            buttonTakePicture.setVisibility(View.GONE);
+    }
+    public void isEdit(){
+        Intent intent=getIntent();
+        isEdit=intent.getBooleanExtra("isEdit", false);
+        groupID =intent.getIntExtra("id",0);
+        if (isEdit){
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle(R.string.actionbar_edit_mission);
+            Group group = QueryFunctions.getGroup(groupID);
+            SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmm");
+            Date date=group.getExpAt();
+            String dateString =format.format(date);
+            year=Integer.valueOf(dateString.substring(0,4));
+            month=Integer.valueOf(dateString.substring(4,6));
+            day=Integer.valueOf(dateString.substring(6,8));
+            hour=Integer.valueOf(dateString.substring(8,10));
+            minute=Integer.valueOf(dateString.substring(10,12));
+            String tempAMPM;
+            if (hour>=12 && hour<24){
+                if (hour>12) {
+                    tempAMPM = new String(getResources().getString(R.string.PM_new_mission_and_group));
+                    hour-=12;
+                }
+                else {
+                    tempAMPM = new String(getResources().getString(R.string.PM_new_mission_and_group));
+                }
+            }
+            else{
+                tempAMPM =new String(getResources().getString(R.string.AM_new_mission_and_group));
+            }
+            buttonTime.setText(hour + getResources().getString(R.string.hour_new_mission_and_group) + minute + getResources().getString(R.string.minute_new_mission_and_group)+" "+tempAMPM);
+            buttonDate.setText(year + getResources().getString(R.string.year_new_mission_and_group) + (month+1) + getResources().getString(R.string.month_new_mission_and_group) + day + getResources().getString(R.string.day_new_mission_and_group));
+            allreadyDate=true;
+            allreadyTime=true;
+            editTextName.setText(group.getTitle());
+            editTextWhere.setText(group.getPlace());
+            editTextNumber.setText(String.valueOf(group.getNeedNum()));
+            editTextcontent.setText(group.getContent());
+            oneTimesDate=false;
+            oneTimesTime=false;
         }
     }
     public void limitAndSet (){
@@ -394,21 +450,21 @@ public class NewGroupActivity extends AppCompatActivity {
 
     //從檔案讀取圖片(由onClickPickimg進行呼叫)
     public void Pickimg(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+      /*  if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
-        }
+        }*/
         Intent intent =new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, requireCodefromSdcard);
     }
     //開啟相機(由useCamara進行呼叫)
     private void openCamara(){
-        Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         String fname ="p"+ System.currentTimeMillis() +".jpg";
         uriImg =Uri.parse("file://" + dir + "/" +fname);
+        Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         camera.putExtra(MediaStore.EXTRA_OUTPUT, uriImg);
         startActivityForResult(camera, requireCodefromCamara);
 
@@ -421,7 +477,7 @@ public class NewGroupActivity extends AppCompatActivity {
     protected void onActivityResult(int requireCode,int resultCode,Intent data){
         super.onActivityResult(requireCode, resultCode, data);
         switch (requireCode) {
-            case requireCodefromCamara: {
+            case requireCodefromCamara:
                 if (resultCode == Activity.RESULT_OK ) {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
@@ -440,14 +496,15 @@ public class NewGroupActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
-            }
-            case requireCodefromSdcard: {
+                break;
+            case requireCodefromSdcard:
                 if (resultCode == Activity.RESULT_OK ) {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
                     option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
+                    uriImg =data.getData();
                     Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
-
+                    Toast.makeText(this, uriImg.toString(), Toast.LENGTH_SHORT).show();
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
 
                     imv.setVisibility(View.VISIBLE);
@@ -460,7 +517,7 @@ public class NewGroupActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
-            }
+                break;
         }
     }
 
@@ -493,29 +550,66 @@ public class NewGroupActivity extends AppCompatActivity {
                             if (editTextcontent.getText().toString().trim().equals("")) {
                                 Toast.makeText(this, R.string.errorcontent_new_group, Toast.LENGTH_SHORT).show();
                             } else {
+                                if(!isEdit) {
+                                    //missionData.content = editTextcontent.getText().toString();
+                                    calendar.set(year, month, day, hour, minute);
+                                    ClientFunctions.publishGroup(
+                                            editTextName.getText().toString(),
+                                            Integer.valueOf(editTextNumber.getText().toString()),
+                                            editTextWhere.getText().toString(),
+                                            editTextcontent.getText().toString(),
+                                            calendar.getTime(),
+                                            new ClientResponse() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                   /* if (!String.valueOf(uriImg).equals("null")){
+                                                        ClientFunctions.uploadImage(Integer.valueOf(response), uriImg.toString(), new ClientResponse() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+                                                                Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
+                                                                NewGroupActivity.this.finish();
+                                                            }
+                                                            @Override
+                                                            public void onErrorResponse(String response) {
+                                                                Toast.makeText(v.getContext(), "連線失敗，請重新送出", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                                    }*/
+                                                    Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+                                                    NewGroupActivity.this.finish();
+                                                }
 
-                                //missionData.content = editTextcontent.getText().toString();
-                                calendar.set(year, month, day, hour, minute);
-                                ClientFunctions.publishGroup(
-                                        editTextName.getText().toString(),
-                                        Integer.valueOf(editTextNumber.getText().toString()),
-                                        editTextWhere.getText().toString(),
-                                        editTextcontent.getText().toString(),
-                                        calendar.getTime(),
-                                        new ClientResponse() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+
+                                                @Override
+                                                public void onErrorResponse(String response) {
+                                                    Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            });
+
+                                }
+                                else{
+                                    ClientFunctions.publishUpdateGroup(groupID,
+                                            editTextName.getText().toString(),
+                                            Integer.valueOf(editTextNumber.getText().toString()),
+                                            editTextWhere.getText().toString(),
+                                            editTextcontent.getText().toString(),
+                                            calendar.getTime(),
+                                            new ClientResponse() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Toast.makeText(NewGroupActivity.this, "編輯成功", Toast.LENGTH_SHORT).show();
+                                                    NewGroupActivity.this.finish();
+                                                }
+
+                                                @Override
+                                                public void onErrorResponse(String response) {
+                                                    Toast.makeText(NewGroupActivity.this, response, Toast.LENGTH_SHORT).show();
+                                                }
                                             }
+                                    );
 
-
-                                            @Override
-                                            public void onErrorResponse(String response) {
-                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
-
-                                            }
-                                        });
-                                this.finish();
+                                }
                             }
                         }
                     }

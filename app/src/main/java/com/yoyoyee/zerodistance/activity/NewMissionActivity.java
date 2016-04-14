@@ -186,7 +186,7 @@ public class NewMissionActivity extends AppCompatActivity {
         limitLong();//名稱字數限制以及字型大小限制
         allTextSize(SessionFunctions.getUserTextSize());
         isEdit();
-        startService(new Intent(this, TapService.class));
+        imvListener();
 
 
 
@@ -212,11 +212,11 @@ public class NewMissionActivity extends AppCompatActivity {
                 Display.setText(stringPay[position]);
                 if (position == (getResources().getStringArray(R.array.pay_new_mission).length - 1)) {
                     editTextOtherPay.setVisibility(View.VISIBLE);
-                    isOtherPay=true;
+                    isOtherPay = true;
                 } else {
                     getPay = stringPay[position];
                     editTextOtherPay.setVisibility(View.GONE);
-                    isOtherPay=false;
+                    isOtherPay = false;
                 }
             }
 
@@ -224,6 +224,7 @@ public class NewMissionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
 
         //此區為隱藏功能用--------------------------------------------------------------------------
         //hide(PICTURE_GONE);
@@ -632,8 +633,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                             });
                                 }
                                 else{
-                                    ClientFunctions.publishUpdateMission(
-                                            missionID,
+                                    ClientFunctions.publishUpdateMission(missionID,
                                             editTextName.getText().toString(),
                                             press,
                                             Integer.valueOf(editTextNumber.getText().toString()),
@@ -645,6 +645,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(String response) {
                                                     Toast.makeText(NewMissionActivity.this, "編輯成功", Toast.LENGTH_SHORT).show();
+                                                    NewMissionActivity.this.finish();
                                                 }
 
                                                 @Override
@@ -653,6 +654,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                                 }
                                             }
                                     );
+
                                 }
                             }
                         }
