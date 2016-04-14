@@ -186,7 +186,10 @@ public class MissionActivity extends AppCompatActivity {
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
     public static boolean PD=false;
-    private boolean notRead = false;//在finish( ) 之前 update手機資料庫且不執行readValue
+
+    //在finish( ) 之前 update手機資料庫且不執行readValue
+    private boolean notRead = false;
+
 
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -268,12 +271,9 @@ public class MissionActivity extends AppCompatActivity {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if(rating!=0){
-                    finishButton.setVisibility(View.VISIBLE);
-                }
-                else{
-                    finishButton.setVisibility(View.GONE);
-                }
+
+                    //調整評分
+
             }
         });
 
@@ -282,9 +282,11 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), R.string.rating_finished,Toast.LENGTH_SHORT).show();
+
+                //更新手機資料庫，並且finish()
                 notRead = true;
                 updateMissions();
-                finish();
+
             }
         });
 
@@ -308,9 +310,7 @@ public class MissionActivity extends AppCompatActivity {
 
        //設定
         showDialog();
-
         readValue();
-
 
     }
 
@@ -671,6 +671,11 @@ public class MissionActivity extends AppCompatActivity {
                     updateCount = 5;
                     readValue();
                 }
+                //如果不讀，代表要finish()掉的前置動作
+                else{
+                    //關掉
+                    finish();
+                }
 
 
             }
@@ -702,10 +707,10 @@ public class MissionActivity extends AppCompatActivity {
                 //提示該揪團或任務已刪除
                 Toast.makeText(getApplicationContext(), R.string.delete_success ,Toast.LENGTH_SHORT).show();
 
+                //更新資料庫完，finish()
                 notRead = true;
                 updateMissions();
-                //關掉
-                finish();
+
             }
 
             @Override

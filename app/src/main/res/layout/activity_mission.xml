@@ -133,8 +133,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible">
+                android:layout_height="match_parent">
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -188,7 +187,7 @@
                     android:layout_marginRight="100dp"
                     android:layout_weight="0.11"
                     android:layout_columnSpan="2"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <RatingBar
                     android:layout_width="147dp"
@@ -198,7 +197,8 @@
                     android:layout_column="0"
                     android:numStars="3"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:stepSize="1" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -210,7 +210,8 @@
                     android:id="@+id/ratebuttonM"
                     android:textColor="#ffffff"
                     android:background="@drawable/buttom4"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="visible" />
             </GridLayout>
 
             <LinearLayout

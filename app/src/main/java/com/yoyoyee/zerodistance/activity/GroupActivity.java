@@ -170,7 +170,9 @@ public class GroupActivity extends AppCompatActivity {
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
     public static boolean PD=false;
-    private boolean notRead = false;//在finish( ) 之前 update手機資料庫且不執行readValue
+
+    //在finish( ) 之前 update手機資料庫且不執行readValue
+    private boolean notRead = false;
 
     //拿來Format Date之用
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -612,6 +614,12 @@ public class GroupActivity extends AppCompatActivity {
                     readValue();
                 }
 
+                //如果不讀，代表要finish()掉的前置動作
+                else{
+                    //關掉
+                    finish();
+                }
+
             }
 
             @Override
@@ -641,11 +649,10 @@ public class GroupActivity extends AppCompatActivity {
                 //提示該揪團或任務已刪除
                 Toast.makeText(getApplicationContext(), R.string.delete_success ,Toast.LENGTH_SHORT).show();
 
-                //更新手機資料庫
+                //更新手機資料庫，並且關掉
                 notRead = true;
                 updateGroup();
-                //關掉
-                finish();
+
             }
 
             @Override
