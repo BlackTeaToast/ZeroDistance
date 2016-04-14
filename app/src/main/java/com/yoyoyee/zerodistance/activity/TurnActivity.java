@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.client.MultipartRequest;
@@ -184,6 +185,7 @@ public class TurnActivity extends AppCompatActivity {
         btnUnitTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopService(new Intent(TurnActivity.this, TapService.class));
 
                 /*ClientFunctions.updateMissionAcceptUser(29, new ClientResponse() {
                     @Override
@@ -211,7 +213,7 @@ public class TurnActivity extends AppCompatActivity {
                     }
                 });*/
 
-                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
                         //申请WRITE_EXTERNAL_STORAGE權限，
@@ -222,23 +224,21 @@ public class TurnActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             });
-                        }
-                        else {
-                            ActivityCompat.requestPermissions(getParent() , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
+                        } else {
+                            ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
                             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                                 Pickimg();
                             }
                         }
-                    }
-                    else
+                    } else
                         Pickimg();
-                }
-                else{
+                } else {
                     Pickimg();
                 }
 
             }
         });
+
 
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override

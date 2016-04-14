@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -591,7 +592,8 @@ public class NewMissionActivity extends AppCompatActivity {
                                 }
                                 calendar.set(year, month, day, hour, minute);
                                 if(!isEdit) {
-                                    Toast.makeText(v.getContext(), String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
+                                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                                    progressDialog.show();
                                     ClientFunctions.publishMission(
                                             editTextName.getText().toString(),
                                             press,
@@ -604,30 +606,41 @@ public class NewMissionActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(String response) {
                                                     //ClientFunctions.uploadMissionImage();
+                                                    ClientFunctions.updateMissions(new ClientResponse() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                        }
+                                                        @Override
+                                                        public void onErrorResponse(String response) {
+                                                        }
+                                                    });
                                                     if (!String.valueOf(uriImg).equals("null")){
                                                         ClientFunctions.uploadMissionImage(Integer.valueOf(response), uriImg.toString(), new ClientResponse() {
                                                             @Override
                                                             public void onResponse(String response) {
-                                                                Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
+
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group+1, Toast.LENGTH_SHORT).show();
+
                                                                 NewMissionActivity.this.finish();
                                                             }
                                                             @Override
                                                             public void onErrorResponse(String response) {
+                                                                progressDialog.dismiss();
                                                                 Toast.makeText(v.getContext(), "連線失敗，請重新送出", Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
                                                     }
                                                     else
                                                     {
-                                                        Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group+2, Toast.LENGTH_SHORT).show();
                                                         NewMissionActivity.this.finish();
                                                     }
-
-
-                                            }
+                                                }
                                     @Override
                                                 public void onErrorResponse(String response) {
-                                                    Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(v.getContext(), response+3, Toast.LENGTH_SHORT).show();
 
                                                 }
                                             });
@@ -650,7 +663,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
                                                 @Override
                                                 public void onErrorResponse(String response) {
-                                                    Toast.makeText(NewMissionActivity.this, response, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(NewMissionActivity.this, response+4, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                     );

@@ -41,11 +41,6 @@ public class TapService extends Service {
     }
 
     @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
     }
@@ -54,11 +49,10 @@ public class TapService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(Intent.ACTION_TIME_TICK)) {
+            while (action.equals(Intent.ACTION_TIME_TICK)) {
                 final int notifyID = 1; // 通知的識別號碼
                 final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
                 ArrayList<QA> allData = QueryFunctions.getQAs();
-
                 try {
                     Calendar calender =Calendar.getInstance();
 
@@ -67,8 +61,27 @@ public class TapService extends Service {
                 }catch (Exception ex){
                     System.out.println("系統版本不支援");
                 }
+
             }
         }
     };
 
 }
+/*
+if (action.equals(Intent.ACTION_TIME_TICK)) {
+                final int notifyID = 1; // 通知的識別號碼
+                final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
+                ArrayList<QA> allData = QueryFunctions.getQAs();
+                try {
+                    Calendar calender =Calendar.getInstance();
+
+                    final Notification notification = new Notification.Builder(getApplicationContext()).setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp).setContentTitle("每分報時系統").setContentText("現在時間" + calender.get(Calendar.HOUR_OF_DAY) + "點" + calender.get(Calendar.MINUTE) + "分").build(); // 建立通知
+                    notificationManager.notify(notifyID, notification);
+                }catch (Exception ex){
+                    System.out.println("系統版本不支援");
+                }
+
+            }
+
+*
+ */

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -551,6 +552,8 @@ public class NewGroupActivity extends AppCompatActivity {
                                 Toast.makeText(this, R.string.errorcontent_new_group, Toast.LENGTH_SHORT).show();
                             } else {
                                 if(!isEdit) {
+                                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                                    progressDialog.show();
                                     //missionData.content = editTextcontent.getText().toString();
                                     calendar.set(year, month, day, hour, minute);
                                     ClientFunctions.publishGroup(
@@ -575,6 +578,15 @@ public class NewGroupActivity extends AppCompatActivity {
                                                             }
                                                         });
                                                     }*/
+                                                    ClientFunctions.updateMissions(new ClientResponse() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                        }
+                                                        @Override
+                                                        public void onErrorResponse(String response) {
+                                                        }
+                                                    });
+                                                    progressDialog.dismiss();
                                                     Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
                                                     NewGroupActivity.this.finish();
                                                 }
@@ -583,7 +595,7 @@ public class NewGroupActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onErrorResponse(String response) {
                                                     Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
-
+                                                    progressDialog.dismiss();
                                                 }
                                             });
 
