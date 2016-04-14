@@ -132,6 +132,7 @@ public class fragment_havebeen extends Fragment {//
     }
     public void makecard() {
         missions  = QueryFunctions.getMissions();
+        //拉基神人
         groups = QueryFunctions.getGroups();
         mission = new Mission[missions.size()];
         group = new Group[groups.size()];
