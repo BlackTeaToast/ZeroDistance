@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/UserName"
-        android:layout_weight="1"
+        android:layout_weight="1.11"
         android:layout_gravity="left"
         android:foregroundGravity="left" />
 
@@ -26,6 +26,7 @@
         android:id="@+id/UserSchool"
         android:layout_weight="1"
         android:layout_gravity="left"
-        android:foregroundGravity="left" />
+        android:foregroundGravity="left"
+        android:gravity="right" />
 </LinearLayout>
 </android.support.v7.widget.Toolbar>

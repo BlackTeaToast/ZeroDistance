@@ -66,10 +66,9 @@ public class MainActivity extends AppCompatActivity {
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(true);
-
         pDialog.setMessage("載入中 ...");
         context = this;
-
+        setFontSize();//字體
         updataphoneDB();//手機資料
 
 //設置toolbar標題
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 //        LayoutInflater layout=this.getLayoutInflater();
 //        View view=layout.inflate(R.layout.maintool_bar, null);
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
-        TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName); //  tool_bar.findViewById(R.id.UserName) 會null
+        TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName);
         TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
         UserNames.setText(SessionFunctions.getUserNickName()+"");
         UserSchool.setText(SessionFunctions.getUserschoolName()+"");
@@ -130,7 +129,12 @@ public class MainActivity extends AppCompatActivity {
     //設置字體大小
     private void setFontSize(){
         TextView textViewTemp;
-        SessionFunctions SF= new SessionFunctions();
+        tool_bar = (Toolbar)findViewById(R.id.tool_bar);
+
+        textViewTemp = (TextView)tool_bar.findViewById(R.id.UserName);
+        textViewTemp.setTextSize(12+(SessionFunctions.getUserTextSize())/3);
+        textViewTemp = (TextView)tool_bar.findViewById(R.id.UserSchool);
+        textViewTemp.setTextSize(12+(SessionFunctions.getUserTextSize())/3);
 
     }
     private void showDialog() {

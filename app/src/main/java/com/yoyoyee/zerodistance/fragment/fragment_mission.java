@@ -170,7 +170,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     public void  onResume(){
         super.onResume();
-        Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        CardViewAdapter.setItemCount(0);
+        mList.scrollToPosition(0);
         makecard();
         mList.setAdapter(CardViewAdapter);
     }
