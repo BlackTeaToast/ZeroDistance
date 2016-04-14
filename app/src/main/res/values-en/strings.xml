@@ -41,7 +41,7 @@
     <string name="errorwhere_new_group">You did\'t set meeting place</string>
     <string name="errorcontent_new_group">What are you want to do?</string>
 
-    <string name="press_new_mission_and_group">Emergency Level：</string>
+    <string name="press_new_mission_and_group">Emergency Lv：</string>
 
     <string name="peoplenumber_new_mission_and_group">People：</string>
     <string name="buttomdate_new_mission_and_group">Day</string>
@@ -82,7 +82,7 @@
     <!--楊-->
     <string name="section_format">test：</string>
     <string name="title_activity_new_tool_bar">NewToolBar</string>
-    <string name="peoplenumber">Number of Poeple:</string>
+    <string name="peoplenumber"> </string>
     <string name="date">Date:</string>
     <string name="time">Time:</string>
     <string name="language">Language:</string>
