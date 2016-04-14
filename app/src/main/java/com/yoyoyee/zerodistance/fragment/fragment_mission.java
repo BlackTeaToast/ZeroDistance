@@ -143,8 +143,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             public void onRefresh() {
                     CardViewAdapter.setItemCount(0);
                     mList.scrollToPosition(0);
-                    CardViewAdapter.notifyDataSetChanged();
                     updataphoneDB();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
         // 頂端向下滑更新
@@ -204,7 +204,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                makecard();
+                CardViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -310,7 +310,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
 
         try {           //如果是第一次就部會執行
-            mSwipeRefreshLayout.setRefreshing(false);
+
             mList.setAdapter(CardViewAdapter);
         } catch (Exception e) {
             e.printStackTrace();
@@ -323,7 +323,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                     Count+=1;
                 }
             }
-        Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
         return Count;
     }
 }
