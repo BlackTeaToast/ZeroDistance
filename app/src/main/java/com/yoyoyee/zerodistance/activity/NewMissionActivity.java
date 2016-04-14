@@ -52,6 +52,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 
 
+import java.io.File;
 import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,7 +72,6 @@ public class NewMissionActivity extends AppCompatActivity {
 
 
      -------------------------------------------------------------------------------------------------------------*/
-    private Mission missionData =new Mission();
     private ArrayAdapter<String> adapterPress,adapterPay;
     private Boolean press;//緊急程度 false是不僅緊急，true是緊急
     private Boolean oneTimesDate =true,oneTimesTime=true;//第一次進行時間日期設定判斷用的，用以顯示提示吐司
@@ -97,6 +97,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private String[] stringPress ,stringPay;
     private String getThatString;
     private String getPay;
+
 
     private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
@@ -288,13 +289,31 @@ public class NewMissionActivity extends AppCompatActivity {
             }
             buttonTime.setText(hour + getResources().getString(R.string.hour_new_mission_and_group) + minute + getResources().getString(R.string.minute_new_mission_and_group)+" "+tempAMPM);
             buttonDate.setText(year + getResources().getString(R.string.year_new_mission_and_group) + (month+1) + getResources().getString(R.string.month_new_mission_and_group) + day + getResources().getString(R.string.day_new_mission_and_group));
+            allreadyDate=true;
+            allreadyTime=true;
             editTextName.setText(mission.getTitle());
             editTextWhere.setText(mission.getPlace());
             editTextNumber.setText(String.valueOf(mission.getNeedNum()));
             editTextcontent.setText(mission.getContent());
-            editTextOtherPay.setText(mission.getReward());
+
             oneTimesDate=false;
             oneTimesTime=false;
+            press=mission.isUrgent;
+            spinnerPress.setSelection((mission.isUrgent) ? 1 : 0);
+            for (int i=0;i<stringPay.length;i++){
+               if (stringPay[i].equals(mission.getReward()))
+               {
+                   spinnerPay.setSelection(i);
+                   break;
+               }
+                else if(i==stringPay.length-1){
+                   spinnerPay.setSelection(i);
+                   spinnerPay.setVisibility(View.VISIBLE);
+                   editTextOtherPay.setText(mission.getReward());
+               }
+            }
+
+
 
         }
     }
@@ -464,23 +483,26 @@ public class NewMissionActivity extends AppCompatActivity {
 
     //從檔案讀取圖片(由onClickPickimg進行呼叫)
     public void Pickimg(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+      /*  if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requireCodefromSdcard);
         }
-        else {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            startActivityForResult(intent, requireCodefromSdcard);
-        }
+        else {*/
+
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, requireCodefromSdcard);
+       // }/
     }
     //開啟相機(由useCamara進行呼叫)
     private void openCamara(){
-        Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         String fname ="p"+ System.currentTimeMillis() +".jpg";
         uriImg =Uri.parse("file://" + dir + "/" +fname);
+        Toast.makeText(this, String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
+        Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         camera.putExtra(MediaStore.EXTRA_OUTPUT, uriImg);
         startActivityForResult(camera, requireCodefromCamara);
 
@@ -493,15 +515,13 @@ public class NewMissionActivity extends AppCompatActivity {
     protected void onActivityResult(int requireCode,int resultCode,Intent data){
         super.onActivityResult(requireCode, resultCode, data);
         switch (requireCode) {
-            case requireCodefromCamara: {
+            case requireCodefromCamara:
                 if (resultCode == Activity.RESULT_OK ) {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
                     option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
                     Bitmap bitmap = BitmapFactory.decodeFile(uriImg.getPath(), option); //讀取圖檔資訊，存入option中，已進行修改
-
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
-
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
                     if (firstTakePicture == true) {
@@ -512,16 +532,16 @@ public class NewMissionActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
-            }
-            case requireCodefromSdcard: {
+                break;
+            case requireCodefromSdcard:
                 if (resultCode == Activity.RESULT_OK ) {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
                     option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
+                    uriImg =data.getData();
                     Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
-
+                    Toast.makeText(this, uriImg.toString(), Toast.LENGTH_SHORT).show();
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
-
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
                     if (firstTakePicture == true) {
@@ -532,7 +552,7 @@ public class NewMissionActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(this, R.string.notakepicture_new_mission_and_group, Toast.LENGTH_SHORT).show();
                 }
-            }
+                break;
         }
     }
     //按完成鈕送出
@@ -562,7 +582,7 @@ public class NewMissionActivity extends AppCompatActivity {
                         } else {
                             //待添加TIME
                             if (editTextcontent.getText().toString().trim().equals("")) {
-                                Toast.makeText(this, String.valueOf(press)/*R.string.errornocontent_new_mission*/, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
                             } else {
                                 //    missionData.content = editTextcontent.getText().toString();
                                 if (isOtherPay){
@@ -570,6 +590,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                 }
                                 calendar.set(year, month, day, hour, minute);
                                 if(!isEdit) {
+                                    Toast.makeText(v.getContext(), String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
                                     ClientFunctions.publishMission(
                                             editTextName.getText().toString(),
                                             press,
@@ -582,16 +603,16 @@ public class NewMissionActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(String response) {
                                                     //ClientFunctions.uploadMissionImage();
-                                                    if (!String.valueOf(uriImg).equals(null)){
-                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), String.valueOf(uriImg), new ClientResponse() {
+                                                    if (!String.valueOf(uriImg).equals("null")){
+                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), uriImg.toString(), new ClientResponse() {
                                                             @Override
                                                             public void onResponse(String response) {
-                                                                Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group, Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
                                                                 NewMissionActivity.this.finish();
                                                             }
                                                             @Override
                                                             public void onErrorResponse(String response) {
-
+                                                                Toast.makeText(v.getContext(), "連線失敗，請重新送出", Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
                                                     }
@@ -628,7 +649,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
                                                 @Override
                                                 public void onErrorResponse(String response) {
-
+                                                    Toast.makeText(NewMissionActivity.this, response, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                     );
