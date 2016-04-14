@@ -1604,6 +1604,7 @@ public class ClientFunctions {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 Map<String, String> params = new HashMap<>();
+                params.put("mission_id", String.valueOf(missionID));
                 params.put("uid", session.getUserUid());
                 params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
@@ -1670,6 +1671,7 @@ public class ClientFunctions {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
                 Map<String, String> params = new HashMap<>();
+                params.put("group_id", String.valueOf(groupID));
                 params.put("uid", session.getUserUid());
                 params.put("access_key", session.getUserAccessKey());
                 params.put("title", title);
