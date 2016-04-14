@@ -49,7 +49,7 @@ public class Mission {
         this.isFinished = isFinished;
         this.finishedAt = finishedAt;
     }
-    public Mission(int id, String title, String content, Date expAt, int needNum, int currentNum, boolean isUrgent) {
+    public Mission(int id, String title, String content, Date expAt, int needNum, int currentNum, boolean isUrgent, boolean isMission) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -57,6 +57,7 @@ public class Mission {
         this.needNum = needNum;
         this.currentNum = currentNum;
         this.isUrgent = isUrgent;
+        this.isMission = isMission;
     }
 
     public int getId() {

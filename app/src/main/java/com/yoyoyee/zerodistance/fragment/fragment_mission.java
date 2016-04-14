@@ -298,12 +298,12 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                     mission[i] = new Mission(missions.get(missions.size()-i-1).id, missions.get(missions.size()-i-1).title
                             , missions.get(missions.size()-i-1).content, missions.get(missions.size()-i-1).expAt
                             , missions.get(missions.size()-i-1).needNum, missions.get(missions.size()-i-1).currentNum
-                            , missions.get(missions.size()-i-1).isUrgent);
+                            , missions.get(missions.size()-i-1).isUrgent, true);
                 }else {//獎勵
                     mission[i] = new Mission(missions.get(missions.size()-i-1).id, missions.get(missions.size()-i-1).title
                             , missions.get(missions.size()-i-1).reward, missions.get(missions.size()-i-1).expAt
                             , missions.get(missions.size()-i-1).needNum, missions.get(missions.size()-i-1).currentNum
-                            , missions.get(missions.size()-i-1).isUrgent);
+                            , missions.get(missions.size()-i-1).isUrgent, true);
                 }
         }
         bedangerfirst();    //任務排序 (緊急任務先)

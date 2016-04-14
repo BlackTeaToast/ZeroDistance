@@ -44,13 +44,14 @@ public class Group extends Mission{
         this.isFinished = isFinished;
         this.finishedAt = finishedAt;
     }
-    public Group(int id, String title, String content, Date expAt, int needNum, int currentNum) {
+    public Group(int id, String title, String content, Date expAt, int needNum, int currentNum , boolean isMission) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.expAt = expAt;
         this.needNum = needNum;
         this.currentNum = currentNum;
+        this.isMission = false;
     }
 
     public int getId() {

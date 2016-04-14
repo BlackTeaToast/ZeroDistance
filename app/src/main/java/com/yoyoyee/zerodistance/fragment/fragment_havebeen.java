@@ -43,7 +43,10 @@ public class fragment_havebeen extends Fragment {//
     boolean[] missiondangerous;
     boolean becontext;
     String[] detial;
-    ArrayList<Group> missions;
+    ArrayList<Mission> missions;
+    Mission[] mission;
+    ArrayList<Group> groups;
+    Group[] group;
     int missionnumber[];
     //
     CardViewAdapter CardViewAdapter;
@@ -58,17 +61,7 @@ public class fragment_havebeen extends Fragment {//
         View v = inflater.inflate(R.layout.fragment_havebeen, container, false);
         ArrayList<Mission> missions = QueryFunctions.getFinishedMissions();
         ArrayList<Group> Group = QueryFunctions.getFinishedGroups();
-        SessionFunctions SF = new SessionFunctions();
-        //建立陣列
-        int[] id = new int[missions.size()+Group.size()];//任務id
-        String[] title = new String[missions.size()+Group.size()];//任務標題
-        String[] detial = new String[missions.size()+Group.size()];//任務內容or獎勵
-        Date[] expAt = new Date[missions.size()+Group.size()];//任務結束時間
-        int[] needNum = new int[missions.size()+Group.size()]; //需要人數
-        int[] currentNum = new int[missions.size()+Group.size()];//已有人數
-        boolean[] missiondangerous = new boolean[missions.size()+Group.size()];//任務是否緊急
-        boolean becontext = SF.getbecontext();//true 為內容 false為獎勵
-        //建立陣列
+        makecard();
         // 頂端向下滑更新
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,42 +69,42 @@ public class fragment_havebeen extends Fragment {//
             public void onRefresh() {
                 CardViewAdapter.setItemCount(0);
                 mList.scrollToPosition(0);
-                CardViewAdapter.notifyDataSetChanged();
                 updataphoneDB();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
         // 頂端向下滑更新
-        for(int i = 0;i <missions.size()+Group.size();i++){
-            if(i<missions.size()) {
-                id[i] = missions.get(i).id;
-                title[i] = missions.get(i).title;
-                if (becontext) {
-                    detial[i] = missions.get(i).content;
-                } else {
-                    detial[i] = missions.get(i).reward;
-                }
-                expAt[i] = missions.get(i).expAt;
-                needNum[i] = missions.get(i).needNum;
-                currentNum[i] = missions.get(i).currentNum;
-                missiondangerous[i] = missions.get(i).isUrgent;
+//        for(int i = 0;i <missions.size()+Group.size();i++){
+//            if(i<missions.size()) {
+//                id[i] = missions.get(i).id;
+//                title[i] = missions.get(i).title;
+//                if (becontext) {
+//                    detial[i] = missions.get(i).content;
+//                } else {
+//                    detial[i] = missions.get(i).reward;
+//                }
+//                expAt[i] = missions.get(i).expAt;
+//                needNum[i] = missions.get(i).needNum;
+//                currentNum[i] = missions.get(i).currentNum;
+//                missiondangerous[i] = missions.get(i).isUrgent;
+//
+//            }else if(i>=missions.size()){
+//                id[i+missions.size()] = Group.get(i).id;
+//                title[i+missions.size()] = Group.get(i).title;
+//                detial[i+missions.size()] = Group.get(i).content;
+//                expAt[i+missions.size()] = Group.get(i).expAt;
+//                needNum[i+missions.size()] = Group.get(i).needNum;
+//                currentNum[i+missions.size()] = Group.get(i).currentNum;
+//                missiondangerous[i+missions.size()] = false;
+//
+//            }
 
-            }else if(i>=missions.size()){
-                id[i+missions.size()] = Group.get(i).id;
-                title[i+missions.size()] = Group.get(i).title;
-                detial[i+missions.size()] = Group.get(i).content;
-                expAt[i+missions.size()] = Group.get(i).expAt;
-                needNum[i+missions.size()] = Group.get(i).needNum;
-                currentNum[i+missions.size()] = Group.get(i).currentNum;
-                missiondangerous[i+missions.size()] = false;
+//        }
 
-            }
-
-        }
-
-        int missionnumber[]=new int[title.length];
-        for(int i=0;i<title.length;i++){
-            missionnumber[i]=i;
-        }
+//        int missionnumber[]=new int[title.length];
+//        for(int i=0;i<title.length;i++){
+//            missionnumber[i]=i;
+//        }
         try {
 //            CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_havebeen);
             mList = (RecyclerView) v.findViewById(R.id.listView);
@@ -138,32 +131,34 @@ public class fragment_havebeen extends Fragment {//
 
     }
     public void makecard() {
-        missions = QueryFunctions.getGroups();
-        id = new int[missions.size()];//任務id
-        title = new String[missions.size()];//任務標題
-        detial = new String[missions.size()];//任務內容or獎勵
-        expAt = new Date[missions.size()];//任務結束時間
-        needNum = new int[missions.size()]; //需要人數
-        currentNum = new int[missions.size()];//已有人數
-        missiondangerous = new boolean[missions.size()];//任務是否緊急
-        becontext = SessionFunctions.getbecontext();//true 為內容 false為獎勵
-        for (int i = 0; i < missions.size(); i++) {
+        missions  = QueryFunctions.getMissions();
+        groups = QueryFunctions.getGroups();
+        mission = new Mission[missions.size()];
+        group = new Group[groups.size()];
+        for(int i = 0;i <missions.size();i++) {
+            if ((becontext)) {
+                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
+                        , missions.get(missions.size() - i - 1).content, missions.get(missions.size() - i - 1).expAt
+                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
+                        , false, true);
 
-            id[i] = missions.get(missions.size() - i - 1).id;
-            title[i] = missions.get(missions.size() - i - 1).title;
-            detial[i] = missions.get(missions.size() - i - 1).content;
-            expAt[i] = missions.get(missions.size() - i - 1).expAt;
-            needNum[i] = missions.get(missions.size() - i - 1).needNum;
-            currentNum[i] = missions.get(missions.size() - i - 1).currentNum;
-            missiondangerous[i] = false;
+            } else {//獎勵
+                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
+                        , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
+                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
+                        , false, true);
+            }
+        }
+        for(int i=missions.size();i<missions.size()+groups.size();i++){
+
         }
 
-        missionnumber = new int[missions.size()];
-        for (int i = 0; i < missions.size(); i++) {
-            missionnumber[i] = i;
+        try {
+            mList.setAdapter(CardViewAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Resources res =this.getResources();
-//        CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_team/*,res*/);
+        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
     }
     private void updataphoneDB(){//更新手機資料
         totalvuledel();
@@ -173,12 +168,6 @@ public class fragment_havebeen extends Fragment {//
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Group> Group = db.getGroups();
-                if (Group.size() > 0) {
-                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
-                }
               //  Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
                 upDataCount=0;
                 updataGroupDB();//更新揪團
@@ -186,7 +175,7 @@ public class fragment_havebeen extends Fragment {//
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=10){
+                if(upDataCount>=5){
                     Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
                 }else{
                     upDataCount+=1;
@@ -200,22 +189,14 @@ public class fragment_havebeen extends Fragment {//
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Group> Group = db.getGroups();
-                if (Group.size() > 0) {
-                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
-                }
-                makecard();
-              //  Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
-                mSwipeRefreshLayout.setRefreshing(false);
-                mList.setAdapter(CardViewAdapter);
+                CardViewAdapter.notifyDataSetChanged();
+              //  Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show()
                 upDataCount=0;
             }
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=10){
+                if(upDataCount>=5){
                     Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
                 }else{
                     upDataCount+=1;
