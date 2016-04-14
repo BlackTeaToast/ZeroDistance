@@ -58,6 +58,9 @@ public class AppConfig {
 	// Server delete group url
 	public static String URL_DELETE_GROUP = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/delete/deleteGroup";
 
+	// Server delete question url
+	public static String URL_DELETE_QUESTION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/delete/deleteQuestion";
+
     // Server update mission url
     public static String URL_PUBLISH_UPDATE_MISSION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/updateMission";
 
