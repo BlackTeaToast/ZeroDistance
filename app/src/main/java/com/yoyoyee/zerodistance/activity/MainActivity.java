@@ -25,6 +25,7 @@ import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.fragment.fragment_mission;
 import com.yoyoyee.zerodistance.helper.CustomToast;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
@@ -112,11 +113,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //更新手機資料庫
         //更新資料
-        showDialog();
-        if(!beupData){
-            updataMissionDB();
-
-        }
+//        showDialog();
+//        if(!beupData){
+//            updataMissionDB();
+//
+//        }
         beupData=false;
 
     }
@@ -181,12 +182,6 @@ public class MainActivity extends AppCompatActivity {
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Mission> missions = db.getMissions();
-                if (missions.size() > 0) {
-                    Log.d(TAG, "onResponse: " + missions.get(0).getTitle() + " " + missions.get(0).createdAt + " " + missions.get(0).finishedAt);
-                }
                 upDataCount=0;
                 updataGroupDB();//更新揪團
             }
@@ -207,12 +202,6 @@ public class MainActivity extends AppCompatActivity {
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Group> Group = db.getGroups();
-                if (Group.size() > 0) {
-                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
-                }
                 MakeTabAndContext();
             }
 
@@ -232,32 +221,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-        pager.setOffscreenPageLimit(6);//儲存頁面數
+       // pager.setOffscreenPageLimit(6);//儲存頁面數
 
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
        // pager.setCurrentItem(2);  //預設出現頁面
         hideDialog();
     }
-    public void fabtime(){
-        final int[] i = {0};
-        new CountDownTimer(5000,200){
 
-            @Override
-            public void onFinish() {
-                if(pDialog.isShowing()){
-                   // pDialog.dismiss();
-                    CustomToast.showToast(context, "關閉pDialog"+i[0], 200);
-                }
-            }
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                i[0] +=1;
-              //  CustomToast.showToast(context, ""+i[0], 200);
-            }
-
-        }.start();
-    }
 
 }

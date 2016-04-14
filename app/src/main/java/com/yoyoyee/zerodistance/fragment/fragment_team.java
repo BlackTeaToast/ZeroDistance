@@ -200,7 +200,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                 if (Group.size() > 0) {
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
-                Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
                 upDataCount=0;
                 updataGroupDB();//更新揪團
             }

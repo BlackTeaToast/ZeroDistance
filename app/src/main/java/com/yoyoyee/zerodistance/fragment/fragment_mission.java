@@ -72,7 +72,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     int upDataCount;
     LinearLayoutManager layoutManager;//CARD layout
-    GridLayout card_view;
     public fragment_mission(){
        // totalvuledel();
 //        updataphoneDB();
@@ -168,6 +167,13 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
         return v;
     }
+
+    public void  onResume(){
+        super.onResume();
+        Toast.makeText(getContext(), "onResume", Toast.LENGTH_SHORT).show();
+        makecard();
+        mList.setAdapter(CardViewAdapter);
+    }
     //設置字體大小
     private void setFontSize(){
         TextView textViewTemp;
@@ -185,7 +191,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             public void onResponse(String response) {
                 upDataCount=0;
                 updataGroups();
-                Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -204,6 +210,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             @Override
             public void onResponse(String response) {
                 CardViewAdapter.notifyDataSetChanged();
+                makecard();
+                mList.setAdapter(CardViewAdapter);
             }
 
             @Override
@@ -232,8 +240,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             {
 //                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
                 fab.setVisibility(View.INVISIBLE);
-                fabtime();
-                // 設定 TextView 內容, 大小, 位置
                 break;}
 
             case MotionEvent.ACTION_UP:  // 放開
@@ -242,20 +248,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 break;}
         }
         return false;
-    }
-    public void fabtime(){
-        new CountDownTimer(1000,500){
-
-            @Override
-            public void onFinish() {
-                fab.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-
-        }.start();
     }
     public void totalvuledel(){
         id = null;
