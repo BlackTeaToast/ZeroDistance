@@ -64,6 +64,9 @@ public class AppConfig {
     // Server remove mission accept url
     public static String URL_REMOVE_MISSION_ACCEPT = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/removeMissionAccept";
 
+    // Server remove group accept url
+    public static String URL_REMOVE_GROUP_ACCEPT = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/removeGroupAccept";
+
     // Server update mission url
     public static String URL_PUBLISH_UPDATE_MISSION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/updateMission";
 
