@@ -58,7 +58,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     int[] needNum;
     int[] currentNum;
     boolean[] missiondangerous;
-    boolean becontext;
     ArrayList<Mission>  missionsUrgent;
     ArrayList<Mission>  missionsNotUrgent;
     ArrayList<Mission> missions;
@@ -294,7 +293,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         missions  = QueryFunctions.getMissions();
         mission = new Mission[missions.size()];
         for(int i = 0;i <missions.size();i++){
-                if((becontext)){
+                if((SessionFunctions.getbecontext())){
                     mission[i] = new Mission(missions.get(missions.size()-i-1).id, missions.get(missions.size()-i-1).title
                             , missions.get(missions.size()-i-1).content, missions.get(missions.size()-i-1).expAt
                             , missions.get(missions.size()-i-1).needNum, missions.get(missions.size()-i-1).currentNum

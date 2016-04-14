@@ -77,7 +77,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private Boolean firstTakePicture=true;//是否第一次拍照
     private Boolean time12or24=false; //設定true為24小時制，false12小時制
     private Boolean timeAMPMAuto=false;//設定為true時為自動偵測系統時間，fales時為手動設定12或是24小時制
-    private Boolean PICTURE_GONE=true;//隱藏拍照功能
+    private Boolean PICTURE_GONE=false;//隱藏拍照功能
     private Boolean isOtherPay=false;//獎勵是否為其他
     private Boolean isEdit=false;
 

@@ -45,8 +45,7 @@ public class fragment_havebeen extends Fragment {//
     String[] detial;
     ArrayList<Mission> missions;
     Mission[] mission;
-    ArrayList<Group> groups;
-    Group[] group;
+    ArrayList<Group> Group;
     int missionnumber[];
     //
     CardViewAdapter CardViewAdapter;
@@ -61,7 +60,7 @@ public class fragment_havebeen extends Fragment {//
         View v = inflater.inflate(R.layout.fragment_havebeen, container, false);
         ArrayList<Mission> missions = QueryFunctions.getFinishedMissions();
         ArrayList<Group> Group = QueryFunctions.getFinishedGroups();
-        makecard();
+      //  makecard();
         // 頂端向下滑更新
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -130,37 +129,37 @@ public class fragment_havebeen extends Fragment {//
         SessionFunctions SF= new SessionFunctions();
 
     }
-    public void makecard() {
-        missions  = QueryFunctions.getMissions();
-        //拉基神人
-        groups = QueryFunctions.getGroups();
-        mission = new Mission[missions.size()];
-        group = new Group[groups.size()];
-        for(int i = 0;i <missions.size();i++) {
-            if ((becontext)) {
-                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
-                        , missions.get(missions.size() - i - 1).content, missions.get(missions.size() - i - 1).expAt
-                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-                        , false, true);
-
-            } else {//獎勵
-                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
-                        , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
-                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-                        , false, true);
-            }
-        }
-        for(int i=missions.size();i<missions.size()+groups.size();i++){
-
-        }
-
-        try {
-            mList.setAdapter(CardViewAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
-    }
+//    public void makecard() {
+//        missions  = QueryFunctions.getMissions();
+//        Group  = QueryFunctions.getGroups();
+//        mission = new Mission[missions.size()+Group.size()];
+//        for(int i = 0;i <missions.size();i++) {
+//            if ((becontext)) {
+//                mission[i] = new Mission(missions.get(missions.size()+Group.size() - i - 1).id, missions.get(missions.size()+Group.size() - i - 1).title
+//                        , missions.get(missions.size()+Group.size() - i - 1).content, missions.get(missions.size()+Group.size() - i - 1).expAt
+//                        , missions.get(missions.size()+Group.size() - i - 1).needNum, missions.get(missions.size()+Group.size() - i - 1).currentNum
+//                        , false, true);
+//
+//            } else {//獎勵
+//                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
+//                        , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
+//                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
+//                        , false, true);
+//            }
+//        }
+//        for(int i=missions.size();i<missions.size()+Group.size();i++){
+//            mission[i] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
+//                    , Group.get(missions.size()+Group.size()-i-1).content, Group.get(missions.size()+Group.size()-i-1).expAt
+//                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
+//        }
+//
+//        try {
+//            mList.setAdapter(CardViewAdapter);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
+//    }
     private void updataphoneDB(){//更新手機資料
         totalvuledel();
         updataMissionDB();
@@ -190,7 +189,7 @@ public class fragment_havebeen extends Fragment {//
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                CardViewAdapter.notifyDataSetChanged();
+//                CardViewAdapter.notifyDataSetChanged();
               //  Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show()
                 upDataCount=0;
             }
