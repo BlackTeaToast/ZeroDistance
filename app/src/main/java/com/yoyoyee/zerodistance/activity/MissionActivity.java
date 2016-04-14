@@ -251,7 +251,7 @@ public class MissionActivity extends AppCompatActivity {
                         rateTotal.setText(R.string.rate_total);
                         //將個別評分開啟
                         buttonVisible = (Button) findViewById(R.id.ratebuttonM);
-                        buttonVisible.setVisibility(View.VISIBLE);
+                        buttonVisible.setVisibility(View.GONE);
                     } else {
                         TextView rateTotal = (TextView) findViewById(R.id.rateTotalM);
                         rateTotal.setText(R.string.rate_total_one);
