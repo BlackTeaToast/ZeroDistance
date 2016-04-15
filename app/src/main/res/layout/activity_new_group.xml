@@ -166,8 +166,9 @@
             android:layout_gravity="left|center"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/buttom4"
-            android:textColor="#ffffff" />
+            android:background="@drawable/patrickc_button_yellow"
+            android:textColor="#0b0b07"
+            android:layout_marginLeft="-20dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -182,8 +183,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/buttom4"
-            android:textColor="#ffffff" />
+            android:background="@drawable/patrickc_button_yellow"
+            android:textColor="#0b0b07" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -284,8 +285,8 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:onClick="onClickPickimg"
-            android:background="@drawable/buttom4"
-            android:textColor="#ffffff" />
+            android:textColor="#114462"
+            android:background="@drawable/patrickc_button_blue" />
 
         <Button
             android:layout_width="wrap_content"
@@ -295,13 +296,12 @@
             android:layout_column="7"
             android:layout_row="22"
             android:onClick="useCamera"
-            android:layout_gravity="center|right"
+            android:layout_gravity="center"
             android:layout_columnSpan="7"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/buttom4"
-            android:textColor="#ffffff" />
+            android:textColor="#114462"
+            android:background="@drawable/patrickc_button_blue" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -352,17 +352,16 @@
             android:text="@string/okbuttom_new_mission_and_group"
             android:id="@+id/buttonOK"
             android:layout_margin="0dp"
-            android:layout_gravity="left|center|fill_vertical"
             android:layout_column="0"
             android:layout_columnSpan="7"
             android:layout_row="100"
             android:layout_marginTop="15dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
             android:onClick="onClickOkOutputDataGroup"
-            android:background="@drawable/button_misson"
-            android:textColor="#ffffff" />
+            android:background="@drawable/patrickc_button_red"
+            android:textColor="#331c1c" />
 
         <Button
             android:layout_width="wrap_content"
@@ -372,15 +371,15 @@
             android:layout_column="7"
             android:layout_row="100"
             android:layout_margin="0dp"
-            android:layout_gravity="center|fill_vertical|right"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="30dp"
             android:layout_marginBottom="15dp"
             android:layout_columnSpan="7"
             android:onClick="onClickCancelGroup"
-            android:background="@drawable/button_misson"
-            android:textColor="#ffffff" />
+            android:background="@drawable/patrickc_button_red"
+            android:textColor="#331c1c"
+            android:layout_gravity="center_horizontal" />
 
     </GridLayout>
 

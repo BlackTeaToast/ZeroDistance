@@ -173,12 +173,12 @@
                     android:layout_marginLeft="10dp" />
 
                 <Button
-                    android:layout_width="132dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="完成"
                     android:id="@+id/finishButton"
-                    android:textSize="25dp"
-                    android:textColor="#0066a1"
+                    android:textSize="20dp"
+                    android:textColor="#114462"
                     android:background="@drawable/patrickc_button_blue"
                     android:layout_row="3"
                     android:layout_column="0"
@@ -197,7 +197,8 @@
                     android:numStars="3"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:stepSize="1" />
+                    android:stepSize="1"
+                    android:layout_gravity="center_horizontal" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -210,7 +211,7 @@
                     android:textColor="#ffffff"
                     android:background="@drawable/buttom4"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </GridLayout>
 
             <LinearLayout
