@@ -135,9 +135,9 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 }
         }
         if(missions[position].isMission()){
-            holder.missionName.setTextColor(Color.BLUE);
-        }else {
             holder.missionName.setTextColor(Color.parseColor("#FF428BCA"));
+        }else {
+            holder.missionName.setTextColor(Color.parseColor("#ff99cc00"));
         }
 
         holder.missionbutton.setOnClickListener(new View.OnClickListener() {
