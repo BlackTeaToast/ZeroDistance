@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.AskActivity;
+import com.yoyoyee.zerodistance.activity.QAActivity;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 
@@ -105,7 +106,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             holder.q_Card_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    layOutClick(v, q_a_ID[position], a_Acontenttext[position],userUID[position], holder);
+                    layOutClick(v, q_a_ID[position],q_Qcontenttext[position], a_Acontenttext[position],userUID[position], holder);
                 }
             });
         }
@@ -114,13 +115,13 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             holder.q_Card_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    layOutClick(v, q_a_ID[position], a_Acontenttext[position],userUID[position], holder);
+                    layOutClick(v, q_a_ID[position],q_Qcontenttext[position], a_Acontenttext[position],userUID[position], holder);
                 }
             });
             holder.a_Card_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    layOutClick(v, q_a_ID[position], a_Acontenttext[position], userUID[position], holder);
+                    layOutClick(v, q_a_ID[position],q_Qcontenttext[position], a_Acontenttext[position], userUID[position], holder);
                 }
             });
         };
@@ -150,7 +151,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
      * 按下按鈕後，會進行判斷，是否為發文者，是則可以進行回文，不適則否
      * @param v
      */
-    public void layOutClick(final View v, final int qaID,final String a_Acontenttext,String userUID,ViewHolder hoder){
+    public void layOutClick(final View v, final int qaID,final String q_Qcontenttext,final String a_Acontenttext,String userUID,ViewHolder hoder){
         String myUID=QueryFunctions.getUserUid();
         if (publisher) {
             if (a_Acontenttext.equals("null")) {
@@ -162,7 +163,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case (R.id.popans_nogroup):
-                                intentGO(v,qaID,a_Acontenttext);
+                                intentGO(v,qaID,a_Acontenttext,q_Qcontenttext,false);
                                 break;
                             case (R.id.popdel_nogroup):
                                ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
@@ -199,7 +200,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case (R.id.popedit_hadans_group):
-                                intentGO(v,qaID,a_Acontenttext);
+                                intentGO(v,qaID,a_Acontenttext,q_Qcontenttext,false);
                                 break;
                             case (R.id.popdel_hadans_group):
                                 ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
@@ -238,7 +239,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case (R.id.popedit):
-
+                            intentGO(v,qaID,a_Acontenttext,q_Qcontenttext,true);
                             break;
                         case (R.id.popdel):
 
@@ -261,12 +262,14 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
             //Toast.makeText(v.getContext(), "我是看的人", Toast.LENGTH_SHORT).show();
     }
 
-    private void intentGO(View v,int qaID,String a_Acontenttext){
+    private void intentGO(View v,int qaID,String a_Acontenttext,String q_Qcontenttext,Boolean isQ){
         Intent intent = new Intent(v.getContext(), AskActivity.class);
         intent.putExtra("isGroup",isGroup);
         intent.putExtra("isAsk",false);
         intent.putExtra("q_a_ID",qaID);
         intent.putExtra("content",a_Acontenttext);
+        intent.putExtra("q_Qcontenttext",q_Qcontenttext);
+        intent.putExtra("isQ",isQ);
         v.getContext().startActivity(intent);
     }
 

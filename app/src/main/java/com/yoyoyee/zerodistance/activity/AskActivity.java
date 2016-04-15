@@ -19,9 +19,10 @@ import com.yoyoyee.zerodistance.client.ClientResponse;
 public class AskActivity extends AppCompatActivity {
     protected EditText ET;
     protected Button OK,NO;
-    protected Boolean isAsk,isGroup;
+    protected Boolean isAsk,isGroup,isQ;
     protected int group_mission_ID,q_a_ID;
-    protected String a_Acontenttext;
+    protected String a_Acontenttext,q_Qcontenttext;
+    protected Boolean publisher;
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class AskActivity extends AppCompatActivity {
         isGroup=intent.getBooleanExtra("isGroup", false);
         isAsk=intent.getBooleanExtra("isAsk", true);
         group_mission_ID=intent.getIntExtra("group_missionID", 0);
+        isQ=intent.getBooleanExtra("isQ", false);
         //toolbar 定位區
         toolbar= (Toolbar) findViewById(R.id.ask_Toolbar);
 
@@ -38,7 +40,8 @@ public class AskActivity extends AppCompatActivity {
         //----------------------------------------------------------------------------------------------------------
         q_a_ID =intent.getIntExtra("q_a_ID",0);
         a_Acontenttext=intent.getStringExtra("content");
-        findIDAndSetUse(isAsk,a_Acontenttext);
+        q_Qcontenttext=intent.getStringExtra("q_Qcontenttext");
+        findIDAndSetUse(isAsk,a_Acontenttext,q_Qcontenttext);
 
         NO.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -65,7 +68,7 @@ public class AskActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    ClientFunctions.publishMissionQA(group_mission_ID, ET.getText().toString(), new ClientResponse() {
+                    ClientFunctions.publishMissionQA(q_a_ID, ET.getText().toString(), new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(AskActivity.this, "完成", Toast.LENGTH_SHORT).show();
@@ -76,18 +79,32 @@ public class AskActivity extends AppCompatActivity {
                             Toast.makeText(AskActivity.this, "發問失敗", Toast.LENGTH_SHORT).show();
                         }
                     });
+
                 }
             }
-            else{
-                ClientFunctions.publishQAAnswer(q_a_ID, ET.getText().toString(), new ClientResponse() {
+            else if(isQ) {
+                ClientFunctions.publishUpdateQuestion(q_a_ID, ET.getText().toString(), new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(AskActivity.this,"完成",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AskActivity.this, "完成", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onErrorResponse(String response) {
-                        Toast.makeText(AskActivity.this,response,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AskActivity.this, "發問失敗", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else  {
+                ClientFunctions.publishQAAnswer(q_a_ID, ET.getText().toString(), new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(AskActivity.this, "完成", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+                        Toast.makeText(AskActivity.this, "發問失敗", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -96,7 +113,7 @@ public class AskActivity extends AppCompatActivity {
         });
 
     }
-    protected void findIDAndSetUse(Boolean isAsk,String a_Acontenttext){
+    protected void findIDAndSetUse(Boolean isAsk,String a_Acontenttext,String q_Qcontenttext){
         ET = (EditText)findViewById(R.id.askEditText);
         OK = (Button)findViewById(R.id.askOk);
         NO = (Button)findViewById(R.id.askCancle);
@@ -105,24 +122,30 @@ public class AskActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle(R.string.ask_for_title);
-
-
             OK.setText(R.string.ask_for_ok);
             NO.setText(R.string.ask_for_cancle);
         }
         else{
             try {
-                if (!a_Acontenttext.equals("null")){
-                    //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
-                    setSupportActionBar(toolbar);
-                    ActionBar actionBar = getSupportActionBar();
-                    actionBar.setTitle(R.string.ans_for_had_ans);
+                if(!isQ) {
+                    if (!a_Acontenttext.equals("null")) {
+                        //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
+                        setSupportActionBar(toolbar);
+                        ActionBar actionBar = getSupportActionBar();
+                        actionBar.setTitle(R.string.ans_for_had_ans);
+                    } else {
+                        //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
+                        setSupportActionBar(toolbar);
+                        ActionBar actionBar = getSupportActionBar();
+                        actionBar.setTitle(R.string.ans_for_title);
+                    }
                 }
-                else {
-                    //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
-                    setSupportActionBar(toolbar);
-                    ActionBar actionBar = getSupportActionBar();
-                    actionBar.setTitle(R.string.ans_for_title);
+                else{
+                    if(!q_Qcontenttext.equals("null")){
+                        setSupportActionBar(toolbar);
+                        ActionBar actionBar = getSupportActionBar();
+                        actionBar.setTitle("編輯問題");
+                    }
                 }
             }
             catch (Exception ex){
@@ -135,11 +158,14 @@ public class AskActivity extends AppCompatActivity {
             NO.setText(R.string.ans_for_cancle);
         }
         try {
-            if (!a_Acontenttext.equals("null")){
-                ET.setText(a_Acontenttext);
+            if(!isQ) {
+                if (!a_Acontenttext.equals("null")) {
+                    ET.setText(a_Acontenttext);
+                } else {
+                }
             }
-            else {
-            }
+            else
+                ET.setText(q_Qcontenttext);
         }
         catch (Exception ex){
         };
