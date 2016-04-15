@@ -89,6 +89,15 @@ public class fragment_havebeen extends Fragment {//
 
         //listView 典籍
     }
+    public void  onResume(){
+        super.onResume();
+        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        CardViewAdapter.setItemCount(0);
+        mList.scrollToPosition(0);
+        makecard();
+        mList.setAdapter(CardViewAdapter);
+    }
+
     //設置字體大小
     private void setFontSize(){
         TextView textViewTemp;
@@ -122,7 +131,7 @@ public class fragment_havebeen extends Fragment {//
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }
-        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
+        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_havebeen);
     }
     private void updataphoneDB(){//更新手機資料
         totalvuledel();

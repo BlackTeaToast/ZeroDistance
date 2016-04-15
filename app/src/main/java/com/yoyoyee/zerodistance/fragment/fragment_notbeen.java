@@ -87,7 +87,14 @@ public class fragment_notbeen extends Fragment{
 
 
         return v;}
-
+    public void  onResume(){
+        super.onResume();
+        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        CardViewAdapter.setItemCount(0);
+        mList.scrollToPosition(0);
+        makecard();
+        mList.setAdapter(CardViewAdapter);
+    }
 
     public void makecard() {
         missions  = QueryFunctions.getMissions();
@@ -116,7 +123,7 @@ public class fragment_notbeen extends Fragment{
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }
-        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
+        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_notbeen);
     }
     private void updataphoneDB(){//更新手機資料
         updataMissionDB();

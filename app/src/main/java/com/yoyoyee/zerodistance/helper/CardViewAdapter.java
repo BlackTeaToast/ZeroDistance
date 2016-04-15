@@ -122,7 +122,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.expAt.setText(hour[position]+":"+mm[position]);
             holder.peoplenumber.setText(missions[position].getCurrentNum()+"/"+missions[position].getNeedNum()+"人");
 
-        if(missions[position].isMission()){//其他頁面沒有緊急任務
+        if(missions[position].isMission()&&fragment==R.layout.fragment_fragment_mission){//其他頁面沒有緊急任務
                 if(missions[position].getUrgent()){
                     holder.missiondangerous.setVisibility(View.VISIBLE);
 //                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
@@ -144,7 +144,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             @Override
             public void onClick(View v) {
            //    Toast.makeText(v.getContext(), ""+missions[position].isMission(), Toast.LENGTH_SHORT).show();
-                doIntent(v.getContext(), position);
+                doIntent(v.getContext(), missions[position].isMission());
                 in.putExtra("id", missions[position].getId());
 //                in.putExtra("id", 2);
                 v.getContext().startActivity(in);
@@ -161,29 +161,35 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         this.Count = Count;
         return Count;
     }
-    public Intent doIntent(Context c,int position){
+    public Intent doIntent(Context c,boolean isMission){
         in=null;
         switch (fragment){
             case R.layout.fragment_fragment_mission:{
                 in = new Intent(c, MissionActivity.class);
+
             }
             break;
             case R.layout.fragment_fragment_team:{
                 in = new Intent(c, GroupActivity.class);
-            }
+            }break;
             case R.layout.fragment_fragment_havebeen:{
-                if(missions[position].isMission()){
+                if(isMission){
                     in = new Intent(c, MissionActivity.class);
                 }else {
                     in = new Intent(c, GroupActivity.class);
                 }
-            }case R.layout.fragment_fragment_notbeen:{
-                if(missions[position].isMission()){
+
+            }break;
+            case R.layout.fragment_fragment_notbeen:{
+                if(isMission){
+                    Toast.makeText(c, isMission+"", Toast.LENGTH_LONG).show();
                     in = new Intent(c, MissionActivity.class);
                 }else {
+                    Toast.makeText(c, isMission+"", Toast.LENGTH_LONG).show();
                     in = new Intent(c, GroupActivity.class);
                 }
-            }
+
+            }break;
         }
         return in;
     }
