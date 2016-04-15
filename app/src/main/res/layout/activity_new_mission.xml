@@ -347,7 +347,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="38dp"
             android:layout_column="0"
             android:layout_columnSpan="14"
             android:layout_row="22">
@@ -424,7 +424,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_column="0"
             android:layout_columnSpan="14"
             android:layout_row="100"
@@ -444,7 +444,6 @@
                 android:background="@drawable/patrickc_button_red"
                 android:textColor="#331c1c"
                 android:layout_marginStart="20dp"
-                android:layout_alignParentTop="false"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="false"
@@ -463,7 +462,6 @@
                 android:onClick="onClickCancel"
                 android:background="@drawable/patrickc_button_red"
                 android:textColor="#331c1c"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
