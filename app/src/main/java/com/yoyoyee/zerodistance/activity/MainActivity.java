@@ -52,11 +52,9 @@ public class MainActivity extends AppCompatActivity {
     ViewPager pager;
     SlidingTabLayout tabs;
     private ProgressDialog pDialog;
-    public static boolean PD=false;
     private SQLiteHandler db;
     String Titles[];
     int upDataCount=0;
-    boolean beupData= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
 //            updataMissionDB();
 //
 //        }
-        beupData=false;
 
     }
 
@@ -140,14 +137,12 @@ public class MainActivity extends AppCompatActivity {
     private void showDialog() {
         if (!pDialog.isShowing()){
             pDialog.show();
-            PD=true;
         }
     }
 
     private void hideDialog() {
         if (pDialog.isShowing()){
             pDialog.dismiss();
-            PD=false;
         }
     }
     private void delphoneDB(){
@@ -159,9 +154,8 @@ public class MainActivity extends AppCompatActivity {
         delphoneDB();//資料都先削掉
         showDialog();
         //fabtime();
-        updataSchoolDB();//成功會更新Mission
+        updataSchoolDB();
         updataMissionDB();
-        beupData=true;
     }
     private void updataSchoolDB(){
         ClientFunctions.updateSchools(new ClientResponse() {

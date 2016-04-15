@@ -40,14 +40,6 @@ import java.util.Date;
  */
 public class fragment_team extends Fragment implements View.OnTouchListener{
    //
-   int[] id;
-    String[] title;
-    Date[] expAt;
-    int[] needNum;
-    int[] currentNum;
-    boolean[] missiondangerous;
-    boolean becontext;
-    String[] detial;
     ArrayList<Group> Group;
     private ProgressDialog pDialog;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
@@ -62,11 +54,11 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
 
     public fragment_team(){
-        updataphoneDB();
+//        updataphoneDB();
     }
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_team, container, false);
-//        makecard();
+        makecard();
         try {
 
             //CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
@@ -74,7 +66,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
-            mList.setAdapter(CardViewAdapter);
+//            mList.setAdapter(CardViewAdapter);
             mList.setOnTouchListener(this);//監聽動作
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,6 +121,14 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
         return v;
     }
+    public void  onResume(){
+        super.onResume();
+        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        CardViewAdapter.setItemCount(0);
+        mList.scrollToPosition(0);
+        makecard();
+        mList.setAdapter(CardViewAdapter);
+    }
 
     public void makecard() {
         Group  = QueryFunctions.getGroups();
@@ -140,6 +140,11 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
         }
         CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/);
+        try {
+            mList.setAdapter(CardViewAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean onTouch(View v, MotionEvent event) {
@@ -162,6 +167,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
                 case MotionEvent.ACTION_UP:  // 放開
                 {
+                    fab.setVisibility(View.VISIBLE);
                     // 設定 TextView 內容
                     break;}
             }
@@ -187,7 +193,6 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
     //更新
     private void updataphoneDB(){//更新手機資料
-        totalvuledel();
         updataMissionDB();
     }
     private void updataMissionDB(){  //成功會更新Group
@@ -246,14 +251,5 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     }
     //更新
 
-    public void totalvuledel(){
-        id = null;
-        title = null;
-        detial = null;
-        expAt = null;
-        needNum = null;
-        currentNum = null;
-        missiondangerous = null;
-    }
 
 }

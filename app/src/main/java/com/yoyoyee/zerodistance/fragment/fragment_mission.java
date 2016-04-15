@@ -52,14 +52,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     //
 
-    int[] id;
-    String[] title;
-    Date[] expAt;
-    int[] needNum;
-    int[] currentNum;
-    boolean[] missiondangerous;
-    ArrayList<Mission>  missionsUrgent;
-    ArrayList<Mission>  missionsNotUrgent;
     ArrayList<Mission> missions;
     Mission[] mission;
     int missionnumber[];
@@ -73,27 +65,20 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     int upDataCount;
     LinearLayoutManager layoutManager;//CARD layout
     public fragment_mission(){
-       // totalvuledel();
 //        updataphoneDB();
-     // makecard();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
-
-        SessionFunctions SF = new SessionFunctions();
-
-    makecard();
-
+         makecard();
 
         try {
-           // CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_mission);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
-            mList.setAdapter(CardViewAdapter);  //設定內容
+          //  mList.setAdapter(CardViewAdapter);  //設定內容
             mList.setOnTouchListener(this);//監聽動作
         } catch (Exception e) {
             e.printStackTrace();
@@ -192,7 +177,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     }
     private void updataphoneDB(){//更新手機資料
-        totalvuledel();
         updataMissionDB();
     }
 
@@ -222,7 +206,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             public void onResponse(String response) {
                 CardViewAdapter.notifyDataSetChanged();
                 makecard();
-                mList.setAdapter(CardViewAdapter);
+             //   mList.setAdapter(CardViewAdapter);
             }
 
             @Override
@@ -251,7 +235,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             {
 //                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
                 fab.setVisibility(View.INVISIBLE);
-                //fabtime();
+                fabtime();
                 break;}
 
             case MotionEvent.ACTION_UP:  // 放開
@@ -279,15 +263,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
         }.start();
     }
-    public void totalvuledel(){
-        id = null;
-        title = null;
-        detial = null;
-        expAt = null;
-        needNum = null;
-        currentNum = null;
-        missiondangerous = null;
-    }
+
     //任務排序 (緊急任務先)
     public void bedangerfirst(){
         Mission[] dangerlist=new Mission[getUrgentCount()];
@@ -330,8 +306,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         bedangerfirst();    //任務排序 (緊急任務先)
             CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
 
-        try {           //如果是第一次就部會執行
-
+        try {
             mList.setAdapter(CardViewAdapter);
         } catch (Exception e) {
             e.printStackTrace();
