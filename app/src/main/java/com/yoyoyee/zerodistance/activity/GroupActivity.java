@@ -327,7 +327,7 @@ public class GroupActivity extends AppCompatActivity {
         needNumber = group.getNeedNum();
         acceptNumber = group.getCurrentNum();
         //須在改過，改成發布者名
-        who = group.getUserID();
+        who = group.getUserName();
         //設置時間
         Date dateTemp = group.getCreateAt();
         timeS = dateFormat.format(dateTemp);
