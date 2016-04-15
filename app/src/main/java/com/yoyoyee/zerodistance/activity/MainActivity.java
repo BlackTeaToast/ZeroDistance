@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updataphoneDB(){//更新手機資料
-        delphoneDB();//資料都先削掉
         showDialog();
+        delphoneDB();//資料都先削掉
         //fabtime();
         updataSchoolDB();
         updataMissionDB();
@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 if(upDataCount>=5){
                     CustomToast.showToast(context, "更新失敗揪團(主)", 500);
                     hideDialog();
+                    MakeTabAndContext();
                 }else{
                     upDataCount+=1;
                     updataGroupDB();

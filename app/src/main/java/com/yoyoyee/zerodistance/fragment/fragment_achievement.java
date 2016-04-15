@@ -52,21 +52,21 @@ public class fragment_achievement extends Fragment {
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "尚餘9次達成" ,Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(), "尚餘9次達成" ,Toast.LENGTH_SHORT).show();
             }
         });
 
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "尚餘10次達成" ,Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(), "尚餘10次達成" ,Toast.LENGTH_SHORT).show();
             }
         });
 
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "尚餘10次達成" ,Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(), "尚餘10次達成" ,Toast.LENGTH_SHORT).show();
             }
         });
 

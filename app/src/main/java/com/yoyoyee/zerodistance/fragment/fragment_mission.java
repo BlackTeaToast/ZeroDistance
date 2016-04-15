@@ -54,8 +54,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     ArrayList<Mission> missions;
     Mission[] mission;
-    int missionnumber[];
-    String[] detial;
     //
     RecyclerView mList;
     FloatingActionButton fab;
@@ -178,6 +176,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     }
     private void updataphoneDB(){//更新手機資料
         updataMissionDB();
+        updataGroups();
     }
 
     private void updataMissionDB(){
