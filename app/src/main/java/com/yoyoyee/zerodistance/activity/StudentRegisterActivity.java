@@ -107,9 +107,6 @@ public class StudentRegisterActivity extends Activity {
         btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        LoginActivity.class);
-                startActivity(i);
                 finish();
             }
         });
