@@ -1,5 +1,6 @@
 package com.yoyoyee.zerodistance.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -108,6 +109,35 @@ public class AskActivity extends AppCompatActivity {
                     }
                 });
             }
+                final ProgressDialog progressDialog = new ProgressDialog(v.getContext());
+                    progressDialog.show();
+                if (isGroup){
+                    ClientFunctions.updateGroupQA(group_mission_ID, new ClientResponse() {
+                        @Override
+                        public void onResponse(String response) {
+                            progressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+                            progressDialog.dismiss();
+                        }
+                    });
+
+                }
+                else {
+                    ClientFunctions.updateMissionQA(group_mission_ID, new ClientResponse() {
+                        @Override
+                        public void onResponse(String response) {
+                            progressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onErrorResponse(String response) {
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
             finish();
             }
         });
