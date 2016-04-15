@@ -115,6 +115,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                     mList.scrollToPosition(0);
                     CardViewAdapter.notifyDataSetChanged();
                     updataphoneDB();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
         // 頂端向下滑更新
@@ -224,7 +225,6 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                     Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
                 }
                 //Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
-                mSwipeRefreshLayout.setRefreshing(false);
                 makecard();
                 mList.setAdapter(CardViewAdapter);
                 upDataCount=0;
