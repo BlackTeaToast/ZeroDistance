@@ -52,7 +52,6 @@ public class TapService extends Service {
             while (action.equals(Intent.ACTION_TIME_TICK)) {
                 final int notifyID = 1; // 通知的識別號碼
                 final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
-                ArrayList<QA> allData = QueryFunctions.getQAs();
                 try {
                     Calendar calender =Calendar.getInstance();
 

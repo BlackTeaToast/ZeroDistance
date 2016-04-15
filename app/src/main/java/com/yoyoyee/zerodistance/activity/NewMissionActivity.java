@@ -614,7 +614,6 @@ public class NewMissionActivity extends AppCompatActivity {
                                             new ClientResponse() {
                                                 @Override
                                                 public void onResponse(String response) {
-                                                    //ClientFunctions.uploadMissionImage();
                                                     ClientFunctions.updateMissions(new ClientResponse() {
                                                         @Override
                                                         public void onResponse(String response) {
@@ -630,7 +629,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                                             public void onResponse(String response) {
 
                                                                 progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group + "_1", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(v.getContext(), response , Toast.LENGTH_SHORT).show();
 
                                                                 NewMissionActivity.this.finish();
                                                             }
@@ -638,7 +637,7 @@ public class NewMissionActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onErrorResponse(String response) {
                                                                 progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), "連線失敗，請重新送出", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
                                                     } else {

@@ -55,20 +55,20 @@ public class AskActivity extends AppCompatActivity {
                     ClientFunctions.publishGroupQA(group_mission_ID, ET.getText().toString(), new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(AskActivity.this, "發問成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AskActivity.this, "完成", Toast.LENGTH_SHORT).show();
 
                         }
 
                         @Override
                         public void onErrorResponse(String response) {
-                            Toast.makeText(AskActivity.this, "發問失敗", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AskActivity.this, "失敗", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
                     ClientFunctions.publishMissionQA(group_mission_ID, ET.getText().toString(), new ClientResponse() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(AskActivity.this, "發問成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AskActivity.this, "完成", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -82,7 +82,7 @@ public class AskActivity extends AppCompatActivity {
                 ClientFunctions.publishQAAnswer(q_a_ID, ET.getText().toString(), new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(AskActivity.this,"回答成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AskActivity.this,"完成",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

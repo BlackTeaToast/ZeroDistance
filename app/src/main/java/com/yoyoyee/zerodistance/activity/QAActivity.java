@@ -6,6 +6,7 @@ package com.yoyoyee.zerodistance.activity;
         import android.content.Intent;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
+        import android.support.v4.widget.SwipeRefreshLayout;
         import android.support.v7.app.ActionBar;
         import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ package com.yoyoyee.zerodistance.activity;
         import com.yoyoyee.zerodistance.app.QAndA;
         import com.yoyoyee.zerodistance.client.ClientFunctions;
         import com.yoyoyee.zerodistance.client.ClientResponse;
+        import com.yoyoyee.zerodistance.helper.CardViewAdapter;
         import com.yoyoyee.zerodistance.helper.QAAdapter;
         import com.yoyoyee.zerodistance.helper.QueryFunctions;
         import com.yoyoyee.zerodistance.helper.SessionFunctions;
@@ -45,7 +47,8 @@ public class QAActivity extends AppCompatActivity {
     private Intent intentData;
     private ArrayList<QA> DataQas;
     private Toolbar.OnMenuItemClickListener onMenuItemClick;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    protected Boolean isreload=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,17 @@ public class QAActivity extends AppCompatActivity {
                 return false;
             }
         };
+        //下拉更新
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isreload=true;
+                loadQandAData(isGroup, group_or_mission_ID);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
         ActionBar actionBar = getSupportActionBar();
@@ -88,7 +102,10 @@ public class QAActivity extends AppCompatActivity {
     private void loadQandAData(boolean isGroup,int ID){
             if (isGroup) {
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.show();
+                if (!isreload){
+                    progressDialog.show();
+                    isreload=false;
+                }
                 ClientFunctions.updateGroupQA(ID, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {
@@ -105,7 +122,10 @@ public class QAActivity extends AppCompatActivity {
                 });
             } else if(!isGroup)  {
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.show();
+                if (!isreload){
+                    progressDialog.show();
+                    isreload=false;
+                }
                 ClientFunctions.updateMissionQA(ID, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {

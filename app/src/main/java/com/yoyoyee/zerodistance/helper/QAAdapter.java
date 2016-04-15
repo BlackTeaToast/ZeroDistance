@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.AskActivity;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 
 import java.lang.reflect.Field;
 
@@ -163,7 +165,16 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                                 intentGO(v,qaID,a_Acontenttext);
                                 break;
                             case (R.id.popdel_nogroup):
+                               ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
+                                   @Override
+                                   public void onResponse(String response) {
 
+                                   }
+
+                                   @Override
+                                   public void onErrorResponse(String response) {
+                                   }
+                               });
                                 break;
                         }
                         return false;
@@ -191,7 +202,17 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                                 intentGO(v,qaID,a_Acontenttext);
                                 break;
                             case (R.id.popdel_hadans_group):
+                                ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
+                                    @Override
+                                    public void onResponse(String response) {
 
+                                    }
+
+                                    @Override
+                                    public void onErrorResponse(String response) {
+
+                                    }
+                                });
                                 break;
                         }
                         return false;
