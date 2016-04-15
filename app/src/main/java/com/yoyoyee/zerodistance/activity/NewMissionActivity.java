@@ -337,10 +337,10 @@ public class NewMissionActivity extends AppCompatActivity {
         textViewcontent.setTextSize(size+5);
         textViewMissionDate.setTextSize(size+5);
         textViewPeopleNumber.setTextSize(size+5);
-        buttonTime.setTextSize(size+5);
-        buttonDate.setTextSize(size+5);
-        buttonPicture.setTextSize(size+5);
-        buttonTakePicture.setTextSize(size+5);
+        buttonTime.setTextSize(size);
+        buttonDate.setTextSize(size);
+        buttonPicture.setTextSize(size);
+        buttonTakePicture.setTextSize(size);
         textViewWhere.setTextSize(size+5);
         buttonOk.setTextSize(size);
         buttonCancel.setTextSize(size);
@@ -505,7 +505,7 @@ public class NewMissionActivity extends AppCompatActivity {
         String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         String fname ="p"+ System.currentTimeMillis() +".jpg";
         uriImg =Uri.parse( "file://" + dir + "/"+ fname);
-        Toast.makeText(this, String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
         Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         camera.putExtra(MediaStore.EXTRA_OUTPUT, uriImg);
         startActivityForResult(camera, requireCodefromCamara);
@@ -554,7 +554,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
 
                     Bitmap bitmap = BitmapFactory.decodeFile(picturePath , option); //讀取圖檔資訊，存入option中，已進行修改
-                    Toast.makeText(this, picturePath, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, picturePath, Toast.LENGTH_SHORT).show();
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
@@ -614,6 +614,29 @@ public class NewMissionActivity extends AppCompatActivity {
                                             new ClientResponse() {
                                                 @Override
                                                 public void onResponse(String response) {
+                                                    if (!String.valueOf(uriImg).equals("null")) {
+                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), picturePath, new ClientResponse() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(v.getContext(), "上傳成功" , Toast.LENGTH_SHORT).show();
+
+                                                                NewMissionActivity.this.finish();
+                                                            }
+
+                                                            @Override
+                                                            public void onErrorResponse(String response) {
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(v.getContext(), "上傳完成", Toast.LENGTH_SHORT).show();
+                                                                NewMissionActivity.this.finish();
+                                                            }
+                                                        });
+                                                    } else {
+
+                                                        Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
+                                                        NewMissionActivity.this.finish();
+                                                    }
                                                     ClientFunctions.updateMissions(new ClientResponse() {
                                                         @Override
                                                         public void onResponse(String response) {
@@ -623,33 +646,12 @@ public class NewMissionActivity extends AppCompatActivity {
                                                         public void onErrorResponse(String response) {
                                                         }
                                                     });
-                                                    if (!String.valueOf(uriImg).equals("null")) {
-                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), picturePath, new ClientResponse() {
-                                                            @Override
-                                                            public void onResponse(String response) {
-
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), response , Toast.LENGTH_SHORT).show();
-
-                                                                NewMissionActivity.this.finish();
-                                                            }
-
-                                                            @Override
-                                                            public void onErrorResponse(String response) {
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        });
-                                                    } else {
-                                                        progressDialog.dismiss();
-                                                        Toast.makeText(v.getContext(), getResources().getString(R.string.okbuttom_new_mission_and_group) + "_2", Toast.LENGTH_SHORT).show();
-                                                        NewMissionActivity.this.finish();
-                                                    }
                                                 }
 
                                                 @Override
                                                 public void onErrorResponse(String response) {
-                                                    Toast.makeText(v.getContext(), response + "_3", Toast.LENGTH_SHORT).show();
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(v.getContext(), response , Toast.LENGTH_SHORT).show();
 
                                                 }
                                             });
