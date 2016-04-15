@@ -47,7 +47,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     LinearLayoutManager layoutManager;
     //
     int upDataCount=0;
-
+    boolean isfirst=true;
 
     RecyclerView mList;
     FloatingActionButton fab;
@@ -140,10 +140,8 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
         }
         CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/);
-        try {
+        if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -41,12 +41,11 @@ public class fragment_havebeen extends Fragment {//
     int[] needNum;
     int[] currentNum;
     boolean[] missiondangerous;
-    boolean becontext;
+    boolean becontext, isfirst=true;
     String[] detial;
     ArrayList<Mission> missions;
     Mission[] mission;
     ArrayList<Group> Group;
-    int missionnumber[];
     //
     CardViewAdapter CardViewAdapter;
     int upDataCount=0;
@@ -58,9 +57,7 @@ public class fragment_havebeen extends Fragment {//
     }
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_havebeen, container, false);
-        ArrayList<Mission> missions = QueryFunctions.getFinishedMissions();
-        ArrayList<Group> Group = QueryFunctions.getFinishedGroups();
-      //  makecard();
+        makecard();
         // 頂端向下滑更新
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -73,39 +70,8 @@ public class fragment_havebeen extends Fragment {//
             }
         });
         // 頂端向下滑更新
-//        for(int i = 0;i <missions.size()+Group.size();i++){
-//            if(i<missions.size()) {
-//                id[i] = missions.get(i).id;
-//                title[i] = missions.get(i).title;
-//                if (becontext) {
-//                    detial[i] = missions.get(i).content;
-//                } else {
-//                    detial[i] = missions.get(i).reward;
-//                }
-//                expAt[i] = missions.get(i).expAt;
-//                needNum[i] = missions.get(i).needNum;
-//                currentNum[i] = missions.get(i).currentNum;
-//                missiondangerous[i] = missions.get(i).isUrgent;
-//
-//            }else if(i>=missions.size()){
-//                id[i+missions.size()] = Group.get(i).id;
-//                title[i+missions.size()] = Group.get(i).title;
-//                detial[i+missions.size()] = Group.get(i).content;
-//                expAt[i+missions.size()] = Group.get(i).expAt;
-//                needNum[i+missions.size()] = Group.get(i).needNum;
-//                currentNum[i+missions.size()] = Group.get(i).currentNum;
-//                missiondangerous[i+missions.size()] = false;
-//
-//            }
 
-//        }
-
-//        int missionnumber[]=new int[title.length];
-//        for(int i=0;i<title.length;i++){
-//            missionnumber[i]=i;
-//        }
         try {
-//            CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber,R.layout.fragment_fragment_havebeen);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
@@ -153,10 +119,8 @@ public class fragment_havebeen extends Fragment {//
                     , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
         }
 
-        try {
+        if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
     }
