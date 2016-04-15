@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName);
         TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
         UserNames.setText(SessionFunctions.getUserNickName()+"");
-        UserSchool.setText(SessionFunctions.getUserschoolName()+"");
+        UserSchool.setText(SessionFunctions.getUserschoolName()+"　　");
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
 
@@ -132,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
 
         textViewTemp = (TextView)tool_bar.findViewById(R.id.UserName);
-        textViewTemp.setTextSize(12+(SessionFunctions.getUserTextSize())/3);
+        textViewTemp.setTextSize(14+(SessionFunctions.getUserTextSize())/3);
         textViewTemp = (TextView)tool_bar.findViewById(R.id.UserSchool);
-        textViewTemp.setTextSize(12+(SessionFunctions.getUserTextSize())/3);
+        textViewTemp.setTextSize(14+(SessionFunctions.getUserTextSize())/3);
 
     }
     private void showDialog() {
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
-        pager.setCurrentItem(2);  //預設出現頁面
+     //   pager.setCurrentItem(2);  //預設出現頁面
         hideDialog();
     }
 

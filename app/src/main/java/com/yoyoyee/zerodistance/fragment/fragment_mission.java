@@ -101,7 +101,11 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
         //漂浮
          fab=  (FloatingActionButton) v.findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE);
+        if(SessionFunctions.isTeacher()) {
+            fab.setVisibility(View.VISIBLE);
+        }else{
+            fab.setVisibility(View.GONE);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +113,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 //                        .setAction("Action", null).show();
                 Intent in = new Intent(getActivity(), NewMissionActivity.class);
                 in.putExtra("id", SessionFunctions.getUserUid());
-                Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
                 startActivity(in);
             }
         });
@@ -175,6 +179,11 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         mList.scrollToPosition(0);
         makecard();
         mList.setAdapter(CardViewAdapter);
+        if(SessionFunctions.isTeacher()) {
+            fab.setVisibility(View.VISIBLE);
+        }else{
+            fab.setVisibility(View.GONE);
+        }
     }
     //設置字體大小
     private void setFontSize(){
@@ -247,8 +256,11 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
             case MotionEvent.ACTION_UP:  // 放開
             {
-                fab.setVisibility(View.VISIBLE);
-                // 設定 TextView 內容
+                if(SessionFunctions.isTeacher()) {
+                    fab.setVisibility(View.VISIBLE);
+                }else{
+                    fab.setVisibility(View.GONE);
+                }
                 break;}
         }
         return false;

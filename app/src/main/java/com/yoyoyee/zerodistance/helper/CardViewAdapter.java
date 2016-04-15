@@ -132,11 +132,16 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                     holder.CardView.setCardBackgroundColor(Color.parseColor("#fafafa"));
                 }
         }
+        if(missions[position].isMission()){
+            holder.missionName.setTextColor(Color.BLUE);
+        }else {
+            holder.missionName.setTextColor(Color.parseColor("#ff99cc00"));
+        }
 
         holder.missionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Toast.makeText(v.getContext(), ""+missions[position].isMission(), Toast.LENGTH_SHORT).show();
+           //    Toast.makeText(v.getContext(), ""+missions[position].isMission(), Toast.LENGTH_SHORT).show();
                 doIntent(v.getContext(), position);
                 in.putExtra("id", missions[position].getId());
 //                in.putExtra("id", 2);

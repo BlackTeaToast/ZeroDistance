@@ -129,37 +129,37 @@ public class fragment_havebeen extends Fragment {//
         SessionFunctions SF= new SessionFunctions();
 
     }
-//    public void makecard() {
-//        missions  = QueryFunctions.getMissions();
-//        Group  = QueryFunctions.getGroups();
-//        mission = new Mission[missions.size()+Group.size()];
-//        for(int i = 0;i <missions.size();i++) {
-//            if ((becontext)) {
-//                mission[i] = new Mission(missions.get(missions.size()+Group.size() - i - 1).id, missions.get(missions.size()+Group.size() - i - 1).title
-//                        , missions.get(missions.size()+Group.size() - i - 1).content, missions.get(missions.size()+Group.size() - i - 1).expAt
-//                        , missions.get(missions.size()+Group.size() - i - 1).needNum, missions.get(missions.size()+Group.size() - i - 1).currentNum
-//                        , false, true);
-//
-//            } else {//獎勵
-//                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
-//                        , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
-//                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-//                        , false, true);
-//            }
-//        }
-//        for(int i=missions.size();i<missions.size()+Group.size();i++){
-//            mission[i] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
-//                    , Group.get(missions.size()+Group.size()-i-1).content, Group.get(missions.size()+Group.size()-i-1).expAt
-//                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
-//        }
-//
-//        try {
-//            mList.setAdapter(CardViewAdapter);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
-//    }
+    public void makecard() {
+        missions  = QueryFunctions.getMissions();
+        Group  = QueryFunctions.getGroups();
+        mission = new Mission[missions.size()+Group.size()];
+        for(int i = 0;i <missions.size();i++) {
+            if ((becontext)) {
+                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
+                        , missions.get(missions.size() - i - 1).content, missions.get(missions.size() - i - 1).expAt
+                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
+                        , false, true);
+
+            } else {//獎勵
+                mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
+                        , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
+                        , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
+                        , false, true);
+            }
+        }
+        for(int i=missions.size();i<missions.size()+Group.size();i++){
+            mission[i] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
+                    , Group.get(missions.size()+Group.size()-i-1).content, Group.get(missions.size()+Group.size()-i-1).expAt
+                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
+        }
+
+        try {
+            mList.setAdapter(CardViewAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission);
+    }
     private void updataphoneDB(){//更新手機資料
         totalvuledel();
         updataMissionDB();

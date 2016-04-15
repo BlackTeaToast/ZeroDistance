@@ -115,8 +115,8 @@ public class fragment_setting extends Fragment {
                     break;
             }
             SF.setUserTextSize(ttsize);
-            textsize.setText("" + ttsize);
-            textsize.setTextSize(SF.getUserTextSize());
+//            textsize.setText("" + ttsize);
+//            textsize.setTextSize(SF.getUserTextSize());
         }
 
     };
