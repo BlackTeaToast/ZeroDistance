@@ -122,6 +122,7 @@
     <string name="showcontent">顯示內容</string>
     <string name="showpay">顯示獎勵</string>
     <string name="mainpage">主頁面</string>
+    <string name="talktous">聯絡我們</string>
     <style name="cardtext">
         <item name="android:textSize">20sp</item>
     </style>

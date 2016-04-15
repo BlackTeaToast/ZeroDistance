@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(String response) {
                 if(upDataCount>=5){
                 CustomToast.showToast(context, "更新失敗任務(主)", 500);
+                    MakeTabAndContext();
                     hideDialog();
             }else{
                 upDataCount+=1;

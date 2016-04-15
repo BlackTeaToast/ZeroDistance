@@ -132,6 +132,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/talktous"
+        android:id="@+id/talktous"
+        android:textColor="#0000ff"
+        android:textIsSelectable="false"
+        android:layout_gravity="left|bottom" />
+
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="105dp"

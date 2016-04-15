@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +117,7 @@ public class fragment_setting extends Fragment {
                     break;
             }
             SF.setUserTextSize(ttsize);
+            textsize.setVisibility(View.GONE);
 //            textsize.setText("" + ttsize);
 //            textsize.setTextSize(SF.getUserTextSize());
         }
@@ -189,5 +192,9 @@ public class fragment_setting extends Fragment {
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (Button) v.findViewById(R.id.Sign_outbut);
         textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp = (TextView)v.findViewById(R.id.talktous);
+        SpannableString content = new SpannableString(getResources().getString(R.string.talktous));//畫底線
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        textViewTemp.setText(content);//畫底線
     }
 }
