@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:id="@+id/refresh_layout"
-            android:background="@drawable/repeat_block_bg">
+            android:background="@drawable/repeat_flower_bg">
             <view
                 class="android.support.v7.widget.RecyclerView"
                 android:id="@+id/listView"
