@@ -126,7 +126,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 if(missions[position].getUrgent()){
                     holder.missiondangerous.setVisibility(View.VISIBLE);
 //                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
-                holder.CardView.setBackgroundResource(R.drawable.dangreous_background_FAFAFA);
+                holder.CardView.setBackgroundResource(R.drawable.dangreous_background_fa);
                 }
                 else{
                     holder.missiondangerous.setVisibility(View.INVISIBLE);
