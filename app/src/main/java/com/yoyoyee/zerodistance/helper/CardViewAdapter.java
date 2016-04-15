@@ -126,12 +126,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 if(missions[position].getUrgent()){
                     holder.missiondangerous.setVisibility(View.VISIBLE);
 //                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
-                holder.CardView.setBackgroundResource(R.drawable.dangreous_background);
+                holder.CardView.setBackgroundResource(R.drawable.dangreous_background_FAFAFA);
                 }
                 else{
                     holder.missiondangerous.setVisibility(View.INVISIBLE);
 //                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fafafa"));
-                holder.CardView.setBackgroundResource(R.drawable.undangreous_background);
+                holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
                 }
         }
         if(missions[position].isMission()){
