@@ -31,14 +31,14 @@ public class ImageViewAdapter extends RecyclerView.Adapter <ImageViewAdapter.Vie
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView urlImage;
-        public TextView textView;
+
 
 
         public ViewHolder(View itemView){
             super(itemView);
 
             urlImage = (ImageView) itemView.findViewById(R.id.imageViewForAdapter);
-            textView = (TextView) itemView.findViewById(R.id.imageTextForAdapter);
+
         }
 
     }
@@ -59,10 +59,7 @@ public class ImageViewAdapter extends RecyclerView.Adapter <ImageViewAdapter.Vie
     @Override
     //將產生的ViewHolder ImageView 放入圖片
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        if(position<10)
-            holder.textView.setText("image "+(position+1));
-        else
-            holder.textView.setText("image "+position);
+
         holder.urlImage.setVisibility(View.VISIBLE);
         //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
         //建立一個AsyncTask執行緒進行圖片讀取動作，並帶入圖片連結網址路徑

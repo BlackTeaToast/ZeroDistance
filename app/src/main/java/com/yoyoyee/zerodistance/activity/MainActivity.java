@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startService(new Intent(this, TapService.class));
+        //startService(new Intent(this, TapService.class));
         Titles = getResources().getStringArray(R.array.tabstyle);
         // Progress dialog
         pDialog = new ProgressDialog(this);

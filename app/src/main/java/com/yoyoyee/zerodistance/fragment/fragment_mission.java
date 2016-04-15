@@ -242,11 +242,12 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             {
 //                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
                 fab.setVisibility(View.INVISIBLE);
-                fabtime();
+                //fabtime();
                 break;}
 
             case MotionEvent.ACTION_UP:  // 放開
             {
+                fab.setVisibility(View.VISIBLE);
                 // 設定 TextView 內容
                 break;}
         }

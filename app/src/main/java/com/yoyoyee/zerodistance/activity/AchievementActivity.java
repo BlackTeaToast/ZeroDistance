@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
@@ -37,7 +39,10 @@ public class AchievementActivity extends AppCompatActivity {
         textView3 = (TextView)findViewById(R.id.achievementText3);
 
 
+
     }
+
+
 
     protected void onResume(){
         super.onResume();

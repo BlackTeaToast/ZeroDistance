@@ -941,9 +941,11 @@ public class MissionActivity extends AppCompatActivity {
     //依數量設置圖片url
     public void setImageUrl(int howMany){
         imageURL = new ArrayList<>();
+        howMany = 2;
 
         for(int i=0 ; i<howMany ; i++) {
-            imageURL.add(ClientFunctions.getMissionImageUrl(id, i));
+           // imageURL.add(ClientFunctions.getMissionImageUrl(id, i));
+            imageURL.add(ClientFunctions.getMissionImageUrl(81, i));
         }
 
     }

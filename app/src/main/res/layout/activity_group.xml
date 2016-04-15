@@ -122,8 +122,8 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/contentG"
                     android:textSize="22dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:textColor="#000000"
                     android:background="#7dffffff"
                     android:minLines="5" />

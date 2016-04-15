@@ -29,7 +29,9 @@
                     android:layout_alignLeft="@+id/textView5"
                     android:layout_alignStart="@+id/textView5"
                     android:id="@+id/achievement1"
-                    android:layout_gravity="left" />
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="-20dp"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,14 +69,14 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginBottom="5dp" />
+                    android:layout_gravity="left"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="在截止時限內\n完成10個任務"
+                    android:text="  完成10個任務\n執行、發佈間隔\n在一個小時以內"
                     android:id="@+id/achievementText2"
                     android:textSize="30dp"
                     android:layout_centerVertical="true"
@@ -107,7 +109,10 @@
                     android:src="@drawable/price_emergency"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="-20dp"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"

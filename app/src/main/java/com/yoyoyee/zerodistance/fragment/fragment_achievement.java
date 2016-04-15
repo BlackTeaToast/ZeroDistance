@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.yoyoyee.zerodistance.R;
@@ -47,11 +49,43 @@ public class fragment_achievement extends Fragment {
         thunder = false;
 
         //==================
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "尚餘9次達成" ,Toast.LENGTH_SHORT);
+            }
+        });
 
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "尚餘10次達成" ,Toast.LENGTH_SHORT);
+            }
+        });
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "尚餘10次達成" ,Toast.LENGTH_SHORT);
+            }
+        });
+
+        return v;
+
+    }
+
+
+
+    public void  onResume(){
+
+        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        super.onResume();
         //設置圖片
         setImage();
         setFont();
-        return v;}
+
+    }
+
 
 
     private void setImage(){
@@ -73,12 +107,18 @@ public class fragment_achievement extends Fragment {
 
     private void setFont(){
         float size = SessionFunctions.getUserTextSize();
+
         textView1.setText(R.string.achievement1);
+        textView1.setTextSize(size+10);
 
         textView2.setText(R.string.achievement2);
+        textView2.setTextSize(size+10);
 
         textView3.setText(R.string.achievement3);
+        textView3.setTextSize(size+10);
 
     }
+
+
 
 }
