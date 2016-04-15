@@ -108,7 +108,7 @@
     <string name="hint_nick_name">暱稱</string>
     <string name="hint_student_id">學號</string>
     <string name="btn_link_to_login">已經註冊了嗎？馬上登入看看吧！</string>
-    <string name="peoplenumber">人數：</string>
+    <string name="ppeoplenumber">人數：</string>
     <string name="peoplenumber_people">人</string>
     <string name="date">日期:</string>
     <string name="time">時間:</string>

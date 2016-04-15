@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -96,7 +97,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private ImageView imv;
     private Spinner spinnerPress, spinnerPay;
     private String[] stringPress ,stringPay;
-    private String getThatString;
+    private String picturePath;
     private String getPay;
 
 
@@ -246,6 +247,7 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 imv.setVisibility(View.GONE);
+                uriImg=Uri.parse("null");
                 return true;
             }
         });
@@ -493,7 +495,7 @@ public class NewMissionActivity extends AppCompatActivity {
         else {*/
 
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, requireCodefromSdcard);
        // }/
@@ -502,12 +504,12 @@ public class NewMissionActivity extends AppCompatActivity {
     private void openCamara(){
         String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         String fname ="p"+ System.currentTimeMillis() +".jpg";
-        uriImg =Uri.parse("file://" + dir + "/" +fname);
+        uriImg =Uri.parse( "file://" + dir + "/"+ fname);
         Toast.makeText(this, String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
         Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         camera.putExtra(MediaStore.EXTRA_OUTPUT, uriImg);
         startActivityForResult(camera, requireCodefromCamara);
-
+        picturePath=dir + "/"+ fname;
        /* File tmpFile = new File(Environment.getExternalStorageDirectory(),"image.jpg");
 
         Uri outputFileUri = Uri.fromFile(tmpFile);
@@ -540,9 +542,19 @@ public class NewMissionActivity extends AppCompatActivity {
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
                     option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
-                    uriImg =data.getData();
-                    Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/image.jpg", option); //讀取圖檔資訊，存入option中，已進行修改
-                    Toast.makeText(this, uriImg.toString(), Toast.LENGTH_SHORT).show();
+                    uriImg = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                    Cursor cursor = getContentResolver().query(uriImg,
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+
+                    Bitmap bitmap = BitmapFactory.decodeFile(picturePath , option); //讀取圖檔資訊，存入option中，已進行修改
+                    Toast.makeText(this, picturePath, Toast.LENGTH_SHORT).show();
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
@@ -562,23 +574,19 @@ public class NewMissionActivity extends AppCompatActivity {
     public void onClickOkOutputData(final View v){
         if (editTextName.getText().toString().trim().equals("")) {
             Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
-        }
-        else{
-           // missionData.setTitle(editTextName.getText().toString());
-           if ( editTextNumber.getText().toString().trim().equals("")){
+        } else {
+            // missionData.setTitle(editTextName.getText().toString());
+            if (editTextNumber.getText().toString().trim().equals("")) {
                 Toast.makeText(this, R.string.errorpeoplenumber_new_mission_and_group, Toast.LENGTH_SHORT).show();
-            }
-            else {
-             //   missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
+            } else {
+                //   missionData.needNum=Integer.parseInt(editTextNumber.getText().toString());
                 if (allreadyDate == false) {
                     Toast.makeText(this, R.string.errornoDate_new_mission_and_group, Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     //待添加DATE
                     if (allreadyTime == false) {
                         Toast.makeText(this, R.string.errornoTime_new_mission_and_group, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         if (editTextWhere.getText().toString().trim().equals("")) {
                             Toast.makeText(this, R.string.errorwhere_new_mission, Toast.LENGTH_SHORT).show();
                         } else {
@@ -587,12 +595,13 @@ public class NewMissionActivity extends AppCompatActivity {
                                 Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
                             } else {
                                 //    missionData.content = editTextcontent.getText().toString();
-                                if (isOtherPay){
+                                if (isOtherPay) {
                                     getPay = editTextOtherPay.getText().toString();
                                 }
                                 calendar.set(year, month, day, hour, minute);
-                                if(!isEdit) {
+                                if (!isEdit) {
                                     final ProgressDialog progressDialog = new ProgressDialog(this);
+                                    progressDialog.setCancelable(false);
                                     progressDialog.show();
                                     ClientFunctions.publishMission(
                                             editTextName.getText().toString(),
@@ -610,42 +619,42 @@ public class NewMissionActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onResponse(String response) {
                                                         }
+
                                                         @Override
                                                         public void onErrorResponse(String response) {
                                                         }
                                                     });
-                                                    if (!String.valueOf(uriImg).equals("null")){
-                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), uriImg.toString(), new ClientResponse() {
+                                                    if (!String.valueOf(uriImg).equals("null")) {
+                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), picturePath, new ClientResponse() {
                                                             @Override
                                                             public void onResponse(String response) {
 
                                                                 progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group+1, Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group + "_1", Toast.LENGTH_SHORT).show();
 
                                                                 NewMissionActivity.this.finish();
                                                             }
+
                                                             @Override
                                                             public void onErrorResponse(String response) {
                                                                 progressDialog.dismiss();
                                                                 Toast.makeText(v.getContext(), "連線失敗，請重新送出", Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
-                                                    }
-                                                    else
-                                                    {
+                                                    } else {
                                                         progressDialog.dismiss();
-                                                        Toast.makeText(v.getContext(), R.string.okbuttom_new_mission_and_group+2, Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(v.getContext(), getResources().getString(R.string.okbuttom_new_mission_and_group) + "_2", Toast.LENGTH_SHORT).show();
                                                         NewMissionActivity.this.finish();
                                                     }
                                                 }
-                                    @Override
+
+                                                @Override
                                                 public void onErrorResponse(String response) {
-                                                    Toast.makeText(v.getContext(), response+3, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(v.getContext(), response + "_3", Toast.LENGTH_SHORT).show();
 
                                                 }
                                             });
-                                }
-                                else{
+                                } else {
                                     ClientFunctions.publishUpdateMission(missionID,
                                             editTextName.getText().toString(),
                                             press,
@@ -663,7 +672,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
                                                 @Override
                                                 public void onErrorResponse(String response) {
-                                                    Toast.makeText(NewMissionActivity.this, response+4, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(NewMissionActivity.this, response + "_4", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                     );
