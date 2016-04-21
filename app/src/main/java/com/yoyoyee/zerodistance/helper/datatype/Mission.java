@@ -9,20 +9,20 @@ public class Mission {
 
     public int id;             //任務id
     public String userUid;         //擁有者id
-    public String userName;
+    public String userName;     //使用者名稱
     public int schoolID;       //學校id
     public String title;          //任務名稱
     public Boolean isUrgent;      //是否緊急
     public int needNum;           //需求人數
     public int currentNum;        //目前人數
-    public String place;
+    public String place;          //地點
     public String content;        //任務內容
     public String reward;         //獎勵
     public Date createdAt;         //創建時間
     public Date expAt;            //到期時間
     public boolean isRunning;     //是否執行中
     public boolean isFinished;     //是否完成
-    public Date finishedAt;
+    public Date finishedAt;         //
     private boolean isMission=true;       //是否為任務
 
     public Mission() {

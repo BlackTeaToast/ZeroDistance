@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1835,8 +1837,14 @@ public class ClientFunctions {
     }
 
     public static String getMissionImageUrl(int missionID, int imageNum) {
-        return new String(AppConfig.URL_GET_MISSION_IMAGE + "?uid=" + session.getUserUid() + "&access_key="
-                + session.getUserAccessKey() + "&mission_id=" + String.valueOf(missionID)
-                + "&image_num=" + String.valueOf(imageNum));
+        try {
+            String accessKey = URLEncoder.encode(session.getUserAccessKey(), "UTF-8");
+            return AppConfig.URL_GET_MISSION_IMAGE + "?uid=" + session.getUserUid() + "&access_key="
+                    + accessKey + "&mission_id=" + String.valueOf(missionID)
+                    + "&image_num=" + String.valueOf(imageNum);
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "getMissionImageUrl: " + e.getMessage());
+        }
+        return null;
     }
 }
