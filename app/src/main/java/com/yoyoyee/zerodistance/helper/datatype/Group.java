@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by p1235 on 2016/3/29.
  */
-public class Group extends Mission{
+public class Group extends Mission implements Comparable{
 
     public int id;             //任務id
     public String userUid;         //擁有者id
@@ -199,7 +199,17 @@ public class Group extends Mission{
         return isMission;
     }
 
+    @Override
+    public int compareTo(Object another) {
+        //物件本身與 o1 相比較，如果 retrun 正值，就表示比 o1 大
+        if(getExpAt().compareTo(((Group)another).expAt)>0){
+            return -1;
+        }else if(getExpAt().compareTo(((Group)another).expAt)<0){
+            return 1;
+        }else
+            return 0;
 
+    }
 
 }
 

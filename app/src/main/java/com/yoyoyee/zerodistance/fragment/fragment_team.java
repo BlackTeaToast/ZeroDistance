@@ -32,6 +32,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -140,6 +141,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                         , Group.get(Group.size()-i-1).needNum, Group.get(Group.size()-i-1).currentNum, false);
 
         }
+        Arrays.sort(group);//時間排序
         CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/);
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
@@ -218,12 +220,6 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                SQLiteHandler db = AppController.getDB();
-                String TAG = AppController.class.getSimpleName();
-                ArrayList<Group> Group = db.getGroups();
-                if (Group.size() > 0) {
-                    Log.d(TAG, "onResponse: " + Group.get(0).getTitle() + " " + Group.get(0).createdAt + " " + Group.get(0).finishedAt);
-                }
                 //Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
                 makecard();
                 mList.setAdapter(CardViewAdapter);

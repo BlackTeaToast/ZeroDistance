@@ -42,6 +42,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -114,7 +115,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                 //lastVisibleItem >= totalItemCount - 4 表示剩下4個item自動載入，各位自由選擇
                 // dy>0 表示向下滑動
                 if (lastVisibleItem >= totalItemCount && dy < 0) {
-                         fab.setVisibility(View.VISIBLE);
+//                         fab.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -253,7 +254,12 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
             @Override
             public void onFinish() {
-                fab.setVisibility(View.VISIBLE);
+                if(SessionFunctions.isTeacher()){
+                    fab.setVisibility(View.VISIBLE);
+                }else {
+                    fab.setVisibility(View.INVISIBLE);
+                }
+
             }
 
             @Override
@@ -302,7 +308,9 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                             , missions.get(missions.size()-i-1).isUrgent, true);
                 }
         }
+        Arrays.sort(mission);//時間排序
         bedangerfirst();    //任務排序 (緊急任務先)
+
             CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
 
         try {

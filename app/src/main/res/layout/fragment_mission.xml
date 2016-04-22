@@ -47,7 +47,8 @@
         app:elevation="8dp"
         app:pressedTranslationZ="12dp"
         android:background="@drawable/action_floating_blue"
-        card_view:backgroundTint="#e15afc">
+        card_view:backgroundTint="#e15afc"
+        android:visibility="invisible">
 
     </android.support.design.widget.FloatingActionButton>
 

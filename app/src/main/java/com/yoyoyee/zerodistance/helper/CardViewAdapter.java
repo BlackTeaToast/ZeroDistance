@@ -29,6 +29,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -110,7 +111,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(fragment, parent, false);
         ViewHolder vh = new ViewHolder(v);
-
+        dosort();
         return vh;
     }
 
@@ -193,7 +194,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }
         return in;
     }
-
+    //排序
+    private void dosort(){
+//        if(fragment!=R.layout.fragment_fragment_mission){
+//            Arrays.sort(missions);
+//        }
+    }
     //字數限制
     private String limitString(String context, int type){//0為title , 1為detial
         switch ((int)SessionFunctions.getUserTextSize()) {
