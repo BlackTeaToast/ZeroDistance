@@ -29,6 +29,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -44,7 +45,8 @@ public class fragment_havebeen extends Fragment {//
     boolean becontext, isfirst=true;
     String[] detial;
     ArrayList<Mission> missions;
-    Mission[] mission;
+    Mission[] mission , allmission;
+    Group[] group;
     ArrayList<Group> Group;
     //
     CardViewAdapter CardViewAdapter;
@@ -52,9 +54,6 @@ public class fragment_havebeen extends Fragment {//
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
     RecyclerView mList;
     LinearLayoutManager layoutManager;
-    public fragment_havebeen(){
-        updataphoneDB();
-    }
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_havebeen, container, false);
         makecard();
@@ -107,7 +106,9 @@ public class fragment_havebeen extends Fragment {//
     public void makecard() {
         missions  = QueryFunctions.getMissions();
         Group  = QueryFunctions.getGroups();
-        mission = new Mission[missions.size()+Group.size()];
+        mission = new Mission[missions.size()];
+        group = new Group[Group.size()];
+        allmission = new Mission[missions.size()+Group.size()];
         for(int i = 0;i <missions.size();i++) {
             if ((becontext)) {
                 mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
@@ -123,7 +124,7 @@ public class fragment_havebeen extends Fragment {//
             }
         }
         for(int i=missions.size();i<missions.size()+Group.size();i++){
-            mission[i] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
+            group[i-missions.size()] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
                     , Group.get(missions.size()+Group.size()-i-1).content, Group.get(missions.size()+Group.size()-i-1).expAt
                     , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
         }
@@ -131,7 +132,15 @@ public class fragment_havebeen extends Fragment {//
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }
-        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_havebeen);
+        Arrays.sort(mission);//時間排序
+        Arrays.sort(group);
+        for(int i = 0;i <missions.size();i++){
+            allmission[i] = mission[i];
+        }for(int i=0;i<Group.size();i++){
+            allmission[missions.size()+i]=group[i];
+        }
+
+        CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen);
     }
     private void updataphoneDB(){//更新手機資料
         totalvuledel();
