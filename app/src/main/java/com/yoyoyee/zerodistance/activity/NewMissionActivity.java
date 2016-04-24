@@ -29,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -55,6 +56,9 @@ import com.yoyoyee.zerodistance.helper.datatype.QA;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,6 +88,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private Boolean PICTURE_GONE=false;//隱藏拍照功能
     private Boolean isOtherPay=false;//獎勵是否為其他
     private Boolean isEdit=false;
+    private Boolean savePicture=false;//設定：照片是否要存檔
 
     private Button buttonDate,buttonTime,buttonOk,buttonCancel,buttonPicture,buttonTakePicture;
     private Bitmap bitmapOutPut;//要輸出出去的原圖
@@ -99,6 +104,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private String[] stringPress ,stringPay;
     private String picturePath;
     private String getPay;
+    private String dir,fname;
 
 
     private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere;
@@ -502,8 +508,14 @@ public class NewMissionActivity extends AppCompatActivity {
     }
     //開啟相機(由useCamara進行呼叫)
     private void openCamara(){
-        String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        String fname ="p"+ System.currentTimeMillis() +".jpg";
+        dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        fname = "Temp_Picture.jpg";
+        /*if (savePicture) {//用來做為未來在設定上可以增加照片儲存的設定
+            fname = "p" + System.currentTimeMillis() + ".jpg";
+        }
+        else{
+
+        }*/
         uriImg =Uri.parse( "file://" + dir + "/"+ fname);
       //  Toast.makeText(this, String.valueOf(uriImg), Toast.LENGTH_SHORT).show();
         Intent camera =new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -521,11 +533,28 @@ public class NewMissionActivity extends AppCompatActivity {
         switch (requireCode) {
             case requireCodefromCamara:
                 if (resultCode == Activity.RESULT_OK ) {
+                    DisplayMetrics phoneSize = new DisplayMetrics();//取得手機螢幕解析度
+                    getWindowManager().getDefaultDisplay().getMetrics(phoneSize);
+                   // int phoneWidth=phoneSize.widthPixels;讀取手機螢幕寬度
                     BitmapFactory.Options option = new BitmapFactory.Options();
+                    int pictureWidth =option.outWidth;
+                    int mathSize =pictureWidth/1080;
                     //option.inJustDecodeBounds =true;//只讀圖檔資訊
-                    option.inSampleSize = 1;//設定縮小倍率，2為1/2倍
+                    option.inSampleSize =(mathSize<1)?1:mathSize;//設定縮小倍率，2為1/2倍
                     Bitmap bitmap = BitmapFactory.decodeFile(uriImg.getPath(), option); //讀取圖檔資訊，存入option中，已進行修改
                     // Bitmap bitmap = ThumbnailUtils.extractThumbnail(bitmapOutPut, bitmapOutPut.getWidth()/5, bitmapOutPut.getHeight()/5); //圖片壓縮
+                    try {
+                        File file = new File(dir, fname); //存壓縮過後的檔案
+                        FileOutputStream out = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                        out.flush();
+                        out.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     imv.setVisibility(View.VISIBLE);
                     imv.setImageBitmap(bitmap);
                     if (firstTakePicture == true) {
