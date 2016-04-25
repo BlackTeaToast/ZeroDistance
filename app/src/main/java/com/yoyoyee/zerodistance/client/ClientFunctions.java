@@ -1272,6 +1272,119 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    public static void setMissionFinished(final int missionID,
+                                           final ClientResponse clientResponse) {
+        String tag_string_req = "req_set_mission_finished";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SET_MISSION_FINISHED, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("修改完成任務成功");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("mission_id", String.valueOf(missionID));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void setGroupFinished(final int groupID, final ClientResponse clientResponse) {
+        String tag_string_req = "req_set_group_finished";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SET_GROUP_FINISHED, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse("修改完成揪團成功");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("group_id", String.valueOf(groupID));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
     public static void deleteMission(final int missionID,
                                             final ClientResponse clientResponse) {
         String tag_string_req = "req_delete_mission";
