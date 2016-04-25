@@ -181,7 +181,8 @@
     <string name="is_already_joined">已參加</string>
     <string name="not_aleady_joined">已取消參加</string>
     <string name="join_error">參加失敗</string>
-    <string name="rating_finished">已完成評分</string>
+    <string name="rating_finished">已完成評分，任務完成</string>
+    <string name="rating_fail">評分失敗，任務未完成</string>
     <string name="achievement1">"    成功獲得\n10個三星評價"</string>
     <string name="achievement2">"  完成10個任務\n執行、發佈間隔\n在一個小時以內"</string>
     <string name="achievement3">"    完成10個    \n    緊急任務    "</string>

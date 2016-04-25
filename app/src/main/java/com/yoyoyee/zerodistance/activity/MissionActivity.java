@@ -847,10 +847,11 @@ public class MissionActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
 
-                Toast.makeText(MissionActivity.this, R.string.rating_finished,Toast.LENGTH_SHORT).show();
-                //更新手機資料庫，並且finish()
-                notRead = true;
-                updateMissions();
+                //重新設定讀取資料庫次數為5，預設為不能正常讀取資料庫
+                updateCount = 5;
+                updateError = true;
+                setMissionFinished();
+
             }
         });
 
@@ -950,7 +951,38 @@ public class MissionActivity extends AppCompatActivity {
 
     }
 
+    //將任務設置為已完成並且評分
+    public void setMissionFinished(){
+        ClientFunctions.setMissionFinished(id, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
 
+                Toast.makeText(MissionActivity.this, R.string.rating_finished,Toast.LENGTH_SHORT).show();
+                //全部皆已成功
+                //更新手機資料庫，並且finish()
+                updateCount = 0;
+                updateError = false;
+                notRead = true;
+                updateMissions();
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    //失敗則繼續try完updateCount的次數
+                    setMissionFinished();
+                }
+
+                //到最後還是沒有成功則顯示失敗
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.rating_fail ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
 
 
