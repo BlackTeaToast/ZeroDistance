@@ -53,6 +53,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/*
+missonActivity架構：
+onPrepareOptionsMenu為右上角選單會使用到，每當invalidateOptionsMenu()被呼叫時，都會去執行
+
+剛進來這個Activity時，會去抓取傳進來的id
+設定每個按鈕的作用，不管他們有沒有顯示在畫面上
+
+onResume每次都會去呼叫readValue()，每次執行readValue之前都會開啟loading讀取視窗，
+並且在錯誤時(抓不到資料庫時)，或是成功抓到資料後執行getMissionImageCount()之後，關掉loading讀取視窗。
+getMissionImageCount()成功後會去setValue()
+setValue裡面有：
+        設定字型大小
+        setFontSize();
+        //設定語言
+        setFont();
+        還有
+        //設置老師與學生的差別，以及是否參加
+        setTeacherOrStudent();
+
+
+
+ */
+
 public class MissionActivity extends AppCompatActivity {
 
     //變數區====================================
@@ -182,7 +205,8 @@ public class MissionActivity extends AppCompatActivity {
     private String whoSeeID;//看到的人的ID,拿來判斷是否參與
     private boolean joined;//是否有餐與
     private ArrayList<String> imageURL;
-    private int stars = 0;//星星數量
+    private int stars = 0;//設定的星星數量
+    private int trueStars = 0;//已評分過的星星數量，比較用，是實際上的資料庫資料。
 
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
@@ -242,7 +266,8 @@ public class MissionActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //有勾選的話
                 if (isChecked) {
-                    isFinished = true;
+
+                    //打開評分區
                     gridLayout.setVisibility(View.VISIBLE);
 
                     //因應人數改變評分文字與按鈕
@@ -260,7 +285,7 @@ public class MissionActivity extends AppCompatActivity {
                         buttonVisible.setVisibility(View.GONE);
                     }
                 } else {
-                    isFinished = false;
+                    //關閉評分區
                     gridLayout.setVisibility(View.GONE);
                 }
             }
@@ -275,6 +300,13 @@ public class MissionActivity extends AppCompatActivity {
 
                     //調整評分
                 stars = (int) rating;
+                //有調整評分時，打開完成紐(重新評分用)。由於評分完成後，完成紐會關閉。
+                //如果任務已經被完成過，且星星有調整過的話才顯示完成鈕
+                if(isFinished && stars!=trueStars)
+                    finishButton.setVisibility(View.VISIBLE);
+                //如果任務已經被完成過，但是調整的星星數量又調整回原本的數量，則不顯示完成鈕。
+                else if(isFinished && stars==trueStars)
+                    finishButton.setVisibility(View.GONE);
 
             }
         });
@@ -456,8 +488,16 @@ public class MissionActivity extends AppCompatActivity {
     private void setTeacherOrStudent(){
         //設置已完成是否被勾選
         checkBox.setChecked(isFinished);
-        if(isFinished && isTeacher)
+        //設定評分區，如果是已完成，則勾選已完成並顯示評分區
+        if(isFinished && isTeacher) {
+            //將評分完成鈕關閉
+            finishButton.setVisibility(View.GONE);
+            //顯示評分區
             gridLayout.setVisibility(View.VISIBLE);
+            //不能取消勾選已完成
+            checkBox.setClickable(false);
+
+        }
         else
             gridLayout.setVisibility(View.GONE);
 
@@ -824,7 +864,13 @@ public class MissionActivity extends AppCompatActivity {
     //確認是否要給予幾顆星Dialog
     private void areYouSureToGiveStar(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MissionActivity.this);
-        builder.setTitle(R.string.give_score);
+        //設置標題
+        //如果已經完成的話，則由給予評分改為，重新給予評分
+        if(isFinished)
+            builder.setTitle(R.string.re_give_score);
+        else
+            builder.setTitle(R.string.give_score);
+
         String message = getString(R.string.give) + " "+stars+" " + getString(R.string.star);
         builder.setMessage(message);
 
@@ -934,6 +980,7 @@ public class MissionActivity extends AppCompatActivity {
                     updateError = false;
                     Toast.makeText(getApplicationContext(), R.string.pic_reading_error_ ,Toast.LENGTH_SHORT).show();
                 }
+                hideDialog();
 
             }
         });
