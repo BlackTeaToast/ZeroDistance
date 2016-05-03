@@ -89,8 +89,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.missionName.setText(missions[position].getTitle());
             holder.missionDetial.setText(missions[position].getContent());
             holder.datetime.setText(dateFormat.format(missions[position].getExpAt()));
-        holder.peoplenumber.setText(getResources().getString(R.string.peopleCount)+missions[position].getCurrentNum()+"/"+missions[position].getNeedNum());
-
+        holder.peoplenumber.setText(missions[position].getCurrentNum()+"/"+missions[position].getNeedNum());
+      //  getResources().getString(R.string.peopleCount)+
         if(missions[position].isMission()&&fragment==R.layout.fragment_fragment_mission){//其他頁面沒有緊急任務
                 if(missions[position].getUrgent()){
            //         holder.missiondangerous.setVisibility(View.VISIBLE);
