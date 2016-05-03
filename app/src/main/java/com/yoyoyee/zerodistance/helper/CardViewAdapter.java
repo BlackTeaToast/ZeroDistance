@@ -36,68 +36,36 @@ import java.util.Date;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
     private String[] detial ,title;
     private boolean[] missiondangerous;
-    private int[] id, needNum, currentNum, missionnumber, month, day, hourInt, mmInt;
+    private int[] id, needNum, currentNum, hourInt, mmInt;
+    private Date time;
     private String[] hour, mm;
-    private Date[] expAtD;
     private Calendar[] date ;
     private int fragment;
     private int Count;
     Mission[] missions;
 
+    private SimpleDateFormat dateFormat;
     Intent in;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView missionDetial, missionName, missionnumber, datetime, expAt, peoplenumber;
-        public Button missionbutton;
+        public TextView missionDetial, missionName , datetime, peoplenumber;
         public ImageView missiondangerous;
-        public RelativeLayout card;
         public CardView CardView;
+        public RelativeLayout fr_fr_mi;
         public ViewHolder(View v) {
             super(v);
-
             missionName = (TextView) v.findViewById(R.id.missionName);
             missionDetial = (TextView) v.findViewById(R.id.missionDetial);
             datetime = (TextView)v.findViewById(R.id.datetime);
-            expAt = (TextView)v.findViewById(R.id.expAt);
             missiondangerous = (ImageView) v.findViewById(R.id.missiondangerous);
-            missionnumber = (TextView) v.findViewById(R.id.missionnumber);
             peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
-            missionbutton = (Button)v.findViewById(R.id.missionbutton);
-            card = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
+            fr_fr_mi = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
             CardView = (CardView) v.findViewById(R.id.CardView);
-            //處利日期
-            date = new Calendar[getItemCount()];
-            month = new int[getItemCount()];
-            day = new int[getItemCount()];
-            hourInt = new int[getItemCount()];
-            hour = new String[getItemCount()];
-            mmInt = new int[getItemCount()];
-            mm = new String[getItemCount()];
-            for(int i = 0;i<getItemCount();i++){
-                date[i] = Calendar.getInstance();
-                date[i].setTime(missions[i].getExpAt());
-                month[i] = date[i].get(Calendar.MONTH) + 1;  //取出月，月份的編號是由0~11 故+1
-                day[i] = date[i].get(Calendar.DAY_OF_MONTH);  //取出日
-                hourInt[i] = date[i].get(Calendar.HOUR_OF_DAY);  //取出hour
-                if(hourInt[i]<10){
-                    hour[i]="0"+hourInt[i];
-                }else{
-                    hour[i]=""+hourInt[i];
-                }
-                mmInt[i] = date[i].get(Calendar.MINUTE);  //取出分
-                if(mmInt[i]<10){
-                    mm[i]="0"+mmInt[i];
-                }else {
-                    mm[i]=""+mmInt[i];
-                }
-                //處理日期
+            dateFormat  = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
-//                title[i] = limitString(title[i], 0);//0為title , 1為detial
-//                detial[i] = limitString(detial[i], 1);
-            }
             setFontSize(v);//設定字體大小
         }
-
     }
+
     public CardViewAdapter(Mission[] missions, int fragment) {
         this.missions = missions;
         this.fragment = fragment;
@@ -112,6 +80,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 .inflate(fragment, parent, false);
         ViewHolder vh = new ViewHolder(v);
         dosort();
+
         return vh;
     }
 
@@ -119,18 +88,17 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.missionName.setText(missions[position].getTitle());
             holder.missionDetial.setText(missions[position].getContent());
-            holder.datetime.setText(month[position]+"/"+day[position]);
-            holder.expAt.setText(hour[position]+":"+mm[position]);
-            holder.peoplenumber.setText(missions[position].getCurrentNum()+"/"+missions[position].getNeedNum()+"人");
+            holder.datetime.setText(dateFormat.format(missions[position].getExpAt()));
+        holder.peoplenumber.setText(getResources().getString(R.string.peopleCount)+missions[position].getCurrentNum()+"/"+missions[position].getNeedNum());
 
         if(missions[position].isMission()&&fragment==R.layout.fragment_fragment_mission){//其他頁面沒有緊急任務
                 if(missions[position].getUrgent()){
-                    holder.missiondangerous.setVisibility(View.VISIBLE);
+           //         holder.missiondangerous.setVisibility(View.VISIBLE);
 //                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
                 holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
                 }
                 else{
-                    holder.missiondangerous.setVisibility(View.INVISIBLE);
+//                    holder.missiondangerous.setVisibility(View.INVISIBLE);
 //                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fafafa"));
                 holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
                 }
@@ -141,16 +109,16 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.missionName.setTextColor(Color.parseColor("#ff99cc00"));
         }
 
-        holder.missionbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-           //    Toast.makeText(v.getContext(), ""+missions[position].isMission(), Toast.LENGTH_SHORT).show();
-                doIntent(v.getContext(), missions[position].isMission());
-                in.putExtra("id", missions[position].getId());
-//                in.putExtra("id", 2);
-                v.getContext().startActivity(in);
-            }
-        });
+            holder.fr_fr_mi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+               //    Toast.makeText(v.getContext(), ""+missions[position].isMission(), Toast.LENGTH_SHORT).show();
+                    doIntent(v.getContext(), missions[position].isMission());
+                    in.putExtra("id", missions[position].getId());
+    //                in.putExtra("id", 2);
+                    v.getContext().startActivity(in);
+                }
+            });
     }
 
     @Override
@@ -252,10 +220,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         textViewTemp = (TextView) v.findViewById(R.id.missionName);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp.setMaxLines(1);//顯示幾行
-        textViewTemp = (TextView) v.findViewById(R.id.dateread);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView) v.findViewById(R.id.timeread);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
 //        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
 //        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
@@ -269,14 +233,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }
         textViewTemp = (TextView)v.findViewById(R.id.datetime);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView)v.findViewById(R.id.expAt);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView) v.findViewById(R.id.missionnumber);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView)v.findViewById(R.id.peoplenumber);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-
-        textViewTemp = (Button)v.findViewById(R.id.missionbutton);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
     }
 }
