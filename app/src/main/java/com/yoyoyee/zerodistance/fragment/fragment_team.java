@@ -138,7 +138,8 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         for(int i = 0;i <Group.size();i++){
                 group[i] = new Group(Group.get(Group.size()-i-1).id, Group.get(Group.size()-i-1).title
                         , Group.get(Group.size()-i-1).content, Group.get(Group.size()-i-1).expAt
-                        , Group.get(Group.size()-i-1).needNum, Group.get(Group.size()-i-1).currentNum, false);
+                        , Group.get(Group.size()-i-1).needNum, Group.get(Group.size()-i-1).currentNum
+                        , Group.get(Group.size()-i-1).getUserName());
 
         }
         Arrays.sort(group);//時間排序

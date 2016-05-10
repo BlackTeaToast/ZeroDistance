@@ -47,7 +47,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private SimpleDateFormat dateFormat;
     Intent in;
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView missionDetial, missionName , datetime, peoplenumber;
+        public TextView missionDetial, missionName , datetime, peoplenumber, PoName;
         public ImageView missiondangerous;
         public CardView CardView;
         public RelativeLayout fr_fr_mi;
@@ -56,10 +56,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             missionName = (TextView) v.findViewById(R.id.missionName);
             missionDetial = (TextView) v.findViewById(R.id.missionDetial);
             datetime = (TextView)v.findViewById(R.id.datetime);
+            PoName = (TextView)v.findViewById(R.id.PoName);
             missiondangerous = (ImageView) v.findViewById(R.id.missiondangerous);
             peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
             fr_fr_mi = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
             CardView = (CardView) v.findViewById(R.id.CardView);
+
             dateFormat  = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
             setFontSize(v);//設定字體大小
@@ -70,10 +72,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         this.missions = missions;
         this.fragment = fragment;
     }
-//    public CardViewAdapter(Group[] Group, int fragment) {
-//        this.missions = Group;
-//        this.fragment = fragment;
-//    }
+
     @Override
     public CardViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -90,6 +89,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.missionDetial.setText(missions[position].getContent());
             holder.datetime.setText(dateFormat.format(missions[position].getExpAt()));
         holder.peoplenumber.setText(missions[position].getCurrentNum()+"/"+missions[position].getNeedNum());
+        holder.PoName.setText(missions[position].getUserName());
       //  getResources().getString(R.string.peopleCount)+
         if(missions[position].isMission()&&fragment==R.layout.fragment_fragment_mission){//其他頁面沒有緊急任務
                 if(missions[position].getUrgent()){
@@ -141,23 +141,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             case R.layout.fragment_fragment_team:{
                 in = new Intent(c, GroupActivity.class);
             }break;
-            case R.layout.fragment_fragment_havebeen:{
+            default:{
                 if(isMission){
                     in = new Intent(c, MissionActivity.class);
                 }else {
                     in = new Intent(c, GroupActivity.class);
                 }
-
-            }break;
-            case R.layout.fragment_fragment_notbeen:{
-                if(isMission){
-                    Toast.makeText(c, isMission+"", Toast.LENGTH_LONG).show();
-                    in = new Intent(c, MissionActivity.class);
-                }else {
-                    Toast.makeText(c, isMission+"", Toast.LENGTH_LONG).show();
-                    in = new Intent(c, GroupActivity.class);
-                }
-
             }break;
         }
         return in;
@@ -217,13 +206,17 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private void setFontSize(View v){
         TextView textViewTemp;
         SessionFunctions SF= new SessionFunctions();
+        textViewTemp = (TextView)v.findViewById(R.id.datetime);
+        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp = (TextView)v.findViewById(R.id.peoplenumber);
+        textViewTemp.setTextSize(SF.getUserTextSize()+3);
         textViewTemp = (TextView) v.findViewById(R.id.missionName);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp.setMaxLines(1);//顯示幾行
 //        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
 //        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp.setTextSize(SF.getUserTextSize());
         if(SessionFunctions.getUserTextSize()==10){
             textViewTemp.setMaxLines(4);
         }if(SessionFunctions.getUserTextSize()==15){
@@ -231,9 +224,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }if(SessionFunctions.getUserTextSize()==20){
             textViewTemp.setMaxLines(2);
         }
-        textViewTemp = (TextView)v.findViewById(R.id.datetime);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView)v.findViewById(R.id.peoplenumber);
+        textViewTemp = (TextView)v.findViewById(R.id.PoName);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
     }
 }

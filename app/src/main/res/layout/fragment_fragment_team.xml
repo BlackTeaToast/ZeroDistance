@@ -36,7 +36,10 @@
                     android:textSize="18dp"
                     android:gravity="right"
                     android:layout_marginTop="2dp"
-                    android:layout_gravity="left" />
+                    android:layout_gravity="left"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="10dp" />
 
                 <TextView
                     style="@style/cardtext"
@@ -54,7 +57,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="2dp" />
+                    android:layout_marginRight="10dp" />
 
             </RelativeLayout>
 
@@ -71,7 +74,10 @@
                     android:id="@+id/missionName"
                     android:textSize="25dp"
                     android:textColor="#366fe9"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -83,7 +89,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginRight="2dp" />
+                    android:layout_marginRight="10dp" />
 
             </RelativeLayout>
 
@@ -106,7 +112,7 @@
                     android:textSize="20dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="3dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="10dp" />
 
             </LinearLayout>
 

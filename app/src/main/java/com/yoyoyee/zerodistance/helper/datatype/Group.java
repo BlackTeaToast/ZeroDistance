@@ -44,7 +44,7 @@ public class Group extends Mission implements Comparable{
         this.isFinished = isFinished;
         this.finishedAt = finishedAt;
     }
-    public Group(int id, String title, String content, Date expAt, int needNum, int currentNum , boolean isMission) {
+    public Group(int id, String title, String content, Date expAt, int needNum, int currentNum, String userName) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -52,6 +52,7 @@ public class Group extends Mission implements Comparable{
         this.needNum = needNum;
         this.currentNum = currentNum;
         this.isMission = false;
+        this.userName = userName;
     }
 
     public int getId() {

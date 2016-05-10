@@ -1,5 +1,6 @@
 package com.yoyoyee.zerodistance.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,12 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.activity.NewMissionActivity;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
@@ -33,8 +35,7 @@ import java.util.Date;
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
-public class fragment_notbeen extends Fragment{
-//
+public class fragment_notbeen extends Fragment {//
     int[] id;
     String[] title;
     Date[] expAt;
@@ -42,13 +43,12 @@ public class fragment_notbeen extends Fragment{
     int[] currentNum;
     boolean[] missiondangerous;
     boolean becontext, isfirst=true;
-    int missionnumber[];
     String[] detial;
     ArrayList<Mission> missions;
     Mission[] mission , allmission;
     Group[] group;
     ArrayList<Group> Group;
-//
+    //
     CardViewAdapter CardViewAdapter;
     int upDataCount=0;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
@@ -57,8 +57,6 @@ public class fragment_notbeen extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_notbeen, container, false);
         makecard();
-
-
         // 頂端向下滑更新
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -66,7 +64,6 @@ public class fragment_notbeen extends Fragment{
             public void onRefresh() {
                 CardViewAdapter.setItemCount(0);
                 mList.scrollToPosition(0);
-                CardViewAdapter.notifyDataSetChanged();
                 updataphoneDB();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -74,8 +71,8 @@ public class fragment_notbeen extends Fragment{
         // 頂端向下滑更新
 
         try {
-            //CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
             mList = (RecyclerView) v.findViewById(R.id.listView);
+            LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mList.setLayoutManager(layoutManager);
@@ -85,7 +82,12 @@ public class fragment_notbeen extends Fragment{
         }
 
 
-        return v;}
+        return v;
+
+        //listView 典籍
+
+        //listView 典籍
+    }
     public void  onResume(){
         super.onResume();
         //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
@@ -95,6 +97,12 @@ public class fragment_notbeen extends Fragment{
         mList.setAdapter(CardViewAdapter);
     }
 
+    //設置字體大小
+    private void setFontSize(){
+        TextView textViewTemp;
+        SessionFunctions SF= new SessionFunctions();
+
+    }
     public void makecard() {
         missions  = QueryFunctions.getMissions();
         Group  = QueryFunctions.getGroups();
@@ -106,19 +114,19 @@ public class fragment_notbeen extends Fragment{
                 mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
                         , missions.get(missions.size() - i - 1).content, missions.get(missions.size() - i - 1).expAt
                         , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-                        , false, true);
+                        , false, true, missions.get(missions.size()-i-1).getUserName());
 
             } else {//獎勵
                 mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
                         , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
                         , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-                        , false, true);
+                        , false, true, missions.get(missions.size()-i-1).getUserName());
             }
         }
         for(int i=missions.size();i<missions.size()+Group.size();i++){
             group[i-missions.size()] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
                     , Group.get(missions.size()+Group.size()-i-1).content, Group.get(missions.size()+Group.size()-i-1).expAt
-                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
+                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, Group.get(missions.size()+Group.size()-i-1).getUserName());
         }
 
         if(!isfirst) {
@@ -131,16 +139,18 @@ public class fragment_notbeen extends Fragment{
         }for(int i=0;i<Group.size();i++){
             allmission[missions.size()+i]=group[i];
         }
-        CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_notbeen);
+
+        CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen);
     }
     private void updataphoneDB(){//更新手機資料
+        totalvuledel();
         updataMissionDB();
     }
     private void updataMissionDB(){  //成功會更新Group
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-               // Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
                 upDataCount=0;
                 updataGroupDB();//更新揪團
             }
@@ -161,10 +171,8 @@ public class fragment_notbeen extends Fragment{
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                makecard();
-               // Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
-
-                mList.setAdapter(CardViewAdapter);
+//                CardViewAdapter.notifyDataSetChanged();
+                //  Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show()
                 upDataCount=0;
             }
 
@@ -178,5 +186,14 @@ public class fragment_notbeen extends Fragment{
                 }
             }
         });
+    }
+    public void totalvuledel(){
+        id = null;
+        title = null;
+        detial = null;
+        expAt = null;
+        needNum = null;
+        currentNum = null;
+        missiondangerous = null;
     }
 }

@@ -49,7 +49,7 @@ public class Mission implements Comparable{
         this.isFinished = isFinished;
         this.finishedAt = finishedAt;
     }
-    public Mission(int id, String title, String content, Date expAt, int needNum, int currentNum, boolean isUrgent, boolean isMission) {
+    public Mission(int id, String title, String content, Date expAt, int needNum, int currentNum, boolean isUrgent, boolean isMission, String userName) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -58,6 +58,7 @@ public class Mission implements Comparable{
         this.currentNum = currentNum;
         this.isUrgent = isUrgent;
         this.isMission = isMission;
+        this.userName = userName;
     }
 
     public int getId() {

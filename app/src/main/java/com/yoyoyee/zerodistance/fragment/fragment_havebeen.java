@@ -114,19 +114,19 @@ public class fragment_havebeen extends Fragment {//
                 mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
                         , missions.get(missions.size() - i - 1).content, missions.get(missions.size() - i - 1).expAt
                         , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-                        , false, true);
+                        , false, true, missions.get(missions.size()-i-1).getUserName());
 
             } else {//獎勵
                 mission[i] = new Mission(missions.get(missions.size() - i - 1).id, missions.get(missions.size() - i - 1).title
                         , missions.get(missions.size() - i - 1).reward, missions.get(missions.size() - i - 1).expAt
                         , missions.get(missions.size() - i - 1).needNum, missions.get(missions.size() - i - 1).currentNum
-                        , false, true);
+                        , false, true, missions.get(missions.size()-i-1).getUserName());
             }
         }
         for(int i=missions.size();i<missions.size()+Group.size();i++){
             group[i-missions.size()] = new Group(Group.get(missions.size()+Group.size()-i-1).id, Group.get(missions.size()+Group.size()-i-1).title
                     , Group.get(missions.size()+Group.size()-i-1).content, Group.get(missions.size()+Group.size()-i-1).expAt
-                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, false);
+                    , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, Group.get(missions.size()+Group.size()-i-1).getUserName());
         }
 
         if(!isfirst) {
