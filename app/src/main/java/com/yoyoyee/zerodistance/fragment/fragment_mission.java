@@ -308,8 +308,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                             , missions.get(missions.size()-i-1).isUrgent, true, missions.get(missions.size()-i-1).getUserName());
                 }
         }
-        Arrays.sort(mission);//時間排序
-        bedangerfirst();    //任務排序 (緊急任務先)
+        dosort();
+//        bedangerfirst();    //任務排序 (緊急任務先)
 
             CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
 
@@ -326,7 +326,14 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
                     Count+=1;
                 }
             }
-//        Toast.makeText(getContext(), "全部有"+missions.size()+"個任務"+"現在有"+Count+"個緊急任務", Toast.LENGTH_SHORT).show();
         return Count;
+    }
+    //排序
+    private void dosort(){
+        if(SessionFunctions.getSortWay()==1){
+            Arrays.sort(mission);
+        }else if(SessionFunctions.getSortWay()==2){
+        System.out.println("ee");
+        }
     }
 }

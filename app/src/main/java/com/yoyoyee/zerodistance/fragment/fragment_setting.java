@@ -34,24 +34,21 @@ public class fragment_setting extends Fragment {
     private ArrayAdapter<String> adapterPress;
     private RadioButton textsizeLRB, textsizeMRB, textsizeSRB;//大中小字體
     private RadioButton showcontent, showpay;//顯示內容或獎勵
-    private RadioGroup textsizeRG , showstyleRG;
+    private RadioButton poTimeFirst, endTimeFirst;
+    private RadioGroup textsizeRG , showstyleRG, SortWay;
     private SQLiteHandler db;
     private SessionManager session;
     float ttsize;  //字體大小
     static float sizeS=10,sizeM=15, sizeL=20;
-    TextView textsize , userid;
-    SessionFunctions SF= new SessionFunctions();//手機內設定
+    TextView  userid;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_setting, container, false);
         // SQLite database handler
         db = new SQLiteHandler(v.getContext());
         // session manager
         session = new SessionManager(v.getContext());
-        textsize= (TextView) v.findViewById(R.id.textsize);
-        ttsize =textsize.getTextSize();
-        textsize.setText(""+((ttsize/5)+10));
         userid = (TextView) v.findViewById(R.id.userid);
-        userid.setText(SF.getUserUid());
+        userid.setText(SessionFunctions.getUserUid());
         //登出
         Button Sign_outbut = (Button) v.findViewById(R.id.Sign_outbut);
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +90,11 @@ public class fragment_setting extends Fragment {
         showpay = (RadioButton) v.findViewById(R.id.showpay);//顯示任務
         textsizeLRB = (RadioButton) v.findViewById(R.id.textsizeLRB);
         textsizeMRB = (RadioButton) v.findViewById(R.id.textsizeMRB);
+        SortWay = (RadioGroup) v.findViewById(R.id.SortWay);
+        SortWay.setOnCheckedChangeListener(SortWayListener);
         textsizeSRB = (RadioButton) v.findViewById(R.id.textsizeSRB);
+        poTimeFirst = (RadioButton) v.findViewById(R.id.poTimeFirst);
+        endTimeFirst = (RadioButton) v.findViewById(R.id.endTimeFirst);
         checkbecontext();//選擇預設項目
 
         setFontSize(v);//設定字體大小
@@ -116,27 +117,38 @@ public class fragment_setting extends Fragment {
                     ttsize=sizeS;
                     break;
             }
-            SF.setUserTextSize(ttsize);
-            textsize.setVisibility(View.GONE);
-//            textsize.setText("" + ttsize);
-//            textsize.setTextSize(SF.getUserTextSize());
+            SessionFunctions.setUserTextSize(ttsize);
         }
 
     };
 
-    //textsize radio button 監聽
-
     //showstyle radio button 監聽
-
     RadioGroup.OnCheckedChangeListener showstyleListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch(checkedId){
                 case R.id.showcontent:
-                    SF.setbecontext(true);
+                    SessionFunctions.setbecontext(true);
                     break;
                 case R.id.showpay:
-                    SF.setbecontext(false);
+                    SessionFunctions.setbecontext(false);
+                    break;
+            }
+
+        }
+
+    };
+
+    //showstyle radio button 監聽
+    RadioGroup.OnCheckedChangeListener SortWayListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch(checkedId){
+                case R.id.poTimeFirst:
+                    SessionFunctions.setSortWay(1);
+                    break;
+                case R.id.endTimeFirst:
+                    SessionFunctions.setSortWay(2);
                     break;
             }
 
@@ -156,42 +168,57 @@ public class fragment_setting extends Fragment {
     }
     //設定預設大小或顯示資料
     private void checkbecontext(){
-        if(SF.getbecontext()){
+        if(SessionFunctions.getbecontext()){
             showcontent.setChecked(true);
         }else{
             showpay.setChecked(true);
         }
-        if(SF.getUserTextSize()==sizeM){
+
+        if(SessionFunctions.getUserTextSize()==sizeM){
             textsizeMRB.setChecked(true);
-        }else if (SF.getUserTextSize()==sizeS){
+        }else if (SessionFunctions.getUserTextSize()==sizeS){
             textsizeSRB.setChecked(true);
-        }else if (SF.getUserTextSize()==sizeL){
+        }else if (SessionFunctions.getUserTextSize()==sizeL){
             textsizeLRB.setChecked(true);
+        }
+
+        if(SessionFunctions.getSortWay()==1){
+            poTimeFirst.setChecked(true);
+        }else if(SessionFunctions.getSortWay()==2){
+            endTimeFirst.setChecked(true);
         }
     }
     private void setFontSize(View v){
         TextView textViewTemp;
         SessionFunctions SF= new SessionFunctions();
+        textViewTemp = (TextView) v.findViewById(R.id.textsizeread);
+        textViewTemp.setTextSize(SF.getUserTextSize()+10);
         textViewTemp = (TextView) v.findViewById(R.id.languageread);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView) v.findViewById (R.id.showstyleread);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView) v.findViewById(R.id.textsize);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+10);
 //        textViewTemp = (TextView) v.findViewById(R.id.userid);
 //        textViewTemp.setTextSize(SF.getUserTextSize()-5);
+
+        textViewTemp =(TextView) v.findViewById(R.id.showstyleread);
+        textViewTemp.setTextSize(SF.getUserTextSize()+10);
         textViewTemp =(RadioButton) v.findViewById(R.id.showcontent);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (RadioButton) v.findViewById(R.id.showpay);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =(RadioButton) v.findViewById(R.id.textsizeLRB);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (RadioButton) v.findViewById(R.id.textsizeMRB);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =  (RadioButton) v.findViewById(R.id.textsizeSRB);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (Button) v.findViewById(R.id.Sign_outbut);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp = (TextView) v.findViewById(R.id.SortWayTV);
+        textViewTemp.setTextSize(SF.getUserTextSize()+10);
+        textViewTemp = (TextView) v.findViewById(R.id.poTimeFirst);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp = (TextView) v.findViewById(R.id.endTimeFirst);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+
         textViewTemp = (TextView)v.findViewById(R.id.talktous);
         SpannableString content = new SpannableString(getResources().getString(R.string.talktous));//畫底線
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);

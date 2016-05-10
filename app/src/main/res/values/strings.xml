@@ -144,6 +144,9 @@
     </string-array>
     <!--=========以上翻譯過=========================================================-->
     <string name="peopleCount">人數：</string>
+    <string name="SortWay">排列方式</string>
+    <string name="poTimeFirst">PO文時間優先</string>
+    <string name="endTimeFirst">截止時間優先</string>
 
     <!--==================================================================-->
     <!--吱吱吱之-->

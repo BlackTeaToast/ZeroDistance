@@ -132,14 +132,12 @@ public class fragment_havebeen extends Fragment {//
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }
-        Arrays.sort(mission);//時間排序
-        Arrays.sort(group);
         for(int i = 0;i <missions.size();i++){
             allmission[i] = mission[i];
         }for(int i=0;i<Group.size();i++){
             allmission[missions.size()+i]=group[i];
         }
-
+        dosort();
         CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen);
     }
     private void updataphoneDB(){//更新手機資料
@@ -195,5 +193,14 @@ public class fragment_havebeen extends Fragment {//
         needNum = null;
         currentNum = null;
         missiondangerous = null;
+    }
+    //排序
+    private void dosort(){
+        if(SessionFunctions.getSortWay()==1){
+            Arrays.sort(group);
+            Arrays.sort(mission);
+        }else if(SessionFunctions.getSortWay()==2){
+
+        }
     }
 }

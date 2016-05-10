@@ -42,6 +42,7 @@ import java.util.Date;
 public class fragment_team extends Fragment implements View.OnTouchListener{
    //
     ArrayList<Group> Group;
+    Group[] group;
     private ProgressDialog pDialog;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
     CardViewAdapter CardViewAdapter;
@@ -134,7 +135,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
     public void makecard() {
         Group  = QueryFunctions.getGroups();
-        Group[] group = new Group[Group.size()];
+       group = new Group[Group.size()];
         for(int i = 0;i <Group.size();i++){
                 group[i] = new Group(Group.get(Group.size()-i-1).id, Group.get(Group.size()-i-1).title
                         , Group.get(Group.size()-i-1).content, Group.get(Group.size()-i-1).expAt
@@ -142,7 +143,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                         , Group.get(Group.size()-i-1).getUserName());
 
         }
-        Arrays.sort(group);//時間排序
+        dosort();
         CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/);
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
@@ -238,7 +239,15 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
             }
         });
     }
-    //更新
+    //排序
+    private void dosort(){
+        if(SessionFunctions.getSortWay()==1){
+            Arrays.sort(group);
+        }else if(SessionFunctions.getSortWay()==2){
+
+        }
+    }
+
 
 
 }

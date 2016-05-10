@@ -34,12 +34,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
-    private String[] detial ,title;
-    private boolean[] missiondangerous;
-    private int[] id, needNum, currentNum, hourInt, mmInt;
-    private Date time;
-    private String[] hour, mm;
-    private Calendar[] date ;
     private int fragment;
     private int Count;
     Mission[] missions;
@@ -78,8 +72,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(fragment, parent, false);
         ViewHolder vh = new ViewHolder(v);
-        dosort();
-
         return vh;
     }
 
@@ -93,13 +85,9 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
       //  getResources().getString(R.string.peopleCount)+
         if(missions[position].isMission()&&fragment==R.layout.fragment_fragment_mission){//其他頁面沒有緊急任務
                 if(missions[position].getUrgent()){
-           //         holder.missiondangerous.setVisibility(View.VISIBLE);
-//                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fdf1a5"));
                 holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
                 }
                 else{
-//                    holder.missiondangerous.setVisibility(View.INVISIBLE);
-//                    holder.CardView.setCardBackgroundColor(Color.parseColor("#fafafa"));
                 holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
                 }
         }
@@ -112,10 +100,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.fr_fr_mi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-               //    Toast.makeText(v.getContext(), ""+missions[position].isMission(), Toast.LENGTH_SHORT).show();
                     doIntent(v.getContext(), missions[position].isMission());
                     in.putExtra("id", missions[position].getId());
-    //                in.putExtra("id", 2);
                     v.getContext().startActivity(in);
                 }
             });
@@ -151,12 +137,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }
         return in;
     }
-    //排序
-    private void dosort(){
-//        if(fragment!=R.layout.fragment_fragment_mission){
-//            Arrays.sort(missions);
-//        }
-    }
+
+
     //字數限制
     private String limitString(String context, int type){//0為title , 1為detial
         switch ((int)SessionFunctions.getUserTextSize()) {
@@ -207,16 +189,16 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         TextView textViewTemp;
         SessionFunctions SF= new SessionFunctions();
         textViewTemp = (TextView)v.findViewById(R.id.datetime);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+4);
         textViewTemp = (TextView)v.findViewById(R.id.peoplenumber);
-        textViewTemp.setTextSize(SF.getUserTextSize()+3);
+        textViewTemp.setTextSize(SF.getUserTextSize()+7);
         textViewTemp = (TextView) v.findViewById(R.id.missionName);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+7);
         textViewTemp.setMaxLines(1);//顯示幾行
 //        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
 //        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
-        textViewTemp.setTextSize(SF.getUserTextSize());
+        textViewTemp.setTextSize(SF.getUserTextSize()+4);
         if(SessionFunctions.getUserTextSize()==10){
             textViewTemp.setMaxLines(4);
         }if(SessionFunctions.getUserTextSize()==15){
@@ -225,6 +207,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             textViewTemp.setMaxLines(2);
         }
         textViewTemp = (TextView)v.findViewById(R.id.PoName);
-        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp.setTextSize(SF.getUserTextSize()+7);
     }
 }

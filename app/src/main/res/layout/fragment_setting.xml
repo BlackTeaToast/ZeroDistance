@@ -1,162 +1,213 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+<ScrollView android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background ="@drawable/repeat_cube_bg"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:id="@+id/scrollView3"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/repeat_cube_bg"
+    android:fillViewport="false">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="53dp">
+            android:layout_height="474dp"
+            android:id="@+id/linearLayout4">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/textsize"
-                android:id="@+id/textsizeread"
-                style="@style/settext" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="53dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/textsize"
-                style="@style/settext" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/textsize"
+                    android:id="@+id/textsizeread"
+                    style="@style/settext"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="10dp" />
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/textsizeRG">
+            </LinearLayout>
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/textsizeL"
-                android:id="@+id/textsizeLRB"
-                android:layout_alignParentLeft="true"
-                android:layout_weight="1"
-                android:textSize="30dp" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/textsizeM"
-                android:id="@+id/textsizeMRB"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="1"
-                android:textSize="25dp" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/textsizeS"
-                android:id="@+id/textsizeSRB"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"
-                android:textSize="20dp" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginTop="40dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/language"
-                android:id="@+id/languageread"
-                style="@style/settext" />
-
-            <Spinner
+            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/languageSpinner"
-                android:background="#eff6fa"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp" />
+                android:orientation="horizontal"
+                android:id="@+id/textsizeRG"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp" >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textsizeL"
+                    android:id="@+id/textsizeLRB"
+                    android:layout_alignParentLeft="true"
+                    android:layout_weight="1"
+                    android:textSize="30dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textsizeM"
+                    android:id="@+id/textsizeMRB"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:textSize="25dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textsizeS"
+                    android:id="@+id/textsizeSRB"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:textSize="20dp" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/language"
+                    android:id="@+id/languageread"
+                    style="@style/settext"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="10dp" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/languageSpinner"
+                    android:background="#eff6fa"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/showstyles"
+                android:id="@+id/showstyleread"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/showstyleRG"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp" >
+
+                <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showcontent"
+                android:id="@+id/showcontent"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/showpay"
+                    android:id="@+id/showpay"
+                    android:layout_gravity="right"
+                    android:layout_weight="1" />
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/SortWay"
+                android:id="@+id/SortWayTV"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/SortWay"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp" >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/poTimeFirst"
+                    android:id="@+id/poTimeFirst"
+                    android:layout_weight="1"
+                    android:checked="false" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/endTimeFirst"
+                    android:id="@+id/endTimeFirst"
+                    android:layout_gravity="right"
+                    android:layout_weight="1" />
+            </RadioGroup>
+
+
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/showstyles"
-            android:id="@+id/showstyleread"
-            android:layout_marginTop="10dp" />
+            android:text="@string/talktous"
+            android:id="@+id/talktous"
+            android:textColor="#0000ff"
+            android:textIsSelectable="false"
+            android:layout_gravity="left|bottom"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp" />
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/showstyleRG"
-            android:layout_marginTop="20dp">
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="105dp"
+            android:layout_height="28dp"
+            android:text="@string/Sign_out"
+            android:id="@+id/Sign_outbut"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/patrickc_button_yellow"
 
-            <RadioButton
+            android:textColor="#0b0b07" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/showcontent"
-            android:id="@+id/showcontent"
-                android:layout_weight="1" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/showpay"
-                android:id="@+id/showpay"
-                android:layout_gravity="right"
-                android:layout_weight="1" />
-
-        </RadioGroup>
-
-
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/userid"
+            android:layout_gravity="bottom|right" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/talktous"
-        android:id="@+id/talktous"
-        android:textColor="#0000ff"
-        android:textIsSelectable="false"
-        android:layout_gravity="left|bottom" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="105dp"
-        android:layout_height="28dp"
-        android:text="@string/Sign_out"
-        android:id="@+id/Sign_outbut"
-        android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/patrickc_button_yellow"
-
-        android:textColor="#0b0b07" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/userid"
-        android:layout_gravity="bottom|right" />
-
-</FrameLayout>
+</ScrollView>

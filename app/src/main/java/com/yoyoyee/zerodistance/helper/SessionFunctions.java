@@ -9,8 +9,15 @@ public class SessionFunctions {
 
     private static SessionManager session = AppController.getSession();
 
+    public static void setSortWay(int setSortWay) {
+        session.setSortWay(setSortWay);
+    }
+    public static int getSortWay(){
+        return session.getSortWay();
+    }
+
     public static void setIsTeacher(boolean isTeacher) {
-        session.setIsTeacher(isTeacher);;
+        session.setIsTeacher(isTeacher);
     }
     public static String getUserschoolName() {
         return session.getUserSchoolName();

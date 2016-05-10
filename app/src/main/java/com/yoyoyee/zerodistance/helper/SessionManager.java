@@ -34,6 +34,7 @@ public class SessionManager {
 	private static final String KEY_USER_STUDENT_ID = "studentID";
     private static final String KEY_USER_TEXTSIZE = "usertextsize";
     private static final String KEY_USER_BECONTEXT = "becontext";
+    private static final String KEY_USER_SORTWAY = "sortway";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -43,6 +44,13 @@ public class SessionManager {
     public void setbecontext(boolean YN) {
         editor.putBoolean(KEY_USER_BECONTEXT, YN);
         editor.commit();
+    }
+    public void setSortWay(int setSortWay){
+        editor.putInt(KEY_USER_SORTWAY, setSortWay);
+        editor.commit();
+    }
+    public int getSortWay(){
+        return pref.getInt(KEY_USER_SORTWAY, 1);
     }
     public boolean getbecontext(){
         return pref.getBoolean(KEY_USER_BECONTEXT, true);
