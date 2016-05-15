@@ -19,6 +19,8 @@ import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
+import com.yoyoyee.zerodistance.helper.datatype.UserAcceptGroups;
+import com.yoyoyee.zerodistance.helper.datatype.UserAcceptMissions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1959,5 +1961,157 @@ public class ClientFunctions {
             Log.e(TAG, "getMissionImageUrl: " + e.getMessage());
         }
         return null;
+    }
+
+    public static void updateUserAcceptMissions(final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_user_accept_missions";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_USER_ACCEPT_MISSIONS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray missions = jObj.getJSONArray("missions");
+
+                        ArrayList<UserAcceptMissions> list = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                        for(int i=0; i<missions.length(); i++) {
+                            JSONObject mission = missions.getJSONObject(i);
+                            try {
+                                list.add(new UserAcceptMissions(
+                                        mission.getInt("mission_id"),
+                                        dateFormat.parse(mission.getString("accepted_at"))));
+                                //Log.d(TAG, "onResponse: " + mission.getString("user_name"));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateUserAcceptMissions(list);
+                        clientResponse.onResponse("Mission accept user get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void updateUserAcceptGroups(final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_user_accept_groups";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_USER_ACCEPT_GROUPS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray groups = jObj.getJSONArray("groups");
+
+                        ArrayList<UserAcceptGroups> list = new ArrayList<>();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                        for(int i=0; i<groups.length(); i++) {
+                            JSONObject group = groups.getJSONObject(i);
+                            try {
+                                list.add(new UserAcceptGroups(
+                                        group.getInt("group_id"),
+                                        dateFormat.parse(group.getString("accepted_at"))));
+                                //Log.d(TAG, "onResponse: " + mission.getString("user_name"));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateUserAcceptGroups(list);
+                        clientResponse.onResponse("Group accept user get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 }

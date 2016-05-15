@@ -12,6 +12,8 @@ import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
+import com.yoyoyee.zerodistance.helper.datatype.UserAcceptGroups;
+import com.yoyoyee.zerodistance.helper.datatype.UserAcceptMissions;
 import com.yoyoyee.zerodistance.helper.table.GroupAcceptUserTable;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
@@ -19,6 +21,8 @@ import com.yoyoyee.zerodistance.helper.table.MissionAcceptUserTable;
 import com.yoyoyee.zerodistance.helper.table.MissionsTable;
 import com.yoyoyee.zerodistance.helper.table.QATable;
 import com.yoyoyee.zerodistance.helper.table.SchoolsTable;
+import com.yoyoyee.zerodistance.helper.table.UserAcceptGroupsTable;
+import com.yoyoyee.zerodistance.helper.table.UserAcceptMissionsTable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -937,6 +941,326 @@ public class QueryFunctions {
         cursor.close();
         db.close();
         return gaList;
+    }
+
+    public static void updateUserAcceptMissions(ArrayList<UserAcceptMissions> list) {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        db.beginTransaction();
+        try {
+            db.delete(UserAcceptMissionsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<list.size(); i++) {
+                values.put(UserAcceptMissionsTable.KEY_MISSION_ID, list.get(i).missionID); // Name
+                values.put(UserAcceptMissionsTable.KEY_ACCEPTED_AT, dateFormat.format(list.get(i).acceptedAt)); // Created At
+
+                // Inserting Row
+                db.insert(UserAcceptMissionsTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateUserAcceptMissionsTable: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all UserAcceptMissionsTable info from SQLite");
+        db.close();
+
+    }
+
+    public static ArrayList<Mission> getUserAcceptMissions() {
+
+        ArrayList<Mission> missions = new ArrayList<>();
+        String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
+                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Mission mission = new Mission();
+                mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
+                mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                missions.add(mission);
+                Log.d(TAG, "getUserAcceptMissions: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return missions;
+    }
+
+    public static ArrayList<Mission> getUserAcceptUnfinishedMissions() {
+
+        ArrayList<Mission> missions = new ArrayList<>();
+        String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
+                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id AND t1.is_finished = 0";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Mission mission = new Mission();
+                mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
+                mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                missions.add(mission);
+                Log.d(TAG, "getUserAcceptMissions: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return missions;
+    }
+
+    public static ArrayList<Mission> getUserAcceptFinishedMissions() {
+
+        ArrayList<Mission> missions = new ArrayList<>();
+        String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
+                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id AND t1.is_finished = 1";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Mission mission = new Mission();
+                mission.id = cursor.getInt(MissionsTable.COLUMNS_NUM_ID);
+                mission.userUid = cursor.getString(MissionsTable.COLUMNS_NUM_USER_UID);
+                mission.userName = cursor.getString(MissionsTable.COLUMNS_NUM_USER_NAME);
+                mission.schoolID = cursor.getInt(MissionsTable.COLUMNS_NUM_SCHOOL_ID);
+                mission.title = cursor.getString(MissionsTable.COLUMNS_NUM_TITLE);
+                mission.isUrgent = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_URGENT) != 0;
+                mission.needNum = cursor.getInt(MissionsTable.COLUMNS_NUM_NEED_NUM);
+                mission.currentNum = cursor.getInt(MissionsTable.COLUMNS_NUM_CURRENT_NUM);
+                mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
+                mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
+                mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
+                mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
+                mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
+                missions.add(mission);
+                Log.d(TAG, "getUserAcceptMissions: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return missions;
+    }
+
+    public static void updateUserAcceptGroups(ArrayList<UserAcceptGroups> list) {
+        SQLiteDatabase db = DB.getWritableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        db.beginTransaction();
+        try {
+            db.delete(UserAcceptMissionsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<list.size(); i++) {
+                values.put(UserAcceptGroupsTable.KEY_GROUP_ID, list.get(i).groupID); // Name
+                values.put(UserAcceptGroupsTable.KEY_ACCEPTED_AT, dateFormat.format(list.get(i).acceptedAt)); // Created At
+
+                // Inserting Row
+                db.insert(UserAcceptGroupsTable.TABLE_NAME, null, values);
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateUserAcceptGroupsTable: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all UserAcceptGroupsTable info from SQLite");
+        db.close();
+
+    }
+
+    public static ArrayList<Group> getUserAcceptGroups() {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
+                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Group group = new Group();
+                group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+                group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
+                group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+                group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+                group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+                group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+                group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+                group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+                group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+                group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+                group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+                groups.add(group);
+                Log.d(TAG, "getUserAcceptGroups: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return groups;
+    }
+
+    public static ArrayList<Group> getUserAcceptUnfinishedGroups() {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
+                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id AND t1.is_finished = 0";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Group group = new Group();
+                group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+                group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
+                group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+                group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+                group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+                group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+                group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+                group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+                group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+                group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+                group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+                groups.add(group);
+                Log.d(TAG, "getUserAcceptUnfinishedGroups: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return groups;
+    }
+
+    public static ArrayList<Group> getUserAcceptFinishedGroups() {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
+                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id AND t1.is_finished = 1";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Taipei"));
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Group group = new Group();
+                group.id = cursor.getInt(GroupsTable.COLUMNS_NUM_ID);
+                group.userUid = cursor.getString(GroupsTable.COLUMNS_NUM_USER_UID);
+                group.userName = cursor.getString(GroupsTable.COLUMNS_NUM_USER_NAME);
+                group.schoolID = cursor.getInt(GroupsTable.COLUMNS_NUM_SCHOOL_ID);
+                group.title = cursor.getString(GroupsTable.COLUMNS_NUM_TITLE);
+                group.needNum = cursor.getInt(GroupsTable.COLUMNS_NUM_NEED_NUM);
+                group.currentNum = cursor.getInt(GroupsTable.COLUMNS_NUM_CURRENT_NUM);
+                group.place = cursor.getString(GroupsTable.COLUMNS_NUM_PLACE);
+                group.content = cursor.getString(GroupsTable.COLUMNS_NUM_CONTENT);
+                group.createdAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_CREATED_AT));
+                group.expAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_EXP_AT));
+                group.isRunning = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_RUNNING) != 0;
+                group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
+                group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
+                groups.add(group);
+                Log.d(TAG, "getUserAcceptFinishedGroups: " );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return groups;
     }
 
 }

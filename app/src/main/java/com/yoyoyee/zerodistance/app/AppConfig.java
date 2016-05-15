@@ -91,4 +91,10 @@ public class AppConfig {
     // Server get mission image url
     public static String URL_GET_MISSION_IMAGE_COUNT = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getMissionImageCount";
 
+	// Server get user accept missions image url
+	public static String URL_GET_USER_ACCEPT_MISSIONS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getUserAcceptMissions";
+
+    // Server get user accept groups image url
+    public static String URL_GET_USER_ACCEPT_GROUPS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getUserAcceptGroups";
+
 }
