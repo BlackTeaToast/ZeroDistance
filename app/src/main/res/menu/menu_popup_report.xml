@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/report_group">
+        <item
+            android:id="@+id/popreport"
+            android:title="@string/report_pop"
+            android:icon="@drawable/ic_gavel_black_48dp"/>
+    </group>
+
+</menu>

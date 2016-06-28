@@ -152,7 +152,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
      * @param v
      */
     public void layOutClick(final View v, final int qaID,final String q_Qcontenttext,final String a_Acontenttext,String userUID,ViewHolder hoder){
-        String myUID=QueryFunctions.getUserUid();
+        String myUID= QueryFunctions.getUserUid();
         if (publisher) {
             if (a_Acontenttext.equals("null")) {
                 final PopupMenu popupmenu = new PopupMenu(v.getContext(), hoder.q_Card_all);
@@ -163,19 +163,21 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case (R.id.popans_nogroup):
-                                intentGO(v,qaID,a_Acontenttext,q_Qcontenttext,false);
+                                intentGO(v, qaID, a_Acontenttext, q_Qcontenttext, false);
                                 break;
                             case (R.id.popdel_nogroup):
-                               ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
-                                   @Override
-                                   public void onResponse(String response) {
+                                ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
+                                    @Override
+                                    public void onResponse(String response) {
 
-                                   }
+                                    }
 
-                                   @Override
-                                   public void onErrorResponse(String response) {
-                                   }
-                               });
+                                    @Override
+                                    public void onErrorResponse(String response) {
+                                    }
+                                });
+                                break;
+                            case (R.id.popreport_nogroup):
                                 break;
                         }
                         return false;
@@ -183,7 +185,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                 });
                 //設置setForceShowIcon為true，強制顯示圖案
                 try {
-                    Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+                    Field mFieldPopup = popupmenu.getClass().getDeclaredField("mPopup");
                     mFieldPopup.setAccessible(true);
                     MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
                     mPopup.setForceShowIcon(true);
@@ -200,7 +202,7 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case (R.id.popedit_hadans_group):
-                                intentGO(v,qaID,a_Acontenttext,q_Qcontenttext,false);
+                                intentGO(v, qaID, a_Acontenttext, q_Qcontenttext, false);
                                 break;
                             case (R.id.popdel_hadans_group):
                                 ClientFunctions.deleteQuestion(qaID, new ClientResponse() {
@@ -215,13 +217,15 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                                     }
                                 });
                                 break;
+                            case (R.id.popreport_hadans_group):
+                                break;
                         }
                         return false;
                     }
                 });
                 //設置setForceShowIcon為true，強制顯示圖案
                 try {
-                    Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+                    Field mFieldPopup = popupmenu.getClass().getDeclaredField("mPopup");
                     mFieldPopup.setAccessible(true);
                     MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
                     mPopup.setForceShowIcon(true);
@@ -242,6 +246,31 @@ public class QAAdapter  extends RecyclerView.Adapter<QAAdapter.ViewHolder> {
                             intentGO(v,qaID,a_Acontenttext,q_Qcontenttext,true);
                             break;
                         case (R.id.popdel):
+
+                            break;
+                    }
+                    return false;
+                }
+            });
+            //設置setForceShowIcon為true，強制顯示圖案
+            try {
+                Field mFieldPopup=popupmenu.getClass().getDeclaredField("mPopup");
+                mFieldPopup.setAccessible(true);
+                MenuPopupHelper mPopup = (MenuPopupHelper) mFieldPopup.get(popupmenu);
+                mPopup.setForceShowIcon(true);
+            } catch (Exception e) {
+
+            }
+            popupmenu.show();
+        }
+        else  {
+            final PopupMenu popupmenu = new PopupMenu(v.getContext(), hoder.q_Card_all);
+            popupmenu.getMenuInflater().inflate(R.menu.menu_popup_report, popupmenu.getMenu());
+            popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case (R.id.popreport):
 
                             break;
                     }
