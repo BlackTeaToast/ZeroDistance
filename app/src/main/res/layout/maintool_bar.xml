@@ -5,7 +5,8 @@
     android:background="@color/ColorPrimaryToolbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:elevation="4dp"
-    android:textColor="@color/ColorTextToolbar">
+    android:textColor="@color/ColorTextToolbar"
+    >
 
 <LinearLayout
     android:layout_width="match_parent"

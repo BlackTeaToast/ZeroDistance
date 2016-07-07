@@ -15,6 +15,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yoyoyee.zerodistance.R;
+
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
@@ -185,6 +187,7 @@ public class SlidingTabLayout  extends HorizontalScrollView {
 
             tabTitleView.setText(adapter.getPageTitle(i));
             tabTitleView.setTextSize(12+(SF.getUserTextSize()/5)); //字體
+            tabTitleView.setTextColor(getResources().getColorStateList(R.color.ColorTextToolbar));
             tabView.setOnClickListener(tabClickListener);
             String desc = mContentDescriptions.get(i, null);
             if (desc != null) {
