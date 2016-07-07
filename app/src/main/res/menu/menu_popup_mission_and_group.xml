@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/is_publisher_group">
+        <item
+            android:id="@+id/popedit_publishergroup"
+            android:title="@string/edit_pop"
+            android:icon="@drawable/ic_mode_edit_black_24dp"/>
+        <item
+            android:id="@+id/popdel_publishergroup"
+            android:title="@string/del_pop"
+            android:icon="@drawable/ic_delete_black_24dp"/>
+
+    </group>
+
+    <group android:id="@+id/not_publisher_not_joined_group">
+        <item
+            android:id="@+id/join_not_publishergroup"
+            android:title="@string/is_joined"
+            android:icon="@drawable/ic_person_add_black_48dp"/>
+        <item
+            android:id="@+id/report_not_joinedgroup"
+            android:title="@string/report_pop"
+            android:icon="@drawable/ic_gavel_black_48dp"/>
+    </group>
+
+    <group android:id="@+id/not_publisher_joined_group">
+        <item
+            android:id="@+id/notjoin_not_publishergroup"
+            android:title="@string/not_joined"
+            android:icon="@drawable/ic_person_black_48dp"/>
+        <item
+            android:id="@+id/report_joinedgroup"
+            android:title="@string/report_pop"
+            android:icon="@drawable/ic_gavel_black_48dp"/>
+    </group>
+
+
+</menu>

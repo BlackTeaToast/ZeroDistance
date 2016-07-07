@@ -75,21 +75,13 @@ public class GroupActivity extends AppCompatActivity {
         }
         else{
 
-            if(joined) {
-                //有參加時，顯示不參加鈕
-                menu.setGroupVisible(R.id.mission_toolbar_group_join, false);
-                menu.setGroupVisible(R.id.mission_toolbar_group_not_join, true);
+            //不顯示參加、不參加鈕。這兩個功能改到more裡面，所以現在選單上的兩個鈕都關掉了
+            menu.setGroupVisible(R.id.mission_toolbar_group_join, false);
+            menu.setGroupVisible(R.id.mission_toolbar_group_not_join, false);
 
-            }
-            else {
-                //沒參加時，顯示參加鈕
-                menu.setGroupVisible(R.id.mission_toolbar_group_join, true);
-                menu.setGroupVisible(R.id.mission_toolbar_group_not_join, false);
+            //把有參加、不參加與檢舉的more選項打開
+            menu.setGroupVisible(R.id.mission_toolbar_group_more, true);
 
-            }
-
-            //把編輯跟刪除關掉
-            menu.setGroupVisible(R.id.mission_toolbar_group_more, false);
 
         }
         return true;
@@ -114,17 +106,9 @@ public class GroupActivity extends AppCompatActivity {
 
                 break;
 
-            //點選參加
-            case R.id.mission_toolbar_group_join:
-                areYouSureToJoin();
-                break;
-
-            //點選不參加
-            case R.id.mission_toolbar_group_not_join:
-                areYouSureToNotJoin();
-                break;
-
+            //點選更多選單
             case R.id.mission_toolbar_group_more:
+                //顯示more 裡面的項目，現在除了Edit 跟 Delete 之外，如果不是發佈者，改為顯示參加鈕與檢舉
                 showEditAndDelete();
                 break;
         }
@@ -765,11 +749,60 @@ public class GroupActivity extends AppCompatActivity {
         builder.create().show();
 
     }
+
+    private void areYouSureToReport(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GroupActivity.this);
+        builder.setTitle(R.string.report_pop);
+        builder.setMessage(R.string.are_you_sure_to_report);
+        builder.setIcon(R.drawable.ic_gavel_black_48dp);
+
+
+        //取消鈕
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        //確認鈕
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //檢舉
+
+            }
+        });
+
+        builder.create().show();
+
+    }
+
     //顯示編輯與刪除選單
     private void showEditAndDelete(){
         View viewTemp = findViewById(R.id.misson_toolbar_more);
         final PopupMenu popupmenu = new PopupMenu(GroupActivity.this, viewTemp);
-        popupmenu.inflate(R.menu.menu_popup_asker); // API 14以上才支援此方法.
+        popupmenu.inflate(R.menu.menu_popup_mission_and_group); // API 14以上才支援此方法.
+
+        if(isPublisher){
+            //如果是發佈者，只顯示發佈者的group
+            popupmenu.getMenu().setGroupVisible(R.id.not_publisher_not_joined_group, false);
+            popupmenu.getMenu().setGroupVisible(R.id.not_publisher_joined_group, false);
+
+        }
+        else if(joined){
+            //如果非發布者，有參加則顯示取消參加的選項；沒有則相反，把編輯刪除選項關掉
+            popupmenu.getMenu().setGroupVisible(R.id.is_publisher_group, false);
+            popupmenu.getMenu().setGroupVisible(R.id.not_publisher_not_joined_group, false);
+            popupmenu.getMenu().setGroupVisible(R.id.not_publisher_joined_group, true);
+
+        }
+        else{
+            popupmenu.getMenu().setGroupVisible(R.id.is_publisher_group, false);
+            popupmenu.getMenu().setGroupVisible(R.id.not_publisher_not_joined_group, true);
+            popupmenu.getMenu().setGroupVisible(R.id.not_publisher_joined_group, false);
+        }
 
         popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() { // 設定popupmenu項目點擊傾聽者.
 
@@ -777,7 +810,7 @@ public class GroupActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     //點選編輯
-                    case (R.id.popedit):
+                    case (R.id.popedit_publishergroup):
                         Intent it = new Intent(GroupActivity.this, NewGroupActivity.class);
                         it.putExtra("id", id);
                         it.putExtra("isEdit", true);
@@ -786,8 +819,28 @@ public class GroupActivity extends AppCompatActivity {
                         break;
 
                     //點選刪除
-                    case (R.id.popdel):
+                    case (R.id.popdel_publishergroup):
                         areYouSureToDelete();
+                        break;
+
+                    //點選參加
+                    case (R.id.join_not_publishergroup):
+                        areYouSureToJoin();
+                        break;
+
+                    //點選取消參加
+                    case (R.id.notjoin_not_publishergroup):
+                        areYouSureToNotJoin();
+                        break;
+
+                    //點選檢舉(尚未參加)
+                    case (R.id.report_not_joinedgroup):
+                        areYouSureToReport();
+                        break;
+
+                    //點選檢舉(已參加)
+                    case (R.id.report_joinedgroup):
+                        areYouSureToReport();
                         break;
                 }
                 return true;
@@ -804,7 +857,6 @@ public class GroupActivity extends AppCompatActivity {
 
         }
         popupmenu.show();
-
 
     }
 
