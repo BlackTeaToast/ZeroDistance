@@ -35,6 +35,7 @@ public class StudentRegisterActivity extends Activity {
     private EditText inputStudentID;
     private EditText inputEmail;
     private EditText inputPassword;
+    private EditText inputConfirmPassword;
     private Spinner spinnerArea;
     private Spinner spinnerCounty;
     private Spinner spinnerSchool;
@@ -55,6 +56,7 @@ public class StudentRegisterActivity extends Activity {
         inputStudentID = (EditText) findViewById(R.id.studentID);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
+        inputConfirmPassword = (EditText) findViewById(R.id.confirmPassword);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
         spinnerArea = (Spinner) findViewById(R.id.spinnerArea);
@@ -85,19 +87,31 @@ public class StudentRegisterActivity extends Activity {
             public void onClick(View view) {
                 String name = inputFullName.getText().toString().trim();
                 String nickName = inputNickName.getText().toString().trim();
-                String schoolID = String.valueOf(db.getSchoolID(spinnerArea.getSelectedItem().toString(),
-                        spinnerCounty.getSelectedItem().toString(),
-                        spinnerSchool.getSelectedItem().toString()));
+                String area = spinnerArea.getSelectedItem().toString();
+                String county = spinnerCounty.getSelectedItem().toString();
+                String school = spinnerSchool.getSelectedItem().toString();
                 String studentID = inputStudentID.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String confirmPassword = inputConfirmPassword.getText().toString().trim();
 
-                if (!name.isEmpty() && !nickName.isEmpty() && !schoolID.isEmpty() &&
-                        !studentID.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerStudent(name, nickName, schoolID, studentID, email, password);
+                if (!name.isEmpty() && !nickName.isEmpty() && !studentID.isEmpty() &&
+                        !email.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty() &&
+                        spinnerArea.getSelectedItemPosition()!=0 &&
+                        spinnerCounty.getSelectedItemPosition()!=0 &&
+                        spinnerSchool.getSelectedItemPosition()!=0) {
+
+                    String schoolID = String.valueOf(db.getSchoolID(area, county, school));
+                    if(password.equals(confirmPassword)) {
+                        registerStudent(name, nickName, schoolID, studentID, email, password);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "兩次密碼輸入不相同，請確認密碼是否輸入正確！", Toast.LENGTH_SHORT)
+                                .show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_SHORT)
+                            "輸入資料不完整！", Toast.LENGTH_SHORT)
                             .show();
                 }
             }

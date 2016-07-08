@@ -127,5 +127,6 @@
     <string name="answer_for_title">Answer</string>
     <string name="qanda_Q">Q：</string>
     <string name="qanda_A">A：</string>
->>>>>>> Stashed changes-->
+    <string name="hint_confirm_password">Confirm Password</string>
+    >>>>>>> Stashed changes-->
 </resources>

@@ -206,6 +206,7 @@
     <string name="re_give_score">重新給予評分</string>
     <string name="give">給予</string>
     <string name="star">顆星</string>
+    <string name="hint_confirm_password">密碼再確認</string>
     <!--=========================================================-->
 
 
