@@ -92,14 +92,14 @@
     <string name="ans_pop">回答</string>
     <string name="del_pop">刪除</string>
     <string name="report_pop">檢舉</string>
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
 
 
     <!--==================================================================-->
@@ -148,7 +148,26 @@
     <string name="SortWay">排列方式</string>
     <string name="poTimeFirst">PO文時間優先</string>
     <string name="endTimeFirst">截止時間優先</string>
-
+    <string-array name="drawer_menu">
+        <item>任務</item>
+        <item>揪團</item>
+        <item>未完成</item>
+        <item>已完成</item>
+        <item>成就</item>
+        <item>設定</item>
+    </string-array>
+    <string name="drawer_open">開啟</string>
+    <string name="drawer_close">關閉</string>
+    <string name="level">等級</string>
+    <string name="exp">經驗值</string>
+    <string name="Quality">素質</string>
+    <string name="profession">職業</string>
+    <string name="Achievement">成就</string>
+    <string name="Aboutmyself">自我介紹</string>
+    <string name="makefri">加好友</string>
+    <string name="exit">離開</string>
+    <string name="subscription">訂閱</string>
+    <string name="saveandout">儲存並送出</string>
     <!--==================================================================-->
     <!--吱吱吱之-->
     <string name="ask_for_title">發問</string>
@@ -215,38 +234,38 @@
 
 
 
-<!--
-如果要使用在.java黨上面時，可以以以下方式來引用。
-如果我們要用單一詞彙
-先在strings資料夾內建立文字資料
-例：
-<string name="要使用的變數名稱">要顯示的文字，任何語言皆可</string>
-那要引用的話，就以R.string.要使用的變數名稱，即可傳入字串
-例：
-strings內：
-<string name="yee">我是範例</string>
-JAVA內：
-private String string=R.string.yee;
-此時，string內即為"我是範例"
-Xml內：
-android:text="@string/yee"
-此時你要的地方就會出現"我是範例"喔!!
-是不是很神奇呢？
+    <!--
+    如果要使用在.java黨上面時，可以以以下方式來引用。
+    如果我們要用單一詞彙
+    先在strings資料夾內建立文字資料
+    例：
+    <string name="要使用的變數名稱">要顯示的文字，任何語言皆可</string>
+    那要引用的話，就以R.string.要使用的變數名稱，即可傳入字串
+    例：
+    strings內：
+    <string name="yee">我是範例</string>
+    JAVA內：
+    private String string=R.string.yee;
+    此時，string內即為"我是範例"
+    Xml內：
+    android:text="@string/yee"
+    此時你要的地方就會出現"我是範例"喔!!
+    是不是很神奇呢？
 
-若是要使用字串，則要定義為此
-例：
- <string-array name="press_new_group">
-        <item>普通</item>
-        <item>緊急</item>
-    </string-array>
-<item>可以自行增加
-要呼叫時則比較麻煩
-例：
-private String[] stringNGAPress = getResources().getStringArray(R.array.press_new_group);
-
-
+    若是要使用字串，則要定義為此
+    例：
+     <string-array name="press_new_group">
+            <item>普通</item>
+            <item>緊急</item>
+        </string-array>
+    <item>可以自行增加
+    要呼叫時則比較麻煩
+    例：
+    private String[] stringNGAPress = getResources().getStringArray(R.array.press_new_group);
 
 
 
 
--->
+
+
+    -->

@@ -39,7 +39,7 @@ public class fragment_setting extends Fragment {
     private SQLiteHandler db;
     private SessionManager session;
     float ttsize;  //字體大小
-    static float sizeS=10,sizeM=15, sizeL=20;
+    static float sizeS=8,sizeM=10, sizeL=20;
     TextView  userid;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -65,7 +65,6 @@ public class fragment_setting extends Fragment {
             adapterPress = new ArrayAdapter<String>(getActivity(), R.layout.spinner,getResources().getStringArray(R.array.languageSppingArrary));
 
             adapterPress.setDropDownViewResource(R.layout.spinner);
-            languageSpinner.setAdapter(adapterPress);
             languageSpinner.setAdapter(adapterPress);
 
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  //spinner監聽

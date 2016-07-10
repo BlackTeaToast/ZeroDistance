@@ -3,29 +3,22 @@ package com.yoyoyee.zerodistance.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentController;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.app.AppController;
-import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
-import com.yoyoyee.zerodistance.fragment.fragment_mission;
 import com.yoyoyee.zerodistance.helper.CustomToast;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
@@ -33,10 +26,8 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
-import com.yoyoyee.zerodistance.helper.datatype.Group;
-import com.yoyoyee.zerodistance.helper.datatype.Mission;
-
-import java.util.ArrayList;
+import com.yoyoyee.zerodistance.menuDialog.Dialogfriend;
+import com.yoyoyee.zerodistance.menuDialog.Dialogmyself;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
         UserSchool.setText(SessionFunctions.getUserschoolName()+"　　");
         setSupportActionBar(tool_bar);
         ActionBar actionBar = getSupportActionBar();
-
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        setDrawerLayout();
+        setnav();//navigation的menu點選
         //actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
 //設置toolbar標題
 
@@ -228,6 +222,65 @@ public class MainActivity extends AppCompatActivity {
      //   pager.setCurrentItem(2);  //預設出現頁面
         hideDialog();
     }
+    private void setDrawerLayout(){
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // 實作 drawer toggle 並放入 toolbar
 
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, tool_bar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerToggle.syncState();
+        mDrawerLayout.setScrimColor(Color.parseColor("#3c448AFF"));
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+    }
+ private void setnav(){
+     NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
+    // navigation.inflateHeaderView(R.layout.navigation_header);
+     navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+         @Override
+         public boolean onNavigationItemSelected(MenuItem menuItem) {
+             int id = menuItem.getItemId();
+             switch (id) {
+                 case R.id.myselfpage:
+                     makeMyfselfDialog();
+                     break;
+                 case R.id.friendList:
+                     makeFriendDialog();
+                     break;
+                 case R.id.myAchievement:
+                     break;
+                 case R.id.setting:
+                     break;
+                 case R.id.about_us:
+                     break;
+                 case R.id.sign_out:
+                     logoutUser();
+                     break;
+                 case R.id.exit:
+                     finish();
+                     break;
+
+             }
+             return false;
+         }
+     });
+ }
+    private void makeMyfselfDialog(){
+        Dialogmyself dialog = new Dialogmyself(context);
+        dialog.setContentView(R.layout.dialog_personal_page);
+            dialog.show();
+    }
+    private void makeFriendDialog(){
+        Dialogfriend dialog = new Dialogfriend(context);
+        dialog.setContentView(R.layout.dialog_friend_list);
+        dialog.show();
+    }
+    private void logoutUser() {
+        SessionManager session = new SessionManager(this);
+        session.setLogin(false);
+        db = new SQLiteHandler(this);
+        db.deleteUsers();
+        Intent in = new Intent(this, LoginActivity.class);
+        startActivity(in);
+        finish();
+    }
 }

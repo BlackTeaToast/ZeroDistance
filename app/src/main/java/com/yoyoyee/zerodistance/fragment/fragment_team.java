@@ -56,20 +56,16 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
 
     public fragment_team(){
-//        updataphoneDB();
     }
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_team, container, false);
-        makecard();
+
         try {
 
             //CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
             mList = (RecyclerView) v.findViewById(R.id.listView);
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mList.setLayoutManager(layoutManager);
-//            mList.setAdapter(CardViewAdapter);
-            mList.setOnTouchListener(this);//監聽動作
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,8 +111,8 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
             public void onRefresh() {
                     CardViewAdapter.setItemCount(0);
                     mList.scrollToPosition(0);
-                    CardViewAdapter.notifyDataSetChanged();
                     updataphoneDB();
+                makecard();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -126,11 +122,14 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     }
     public void  onResume(){
         super.onResume();
+        makecard();
+        mList.setLayoutManager(layoutManager);
+        mList.setOnTouchListener(this);//監聽動作
+        mList.setAdapter(CardViewAdapter);
         //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
         CardViewAdapter.setItemCount(0);
         mList.scrollToPosition(0);
-        makecard();
-        mList.setAdapter(CardViewAdapter);
+
     }
 
     public void makecard() {
@@ -147,6 +146,8 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/);
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
+        }else {
+            isfirst=false;
         }
     }
 
@@ -222,10 +223,8 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                //Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show();
-                makecard();
-                mList.setAdapter(CardViewAdapter);
                 upDataCount=0;
+                CardViewAdapter.notifyDataSetChanged();
             }
 
             @Override

@@ -35,7 +35,6 @@ import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.RecyclerItemClickListener;
-import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.CardViewAdapter;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
@@ -63,27 +62,26 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     int upDataCount;
     LinearLayoutManager layoutManager;//CARD layout
+    boolean isfirst=true;
     public fragment_mission(){
-//        updataphoneDB();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_mission, container, false);
-         makecard();
+
 
         try {
             mList = (RecyclerView) v.findViewById(R.id.listView);
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mList.setLayoutManager(layoutManager);
-          //  mList.setAdapter(CardViewAdapter);  //設定內容
-            mList.setOnTouchListener(this);//監聽動作
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //漂浮
+
          fab=  (FloatingActionButton) v.findViewById(R.id.fab);
         if(SessionFunctions.isTeacher()) {
             fab.setVisibility(View.VISIBLE);
@@ -127,9 +125,8 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                    CardViewAdapter.setItemCount(0);
-                    mList.scrollToPosition(0);
                     updataphoneDB();
+                    makecard();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -159,9 +156,12 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     public void  onResume(){
         super.onResume();
       //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        makecard();
+
         CardViewAdapter.setItemCount(0);
         mList.scrollToPosition(0);
-        makecard();
+        mList.setLayoutManager(layoutManager);
+        mList.setOnTouchListener(this);//監聽動作
         mList.setAdapter(CardViewAdapter);
         if(SessionFunctions.isTeacher()) {
             fab.setVisibility(View.VISIBLE);
@@ -176,47 +176,19 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 
     }
     private void updataphoneDB(){//更新手機資料
-        updataMissionDB();
         updataGroups();
     }
 
-    private void updataMissionDB(){
-        ClientFunctions.updateMissions(new ClientResponse() {
-            @Override
-            public void onResponse(String response) {
-                upDataCount=0;
-                updataGroups();
-            //    Toast.makeText(getContext(), "更新成功(任務)", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onErrorResponse(String response) {
-                if(upDataCount>=5){
-                    Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
-                }else{
-                    upDataCount+=1;
-                    updataMissionDB();
-                }
-            }
-        });
-    }
     private void updataGroups(){
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
                 CardViewAdapter.notifyDataSetChanged();
-                makecard();
-             //   mList.setAdapter(CardViewAdapter);
             }
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=5){
                     Toast.makeText(getContext(), "更新失敗(揪團)", Toast.LENGTH_SHORT).show();
-                }else{
-                    upDataCount+=1;
-                    updataGroups();
-                }
             }
         });
     }
@@ -312,11 +284,10 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
 //        bedangerfirst();    //任務排序 (緊急任務先)
 
             CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission/*,res*/);
-
-        try {
+        if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }else {
+            isfirst=false;
         }
     }
     public int getUrgentCount(){
