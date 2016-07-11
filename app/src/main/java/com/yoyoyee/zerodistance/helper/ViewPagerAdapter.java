@@ -1,24 +1,14 @@
 package com.yoyoyee.zerodistance.helper;
 
-import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
-import com.yoyoyee.zerodistance.app.AppController;
-import com.yoyoyee.zerodistance.client.ClientFunctions;
-import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.fragment.fragment_achievement;
 import com.yoyoyee.zerodistance.fragment.fragment_havebeen;
 import com.yoyoyee.zerodistance.fragment.fragment_mission;
 import com.yoyoyee.zerodistance.fragment.fragment_notbeen;
-import com.yoyoyee.zerodistance.fragment.fragment_setting;
 import com.yoyoyee.zerodistance.fragment.fragment_team;
-import com.yoyoyee.zerodistance.helper.datatype.Group;
-import com.yoyoyee.zerodistance.helper.datatype.Mission;
-
-import java.util.ArrayList;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -67,10 +57,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             fragment_achievement fah = new fragment_achievement();
             f = fah;
         }
-        if(position==5){
-            fragment_setting fah = new fragment_setting();
-            f = fah;
-        }
+//        if(position==5){
+//            fragment_setting fah = new fragment_setting();
+//            f = fah;
+//        }
         return f;
     }
 

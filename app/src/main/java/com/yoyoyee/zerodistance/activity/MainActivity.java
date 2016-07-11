@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -19,9 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
@@ -33,8 +30,9 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
-import com.yoyoyee.zerodistance.menuDialog.Dialogfriend;
-import com.yoyoyee.zerodistance.menuDialog.Dialogmyself;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_friend;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_myself;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_setting;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -59,7 +57,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //startService(new Intent(this, TapService.class));
-        Titles = getResources().getStringArray(R.array.tabstyle);
+        Titles = getResources().getStringArray(R.array.tabstyle); //設定tab
+
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(true);
@@ -300,7 +299,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-        pager.setOffscreenPageLimit(6);//儲存頁面數
+        pager.setOffscreenPageLimit(5);//儲存頁面數
 
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
@@ -334,6 +333,7 @@ public class MainActivity extends AppCompatActivity{
                  case R.id.myAchievement:
                      break;
                  case R.id.setting:
+                     makeSettingDialog();
                      break;
                  case R.id.about_us:
                      break;
@@ -350,13 +350,18 @@ public class MainActivity extends AppCompatActivity{
      });
  }
     private void makeMyfselfDialog(){
-        Dialogmyself dialog = new Dialogmyself(context);
+        Dialog_myself dialog = new Dialog_myself(context);
         dialog.setContentView(R.layout.dialog_personal_page);
             dialog.show();
     }
     private void makeFriendDialog(){
-        Dialogfriend dialog = new Dialogfriend(context);
+        Dialog_friend dialog = new Dialog_friend(context);
         dialog.setContentView(R.layout.dialog_friend_list);
+        dialog.show();
+    }
+    private void makeSettingDialog(){
+        Dialog_setting dialog = new Dialog_setting(context);
+        dialog.setContentView(R.layout.fragment_setting);
         dialog.show();
     }
     private void logoutUser() {

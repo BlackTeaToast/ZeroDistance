@@ -19,13 +19,13 @@ import com.yoyoyee.zerodistance.helper.FriendAdapter;
 /**
  * Created by 楊霖村 on 2016/7/9.
  */
-public class Dialogfriend  extends Dialog {
+public class Dialog_friend extends Dialog {
     RecyclerView mList;
     LinearLayoutManager layoutManager;//CARD layout
     Context context;
     FriendAdapter friendAdapter;
     Button newfir,otherpeo, cancel;
-    public Dialogfriend(Context context) {
+    public Dialog_friend(Context context) {
         super(context);
         this.context=context;
         requestWindowFeature(Window.FEATURE_NO_TITLE);

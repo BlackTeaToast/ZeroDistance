@@ -18,13 +18,13 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 /**
  * Created by 楊霖村 on 2016/7/9.
  */
-public class Dialogmyself extends Dialog {
+public class Dialog_myself extends Dialog {
     Button btn_confirm;
     Button btn_exit;
     TextView name, profession, level, exp, Achievement;
     EditText Aboutmyself;
     boolean beonclick=false;
-    public Dialogmyself(Context context) {
+    public Dialog_myself(Context context) {
        super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_personal_page);
