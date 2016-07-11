@@ -9,11 +9,11 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
         android:layout_gravity="center"
-        android:layout_above="@+id/linearLayout5"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/linearLayout6">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -26,6 +26,22 @@
     </ScrollView>
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout6">
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:background="#00bebebe"
+            android:layout_marginTop="10dp" />
+
+
+        <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="新增好友"
-                android:id="@+id/button"
+                android:id="@+id/newfir"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_glossy"
                 android:layout_marginLeft="5dp" />
@@ -64,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="查詢其他玩家資訊"
-                android:id="@+id/button2"
+                android:id="@+id/otherpeo"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_glossy"  />
 
@@ -75,13 +91,13 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="New Button"
-                android:id="@+id/button3"
+                android:text="@android:string/cancel"
+                android:id="@+id/cancel"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_glossy"
                 android:layout_marginRight="5dp" />
         </LinearLayout>
     </LinearLayout>
-
+    </LinearLayout>
 
 </RelativeLayout>

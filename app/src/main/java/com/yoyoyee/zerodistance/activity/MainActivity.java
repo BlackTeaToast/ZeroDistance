@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -14,7 +17,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AbsListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
@@ -29,7 +36,7 @@ import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
 import com.yoyoyee.zerodistance.menuDialog.Dialogfriend;
 import com.yoyoyee.zerodistance.menuDialog.Dialogmyself;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
 //    private SectionsPagerAdapter mSectionsPagerAdapter;
     /**
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteHandler db;
     String Titles[];
     int upDataCount=0;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +84,37 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         setDrawerLayout();
         setnav();//navigation的menu點選
+
         //actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
 //設置toolbar標題
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.container);
+        pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch( event.getAction() ) {
 
+                    case MotionEvent.ACTION_DOWN:  // 按下
+                    {
+
+                        break;
+                    }
+
+                    case MotionEvent.ACTION_MOVE:  // 拖曳移動
+                    {
+                        break;}
+
+                    case MotionEvent.ACTION_UP:  // 放開
+                    {
+                        fabtime();
+                        break;}
+                }
+                return false;
+            }
+        });
+
+        setfab();//fab設定
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -147,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
     private void updataphoneDB(){//更新手機資料
         showDialog();
         delphoneDB();//資料都先削掉
-        //fabtime();
         updataSchoolDB();
         updataMissionDB();
     }
@@ -212,6 +244,59 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void fabtime(){
+        new CountDownTimer(100,100){
+
+            @Override
+            public void onFinish() {
+                switch (pager.getCurrentItem()){
+                    case 0:
+                        if (SessionFunctions.isTeacher()) {
+                            fab.show();
+                        }
+                        break;
+                    case 1:
+                        fab.show();
+                        break;
+                    default:
+                        fab.hide();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+        }.start();
+    }
+    private void setfab() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (SessionFunctions.isTeacher()&&pager.getCurrentItem()==0) {
+            fab.show();
+        }else {
+            fab.hide();
+        }
+         fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (pager.getCurrentItem()) {
+                        case 0: {
+                                Intent in = new Intent(context, NewMissionActivity.class);
+                                in.putExtra("id", SessionFunctions.getUserUid());
+                                startActivity(in);
+                                break;
+                                 }
+                        case 1:{
+                            Intent in = new Intent(context, NewGroupActivity.class);
+                            in.putExtra("id", SessionFunctions.getUserUid());
+                            startActivity(in);
+                        }
+                                                    }
+                                        }
+                                        });
+
+        }
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
@@ -283,4 +368,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
         finish();
     }
+
 }

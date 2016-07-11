@@ -6,8 +6,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.FriendAdapter;
@@ -20,7 +24,7 @@ public class Dialogfriend  extends Dialog {
     LinearLayoutManager layoutManager;//CARD layout
     Context context;
     FriendAdapter friendAdapter;
-    TextView name, profession, level, exp, Achievement, Aboutmyself;
+    Button newfir,otherpeo, cancel;
     public Dialogfriend(Context context) {
         super(context);
         this.context=context;
@@ -35,8 +39,31 @@ public class Dialogfriend  extends Dialog {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mList.setLayoutManager(layoutManager);
         getWindow().setBackgroundDrawable(new BitmapDrawable());
-//        makecard();
-
+        newfir = (Button)findViewById(R.id.newfir);
+        otherpeo = (Button)findViewById(R.id.otherpeo);
+        cancel = (Button)findViewById(R.id.cancel);
+        newfir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFriend dialog = new SearchFriend(context, 1);
+                dialog.setContentView(R.layout.dialog_searchfriend);
+                dialog.show();
+            }
+        });
+        otherpeo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchFriend dialog = new SearchFriend(context, 2);
+                dialog.setContentView(R.layout.dialog_searchfriend);
+                dialog.show();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               cancel();
+            }
+        });
     }
     public void makecard(){
 

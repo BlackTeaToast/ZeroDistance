@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
@@ -39,7 +41,7 @@ import java.util.Date;
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
-public class fragment_team extends Fragment implements View.OnTouchListener{
+public class fragment_team extends Fragment{
    //
     ArrayList<Group> Group;
     Group[] group;
@@ -52,7 +54,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
     boolean isfirst=true;
 
     RecyclerView mList;
-    FloatingActionButton fab;
+//    FloatingActionButton fab;
 
 
     public fragment_team(){
@@ -73,18 +75,18 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
 
 
         //漂浮
-        fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            //                        .setAction("Action", null).show();
-            Intent in = new Intent(getActivity(), NewGroupActivity.class);
-            in.putExtra("id", SessionFunctions.getUserUid());
-            Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
-            startActivity(in);
-        }
-    });
+//        fab = (FloatingActionButton) v.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//            //                        .setAction("Action", null).show();
+//            Intent in = new Intent(getActivity(), NewGroupActivity.class);
+//            in.putExtra("id", SessionFunctions.getUserUid());
+//            Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
+//            startActivity(in);
+//        }
+//    });
 
         //漂浮
 
@@ -98,7 +100,7 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
                 //lastVisibleItem >= totalItemCount - 4 表示剩下4個item自動載入，各位自由選擇
                 // dy>0 表示向下滑動
                 if (lastVisibleItem >= totalItemCount && dy < 0) {
-                    fab.setVisibility(View.VISIBLE);
+//                    fab.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -109,7 +111,6 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                    CardViewAdapter.setItemCount(0);
                     mList.scrollToPosition(0);
                     updataphoneDB();
                 makecard();
@@ -124,10 +125,9 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         super.onResume();
         makecard();
         mList.setLayoutManager(layoutManager);
-        mList.setOnTouchListener(this);//監聽動作
+//        mList.setOnTouchListener(this);//監聽動作
         mList.setAdapter(CardViewAdapter);
         //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
-        CardViewAdapter.setItemCount(0);
         mList.scrollToPosition(0);
 
     }
@@ -151,49 +151,49 @@ public class fragment_team extends Fragment implements View.OnTouchListener{
         }
     }
 
-    public boolean onTouch(View v, MotionEvent event) {
-
-        try {
-            switch( event.getAction() ) {
-
-                case MotionEvent.ACTION_DOWN:  // 按下
-                {
-                    // 設定 TextView 內容, 大小, 位置
-                    break;}
-
-                case MotionEvent.ACTION_MOVE:  // 拖曳移動
-                {
-    //                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
-                    fab.setVisibility(View.INVISIBLE);
-                    fabtime();
-                    // 設定 TextView 內容, 大小, 位置
-                    break;}
-
-                case MotionEvent.ACTION_UP:  // 放開
-                {
-                    fab.setVisibility(View.VISIBLE);
-                    // 設定 TextView 內容
-                    break;}
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    public void fabtime(){
-        new CountDownTimer(1000,500){
-
-            @Override
-            public void onFinish() {
-                fab.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-
-        }.start();
-    }
+//    public boolean onTouch(View v, MotionEvent event) {
+//
+//        try {
+//            switch( event.getAction() ) {
+//
+//                case MotionEvent.ACTION_DOWN:  // 按下
+//                {
+//                    // 設定 TextView 內容, 大小, 位置
+//                    break;}
+//
+//                case MotionEvent.ACTION_MOVE:  // 拖曳移動
+//                {
+//    //                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
+//                    fab.setVisibility(View.INVISIBLE);
+//                    fabtime();
+//                    // 設定 TextView 內容, 大小, 位置
+//                    break;}
+//
+//                case MotionEvent.ACTION_UP:  // 放開
+//                {
+//                    fab.setVisibility(View.VISIBLE);
+//                    // 設定 TextView 內容
+//                    break;}
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+//    public void fabtime(){
+//        new CountDownTimer(1000,500){
+//
+//            @Override
+//            public void onFinish() {
+//                fab.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//            }
+//
+//        }.start();
+//    }
 
     //更新
     private void updataphoneDB(){//更新手機資料

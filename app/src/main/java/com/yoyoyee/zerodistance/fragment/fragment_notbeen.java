@@ -72,7 +72,6 @@ public class fragment_notbeen extends Fragment {//
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                CardViewAdapter.setItemCount(0);
                 mList.scrollToPosition(0);
                 updataphoneDB();
                 makecard();
@@ -89,7 +88,6 @@ public class fragment_notbeen extends Fragment {//
         mList.setLayoutManager(layoutManager);
         mList.setAdapter(CardViewAdapter);
         //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
-        CardViewAdapter.setItemCount(0);
         mList.scrollToPosition(0);
     }
 

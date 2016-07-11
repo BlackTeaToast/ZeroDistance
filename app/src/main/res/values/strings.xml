@@ -168,6 +168,10 @@
     <string name="exit">離開</string>
     <string name="subscription">訂閱</string>
     <string name="saveandout">儲存並送出</string>
+    <string name="inname">請輸入玩家名稱</string>
+    <string name="waitacc">等待對方接受</string>
+    <string name="search">搜尋</string>
+
     <!--==================================================================-->
     <!--吱吱吱之-->
     <string name="ask_for_title">發問</string>

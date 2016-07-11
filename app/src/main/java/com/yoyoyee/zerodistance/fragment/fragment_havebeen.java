@@ -72,7 +72,6 @@ public class fragment_havebeen extends Fragment {//
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                CardViewAdapter.setItemCount(0);
                 mList.scrollToPosition(0);
                 updataphoneDB();
                 makecard();

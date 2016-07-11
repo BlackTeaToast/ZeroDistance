@@ -27,14 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.activity.MainActivity;
-import com.yoyoyee.zerodistance.activity.MissionActivity;
-import com.yoyoyee.zerodistance.activity.NewMissionActivity;
-import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
-import com.yoyoyee.zerodistance.helper.RecyclerItemClickListener;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.CardViewAdapter;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
@@ -48,7 +43,7 @@ import java.util.ResourceBundle;
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
-public class fragment_mission extends Fragment implements View.OnTouchListener {
+public class fragment_mission extends Fragment  {
 
     //
 
@@ -56,7 +51,7 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
     Mission[] mission;
     //
     RecyclerView mList;
-    FloatingActionButton fab;
+//    FloatingActionButton fab;
     private SwipeRefreshLayout mSwipeRefreshLayout;//RecyclerView外圍框
     CardViewAdapter CardViewAdapter;
 
@@ -80,28 +75,28 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
             e.printStackTrace();
         }
 
-        //漂浮
-
-         fab=  (FloatingActionButton) v.findViewById(R.id.fab);
-        if(SessionFunctions.isTeacher()) {
-            fab.setVisibility(View.VISIBLE);
-        }else{
-            fab.setVisibility(View.GONE);
-        }
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //                        .setAction("Action", null).show();
-                Intent in = new Intent(getActivity(), NewMissionActivity.class);
-                in.putExtra("id", SessionFunctions.getUserUid());
-             //   Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
-                startActivity(in);
-            }
-        });
 
         //漂浮
 
+//         fab=  (FloatingActionButton) v.findViewById(R.id.fab);
+//        if(SessionFunctions.isTeacher()) {
+//            fab.setVisibility(View.VISIBLE);
+//        }else{
+//            fab.setVisibility(View.GONE);
+//        }
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                //                        .setAction("Action", null).show();
+//                Intent in = new Intent(getActivity(), NewMissionActivity.class);
+//                in.putExtra("id", SessionFunctions.getUserUid());
+//             //   Toast.makeText(getContext(), "UserUid: "+SessionFunctions.getUserUid(), Toast.LENGTH_SHORT).show();
+//                startActivity(in);
+//            }
+//        });
+
+        //漂浮
 
         // 判斷目前card位置
         mList.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -158,16 +153,15 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
       //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
         makecard();
 
-        CardViewAdapter.setItemCount(0);
         mList.scrollToPosition(0);
         mList.setLayoutManager(layoutManager);
-        mList.setOnTouchListener(this);//監聽動作
+//        mList.setOnTouchListener(this);//監聽動作
         mList.setAdapter(CardViewAdapter);
-        if(SessionFunctions.isTeacher()) {
-            fab.setVisibility(View.VISIBLE);
-        }else{
-            fab.setVisibility(View.GONE);
-        }
+//        if(SessionFunctions.isTeacher()) {
+//            fab.setVisibility(View.VISIBLE);
+//        }else{
+//            fab.setVisibility(View.GONE);
+//        }
     }
     //設置字體大小
     private void setFontSize(){
@@ -193,53 +187,6 @@ public class fragment_mission extends Fragment implements View.OnTouchListener {
         });
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        switch( event.getAction() ) {
-
-            case MotionEvent.ACTION_DOWN:  // 按下
-            {
-                // 設定 TextView 內容, 大小, 位置
-                break;}
-
-            case MotionEvent.ACTION_MOVE:  // 拖曳移動
-            {
-//                Toast.makeText(getContext(), "拖曳移動", Toast.LENGTH_SHORT).show();
-                fab.setVisibility(View.INVISIBLE);
-                fabtime();
-                break;}
-
-            case MotionEvent.ACTION_UP:  // 放開
-            {
-                if(SessionFunctions.isTeacher()) {
-                    fab.setVisibility(View.VISIBLE);
-                }else{
-                    fab.setVisibility(View.GONE);
-                }
-                break;}
-        }
-        return false;
-    }
-    public void fabtime(){
-        new CountDownTimer(1000,500){
-
-            @Override
-            public void onFinish() {
-                if(SessionFunctions.isTeacher()){
-                    fab.setVisibility(View.VISIBLE);
-                }else {
-                    fab.setVisibility(View.INVISIBLE);
-                }
-
-            }
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-
-        }.start();
-    }
 
     //任務排序 (緊急任務先)
     public void bedangerfirst(){
