@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "983070383668",
+    "firebase_url": "https://yoyoyee-f6847.firebaseio.com",
+    "project_id": "yoyoyee-f6847",
+    "storage_bucket": "yoyoyee-f6847.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983070383668:android:53bb5201f2afd3f7",
+        "android_client_info": {
+          "package_name": "com.yoyoyee.zerodistance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983070383668-hhg7ksatql2bbcchjhorptkdroqrug0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC__A2YK5FnK85EcfqcdEdiJiBbecI1X2U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

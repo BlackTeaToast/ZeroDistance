@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="2016/01/01 12:00"
-                    android:id="@+id/profession"
+                    android:id="@+id/textView9"
                     android:textSize="14dp"
                     android:gravity="right"
                     android:layout_gravity="left"
@@ -60,9 +60,9 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="燒酒螺"
-                    android:id="@+id/level"
+                    android:id="@+id/textView11"
                     android:textSize="17dp"
-                    android:layout_below="@+id/profession"
+                    android:layout_below="@+id/textView9"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="3dp" />
@@ -100,7 +100,7 @@
                     android:textColor="#ca0def"
                     android:layout_alignWithParentIfMissing="false"
                     android:textSize="15dp"
-                    android:layout_below="@+id/level"
+                    android:layout_below="@+id/textView11"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
 
@@ -117,7 +117,7 @@
                     android:textColor="#ca0def"
                     android:layout_alignWithParentIfMissing="false"
                     android:textSize="15dp"
-                    android:layout_below="@+id/level"
+                    android:layout_below="@+id/textView11"
                     android:layout_toLeftOf="@+id/textView12"
                     android:layout_toStartOf="@+id/textView12"
                     android:textIsSelectable="false" />

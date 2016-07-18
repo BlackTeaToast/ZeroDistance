@@ -43,6 +43,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.app.TextLenghLimiter;
@@ -196,6 +198,28 @@ public class NewMissionActivity extends AppCompatActivity {
         isEdit();
         imvListener();
 
+        final Button serviceStart,serviceStop;
+        serviceStart= (Button) findViewById(R.id.serviceStart);
+        serviceStop= (Button)findViewById(R.id.serviceStop);
+        serviceStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseMessaging.getInstance().subscribeToTopic("test");
+                FirebaseInstanceId.getInstance().getToken();
+                /*
+                Intent Intent =new Intent (NewMissionActivity.this,TapService.class);
+                startService(Intent);*/
+                Toast.makeText(NewMissionActivity.this,"START",Toast.LENGTH_SHORT).show();
+            }
+        });
+        serviceStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Intent =new Intent (NewMissionActivity.this,TapService.class);
+                stopService(Intent);
+                Toast.makeText(NewMissionActivity.this,"STOP",Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         //edit的監聽

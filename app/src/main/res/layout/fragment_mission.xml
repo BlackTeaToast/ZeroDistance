@@ -7,18 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    android:layout_margin="5dp"
-    android:background="@drawable/repeat_block_bg"
-    >
+    android:layout_margin="5dp">
 
-    <LinearLayout
+    <GridLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:orientation="vertical">
-
+        tools:context=".MainActivity">
         <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
@@ -33,16 +29,28 @@
             android:layout_row="1"
             android:layout_column="1"
             android:foregroundGravity="top"
-            >
-
+            android:background="@drawable/repeat_block_bg">
         </view>
         </android.support.v4.widget.SwipeRefreshLayout>
+    </GridLayout>
 
 
-    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_gravity="bottom|right"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_input_add_fix"
+        android:layout_column="0"
+        android:layout_row="0"
+        app:elevation="8dp"
+        app:pressedTranslationZ="12dp"
+        android:background="@drawable/action_floating_blue"
+        card_view:backgroundTint="#e15afc"
+        android:visibility="invisible">
 
-
-
+    </android.support.design.widget.FloatingActionButton>
 
 
 </GridLayout>
