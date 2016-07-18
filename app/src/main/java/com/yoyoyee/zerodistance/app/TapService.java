@@ -35,16 +35,27 @@ public class TapService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        IntentFilter filter=new IntentFilter();
+        final int notifyID = 1; // 通知的識別號碼
+        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
+        try {
+            Calendar calender =Calendar.getInstance();
+
+            final Notification notification = new Notification.Builder(getApplicationContext()).setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp).setContentTitle("每分報時系統").setContentText("現在時間" + calender.get(Calendar.HOUR_OF_DAY) + "點" + calender.get(Calendar.MINUTE) + "分").build(); // 建立通知
+            notificationManager.notify(notifyID, notification);
+        }catch (Exception ex){
+            System.out.println("系統版本不支援");
+        }
+
+/*        IntentFilter filter=new IntentFilter();
         filter.addAction(Intent.ACTION_TIME_TICK);
-        registerReceiver(receiver, filter);
+        registerReceiver(receiver, filter);*/
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
+/* 20160711碼調
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -64,7 +75,7 @@ public class TapService extends Service {
             }
         }
     };
-
+*/
 }
 /*
 if (action.equals(Intent.ACTION_TIME_TICK)) {
