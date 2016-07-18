@@ -56,45 +56,39 @@ public class fragment_notbeen extends Fragment {//
     LinearLayoutManager layoutManager;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_notbeen, container, false);
-        makecard();
-        // 頂端向下滑更新
-        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                CardViewAdapter.setItemCount(0);
-                mList.scrollToPosition(0);
-                updataphoneDB();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-        // 頂端向下滑更新
-
         try {
+
+            //CardViewAdapter CardViewAdapter = new CardViewAdapter(id, title , detial ,expAt, needNum, currentNum, missiondangerous , missionnumber, R.layout.fragment_fragment_team);
             mList = (RecyclerView) v.findViewById(R.id.listView);
-            LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mList.setLayoutManager(layoutManager);
-            mList.setAdapter(CardViewAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
+        // 頂端向下滑更新
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mList.scrollToPosition(0);
+                updataphoneDB();
+                makecard();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        // 頂端向下滑更新
+
         return v;
-
-        //listView 典籍
-
-        //listView 典籍
     }
     public void  onResume(){
         super.onResume();
-        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
-        CardViewAdapter.setItemCount(0);
-        mList.scrollToPosition(0);
         makecard();
+        mList.setLayoutManager(layoutManager);
         mList.setAdapter(CardViewAdapter);
+        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
+        mList.scrollToPosition(0);
     }
 
     //設置字體大小
@@ -129,9 +123,6 @@ public class fragment_notbeen extends Fragment {//
                     , Group.get(missions.size()+Group.size()-i-1).needNum, Group.get(missions.size()+Group.size()-i-1).currentNum, Group.get(missions.size()+Group.size()-i-1).getUserName());
         }
 
-        if(!isfirst) {
-            mList.setAdapter(CardViewAdapter);
-        }
         for(int i = 0;i <missions.size();i++){
             allmission[i] = mission[i];
         }for(int i=0;i<Group.size();i++){
@@ -139,9 +130,14 @@ public class fragment_notbeen extends Fragment {//
         }
         dosort();
         CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen);
+        if(!isfirst) {
+            mList.setAdapter(CardViewAdapter);
+        }else {
+            isfirst=false;
+        }
+
     }
     private void updataphoneDB(){//更新手機資料
-        totalvuledel();
         updataMissionDB();
     }
     private void updataMissionDB(){  //成功會更新Group
@@ -169,8 +165,7 @@ public class fragment_notbeen extends Fragment {//
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-//                CardViewAdapter.notifyDataSetChanged();
-                //  Toast.makeText(getContext(), "更新成功(揪團)", Toast.LENGTH_SHORT).show()
+                CardViewAdapter.notifyDataSetChanged();
                 upDataCount=0;
             }
 
@@ -184,15 +179,6 @@ public class fragment_notbeen extends Fragment {//
                 }
             }
         });
-    }
-    public void totalvuledel(){
-        id = null;
-        title = null;
-        detial = null;
-        expAt = null;
-        needNum = null;
-        currentNum = null;
-        missiondangerous = null;
     }
     //排序
     private void dosort(){

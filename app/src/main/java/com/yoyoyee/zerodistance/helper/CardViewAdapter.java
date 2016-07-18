@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +39,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private int fragment;
     private int Count;
     Mission[] missions;
-
+    private int Countplus;
     private SimpleDateFormat dateFormat;
     Intent in;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,6 +47,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         public ImageView missiondangerous;
         public CardView CardView;
         public RelativeLayout fr_fr_mi;
+        private Space space;
         public ViewHolder(View v) {
             super(v);
             missionName = (TextView) v.findViewById(R.id.missionName);
@@ -55,6 +58,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
             fr_fr_mi = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
             CardView = (CardView) v.findViewById(R.id.CardView);
+            space = (Space)v.findViewById(R.id.space);
 
             dateFormat  = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
@@ -80,22 +84,21 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.missionName.setText(missions[position].getTitle());
             holder.missionDetial.setText(missions[position].getContent());
             holder.datetime.setText(dateFormat.format(missions[position].getExpAt()));
-        holder.peoplenumber.setText(missions[position].getCurrentNum()+"/"+missions[position].getNeedNum());
-        holder.PoName.setText(missions[position].getUserName());
-      //  getResources().getString(R.string.peopleCount)+
-        if(missions[position].isMission()&&fragment==R.layout.fragment_fragment_mission){//其他頁面沒有緊急任務
-                if(missions[position].getUrgent()){
-                holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
+            holder.peoplenumber.setText(missions[position].getCurrentNum() + "/" + missions[position].getNeedNum());
+            holder.PoName.setText(missions[position].getUserName());
+            //  getResources().getString(R.string.peopleCount)+
+            if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission) {//其他頁面沒有緊急任務
+                if (missions[position].getUrgent()) {
+                    holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
+                } else {
+                    holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
                 }
-                else{
-                holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
-                }
-        }
-        if(missions[position].isMission()){
-            holder.missionName.setTextColor(Color.parseColor("#FF428BCA"));
-        }else {
-            holder.missionName.setTextColor(Color.parseColor("#ff99cc00"));
-        }
+            }
+            if (missions[position].isMission()) {
+                holder.missionName.setTextColor(Color.parseColor("#FF428BCA"));
+            } else {
+                holder.missionName.setTextColor(Color.parseColor("#ff99cc00"));
+            }
 
             holder.fr_fr_mi.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,6 +108,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                     v.getContext().startActivity(in);
                 }
             });
+//        if(position==missions.length){
+//            holder.space.setVisibility(View.VISIBLE);
+//        }else{
+//            holder.space.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -112,10 +120,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         Count = missions.length;//長度
         return Count;
     }
-    public int setItemCount(int Count){
-        this.Count = Count;
-        return Count;
-    }
+
     public Intent doIntent(Context c,boolean isMission){
         in=null;
         switch (fragment){

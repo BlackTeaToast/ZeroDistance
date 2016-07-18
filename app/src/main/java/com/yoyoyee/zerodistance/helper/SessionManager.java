@@ -62,7 +62,7 @@ public class SessionManager {
         editor.commit();
     }
     public float getUserTextSize() {
-        return pref.getFloat(KEY_USER_TEXTSIZE, 15);
+        return pref.getFloat(KEY_USER_TEXTSIZE, 10);
     }
 	public void setLogin(boolean isLoggedIn) {
 
