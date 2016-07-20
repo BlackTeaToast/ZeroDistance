@@ -257,9 +257,17 @@ public class NewMissionActivity extends AppCompatActivity {
             }
         });
 
-
+        toNotificationClass();
         //此區為隱藏功能用--------------------------------------------------------------------------
         //hide(PICTURE_GONE);
+    }
+    void toNotificationClass (){
+        Intent intent = getIntent();
+        Boolean isNotification = intent.getBooleanExtra("notificationModel",false);
+        if (isNotification==true){
+            Intent intentNotification =new Intent(this,MainActivity.class);
+            startActivity(intentNotification);
+        }
     }
 
     public void hide(Boolean PICTURE_GONE){
