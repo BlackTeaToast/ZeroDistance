@@ -64,6 +64,10 @@
     <string name="idontwantpicture_new_mission_and_group">已取消選取</string>
     <string name="updata_new_mission_and_group">上傳成功</string>
     <string name="errorupdata_new_mission_and_group">上傳失敗</string>
+    <!--========Tree 通知內容文字=========-->
+    <string name="notification_QA_Title_HadAnswer">您發問的問題已有回答：</string>
+    <string name="notification_QA_Contest_Answer">對方答覆：</string>
+    <string name="notification_Successr">讀取成功</string>
 
 
 
@@ -72,6 +76,7 @@
 
 
 
+    <!--========Tree 選單文字=========-->
     <string-array name="press_new_mission_and_group">
         <item>普通</item>
         <item>緊急</item>
