@@ -12,6 +12,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.MainActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
+import com.yoyoyee.zerodistance.activity.QAActivity;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
@@ -121,15 +122,16 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
             loadQandAData(Boolean.valueOf(data.get("isGroup").toString()),Integer.parseInt(data.get("ID").toString()),Integer.parseInt(data.get("QAID").toString()), new Callback() {
                 @Override
                 public void run() {
-                    Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-                    i.putExtra("notificationModel",true);
+                    Intent i =new Intent(getApplicationContext(),QAActivity.class);
+                    i.putExtra("isGroup",Boolean.valueOf(data.get("isGroup").toString()));
+                    i.putExtra("id",Integer.parseInt(data.get("ID").toString()));
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
                             .setAutoCancel(true)
                             .setContentTitle(getResources().getString(R.string.notification_QA_Title_HadAnswer))
                             .setContentText(getResources().getString(R.string.notification_QA_Contest_Answer) + content)
-                            .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
+                            .setSmallIcon(R.drawable.login_pic8)
                             .setContentIntent(pendingIntent);
                     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
