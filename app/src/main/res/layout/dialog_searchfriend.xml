@@ -10,7 +10,13 @@
         android:layout_height="wrap_content"
         android:text="@string/inname"
         android:id="@+id/textView7"
-        android:textColor="#cf4d4d65" />
+        android:textColor="#cf4d4d65"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px" />
 
     <EditText
         android:layout_width="match_parent"
@@ -18,13 +24,22 @@
         android:id="@+id/friname"
         android:layout_gravity="center_horizontal"
         android:background="#cacaca"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right">
+        android:gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -44,6 +59,6 @@
             android:layout_height="wrap_content"
             android:text="@android:string/cancel"
             android:id="@+id/docancel"
-            android:background="@drawable/btn_blue_glossy"/>
+            android:background="@drawable/btn_blue_glossy" />
     </LinearLayout>
 </LinearLayout>

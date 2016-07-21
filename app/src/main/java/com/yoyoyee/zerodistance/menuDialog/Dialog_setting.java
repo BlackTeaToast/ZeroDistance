@@ -3,29 +3,21 @@ package com.yoyoyee.zerodistance.menuDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.LoginActivity;
-import com.yoyoyee.zerodistance.activity.MainActivity;
-import com.yoyoyee.zerodistance.app.UsedData;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
@@ -39,7 +31,8 @@ public class Dialog_setting extends Dialog {
     private RadioButton textsizeLRB, textsizeMRB, textsizeSRB;//大中小字體
     private RadioButton showcontent, showpay;//顯示內容或獎勵
     private RadioButton poTimeFirst, endTimeFirst;
-    private RadioGroup textsizeRG , showstyleRG, SortWay;
+    private RadioButton layoutset1, layoutset2, layoutset3;
+    private RadioGroup textsizeRG , showstyleRG, SortWay, Cardlayoutset;
     private SQLiteHandler db;
     private SessionManager session;
     float ttsize;  //字體大小
@@ -106,12 +99,19 @@ public class Dialog_setting extends Dialog {
         textsizeSRB = (RadioButton) findViewById(R.id.textsizeSRB);
         poTimeFirst = (RadioButton) findViewById(R.id.poTimeFirst);
         endTimeFirst = (RadioButton) findViewById(R.id.endTimeFirst);
+        Cardlayoutset = (RadioGroup)findViewById(R.id.Cardlayoutset);
+        Cardlayoutset.setOnCheckedChangeListener(Cardlayoutway);
+        layoutset1 = (RadioButton)findViewById(R.id.layoutset1);
+        layoutset2 = (RadioButton)findViewById(R.id.layoutset2);
+        layoutset3 = (RadioButton)findViewById(R.id.layoutset3);
+
         checkbecontext();//選擇預設項目
 
         setFontSize();//設定字體大小
         //radio button
 
         return ;}
+
 //textsize radio button 監聽
     RadioGroup.OnCheckedChangeListener textsizeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -168,6 +168,23 @@ public class Dialog_setting extends Dialog {
     };
 
     //showstyle radio button 監聽
+    RadioGroup.OnCheckedChangeListener Cardlayoutway = new RadioGroup.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch(checkedId){
+                case R.id.layoutset1:
+                    SessionFunctions.setCardlayoutWay(1);
+                    break;
+                case R.id.layoutset2:
+                    SessionFunctions.setCardlayoutWay(2);
+                    break;
+                case R.id.layoutset3:
+                    SessionFunctions.setCardlayoutWay(3);
+            }
+        }
+    };
+
 
     private void logoutUser() {
 
@@ -198,6 +215,14 @@ public class Dialog_setting extends Dialog {
         }else if(SessionFunctions.getSortWay()==2){
             endTimeFirst.setChecked(true);
         }
+
+
+        if(SessionFunctions.getCardlayoutWay()==1){
+            layoutset1.setChecked(true);
+        }else if(SessionFunctions.getCardlayoutWay()==2){
+            layoutset2.setChecked(true);
+        }else if(SessionFunctions.getCardlayoutWay()==3){
+            layoutset3.setChecked(true);}
     }
     private void setFontSize(){
         TextView textViewTemp;
@@ -229,7 +254,8 @@ public class Dialog_setting extends Dialog {
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) findViewById(R.id.endTimeFirst);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
-
+        textViewTemp =  (TextView)findViewById(R.id.cardlayout);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView)findViewById(R.id.talktous);
         SpannableString content = new SpannableString(context.getResources().getString(R.string.talktous));//畫底線
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);

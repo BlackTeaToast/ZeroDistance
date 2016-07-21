@@ -175,6 +175,12 @@
     <string name="inname">請輸入玩家名稱</string>
     <string name="waitacc">等待對方接受</string>
     <string name="search">搜尋</string>
+    <string name="newfri">加好友</string>
+    <string name="searchoth">搜尋其他玩家</string>
+    <string name="layoutset">卡片樣式設計</string>
+    <string name="layoutset1">設定一</string>
+    <string name="layoutset2">設定二</string>
+    <string name="layoutset3">設定三</string>
 
     <!--==================================================================-->
     <!--吱吱吱之-->

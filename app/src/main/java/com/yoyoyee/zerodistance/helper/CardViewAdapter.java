@@ -6,34 +6,23 @@ package com.yoyoyee.zerodistance.helper;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.activity.GroupActivity;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
-import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
     private int fragment;
@@ -60,7 +49,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             CardView = (CardView) v.findViewById(R.id.CardView);
             space = (Space)v.findViewById(R.id.space);
 
-            dateFormat  = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            dateFormat  = new SimpleDateFormat("MM/dd HH:mm");
 
             setFontSize(v);//設定字體大小
         }
@@ -73,8 +62,34 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     @Override
     public CardViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(fragment, parent, false);
+        View v=null;
+        int i=0;
+        if(fragment==R.layout.fragment_fragment_mission){
+            switch (SessionFunctions.getCardlayoutWay()) {
+                case 1: {
+                    v = LayoutInflater.from(parent.getContext())
+                            .inflate(fragment, parent, false);//原本
+                    i=1;
+                    break;
+                }
+                case 2: {
+                   v = LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.fragment_fragment_mission1, parent, false);//原本
+                    i=2;
+                    break;
+                }
+                case 3: {
+                    v = LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.fragment_fragment_mission2, parent, false);//原本
+                    i=3;
+                    break;
+                }
+            }
+        }else {
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(fragment, parent, false);
+            i=4;
+        }
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -124,7 +139,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     public Intent doIntent(Context c,boolean isMission){
         in=null;
         switch (fragment){
-            case R.layout.fragment_fragment_mission:{
+            case R.layout.fragment_fragment_mission: {
                 in = new Intent(c, MissionActivity.class);
 
             }
@@ -191,27 +206,85 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     //設置字體大小
     private void setFontSize(View v){
-        TextView textViewTemp;
-        SessionFunctions SF= new SessionFunctions();
-        textViewTemp = (TextView)v.findViewById(R.id.datetime);
-        textViewTemp.setTextSize(SF.getUserTextSize()+4);
-        textViewTemp = (TextView)v.findViewById(R.id.peoplenumber);
-        textViewTemp.setTextSize(SF.getUserTextSize()+7);
-        textViewTemp = (TextView) v.findViewById(R.id.missionName);
-        textViewTemp.setTextSize(SF.getUserTextSize()+7);
-        textViewTemp.setMaxLines(1);//顯示幾行
+        if(SessionFunctions.getCardlayoutWay()==1) {
+            TextView textViewTemp;
+            SessionFunctions SF = new SessionFunctions();
+            textViewTemp = (TextView) v.findViewById(R.id.datetime);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+            textViewTemp = (TextView) v.findViewById(R.id.peoplenumber);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 7);
+            textViewTemp = (TextView) v.findViewById(R.id.missionName);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 7);
+            textViewTemp.setMaxLines(1);//顯示幾行
 //        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
 //        textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
-        textViewTemp.setTextSize(SF.getUserTextSize()+4);
-        if(SessionFunctions.getUserTextSize()==10){
-            textViewTemp.setMaxLines(4);
-        }if(SessionFunctions.getUserTextSize()==15){
-            textViewTemp.setMaxLines(3);
-        }if(SessionFunctions.getUserTextSize()==20){
-            textViewTemp.setMaxLines(2);
+            textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+            if (SessionFunctions.getUserTextSize() == 10) {
+                textViewTemp.setMaxLines(4);
+            }
+            if (SessionFunctions.getUserTextSize() == 15) {
+                textViewTemp.setMaxLines(3);
+            }
+            if (SessionFunctions.getUserTextSize() == 20) {
+                textViewTemp.setMaxLines(2);
+            }
+            textViewTemp = (TextView) v.findViewById(R.id.PoName);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 7);
         }
-        textViewTemp = (TextView)v.findViewById(R.id.PoName);
-        textViewTemp.setTextSize(SF.getUserTextSize()+7);
+        if(SessionFunctions.getCardlayoutWay()==2) {
+            TextView textViewTemp;
+            SessionFunctions SF = new SessionFunctions();
+            textViewTemp = (TextView) v.findViewById(R.id.datetime);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+            textViewTemp = (TextView) v.findViewById(R.id.peoplenumber);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+            textViewTemp = (TextView) v.findViewById(R.id.missionName);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 10);
+            textViewTemp.setMaxLines(1);//顯示幾行
+            textViewTemp = (TextView) v.findViewById(R.id.PoName);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+//        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
+//        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+            textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 7);
+            if (SessionFunctions.getUserTextSize() == 10) {
+                textViewTemp.setMaxLines(1);
+            }
+            if (SessionFunctions.getUserTextSize() == 15) {
+                textViewTemp.setMaxLines(1);
+            }
+            if (SessionFunctions.getUserTextSize() == 20) {
+                textViewTemp.setMaxLines(1);
+            }
+
+        }
+        if(SessionFunctions.getCardlayoutWay()==3) {
+            TextView textViewTemp;
+            SessionFunctions SF = new SessionFunctions();
+            textViewTemp = (TextView) v.findViewById(R.id.datetime);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+            textViewTemp = (TextView) v.findViewById(R.id.peoplenumber);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+            textViewTemp = (TextView) v.findViewById(R.id.missionName);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 10);
+            textViewTemp.setMaxLines(1);//顯示幾行
+            textViewTemp = (TextView) v.findViewById(R.id.PoName);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 4);
+//        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
+//        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+            textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
+            textViewTemp.setTextSize(SF.getUserTextSize() + 7);
+            if (SessionFunctions.getUserTextSize() == 10) {
+                textViewTemp.setMaxLines(1);
+            }
+            if (SessionFunctions.getUserTextSize() == 15) {
+                textViewTemp.setMaxLines(1);
+            }
+            if (SessionFunctions.getUserTextSize() == 20) {
+                textViewTemp.setMaxLines(1);
+            }
+
+        }
     }
 }

@@ -6,12 +6,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.FriendAdapter;
@@ -42,6 +39,7 @@ public class Dialog_friend extends Dialog {
         newfir = (Button)findViewById(R.id.newfir);
         otherpeo = (Button)findViewById(R.id.otherpeo);
         cancel = (Button)findViewById(R.id.cancel);
+        otherpeo.setMaxLines(1);
         newfir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

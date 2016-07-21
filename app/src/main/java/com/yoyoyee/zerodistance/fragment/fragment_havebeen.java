@@ -1,15 +1,11 @@
 package com.yoyoyee.zerodistance.fragment;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.activity.NewMissionActivity;
-import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.CardViewAdapter;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
-import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -97,8 +90,8 @@ public class fragment_havebeen extends Fragment {//
 
     }
     public void makecard() {
-        missions  = QueryFunctions.getMissions();
-        Group  = QueryFunctions.getGroups();
+        missions  = QueryFunctions.getFinishedMissions();
+        Group  = QueryFunctions.getFinishedGroups();
         mission = new Mission[missions.size()];
         group = new Group[Group.size()];
         allmission = new Mission[missions.size()+Group.size()];

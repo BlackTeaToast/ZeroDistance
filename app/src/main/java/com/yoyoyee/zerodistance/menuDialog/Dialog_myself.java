@@ -2,7 +2,7 @@ package com.yoyoyee.zerodistance.menuDialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -42,7 +42,9 @@ public class Dialog_myself extends Dialog {
         Achievement = (TextView)findViewById(R.id.Achievement);
         Aboutmyself = (EditText)findViewById(R.id.Aboutmyself);
         Aboutmyself.setEnabled(false);
-        getWindow().setBackgroundDrawable(new BitmapDrawable());
+//        getWindow().setBackgroundDrawable(new BitmapDrawable());
+        getWindow().setBackgroundDrawable(new ColorDrawable(0));
+//        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         ori();
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override

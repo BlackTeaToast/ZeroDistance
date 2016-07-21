@@ -25,14 +25,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" >
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="2016/01/01 12:00"
-                    android:id="@+id/profession"
+                    android:id="@+id/datetime"
                     android:textSize="14dp"
                     android:gravity="right"
                     android:layout_marginTop="2dp"
@@ -44,24 +45,24 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="幫忙解決維他命"
-                    android:id="@+id/textView8"
+                    android:id="@+id/missionName"
                     android:textSize="18dp"
                     android:textColor="#366fe9"
                     android:textStyle="bold"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="3dp" />
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="燒酒螺"
-                    android:id="@+id/level"
+                    android:id="@+id/PoName"
                     android:textSize="17dp"
-                    android:layout_below="@+id/profession"
+                    android:layout_below="@+id/datetime"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
@@ -69,7 +70,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/level"
+                    android:layout_below="@+id/PoName"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true">
 
@@ -86,7 +87,7 @@
                         android:textColor="#ca0def"
                         android:layout_alignWithParentIfMissing="false"
                         android:textSize="16dp"
-                        android:layout_below="@+id/textView8"
+                        android:layout_below="@+id/missionName"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true" />
 
@@ -96,33 +97,45 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="4/10"
-                        android:id="@+id/textView12"
+                        android:id="@+id/peoplenumber"
                         android:gravity="right"
                         android:layout_column="3"
                         android:layout_row="3"
                         android:textColor="#ca0def"
                         android:layout_alignWithParentIfMissing="false"
                         android:textSize="16dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_alignBottom="@+id/level"
-                        android:layout_alignRight="@+id/profession"
-                        android:layout_alignEnd="@+id/profession" />
+                        android:layout_alignBottom="@+id/PoName"
+                        android:layout_alignRight="@+id/datetime"
+                        android:layout_alignEnd="@+id/datetime" />
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/textView10"
-                        android:background="#9cffffff"
-                        android:minLines="1"
-                        android:text="有一天，有許多維他命跑出來了，那些維他命，賣的又貴又難吃。"
-                        android:maxLines="1"
-                        android:textSize="14dp"
-                        android:singleLine="true"
-                        android:layout_below="@+id/textView8"
-                        android:layout_alignRight="@+id/textView8"
-                        android:layout_alignEnd="@+id/textView8"
-                        android:layout_marginLeft="10dp" />
+
+                        android:layout_below="@+id/missionName"
+                        android:layout_alignRight="@+id/missionName"
+                        android:layout_alignEnd="@+id/missionName"
+                        android:layout_gravity="right"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:id="@+id/missionDetial"
+                            android:background="#9cffffff"
+                            android:minLines="1"
+                            android:text="有一天，有許多維他命跑出來了，那些維他命，賣的又貴又難吃。"
+                            android:maxLines="1"
+                            android:textSize="14dp"
+                            android:singleLine="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="right"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:gravity="right" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 

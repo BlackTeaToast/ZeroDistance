@@ -35,6 +35,7 @@ public class SessionManager {
     private static final String KEY_USER_TEXTSIZE = "usertextsize";
     private static final String KEY_USER_BECONTEXT = "becontext";
     private static final String KEY_USER_SORTWAY = "sortway";
+    private static final String KEY_USER_CARDLAYOUTWAY = "CardlayoutWay";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -47,6 +48,13 @@ public class SessionManager {
     }
     public void setSortWay(int setSortWay){
         editor.putInt(KEY_USER_SORTWAY, setSortWay);
+        editor.commit();
+    }
+    public int getCardlayoutWay(){
+        return pref.getInt(KEY_USER_CARDLAYOUTWAY, 1);
+    }
+    public void setCardlayoutWay(int CardlayoutWay){
+        editor.putInt(KEY_USER_CARDLAYOUTWAY, CardlayoutWay);
         editor.commit();
     }
     public int getSortWay(){

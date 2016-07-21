@@ -9,6 +9,12 @@ public class SessionFunctions {
 
     private static SessionManager session = AppController.getSession();
 
+    public static void setCardlayoutWay(int CardlayoutWay) {
+        session.setCardlayoutWay(CardlayoutWay);
+    }
+    public static int getCardlayoutWay(){
+        return session.getCardlayoutWay();
+    }
     public static void setSortWay(int setSortWay) {
         session.setSortWay(setSortWay);
     }

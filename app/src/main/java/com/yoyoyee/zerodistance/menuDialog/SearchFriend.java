@@ -2,6 +2,7 @@ package com.yoyoyee.zerodistance.menuDialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -32,6 +33,7 @@ public class SearchFriend extends Dialog {
         docancel = (Button)findViewById(R.id.docancel);
         friname = (EditText)findViewById(R.id.friname);
         docancel.setWidth(domakefri.getWidth());
+        getWindow().setBackgroundDrawable(new BitmapDrawable());
         if(way==1){
             domakefri.setText(getContext().getResources().getString(R.string.makefri));
         }else if(way==2){

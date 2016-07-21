@@ -13,6 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:background="@drawable/frame"
         android:layout_above="@+id/linearLayout6">
 
         <android.support.v7.widget.RecyclerView
@@ -66,11 +67,12 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="新增好友"
+                android:text="@string/newfri"
                 android:id="@+id/newfir"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_glossy"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp" />
 
             <Space
                 android:layout_width="20dp"
@@ -79,10 +81,11 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="查詢其他玩家資訊"
+                android:text="@string/searchoth"
                 android:id="@+id/otherpeo"
                 android:layout_weight="1"
-                android:background="@drawable/btn_blue_glossy"  />
+                android:background="@drawable/btn_blue_glossy"
+                android:layout_marginBottom="5dp" />
 
             <Space
                 android:layout_width="20px"
@@ -95,7 +98,8 @@
                 android:id="@+id/cancel"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_glossy"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp" />
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>
