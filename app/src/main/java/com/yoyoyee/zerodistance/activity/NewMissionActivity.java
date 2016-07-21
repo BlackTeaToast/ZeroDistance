@@ -30,6 +30,7 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -206,6 +207,9 @@ public class NewMissionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseMessaging.getInstance().subscribeToTopic("test");
                 FirebaseInstanceId.getInstance().getToken();
+                FirebaseMessaging.getInstance().subscribeToTopic("news");
+                FirebaseInstanceId.getInstance().getToken();
+
                 /*
                 Intent Intent =new Intent (NewMissionActivity.this,TapService.class);
                 startService(Intent);
