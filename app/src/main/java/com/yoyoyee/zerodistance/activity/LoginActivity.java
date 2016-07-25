@@ -121,7 +121,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onResponse(String response) {
                 // Launch main activity
-
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                 hideDialog();
                 if(session.isConfirmed()) {
                     Intent intent = new Intent(LoginActivity.this,
@@ -134,8 +134,6 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                     finish();
                 }
-
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
             }
 
             @Override
