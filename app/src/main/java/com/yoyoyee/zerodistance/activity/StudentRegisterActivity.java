@@ -74,10 +74,14 @@ public class StudentRegisterActivity extends Activity {
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+        if (session.isLoggedIn() && session.isConfirmed()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(StudentRegisterActivity.this,
                     MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (session.isLoggedIn() && !session.isConfirmed()) {
+            Intent intent = new Intent(StudentRegisterActivity.this, EmailConfirmActivity.class);
             startActivity(intent);
             finish();
         }

@@ -42,7 +42,7 @@ public class QueryFunctions {
      * */
     public static void addUser(String isTeacher ,String name, String nickName, String schoolID,
                         String studentID, String email, String uid, String created_at,
-                        String access_key) {
+                        String access_key, String isConfirmed) {
 
         SQLiteDatabase db = DB.getWritableDatabase();
         try {
@@ -56,6 +56,7 @@ public class QueryFunctions {
             values.put(LoginTable.KEY_UID, uid); // Email
             values.put(LoginTable.KEY_CREATED_AT, created_at); // Created At
             values.put(LoginTable.KEY_ACCESS_KEY, access_key); // Created At
+            values.put(LoginTable.KEY_IS_CONFIRMED_KEY, isConfirmed); // Created At
 
             // Inserting Row
             long id = db.insert(LoginTable.TABLE_NAME, null, values);

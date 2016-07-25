@@ -8,6 +8,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.yoyoyee.zerodistance.app.AppConfig;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
@@ -89,6 +91,7 @@ public class ClientFunctions {
                         String email = user.getString("email");
                         String createdAt = user.getString("created_at");
                         String accessKey = user.getString("access_key");
+                        String isConfirmed = user.getString("is_confirmed");
 
                         session.setUserEmail(email);
                         session.setUserPassword(password);
@@ -99,10 +102,12 @@ public class ClientFunctions {
                         session.setUserStudentID(studentID);
                         session.setUserSchoolID(Integer.valueOf(schoolID));
                         session.setUserAccessKey(accessKey);
+                        session.setUserIsConfirmed(Integer.valueOf(isConfirmed)!=0);
 
                         ClientFunctions.updateSchools(new ClientResponse() {
                             @Override
                             public void onResponse(String response) {
+
                                 session.setUserSchoolName(QueryFunctions.getSchoolName(Integer.valueOf(schoolID)));
                             }
 
@@ -114,14 +119,14 @@ public class ClientFunctions {
 
                         // Inserting row in users table
                         db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,
-                                createdAt, accessKey);
+                                createdAt, accessKey, isConfirmed);
                         session.setLogin(true);
                         clientResponse.onResponse("登入成功!");
 
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
-                        clientResponse.onErrorResponse(errorMsg);
+                        clientResponse.onErrorResponse("登入失敗請重試 " + errorMsg);
                     }
                 } catch (JSONException e) {
                     // JSON error
@@ -174,17 +179,7 @@ public class ClientFunctions {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        String uid = jObj.getString("uid");
 
-                        JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user.getString("created_at");
-
-                        // Inserting row in users table
-                        //db.addUser(name, email, uid, created_at);
                         clientResponse.onResponse("註冊成功! 您現在可以登入!");
 
                     } else {
@@ -245,14 +240,6 @@ public class ClientFunctions {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        String uid = jObj.getString("uid");
-
-                        JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user.getString("created_at");
 
                         // Inserting row in users table
                         //db.addUser(name, email, uid, created_at);
@@ -2106,6 +2093,184 @@ public class ClientFunctions {
                 params.put("uid", session.getUserUid());
                 params.put("access_key", session.getUserAccessKey());
 
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void registerDevice(final ClientResponse clientResponse) {
+        String tag_string_req = "req_register_device";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_ADD_USER_DEVICE_TOKEN, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+
+                        // Inserting row in users table
+
+                        clientResponse.onResponse("設備註冊成功!");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    clientResponse.onErrorResponse(e.getMessage());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                FirebaseMessaging.getInstance().subscribeToTopic("all");//註冊所有群組
+
+                params.put("uid", session.getUserUid());
+                params.put("token", FirebaseInstanceId.getInstance().getToken());
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void sendConfirmationEmail(final ClientResponse clientResponse) {
+        String tag_string_req = "req_send_confirm_email";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SEND_CONFIRMATION_EMAIL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+
+                        // Inserting row in users table
+
+                        clientResponse.onResponse("已進行發送");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    clientResponse.onErrorResponse(e.getMessage());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+
+                params.put("uid", session.getUserUid());
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void getEmailConfirmState(final ClientResponse clientResponse) {
+        String tag_string_req = "req_get_email_confirm_state";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_EMAIL_CONFIRM_STATE, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+
+                        // Inserting row in users table
+                        Boolean isConfirmed = jObj.getBoolean("is_confirmed");
+
+                        clientResponse.onResponse(isConfirmed.toString());
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    clientResponse.onErrorResponse(e.getMessage());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+
+                params.put("uid", session.getUserUid());
                 return params;
             }
 

@@ -32,6 +32,7 @@ public class SessionManager {
 	private static final String KEY_USER_SCHOOL_ID = "schoolID";
     private static final String KEY_USER_SCHOOL_NAME = "schoolName";
 	private static final String KEY_USER_STUDENT_ID = "studentID";
+    private static final String KEY_USER_IS_CONFIRMED = "isConfirmed";
     private static final String KEY_USER_TEXTSIZE = "usertextsize";
     private static final String KEY_USER_BECONTEXT = "becontext";
     private static final String KEY_USER_SORTWAY = "sortway";
@@ -178,6 +179,15 @@ public class SessionManager {
 
     public String getUserSchoolName() {
         return pref.getString(KEY_USER_SCHOOL_NAME, "");
+    }
+
+    public void setUserIsConfirmed(boolean isConfirmed) {
+        editor.putBoolean(KEY_USER_IS_CONFIRMED, isConfirmed);
+        editor.commit();
+    }
+
+    public boolean isConfirmed() {
+        return pref.getBoolean(KEY_USER_IS_CONFIRMED, false);
     }
 
 }

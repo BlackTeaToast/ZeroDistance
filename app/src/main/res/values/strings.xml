@@ -242,7 +242,12 @@
     <string name="hint_confirm_password">密碼再確認</string>
     <!--=========================================================-->
 
-
+    <!---->
+    <string name="confirm_email_title">信箱尚未通過驗證\n請到信箱確認</string>
+    <string name="logout">登出</string>
+    <string name="resend_confirm_email">重發驗證信</string>
+    <string name="already_confirm_email">已經驗證信箱</string>
+    <!---->
 
 </resources>
 

@@ -11,17 +11,33 @@ import android.widget.Toast;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.SessionManager;
 
 public class RegisterSelectActivity extends AppCompatActivity {
 
     private Button buttonStudent;
     private Button buttonTeacher;
     private ProgressDialog pDialog;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_select);
+
+        session = new SessionManager(getApplicationContext());
+
+        if (session.isLoggedIn() && session.isConfirmed()) {
+            // User is already logged in. Take him to main activity
+            Intent intent = new Intent(RegisterSelectActivity.this,
+                    MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (session.isLoggedIn() && !session.isConfirmed()) {
+            Intent intent = new Intent(RegisterSelectActivity.this, EmailConfirmActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         buttonStudent = (Button)findViewById(R.id.buttonStudent);
         buttonTeacher = (Button)findViewById(R.id.buttonTeacher);

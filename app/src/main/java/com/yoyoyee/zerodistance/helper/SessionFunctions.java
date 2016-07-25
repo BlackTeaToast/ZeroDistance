@@ -116,11 +116,19 @@ public class SessionFunctions {
         return session.getbecontext();
     }
 
-    public void setUserSchoolName(String schoolName) {
+    public static void setUserSchoolName(String schoolName) {
         session.setUserSchoolName(schoolName);
     }
 
-    public String getUserSchoolName() {
+    public static String getUserSchoolName() {
         return session.getUserSchoolName();
+    }
+
+    public static void setKeyUserIsConfirmed(boolean isConfirmed) {
+        session.setUserIsConfirmed(isConfirmed);
+    }
+
+    public static boolean isConfirmed() {
+        return session.isConfirmed();
     }
 }

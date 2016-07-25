@@ -47,9 +47,24 @@ public class LoginActivity extends Activity {
         session = new SessionManager(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+        if (session.isLoggedIn() && session.isConfirmed()) {
             // User is already logged in. Take him to main activity
+            ClientFunctions.registerDevice(new ClientResponse() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onErrorResponse(String response) {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                }
+            });
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (session.isLoggedIn() && !session.isConfirmed()) {
+            Intent intent = new Intent(LoginActivity.this, EmailConfirmActivity.class);
             startActivity(intent);
             finish();
         }
@@ -108,10 +123,17 @@ public class LoginActivity extends Activity {
                 // Launch main activity
 
                 hideDialog();
-                Intent intent = new Intent(LoginActivity.this,
-                        MainActivity.class);
-                startActivity(intent);
-                finish();
+                if(session.isConfirmed()) {
+                    Intent intent = new Intent(LoginActivity.this,
+                            MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(LoginActivity.this,
+                            EmailConfirmActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
             }

@@ -97,4 +97,13 @@ public class AppConfig {
     // Server get user accept groups image url
     public static String URL_GET_USER_ACCEPT_GROUPS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getUserAcceptGroups";
 
+	// Server add user device token
+	public static String URL_ADD_USER_DEVICE_TOKEN = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/addUserDeviceToken";
+
+	// Server send confirmation email
+	public static String URL_SEND_CONFIRMATION_EMAIL = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/publish/sendConfirmationEmail";
+
+    // Server get user email confirm state
+    public static String URL_GET_EMAIL_CONFIRM_STATE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getEmailConfirmState";
+
 }

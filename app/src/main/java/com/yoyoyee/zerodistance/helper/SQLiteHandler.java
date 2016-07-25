@@ -49,7 +49,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 15;
+	private static final int DATABASE_VERSION = 16;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -111,7 +111,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 	 * */
 	public void addUser(String isTeacher ,String name, String nickName, String schoolID,
                         String studentID, String email, String uid, String created_at,
-                        String access_key) {
+                        String access_key, String isConfirmed) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -125,7 +125,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             values.put(LoginTable.KEY_UID, uid); // Email
             values.put(LoginTable.KEY_CREATED_AT, created_at); // Created At
             values.put(LoginTable.KEY_ACCESS_KEY, access_key); // Created At
-
+            values.put(LoginTable.KEY_IS_CONFIRMED_KEY, isConfirmed); // Created At
             // Inserting Row
             long id = db.insert(LoginTable.TABLE_NAME, null, values);
 
