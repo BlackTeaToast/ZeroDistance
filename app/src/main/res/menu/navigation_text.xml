@@ -4,21 +4,21 @@
     <group android:checkableBehavior="single">
     <item
         android:id="@+id/section"
-        android:icon="@drawable/ic_person_add_black_48dp"
+        android:icon="@drawable/ic_person_black_48dp"
         android:title="我的一切">
         <menu>
         <item
             android:id="@+id/myselfpage"
-            android:icon="@drawable/ic_person_add_black_48dp"
+            android:icon="@drawable/ic_person_black_48dp"
             android:title="個人頁面" />
         <item
             android:id="@+id/friendList"
-            android:icon="@drawable/ic_person_add_black_48dp"
+            android:icon="@drawable/ic_tag_faces_black_48dp"
             android:title="好友清單" />
 
         <item
             android:id="@+id/myAchievement"
-            android:icon="@drawable/ic_person_add_black_48dp"
+            android:icon="@drawable/ic_assessment_black_48dp"
             android:title="我的成就"
             />
         </menu>
@@ -30,21 +30,21 @@
         <menu>
             <item
                 android:id="@+id/setting"
-                android:icon="@drawable/ic_person_add_black_48dp"
+                android:icon="@drawable/ic_settings_black_48dp"
                 android:title="設定" />
             <item
                 android:id="@+id/about_us"
-                android:icon="@drawable/ic_person_add_black_48dp"
+                android:icon="@drawable/ic_local_florist_black_48dp"
                 android:title="關於我們" />
 
             <item
                 android:id="@+id/sign_out"
-                android:icon="@drawable/ic_person_add_black_48dp"
+                android:icon="@drawable/ic_directions_run_black_48dp"
                 android:title="登出"
                 />
             <item
                 android:id="@+id/exit"
-                android:icon="@drawable/ic_person_add_black_48dp"
+                android:icon="@drawable/ic_hotel_black_48dp"
                 android:title="離開"
                 />
         </menu>

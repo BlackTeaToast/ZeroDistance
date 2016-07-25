@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.yoyoyee.zerodistance.fragment.fragment_achievement;
 import com.yoyoyee.zerodistance.fragment.fragment_havebeen;
 import com.yoyoyee.zerodistance.fragment.fragment_mission;
 import com.yoyoyee.zerodistance.fragment.fragment_notbeen;
@@ -53,10 +52,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             fragment_havebeen fhb = new fragment_havebeen();
             f = fhb;
         }
-        if(position==4){
-            fragment_achievement fah = new fragment_achievement();
-            f = fah;
-        }
+//        if(position==4){
+//            Dialog_achievement fah = new Dialog_achievement();
+//            f = fah;
+//        }
 //        if(position==5){
 //            fragment_setting fah = new fragment_setting();
 //            f = fah;

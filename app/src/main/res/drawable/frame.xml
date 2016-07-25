@@ -13,10 +13,13 @@
             <stroke
                 android:width="2.5dip"
                 android:color="#FF73110C" />
-            <gradient android:startColor="#65e44e"
-                android:centerColor="#b1f3a5"
-                android:endColor="#8bec79"
-                android:angle="270" />
+            <!--<gradient android:startColor="#65e44e"-->
+                <!--android:centerColor="#b1f3a5"-->
+                <!--android:endColor="#8bec79"-->
+                <!--android:angle="270" />-->
+            <gradient android:startColor="@color/bg_login"
+                android:endColor="@color/bg_login"></gradient>
+
 
         </shape>
     </item>

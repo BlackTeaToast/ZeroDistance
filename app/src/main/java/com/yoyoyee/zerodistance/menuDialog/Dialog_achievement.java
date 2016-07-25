@@ -1,18 +1,14 @@
-package com.yoyoyee.zerodistance.fragment;
+package com.yoyoyee.zerodistance.menuDialog;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
@@ -20,7 +16,7 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
-public class fragment_achievement extends Fragment {
+public class Dialog_achievement extends Dialog {
     boolean hardToWork;
     boolean enmergency;
     boolean thunder;
@@ -31,22 +27,28 @@ public class fragment_achievement extends Fragment {
     TextView textView1;
     TextView textView2;
     TextView textView3;
-
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_achievement, container, false);
+    public Dialog_achievement(Context context) {
+        super(context);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.fragment_achievement);
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         //findViewById
-        imageView1 = (ImageView)v.findViewById(R.id.achievement1);
-        imageView2 = (ImageView)v.findViewById(R.id.achievement2);
-        imageView3 = (ImageView)v.findViewById(R.id.achievement3);
-        textView1 = (TextView)v.findViewById(R.id.achievementText1);
-        textView2 = (TextView)v.findViewById(R.id.achievementText2);
-        textView3 = (TextView)v.findViewById(R.id.achievementText3);
+        imageView1 = (ImageView)findViewById(R.id.achievement1);
+        imageView2 = (ImageView)findViewById(R.id.achievement2);
+        imageView3 = (ImageView)findViewById(R.id.achievement3);
+        textView1 = (TextView)findViewById(R.id.achievementText1);
+        textView2 = (TextView)findViewById(R.id.achievementText2);
+        textView3 = (TextView)findViewById(R.id.achievementText3);
 
 
         //設置區域==========
         hardToWork = false;
         enmergency = false;
         thunder = false;
+        getWindow().setBackgroundDrawable(new ColorDrawable(0));//四個角部會有角角
 
         //==================
         imageView1.setOnClickListener(new View.OnClickListener() {
@@ -70,21 +72,13 @@ public class fragment_achievement extends Fragment {
             }
         });
 
-        return v;
-
-    }
-
-
-
-    public void  onResume(){
-
-        //  Toast.makeText(getContext(), "onResume{mission}", Toast.LENGTH_SHORT).show();
-        super.onResume();
         //設置圖片
         setImage();
         setFont();
 
     }
+
+
 
 
 

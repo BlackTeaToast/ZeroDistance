@@ -3,11 +3,14 @@ package com.yoyoyee.zerodistance.menuDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,7 +46,7 @@ public class Dialog_setting extends Dialog {
         super(context);
         this.context = context;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_personal_page);
+        setContentView(R.layout.fragment_setting);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,13 @@ public class Dialog_setting extends Dialog {
         db = new SQLiteHandler(getContext());
         // session manager
         session = new SessionManager(getContext());
-        userid = (TextView) findViewById(R.id.userid);
+        try {
+            userid = (TextView) findViewById(R.id.userid);
+
         userid.setText(SessionFunctions.getUserUid());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //登出
         Button Sign_outbut = (Button) findViewById(R.id.Sign_outbut);
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +112,10 @@ public class Dialog_setting extends Dialog {
         layoutset1 = (RadioButton)findViewById(R.id.layoutset1);
         layoutset2 = (RadioButton)findViewById(R.id.layoutset2);
         layoutset3 = (RadioButton)findViewById(R.id.layoutset3);
+        getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
         checkbecontext();//選擇預設項目
-
+        setheight();
         setFontSize();//設定字體大小
         //radio button
 
@@ -185,7 +194,15 @@ public class Dialog_setting extends Dialog {
         }
     };
 
+    private void setheight(){
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = getWindow().getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.85); // 高度设置为屏幕的0.6
+//        p.width = (int) (d.getWidth() * 0.65); // 宽度设置为屏幕的0.65
+        getWindow().setAttributes(p);
 
+    }
     private void logoutUser() {
 
         session.setLogin(false);

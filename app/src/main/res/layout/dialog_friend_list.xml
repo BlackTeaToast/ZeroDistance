@@ -35,11 +35,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout6">
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2px"
-            android:background="#00bebebe"
-            android:layout_marginTop="10dp" />
 
 
         <LinearLayout

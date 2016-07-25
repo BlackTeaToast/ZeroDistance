@@ -30,6 +30,8 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_aboutus;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_achievement;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_friend;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_myself;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_setting;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity{
     String Titles[];
     int upDataCount=0;
     FloatingActionButton fab;
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,6 +256,8 @@ public class MainActivity extends AppCompatActivity{
                     case 0:
                         if (SessionFunctions.isTeacher()) {
                             fab.show();
+                        }else if(!SessionFunctions.isTeacher()){
+                            fab.hide();
                         }
                         break;
                     case 1:
@@ -271,7 +277,7 @@ public class MainActivity extends AppCompatActivity{
     }
     private void setfab() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (SessionFunctions.isTeacher()&&pager.getCurrentItem()==0) {
+        if (SessionFunctions.isTeacher()&&pager.getCurrentItem()==0||pager.getCurrentItem()==1) {
             fab.show();
         }else {
             fab.hide();
@@ -299,7 +305,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
-        pager.setOffscreenPageLimit(5);//儲存頁面數
+        pager.setOffscreenPageLimit(4);//儲存頁面數
 
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
@@ -307,14 +313,12 @@ public class MainActivity extends AppCompatActivity{
         hideDialog();
     }
     private void setDrawerLayout(){
-        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         // 實作 drawer toggle 並放入 toolbar
-
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, tool_bar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, tool_bar, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
         mDrawerLayout.setScrimColor(Color.parseColor("#3c448AFF"));
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
     }
  private void setnav(){
      NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
@@ -331,11 +335,13 @@ public class MainActivity extends AppCompatActivity{
                      makeFriendDialog();
                      break;
                  case R.id.myAchievement:
+                     makeAchievementDialog();
                      break;
                  case R.id.setting:
                      makeSettingDialog();
                      break;
                  case R.id.about_us:
+                     makeAboutusDialog();
                      break;
                  case R.id.sign_out:
                      logoutUser();
@@ -351,17 +357,19 @@ public class MainActivity extends AppCompatActivity{
  }
     private void makeMyfselfDialog(){
         Dialog_myself dialog = new Dialog_myself(context);
-        dialog.setContentView(R.layout.dialog_personal_page);
             dialog.show();
     }
     private void makeFriendDialog(){
         Dialog_friend dialog = new Dialog_friend(context);
-        dialog.setContentView(R.layout.dialog_friend_list);
+//        dialog.setContentView(R.layout.dialog_friend_list);
         dialog.show();
     }
     private void makeSettingDialog(){
         Dialog_setting dialog = new Dialog_setting(context);
-        dialog.setContentView(R.layout.fragment_setting);
+        dialog.show();
+    }
+    private void makeAchievementDialog(){
+        Dialog_achievement dialog = new Dialog_achievement(context);
         dialog.show();
     }
     private void logoutUser() {
@@ -374,4 +382,9 @@ public class MainActivity extends AppCompatActivity{
         finish();
     }
 
+    private void makeAboutusDialog(){
+        Dialog_aboutus dialog = new Dialog_aboutus(context);
+        dialog.setContentView(R.layout.dialog_aboutus);
+        dialog.show();
+    }
 }

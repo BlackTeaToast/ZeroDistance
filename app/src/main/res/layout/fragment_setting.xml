@@ -1,9 +1,14 @@
-<ScrollView android:layout_width="fill_parent"
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/frame">
+    <ScrollView android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/scrollView3"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/repeat_cube_bg"
-    android:fillViewport="false">
+    android:fillViewport="false"
+        android:layout_margin="3.5dp">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,7 +23,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="474dp"
+            android:layout_height="wrap_content"
             android:id="@+id/linearLayout4"
             android:layout_margin="5dp">
 
@@ -33,7 +38,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/textsize"
                     android:id="@+id/textsizeread"
-                    style="@style/settext"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginLeft="10dp" />
@@ -79,31 +83,23 @@
                     android:textSize="20dp" />
             </RadioGroup>
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/language"
+                android:id="@+id/languageread"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp" />
+
+            <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="40dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/language"
-                    android:id="@+id/languageread"
-                    style="@style/settext"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginLeft="10dp" />
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/languageSpinner"
-                    android:background="#eff6fa"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="10dp" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/languageSpinner"
+                android:background="#eff6fa"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,9 +184,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/layoutset"
-                    style="@style/settext"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginLeft="10dp"
@@ -252,8 +247,7 @@
                 android:textIsSelectable="false"
                 android:layout_gravity="left|bottom"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginBottom="3dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -278,3 +272,5 @@
     </LinearLayout>
     </FrameLayout>
 </ScrollView>
+
+</FrameLayout>
