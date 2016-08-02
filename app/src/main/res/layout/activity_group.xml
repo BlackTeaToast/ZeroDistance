@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--拿來上傳更改用 -->
+
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/scrollView2"
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
-    tools:context = ".activity.GroupActivity">
-
-
+tools:context = ".activity.GroupActivity"
+    android:background="@drawable/repeat_cube_bg">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:id="@+id/groupMainVer"
         android:weightSum="1">
 
@@ -28,8 +29,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/groupMainLinear"
-            android:background="@drawable/repeat_cube_bg">
+            android:id="@+id/groupMainLinear">
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -344,6 +344,7 @@
 
     </LinearLayout>
 </ScrollView>
+
 
 
 

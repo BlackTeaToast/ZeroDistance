@@ -234,10 +234,6 @@ public class MissionActivity extends AppCompatActivity {
         users = (TextView)findViewById(R.id.usersM);
         ratingBar = (RatingBar)findViewById(R.id.ratingBarM);
         imageView = (ImageView)findViewById(R.id.imageViewM);
-        joinButton = (Button)findViewById(R.id.joinOrNotM);
-        qAndAButton = (Button)findViewById(R.id.qAndAButtonM);
-        editButton = (Button)findViewById(R.id.editButtonM);
-        deleteButton = (Button)findViewById(R.id.deleteButtonM);
         rateButton = (Button)findViewById(R.id.ratebuttonM);
         finishButton = (Button)findViewById(R.id.finishButton) ;
 
@@ -563,15 +559,7 @@ public class MissionActivity extends AppCompatActivity {
         Button ButtonTemp;
         ButtonTemp = (Button)findViewById(R.id.ratebuttonM);
         ButtonTemp.setTextSize(size+5);
-        //按鈕群(參加鈕、Q&A、編輯、刪除)
-        ButtonTemp = (Button)findViewById(R.id.joinOrNotM);
-        ButtonTemp.setTextSize(size+5);
-        ButtonTemp = (Button)findViewById(R.id.qAndAButtonM);
-        ButtonTemp.setTextSize(size+5);
-        ButtonTemp = (Button)findViewById(R.id.editButtonM);
-        ButtonTemp.setTextSize(size+5);
-        ButtonTemp = (Button)findViewById(R.id.deleteButtonM);
-        ButtonTemp.setTextSize(size+5);
+
     }
 
     //設置文字，更改語言時使用
@@ -610,13 +598,6 @@ public class MissionActivity extends AppCompatActivity {
         Button ButtonTemp;
         ButtonTemp = (Button)findViewById(R.id.ratebuttonM);
         ButtonTemp.setText(R.string.rate_personal);
-        //按鈕群(參加鈕、Q&A、編輯、刪除)
-        ButtonTemp = (Button)findViewById(R.id.qAndAButtonM);
-        ButtonTemp.setText(R.string.q_and_a);
-        ButtonTemp = (Button)findViewById(R.id.editButtonM);
-        ButtonTemp.setText(R.string.edit_button);
-        ButtonTemp = (Button)findViewById(R.id.deleteButtonM);
-        ButtonTemp.setText(R.string.delete_button);
 
 
     }
