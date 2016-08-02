@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
     private ProgressDialog pDialog;
     private SQLiteHandler db;
     String Titles[];
-    int upDataCount=0;
+    int upDataCount=0 , whichpage;
     FloatingActionButton fab;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         //startService(new Intent(this, TapService.class));
         Titles = getResources().getStringArray(R.array.tabstyle); //設定tab
-
+        Intent it  = this.getIntent();
+        whichpage= it.getIntExtra("whichpage", 0);
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(true);
@@ -138,13 +139,6 @@ public class MainActivity extends AppCompatActivity{
 
     public void onResume(){
         super.onResume();
-        //更新手機資料庫
-        //更新資料
-//        showDialog();
-//        if(!beupData){
-//            updataMissionDB();
-//
-//        }
 
     }
 
@@ -306,11 +300,11 @@ public class MainActivity extends AppCompatActivity{
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
         pager.setOffscreenPageLimit(4);//儲存頁面數
-
         pager.setAdapter(adapter);
+        pager.setCurrentItem(whichpage);  //預設出現頁面
         tabs.setViewPager(pager);
-     //   pager.setCurrentItem(2);  //預設出現頁面
         hideDialog();
+        CustomToast.showToast(context, "跳"+whichpage+"頁", 500);
     }
     private void setDrawerLayout(){
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
