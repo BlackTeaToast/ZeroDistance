@@ -173,11 +173,21 @@
     <string name="waitacc">等待對方接受</string>
     <string name="search">搜尋</string>
     <string name="newfri">加好友</string>
-    <string name="searchoth">搜尋其他玩家</string>
+    <string name="searchoth">找玩家</string>
     <string name="layoutset">卡片樣式設計</string>
     <string name="layoutset1">設定一</string>
     <string name="layoutset2">設定二</string>
     <string name="layoutset3">設定三</string>
+    <string name="saveandexit">儲存並離開</string>
+    <string name="cancle">取消</string>
+    <string name="ourname">【名稱】YoYoYeeee</string>
+    <string name="ourenergy">【屬性】宅40％、好男人50％、害羞10％</string>
+    <string name="ourarea">【出沒地區】台中</string>
+    <string name="ourps">【備註】</string>
+    <string name="ourpsd">當你看到疑似本工作室的生物，請打開此APP大喊YoYoYeeee~~將可收服此生物於您的圖鑑內。</string>
+
+
+
 
     <!--==================================================================-->
     <!--吱吱吱之-->

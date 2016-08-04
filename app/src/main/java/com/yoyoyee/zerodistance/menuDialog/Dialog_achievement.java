@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,7 +77,7 @@ public class Dialog_achievement extends Dialog {
         //設置圖片
         setImage();
         setFont();
-
+        setheight();
     }
 
 
@@ -113,6 +115,12 @@ public class Dialog_achievement extends Dialog {
 
     }
 
-
+    private void setheight(){
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = getWindow().getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.85); // 高度设置为屏幕的0.6
+        getWindow().setAttributes(p);
+    }
 
 }

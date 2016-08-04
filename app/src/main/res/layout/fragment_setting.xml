@@ -163,7 +163,7 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/poTimeFirst"
+                    android:text="@string/endTimeFirst"
                     android:id="@+id/poTimeFirst"
                     android:layout_weight="1"
                     android:checked="false" />
@@ -171,7 +171,7 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/endTimeFirst"
+                    android:text="@string/poTimeFirst"
                     android:id="@+id/endTimeFirst"
                     android:layout_gravity="right"
                     android:layout_weight="1" />
@@ -238,27 +238,34 @@
             android:layout_gravity="bottom"
             android:layout_margin="5dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/talktous"
-                android:id="@+id/talktous"
-                android:textColor="#0000ff"
-                android:textIsSelectable="false"
-                android:layout_gravity="left|bottom"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="3dp" />
 
-            <Button
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal">
+                <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="105dp"
                 android:layout_height="28dp"
-                android:text="@string/Sign_out"
-                android:id="@+id/Sign_outbut"
-                android:layout_gravity="bottom|center_horizontal"
+                android:text="@string/saveandexit"
+                android:id="@+id/saveandexit"
                 android:background="@drawable/patrickc_button_yellow"
-
                 android:textColor="#0b0b07" />
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="105dp"
+                    android:layout_height="28dp"
+                    android:text="@string/cancle"
+                    android:id="@+id/Setting_cancel"
+                    android:background="@drawable/patrickc_button_yellow"
+                    android:textColor="#0b0b07" /></LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

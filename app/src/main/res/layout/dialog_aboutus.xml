@@ -41,18 +41,92 @@
         android:radius="5dip"
         android:id="@+id/about_fl">
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp">
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ourname"
+                android:id="@+id/textView7" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ourenergy"
+                android:id="@+id/textView9" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ourarea"
+                android:id="@+id/textView11" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ourps"
+                android:id="@+id/textView13" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ourpsd"
+                android:id="@+id/textView15"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="30dp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/exit"
-            android:id="@+id/aboutexit"
-            android:layout_alignParentBottom="true"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentStart="false"
-            android:layout_gravity="bottom|center_horizontal" />
+            android:layout_gravity="bottom">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/talktous"
+                android:id="@+id/talktous"
+                android:textColor="#0000ff"
+                android:textIsSelectable="false"
+                android:layout_gravity="left|bottom"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="3dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exit"
+                android:id="@+id/aboutexit"
+                android:layout_alignParentBottom="true"
+                android:layout_alignWithParentIfMissing="false"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                android:layout_gravity="bottom|center_horizontal" />
+        </FrameLayout>
+
     </FrameLayout>
 
 </RelativeLayout>

@@ -2,11 +2,16 @@ package com.yoyoyee.zerodistance.menuDialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,18 +26,18 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 public class Dialog_myself extends Dialog {
     Button btn_confirm;
     Button btn_exit;
-    TextView name, profession, level, exp, Achievement;
-    EditText Aboutmyself;
+    TextView name, profession, level, exp, Achievement, Aboutmyself;
+    Context context;
     boolean beonclick=false;
     public Dialog_myself(Context context) {
        super(context);
+        this.context = context;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_personal_page);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.personal_page);
         btn_confirm = (Button)findViewById(R.id.edit);
         btn_exit = (Button)findViewById(R.id.exit);
         name = (TextView)findViewById(R.id.name);
@@ -40,35 +45,12 @@ public class Dialog_myself extends Dialog {
         level = (TextView)findViewById(R.id.level);
         exp = (TextView)findViewById(R.id.exp);
         Achievement = (TextView)findViewById(R.id.Achievement);
-        Aboutmyself = (EditText)findViewById(R.id.Aboutmyself);
-        Aboutmyself.setEnabled(false);
-//        getWindow().setBackgroundDrawable(new BitmapDrawable());
+        Aboutmyself = (TextView)findViewById(R.id.Aboutmyself);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
-//        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        ori();
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!beonclick){
-                    Aboutmyself.setEnabled(true);
-                    Toast.makeText(getContext(),"可以編輯自我介紹",Toast.LENGTH_SHORT).show();
-                    beonclick=true;
-                    btn_confirm.setText(getContext().getResources().getString(R.string.saveandout));
-                }else {
-                    Aboutmyself.setEnabled(false);
-                    Toast.makeText(getContext(),"已送出",Toast.LENGTH_SHORT).show();
-                    beonclick=false;
-                    btn_confirm.setText(getContext().getResources().getString(R.string.edit_pop));
-                }
-            }
-        });
-        btn_exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"you click cancel!",Toast.LENGTH_SHORT).show();
-                cancel();
-            }
-        });
+        ori();//自我介紹內容
+        setheight();//畫面大小
+        setbtn_confirm();//自我介紹按鈕
+        setbtn_exit();//離開按鈕
 
     }
     private void ori(){
@@ -87,6 +69,50 @@ public class Dialog_myself extends Dialog {
                 "\n" +
                 "有句話說:「當別人逃避，而你留下來挑戰，就能得到更上一層樓的機會。」這句話我覺得很符合○○○○這工作的正面態度，希望進入貴公司可以秉持我的工作哲學以及座右銘面對挑戰，貢獻所學並勝任愉快! ");
         Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
+    }
+    private void setheight(){
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = getWindow().getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.85); // 高度设置为屏幕的0.6
+        getWindow().setAttributes(p);
+    }
+    private void setbtn_confirm(){
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final View item = LayoutInflater.from(context).inflate(R.layout.dialog_search, null);
+                final EditText editText = (EditText) item.findViewById(R.id.friname);
+                editText.setMinLines(2);
+                editText.setMaxLines(2);
+                new AlertDialog.Builder(context)
+                        .setView(item)
+                        .setTitle("請輸入自我介紹")
+                        .setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(context, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                                Aboutmyself.setText(editText.getText().toString());
+                            }
+                        })
+                        .setPositiveButton("取消" , new OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                cancel();
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
+    private void setbtn_exit(){
+        btn_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"you click cancel!",Toast.LENGTH_SHORT).show();
+                cancel();
+            }
+        });
     }
 }
 

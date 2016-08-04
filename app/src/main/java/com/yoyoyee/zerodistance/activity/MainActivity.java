@@ -2,6 +2,7 @@ package com.yoyoyee.zerodistance.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //startService(new Intent(this, TapService.class));
         Titles = getResources().getStringArray(R.array.tabstyle); //設定tab
         Intent it  = this.getIntent();
         whichpage= it.getIntExtra("whichpage", 0);
@@ -73,11 +74,8 @@ public class MainActivity extends AppCompatActivity{
         updataphoneDB();//手機資料
 
 //設置toolbar標題
-
-
-//        LayoutInflater layout=this.getLayoutInflater();
-//        View view=layout.inflate(R.layout.maintool_bar, null);
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName);
         TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
         UserNames.setText(SessionFunctions.getUserNickName()+"");
@@ -89,39 +87,13 @@ public class MainActivity extends AppCompatActivity{
         setDrawerLayout();
         setnav();//navigation的menu點選
 
-        //actionBar.setTitle(SessionFunctions.getUserNickName()+"     我塞塞塞塞塞塞塞塞塞");
-//設置toolbar標題
-
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.container);
-        pager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch( event.getAction() ) {
-
-                    case MotionEvent.ACTION_DOWN:  // 按下
-                    {
-
-                        break;
-                    }
-
-                    case MotionEvent.ACTION_MOVE:  // 拖曳移動
-                    {
-                        break;}
-
-                    case MotionEvent.ACTION_UP:  // 放開
-                    {
-                        fabtime();
-                        break;}
-                }
-                return false;
-            }
-        });
+        setpagerListen();
 
         setfab();//fab設定
 
         // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
 
@@ -135,17 +107,6 @@ public class MainActivity extends AppCompatActivity{
 
         // Setting the ViewPager For the SlidingTabsLayout
     }
-
-
-    public void onResume(){
-        super.onResume();
-
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-
 
     //設置字體大小
     private void setFontSize(){
@@ -306,6 +267,47 @@ public class MainActivity extends AppCompatActivity{
         hideDialog();
         CustomToast.showToast(context, "跳"+whichpage+"頁", 500);
     }
+    private void setpagerListen(){
+        pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch( event.getAction() ) {
+
+                    case MotionEvent.ACTION_DOWN:  // 按下
+                    {
+
+                        break;
+                    }
+
+                    case MotionEvent.ACTION_MOVE:  // 拖曳移動
+                    {
+                        break;}
+
+                    case MotionEvent.ACTION_UP:  // 放開
+                    {
+                        fabtime();
+                        break;}
+                }
+                return false;
+            }
+        });
+        tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            fabtime();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
     private void setDrawerLayout(){
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         // 實作 drawer toggle 並放入 toolbar
@@ -338,10 +340,10 @@ public class MainActivity extends AppCompatActivity{
                      makeAboutusDialog();
                      break;
                  case R.id.sign_out:
-                     logoutUser();
+                     makelogoutUserDialog();
                      break;
                  case R.id.exit:
-                     finish();
+                     makeexitDialog();
                      break;
 
              }
@@ -366,6 +368,23 @@ public class MainActivity extends AppCompatActivity{
         Dialog_achievement dialog = new Dialog_achievement(context);
         dialog.show();
     }
+    private void makelogoutUserDialog(){
+        new AlertDialog.Builder(context)
+                .setTitle("你要登出嗎?")
+                .setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logoutUser();
+                    }
+                })
+                .setPositiveButton("取消" , new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
+    }
     private void logoutUser() {
         SessionManager session = new SessionManager(this);
         session.setLogin(false);
@@ -375,10 +394,26 @@ public class MainActivity extends AppCompatActivity{
         startActivity(in);
         finish();
     }
-
     private void makeAboutusDialog(){
         Dialog_aboutus dialog = new Dialog_aboutus(context);
         dialog.setContentView(R.layout.dialog_aboutus);
         dialog.show();
+    }
+    private void makeexitDialog(){
+        new AlertDialog.Builder(context)
+                .setTitle("你要真的要離開嗎?OAQ")
+                .setNegativeButton("是的", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setPositiveButton("取消" , new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 }

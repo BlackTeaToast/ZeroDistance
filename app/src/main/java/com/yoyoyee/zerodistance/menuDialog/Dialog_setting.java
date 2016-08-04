@@ -2,11 +2,8 @@ package com.yoyoyee.zerodistance.menuDialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -20,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.activity.LoginActivity;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
@@ -38,6 +34,8 @@ public class Dialog_setting extends Dialog {
     private RadioGroup textsizeRG , showstyleRG, SortWay, Cardlayoutset;
     private SQLiteHandler db;
     private SessionManager session;
+    Spinner languageSpinner;
+    Button Sign_outbut, saveandexit;
     float ttsize;  //字體大小
     static float sizeS=8,sizeM=10, sizeL=20;
     TextView  userid;
@@ -51,49 +49,17 @@ public class Dialog_setting extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // SQLite database handler
         db = new SQLiteHandler(getContext());
-        // session manager
         session = new SessionManager(getContext());
         try {
             userid = (TextView) findViewById(R.id.userid);
-
         userid.setText(SessionFunctions.getUserUid());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //登出
-        Button Sign_outbut = (Button) findViewById(R.id.Sign_outbut);
-        Sign_outbut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logoutUser();
-//                getOwnerActivity().finish(); //之後設定為儲存
-            }
-        });
-
-        //登出
-        //spinner
-            Spinner languageSpinner = (Spinner) findViewById(R.id.languageSpinner);
-            adapterPress = new ArrayAdapter<String>(getContext(), R.layout.spinner, context.getResources().getStringArray(R.array.languageSppingArrary));
-
-            adapterPress.setDropDownViewResource(R.layout.spinner);
-            languageSpinner.setAdapter(adapterPress);
-
-        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  //spinner監聽
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                languageuse=position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //spinner
-        //radio button
+        Sign_outbut = (Button) findViewById(R.id.Setting_cancel);
+        saveandexit = (Button) findViewById(R.id.saveandexit);
+        languageSpinner  = (Spinner) findViewById(R.id.languageSpinner);
         textsizeRG = (RadioGroup) findViewById(R.id.textsizeRG);
         textsizeRG.setOnCheckedChangeListener(textsizeListener);
         showstyleRG = (RadioGroup) findViewById(R.id.showstyleRG);
@@ -113,12 +79,11 @@ public class Dialog_setting extends Dialog {
         layoutset2 = (RadioButton)findViewById(R.id.layoutset2);
         layoutset3 = (RadioButton)findViewById(R.id.layoutset3);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
-
+        setSpinner();
+        setbutton();
         checkbecontext();//選擇預設項目
-        setheight();
+        setheight();//設定畫面大小
         setFontSize();//設定字體大小
-        //radio button
-
         return ;}
 
 //textsize radio button 監聽
@@ -193,7 +158,20 @@ public class Dialog_setting extends Dialog {
             }
         }
     };
-
+    private void setbutton(){
+        Sign_outbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancel();
+            }
+        });
+        saveandexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel();
+            }
+        });
+    }
     private void setheight(){
         WindowManager m = getWindow().getWindowManager();
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
@@ -201,15 +179,23 @@ public class Dialog_setting extends Dialog {
         p.height = (int) (d.getHeight() * 0.85); // 高度设置为屏幕的0.6
 //        p.width = (int) (d.getWidth() * 0.65); // 宽度设置为屏幕的0.65
         getWindow().setAttributes(p);
-
     }
-    private void logoutUser() {
+    private void setSpinner(){
+        adapterPress = new ArrayAdapter<String>(getContext(), R.layout.spinner, context.getResources().getStringArray(R.array.languageSppingArrary));
+        adapterPress.setDropDownViewResource(R.layout.spinner);
+        languageSpinner.setAdapter(adapterPress);
 
-        session.setLogin(false);
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  //spinner監聽
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                languageuse=position;
+            }
 
-        db.deleteUsers();
-        Intent in = new Intent(context, LoginActivity.class);
-        context.startActivity(in);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
     //設定預設大小或顯示資料
     private void checkbecontext(){
@@ -248,9 +234,6 @@ public class Dialog_setting extends Dialog {
         textViewTemp.setTextSize(SF.getUserTextSize()+10);
         textViewTemp = (TextView) findViewById(R.id.languageread);
         textViewTemp.setTextSize(SF.getUserTextSize()+10);
-//        textViewTemp = (TextView) findViewById(R.id.userid);
-//        textViewTemp.setTextSize(SF.getUserTextSize()-5);
-
         textViewTemp =(TextView) findViewById(R.id.showstyleread);
         textViewTemp.setTextSize(SF.getUserTextSize()+10);
         textViewTemp =(RadioButton) findViewById(R.id.showcontent);
@@ -263,7 +246,9 @@ public class Dialog_setting extends Dialog {
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =  (RadioButton) findViewById(R.id.textsizeSRB);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (Button) findViewById(R.id.Sign_outbut);
+        textViewTemp = (Button) findViewById(R.id.saveandexit);
+        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+        textViewTemp = (Button) findViewById(R.id.Setting_cancel);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp = (TextView) findViewById(R.id.SortWayTV);
         textViewTemp.setTextSize(SF.getUserTextSize()+10);
@@ -273,9 +258,5 @@ public class Dialog_setting extends Dialog {
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =  (TextView)findViewById(R.id.cardlayout);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
-        textViewTemp = (TextView)findViewById(R.id.talktous);
-        SpannableString content = new SpannableString(context.getResources().getString(R.string.talktous));//畫底線
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        textViewTemp.setText(content);//畫底線
     }
 }
