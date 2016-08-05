@@ -1978,7 +1978,7 @@ public class ClientFunctions {
                                 list.add(new UserAcceptMissions(
                                         mission.getInt("mission_id"),
                                         dateFormat.parse(mission.getString("accepted_at"))));
-                                //Log.d(TAG, "onResponse: " + mission.getString("user_name"));
+                                Log.d(TAG, "onResponse: " + mission.getString("accepted_at"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }

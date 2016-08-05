@@ -50,6 +50,7 @@ import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
+import com.yoyoyee.zerodistance.app.TimeBroadcastReceiver;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
@@ -205,22 +206,18 @@ public class NewMissionActivity extends AppCompatActivity {
         serviceStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseMessaging.getInstance().subscribeToTopic("test");
-                FirebaseInstanceId.getInstance().getToken();
-                FirebaseMessaging.getInstance().subscribeToTopic("news");
-                FirebaseInstanceId.getInstance().getToken();
+                Intent intent =new Intent (NewMissionActivity.this,TapService.class);
+                intent.setAction(Intent.ACTION_TIME_TICK);
+                startService(intent);
+                Log.d("BOARDC","start");
 
-                /*
-                Intent Intent =new Intent (NewMissionActivity.this,TapService.class);
-                startService(Intent);
-                Toast.makeText(NewMissionActivity.this,"START",Toast.LENGTH_SHORT).show();*/
             }
         });
         serviceStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Intent =new Intent (NewMissionActivity.this,TapService.class);
-                stopService(Intent);
+                Intent intent =new Intent (NewMissionActivity.this,TapService.class);
+                stopService(intent);
                 Toast.makeText(NewMissionActivity.this,"STOP",Toast.LENGTH_SHORT).show();
             }
         });

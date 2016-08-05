@@ -4,18 +4,24 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.activity.GroupActivity;
 import com.yoyoyee.zerodistance.activity.MainActivity;
+import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.activity.NewMissionActivity;
 import com.yoyoyee.zerodistance.activity.QAActivity;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
+import com.yoyoyee.zerodistance.helper.datatype.Group;
+import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 
 import java.util.ArrayList;
@@ -31,6 +37,11 @@ import java.util.Map;
  *      ----通知類別   辨認代碼----------
  *           普通通知   "normal"
  *           更新通知   "updata"
+ *           {
+ *               更新通知需要：
+ *                  1.更新編號："updata"
+ *                  2.更新網址："YOYOYEEURL"
+ *           }
  *          QA通知       "QA"
  *              {
  *                  QA通知下，需要：
@@ -75,10 +86,9 @@ import java.util.Map;
  *----------------------------------------------------------------------------------------------------------------------------------------------------
  */
 public class MyFireBaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService{
-    interface Callback {
-        void run();
-    }
+    interface Callback {void run();}
     private ArrayList<QA> DataQas;
+    private int updata_ID =-1;
     public String content,title;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -86,121 +96,29 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
         Log.d("FCM","成功讀取資料");
     }
     private void showNoticication(final Map data){
-
         if (data.get("type").toString().equals("normal")) {
-            Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-            i.putExtra("notificationModel",true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setAutoCancel(true)
-                    .setContentTitle(R.string.notification_QA_Title_HadAnswer + content +"mor")
-                    .setContentText(data.get("data").toString()+data.get("ID").toString())
-                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
-                    .setContentIntent(pendingIntent);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            showNormal(data);
         }
-
         else if (data.get("type").toString().equals("updata")) {
-            Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-            i.putExtra("notificationModel",true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setAutoCancel(true)
-                    .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+"updata")
-                    .setContentText(data.get("data").toString()+data.get("ID").toString())
-                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
-                    .setContentIntent(pendingIntent);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            showUpdata(data);
         }
-
-        else if (data.get("type").toString().equals("QA")) {
-            //讀取QA資料
-            loadQandAData(Boolean.valueOf(data.get("isGroup").toString()),Integer.parseInt(data.get("ID").toString()),Integer.parseInt(data.get("QAID").toString()), new Callback() {
-                @Override
-                public void run() {
-                    Intent i =new Intent(getApplicationContext(),QAActivity.class);
-                    i.putExtra("isGroup",Boolean.valueOf(data.get("isGroup").toString()));
-                    i.putExtra("id",Integer.parseInt(data.get("ID").toString()));
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                            .setAutoCancel(true)
-                            .setContentTitle(getResources().getString(R.string.notification_QA_Title_HadAnswer))
-                            .setContentText(getResources().getString(R.string.notification_QA_Contest_Answer) + content)
-                            .setSmallIcon(R.drawable.login_pic8)
-                            .setContentIntent(pendingIntent);
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
-                }
-
-            });
-
+        else if (data.get("type").toString().equals("QA")){
+            showQA(data);
         }
-
-        else if (data.get("type").toString().equals("mission")) {
-            Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-            i.putExtra("notificationModel",true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setAutoCancel(true)
-                    .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+"miss")
-                    .setContentText(data.get("data").toString()+data.get("ID").toString())
-                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
-                    .setContentIntent(pendingIntent);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+        else if (data.get("type").toString().equals("mission")){
+            showMission(data);
         }
-
-        else if (data.get("type").toString().equals("group")) {
-            Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-            i.putExtra("notificationModel",true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setAutoCancel(true)
-                    .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+ "group")
-                    .setContentText(data.get("data").toString()+data.get("ID").toString())
-                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
-                    .setContentIntent(pendingIntent);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+        else if (data.get("type").toString().equals("group")){
+            showGroup(data);
         }
         else if (data.get("type").toString().equals("other")) {
-            Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-            i.putExtra("notificationModel",true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setAutoCancel(true)
-                    .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+"other")
-                    .setContentText(data.get("data").toString()+data.get("ID").toString())
-                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
-                    .setContentIntent(pendingIntent);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            showOther(data);
         }
         else if (data.get("type").toString().equals("test")) {
-            Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
-            i.putExtra("notificationModel",true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                    .setAutoCancel(true)
-                    .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+"test")
-                    .setContentText(data.get("data").toString()+data.get("ID").toString())
-                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
-                    .setContentIntent(pendingIntent);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            showTest(data);
         }
-        else{
-            Log.d("FCM","訊號錯誤");
-        }
+        else
+        Log.d("FCM","訊號錯誤");
 
 
 
@@ -258,5 +176,171 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
         }
 
     }
+    /*
+    * 以下為重新讀取資料mission
+    *
+    * */
+    private void loadMissionData(final int ID,final Callback callback){
+        ClientFunctions.updateMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                Mission missions ;
+                missions =QueryFunctions.getMission(ID);
+                content =missions.title;
+                callback.run();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+            Log.d("loadMissionData_Error",response);
+            }
+        });
+    }
+    /*
+    * 以下為重新讀取資料group
+    *
+    * */
+    private void loadGroupData(final int ID,final Callback callback){
+        ClientFunctions.updateGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                Group group;
+                group =QueryFunctions.getGroup(ID);
+                content =group.title;
+                callback.run();
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+                Log.d("loadMissionData_Error",response);
+            }
+        });
+    }
+
+    private void showQA(final Map data){
+        loadQandAData(Boolean.valueOf(data.get("isGroup").toString()),Integer.parseInt(data.get("ID").toString()),Integer.parseInt(data.get("QAID").toString()), new Callback() {
+            @Override
+            public void run() {
+                Intent i =new Intent(getApplicationContext(),QAActivity.class);
+                i.putExtra("isGroup",Boolean.valueOf(data.get("isGroup").toString()));
+                i.putExtra("id",Integer.parseInt(data.get("ID").toString()));
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                        .setAutoCancel(true)
+                        .setContentTitle(getResources().getString(R.string.notification_QA_Title_HadAnswer))
+                        .setContentText(getResources().getString(R.string.notification_QA_Contest_Answer) + content)
+                        .setSmallIcon(R.drawable.login_pic8)
+                        .setContentIntent(pendingIntent);
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            }
+
+        });
+    }
+    private void showMission(final Map data){
+        loadMissionData(Integer.parseInt(data.get("ID").toString()),new Callback() {
+            @Override
+            public void run() {
+                Intent i =new Intent(getApplicationContext(),MissionActivity.class);
+                i.putExtra("id",Integer.parseInt(data.get("ID").toString()));
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                        .setAutoCancel(true)
+                        .setContentTitle(getResources().getString(R.string.notification_Mission_Changer))
+                        .setContentText(getResources().getString(R.string.notification_Mission_Changer_Name)+content)
+                        .setSmallIcon(R.drawable.login_pic8)
+                        .setContentIntent(pendingIntent);
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            }
+        });
+    }
+    private void showGroup(final Map data){
+        loadGroupData(Integer.parseInt(data.get("ID").toString()),new Callback() {
+            @Override
+            public void run() {
+                Intent i =new Intent(getApplicationContext(), GroupActivity.class);
+                i.putExtra("id",Integer.parseInt(data.get("ID").toString()));
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                        .setAutoCancel(true)
+                        .setContentTitle(getResources().getString(R.string.notification_Group_Changer))
+                        .setContentText(getResources().getString(R.string.notification_Group_Changer_Name)+content)
+                        .setSmallIcon(R.drawable.login_pic8)
+                        .setContentIntent(pendingIntent);
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+            }
+        });
+    }
+    private void showUpdata(final Map data) {
+        try {
+            String fixurl =data.get("YOYOYEEURI").toString();
+            if (!data.get("YOYOYEEURI").toString().substring(0,8).equals("https://")) {
+                fixurl = "https://" + data.get("YOYOYEEURI").toString();
+            }
+            Uri uri=Uri.parse(fixurl);
+            Intent i = new Intent(Intent.ACTION_VIEW,uri);
+            i.putExtra("URI",fixurl);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                    .setAutoCancel(true)
+                    .setContentTitle("updata")
+                    .setContentText("有更新")
+                    .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
+                    .setContentIntent(pendingIntent);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.notify(updata_ID, builder.build());
+        }catch (Exception e){Log.d("FCM_Updata","URL wrong and "+e);}
+    }
+    private void showOther(final Map data){
+        Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
+        i.putExtra("notificationModel",true);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                .setAutoCancel(true)
+                .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+"other")
+                .setContentText(data.get("data").toString()+data.get("ID").toString())
+                .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
+                .setContentIntent(pendingIntent);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+    }
+    private void showTest(final Map data){
+        Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
+        i.putExtra("notificationModel",true);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                .setAutoCancel(true)
+                .setContentTitle(R.string.notification_QA_Title_HadAnswer + content+"test")
+                .setContentText(data.get("data").toString()+data.get("ID").toString())
+                .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
+                .setContentIntent(pendingIntent);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+    }
+    private void showNormal(final Map data){
+        Intent i =new Intent(getApplicationContext(),NewMissionActivity.class);
+        i.putExtra("notificationModel",true);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                .setAutoCancel(true)
+                .setContentTitle(R.string.notification_QA_Title_HadAnswer + content +"mor")
+                .setContentText(data.get("data").toString()+data.get("ID").toString())
+                .setSmallIcon(R.drawable.ic_chat_bubble_outline_white_48dp)
+                .setContentIntent(pendingIntent);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+    }
+
+
+
 
 }

@@ -68,12 +68,10 @@
     <string name="notification_QA_Title_HadAnswer">您發問的問題已有回答：</string>
     <string name="notification_QA_Contest_Answer">對方答覆：</string>
     <string name="notification_Successr">讀取成功</string>
-
-
-
-
-
-
+    <string name="notification_Mission_Changer">您接取的任務有所更動</string>
+    <string name="notification_Mission_Changer_Name">任務名稱為：</string>
+    <string name="notification_Group_Changer">您參與的揪團有所更動</string>
+    <string name="notification_Group_Changer_Name">揪團名稱為：</string>
 
 
     <!--========Tree 選單文字=========-->
@@ -99,14 +97,6 @@
     <string name="report_pop">檢舉</string>
 
 
-
-
-
-
-
-
-
-
     <!--==================================================================-->
     <!--楊-->
     <string name="section_format">test：</string>
@@ -129,6 +119,7 @@
     <string name="showpay">顯示獎勵</string>
     <string name="mainpage">主頁面</string>
     <string name="talktous">聯絡我們</string>
+
     <style name="cardtext">
         <item name="android:textSize">20sp</item>
     </style>
@@ -185,8 +176,6 @@
     <string name="ourarea">【出沒地區】台中</string>
     <string name="ourps">【備註】</string>
     <string name="ourpsd">當你看到疑似本工作室的生物，請打開此APP大喊YoYoYeeee~~將可收服此生物於您的圖鑑內。</string>
-
-
 
 
     <!--==================================================================-->
@@ -257,7 +246,6 @@
     <!---->
 
 </resources>
-
 
 
     <!--

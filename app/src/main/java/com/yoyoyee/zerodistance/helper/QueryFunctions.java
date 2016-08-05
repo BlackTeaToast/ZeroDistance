@@ -975,8 +975,7 @@ public class QueryFunctions {
     public static ArrayList<Mission> getUserAcceptMissions() {
 
         ArrayList<Mission> missions = new ArrayList<>();
-        String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
-                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id";
+        String selectQuery = "SELECT * FROM " + MissionsTable.TABLE_NAME + " WHERE id IN (SELECT mission_id FROM " + UserAcceptMissionsTable.TABLE_NAME + ")";
 
         SQLiteDatabase db = DB.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -984,7 +983,7 @@ public class QueryFunctions {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
-
+        //Log.d(TAG, "getUserAcceptMissions: "+cursor.getCount());
         for(int i=0; i<cursor.getCount(); i++){
             try {
                 Mission mission = new Mission();
@@ -1005,7 +1004,7 @@ public class QueryFunctions {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getUserAcceptMissions: " );
+                //Log.d(TAG, "getUserAcceptMissions: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1138,8 +1137,7 @@ public class QueryFunctions {
     public static ArrayList<Group> getUserAcceptGroups() {
 
         ArrayList<Group> groups = new ArrayList<>();
-        String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
-                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id";
+        String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1 WHERE t1.id IN (SELECT group_id FROM " + UserAcceptGroupsTable.TABLE_NAME + ")";
 
         SQLiteDatabase db = DB.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
