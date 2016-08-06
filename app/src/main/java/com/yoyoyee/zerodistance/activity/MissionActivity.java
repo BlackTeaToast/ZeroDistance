@@ -309,7 +309,6 @@ public class MissionActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "點選了個別評分" ,Toast.LENGTH_SHORT).show();
             }
         });
-
     }//onCreate
 
 
