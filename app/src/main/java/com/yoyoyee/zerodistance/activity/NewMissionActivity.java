@@ -207,7 +207,6 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent (NewMissionActivity.this,TapService.class);
-                intent.setAction(Intent.ACTION_TIME_TICK);
                 startService(intent);
                 Log.d("BOARDC","start");
 

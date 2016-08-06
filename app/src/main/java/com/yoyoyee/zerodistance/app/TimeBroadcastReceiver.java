@@ -29,7 +29,7 @@ public class TimeBroadcastReceiver extends BroadcastReceiver{
     public static int[] group_ID;
     public static String[] mission_AT;
     public static String[] group_AT;
-    public static int[] howNotiNotification ={5,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30} ;
+    public static int[] howNotiNotification ={5,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30} ;//更改這裡的值，值多少就是多久前通知(單位分鐘)
     public static Calendar check;
     private Boolean initial=false;
 
@@ -135,10 +135,15 @@ public class TimeBroadcastReceiver extends BroadcastReceiver{
         check =Calendar.getInstance();
     }
 
-    public void changeTime(int[] how){
+    public void changeTime(int[] how,boolean initial){
         /*更換通知時間使用
         *  */
-        howNotiNotification =how;
+        if (initial ==false) { //不要重製
+            howNotiNotification = how;
+        }
+        else if (initial ==true){ //還原原本設定
+            howNotiNotification = new int[]{5,30};
+        }
     }
 }
 //missions[1][z].codePointCount(0,4)+missions[1][z].codePointCount(4,6) + missions[1][z].codePointCount(6,8)*60*24 + missions[1][z].codePointCount(8,10)*60 + missions[1][z].codePointCount(10,12);

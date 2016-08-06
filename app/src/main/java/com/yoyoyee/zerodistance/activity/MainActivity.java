@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
         // Setting the ViewPager For the SlidingTabsLayout
+
     }
 
     //設置字體大小
