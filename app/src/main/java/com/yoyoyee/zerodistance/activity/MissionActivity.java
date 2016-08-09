@@ -154,6 +154,7 @@ public class MissionActivity extends AppCompatActivity {
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
     private TextView need;
+    private TextView wait;
     private TextView whoSent;
     private TextView timeSent;
     private TextView content;
@@ -167,8 +168,8 @@ public class MissionActivity extends AppCompatActivity {
     private GridLayout gridLayout;//評分區
     private Button buttonVisible;
     private boolean isTeacher;
-    private int needNumber;
-    private int acceptNumber;
+    private int needNumber; //需求人數
+    private int acceptNumber;//已餐與人數
     private boolean isFinished;//一開始是否勾選已完成
     private ImageView imageView;
 
@@ -197,6 +198,7 @@ public class MissionActivity extends AppCompatActivity {
     public static boolean PD=false;
 
     //在finish( ) 之前 update手機資料庫且不執行readValue
+    //此任務刪除時，會先把notRead設定為ture，以避免再次readValue讀到空的任務，造成錯誤
     private boolean notRead = false;
 
 
@@ -225,6 +227,7 @@ public class MissionActivity extends AppCompatActivity {
         checkBox = (CheckBox)findViewById(R.id.checkFinishM);
         gridLayout = (GridLayout)findViewById(R.id.checkedM);
         need = (TextView)findViewById(R.id.needM);
+        wait = (TextView)findViewById(R.id.waitM);
         whoSent = (TextView)findViewById(R.id.whoSentM);
         timeSent = (TextView)findViewById(R.id.timeSentM);
         content = (TextView)findViewById(R.id.contentM);
@@ -278,7 +281,7 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                    //調整評分
+                //調整評分
                 stars = (int) rating;
                 //有調整評分時，打開完成紐(重新評分用)。由於評分完成後，完成紐會關閉。
                 //如果任務已經被完成過，且星星有調整過的話才顯示完成鈕
@@ -310,7 +313,7 @@ public class MissionActivity extends AppCompatActivity {
     }//onCreate
 
 
-    //寫在這個裡面同時有重新整理的功效
+    //寫在這個裡面同時有重新整理的功效(每次回到此頁面都會重整)
     protected void onResume(){
         super.onResume();
 
@@ -437,12 +440,22 @@ public class MissionActivity extends AppCompatActivity {
         int howMany = user.size();
         String userTemp = "";
         //將ArrayList裡的資料讀出
-        for(int i=0 ; i<howMany ; i++){
+        for(int i=0 ; i<howMany && i<needNumber ; i++){
             userTemp += user.get(i);
-            if(i!=howMany-1)
+            if(i!=needNumber-1)
                 userTemp += "\n";
         }
         users.setText(userTemp);
+        //如果有候補的話也讀出
+        if(acceptNumber > needNumber){
+            userTemp = "";
+            for(int i=needNumber ; i<howMany ; i++){
+                userTemp += user.get(i);
+                if(i!=howMany-1)
+                    userTemp += "\n";
+            }
+            wait.setText(userTemp);
+        }
 
         //設置人數
         need.setText(String.valueOf(acceptNumber) + "/" + String.valueOf(needNumber));
@@ -481,7 +494,7 @@ public class MissionActivity extends AppCompatActivity {
         else
             gridLayout.setVisibility(View.GONE);
 
-        //重新設定OptionsMenu
+        //重新整理 (刷新)OptionsMenu
         invalidateOptionsMenu();
 
         if(isTeacher){
@@ -550,6 +563,11 @@ public class MissionActivity extends AppCompatActivity {
         textViewTemp = (TextView)findViewById(R.id.usersTitleM);
         textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.usersM);
+        textViewTemp.setTextSize(size+3);
+        //候補者
+        textViewTemp = (TextView)findViewById(R.id.waitTitleM);
+        textViewTemp.setTextSize(size+7);
+        textViewTemp = (TextView)findViewById(R.id.waitM);
         textViewTemp.setTextSize(size+3);
         //已完成
         checkBox.setTextSize(size+7);
@@ -651,11 +669,31 @@ public class MissionActivity extends AppCompatActivity {
 
     //不參加
     private void dontWantJoin(){
-        Toast.makeText(getApplicationContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
+        ClientFunctions.removeMissionAccept(id, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                //確定有取消參加
+                updateError = true;
+                updateCount = 5;
+                //更新手機資料庫
+                Toast.makeText(getApplicationContext(), R.string.not_aleady_joined ,Toast.LENGTH_SHORT).show();
+                updateMissions();
+            }
 
-        showDialog();
-        //重新整理
-        readValue();
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    dontWantJoin();
+                }
+
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.not_join_error ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     //更新手機任務資料庫
@@ -666,7 +704,7 @@ public class MissionActivity extends AppCompatActivity {
                 //確定更新完之後，重新讀取
                 //確定有成功參加，且成功更新手機資料庫
 
-                //沒有被刪掉才重新整理
+                //沒有被刪掉才重新整理，如果此任務被刪除，執行updateMission時則直接關掉
                 if(!notRead) {
                     showDialog();
                     updateError = true;
@@ -817,8 +855,18 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                if(acceptNumber<=needNumber) {
+                    Toast.makeText(getApplicationContext(), "沒有候補者，取消失敗", Toast.LENGTH_SHORT).show();
+
+                }
+
                 //取消參加
-                dontWantJoin();
+                else{
+                    updateCount = 5;
+                    updateError = true;
+                    dontWantJoin();
+                }
+
             }
         });
 
@@ -1062,7 +1110,6 @@ public class MissionActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 

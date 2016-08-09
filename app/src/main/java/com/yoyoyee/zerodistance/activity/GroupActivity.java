@@ -123,6 +123,7 @@ public class GroupActivity extends AppCompatActivity {
     private float size;//定義所有文字的大小
     private Toolbar toolbar;
     private TextView need;
+    private TextView wait;
     private TextView whoSent;
     private TextView timeSent;
     private TextView content;
@@ -177,6 +178,7 @@ public class GroupActivity extends AppCompatActivity {
         //findViewById--------------------------------------------------------------
         toolbar = (Toolbar)findViewById(R.id.mission_tool_bar);
         need = (TextView)findViewById(R.id.needG);
+        wait = (TextView)findViewById(R.id.waitG);
         whoSent = (TextView)findViewById(R.id.whoSentG);
         timeSent = (TextView)findViewById(R.id.timeSentG);
         content = (TextView)findViewById(R.id.contentG);
@@ -363,12 +365,22 @@ public class GroupActivity extends AppCompatActivity {
         int howMany = user.size();
         String userTemp = "";
         //將ArrayList裡的資料讀出
-        for(int i=0 ; i<howMany ; i++){
+        for(int i=0 ; i<howMany && i<needNumber ; i++){
             userTemp += user.get(i);
-            if(i!=howMany-1)
+            if(i!=needNumber-1)
                 userTemp += "\n";
         }
         users.setText(userTemp);
+        //如果有候補的話也讀出
+        if(acceptNumber > needNumber){
+            userTemp = "";
+            for(int i=needNumber ; i<howMany ; i++){
+                userTemp += user.get(i);
+                if(i!=howMany-1)
+                    userTemp += "\n";
+            }
+            wait.setText(userTemp);
+        }
 
         //設置人數
         need.setText(String.valueOf(acceptNumber) + "/" + String.valueOf(needNumber));
@@ -481,6 +493,11 @@ public class GroupActivity extends AppCompatActivity {
         textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.usersG);
         textViewTemp.setTextSize(size+3);
+        //候補者
+        textViewTemp = (TextView)findViewById(R.id.waitTitleG);
+        textViewTemp.setTextSize(size+7);
+        textViewTemp = (TextView)findViewById(R.id.waitG);
+        textViewTemp.setTextSize(size+3);
         //按鈕群(參加鈕、Q&A、編輯、刪除)
         Button ButtonTemp;
         ButtonTemp = (Button)findViewById(R.id.joinOrNotG);
@@ -575,11 +592,31 @@ public class GroupActivity extends AppCompatActivity {
 
     //不參加
     private void dontWantJoin(){
-        Toast.makeText(getApplicationContext(), "無法取消參加", Toast.LENGTH_SHORT).show();
+        ClientFunctions.removeGroupAccept(id, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+                //確定有取消參加
+                updateError = true;
+                updateCount = 5;
+                //更新手機資料庫
+                Toast.makeText(getApplicationContext(), R.string.not_aleady_joined ,Toast.LENGTH_SHORT).show();
+                updateGroup();
+            }
 
-        showDialog();
-        //重新整理
-        readValue();
+            @Override
+            public void onErrorResponse(String response) {
+                if(updateCount>0){
+                    updateCount--;
+                    dontWantJoin();
+                }
+
+                if(updateError){
+                    updateError = false;
+                    Toast.makeText(getApplicationContext(), R.string.not_join_error ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     //更新手機揪團資料庫
@@ -741,8 +778,17 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                if(acceptNumber<=needNumber) {
+                    Toast.makeText(getApplicationContext(), "沒有候補者，取消失敗", Toast.LENGTH_SHORT).show();
+
+                }
+
                 //取消參加
-                dontWantJoin();
+                else{
+                    updateCount = 5;
+                    updateError = true;
+                    dontWantJoin();
+                }
             }
         });
 

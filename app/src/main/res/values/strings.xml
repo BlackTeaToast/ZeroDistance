@@ -214,6 +214,7 @@
     <string name="is_already_joined">已參加</string>
     <string name="not_aleady_joined">已取消參加</string>
     <string name="join_error">參加失敗</string>
+    <string name="not_join_error">取消失敗</string>
     <string name="rating_finished">已完成評分，任務完成</string>
     <string name="rating_fail">評分失敗，任務未完成</string>
     <string name="achievement1">"    成功獲得\n10個三星評價"</string>

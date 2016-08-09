@@ -364,6 +364,41 @@
                     android:textColor="#ffffff" />
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.05"
+                android:background="#cf4d4d65"
+                android:id="@+id/waitLayoutM"
+                android:layout_marginTop="10dp"
+                android:contextClickable="false"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="候補者"
+                    android:id="@+id/waitTitleM"
+                    android:textSize="30dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#e9a969"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/waitM"
+                    android:textSize="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="false"
+                    android:contextClickable="false"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+
         </LinearLayout>
 
 
