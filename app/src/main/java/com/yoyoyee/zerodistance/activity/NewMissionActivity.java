@@ -208,6 +208,8 @@ public class NewMissionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent (NewMissionActivity.this,TapService.class);
                 startService(intent);
+                Intent intentUpdata = new Intent("com.yoyoyee.MY_BROADCAST_RECEIVAR");
+                sendBroadcast(intentUpdata);
                 Log.d("BOARDC","start");
 
             }
@@ -398,7 +400,7 @@ public class NewMissionActivity extends AppCompatActivity {
             day =dayNow;
             Toast.makeText(this,"開始設定", Toast.LENGTH_SHORT).show();
         }
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, theme, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int lisYear, int lisMonth, int lisDay) {
                 year = lisYear;

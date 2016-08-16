@@ -1,5 +1,8 @@
 package com.yoyoyee.zerodistance.app;
 
+import com.android.volley.toolbox.StringRequest;
+import com.yoyoyee.zerodistance.helper.SessionFunctions;
+
 public class AppConfig {
 	// Server user login url
 	public static String URL_LOGIN = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/login";
@@ -105,5 +108,8 @@ public class AppConfig {
 
     // Server get user email confirm state
     public static String URL_GET_EMAIL_CONFIRM_STATE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getEmailConfirmState";
+
+	//Server get the last version
+	public static String URL_GET_LAST_VERSION ="http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/version";
 
 }

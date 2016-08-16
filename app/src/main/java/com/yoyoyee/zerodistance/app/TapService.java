@@ -43,12 +43,9 @@ import java.util.Date;
  * 背景運行
  */
 public class TapService extends Service {
-    Boolean firstStart =true;
     interface Callback {void run();}
-    private int[] readyStandBy;
     final TimeBroadcastReceiver receiver =new TimeBroadcastReceiver();
-    private static final SQLiteHandler DB = AppController.getDB();
-    private Handler handler = new Handler();
+
 
     public static int i = 1;
 
@@ -63,6 +60,11 @@ public class TapService extends Service {
         IntentFilter filter=new IntentFilter();
         filter.addAction(Intent.ACTION_TIME_TICK);
         registerReceiver(receiver,filter);
+
+
+
+
+
         Log.d("tapService","start");
 
 
