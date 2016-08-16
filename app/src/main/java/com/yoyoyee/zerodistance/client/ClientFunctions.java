@@ -92,6 +92,14 @@ public class ClientFunctions {
                         String createdAt = user.getString("created_at");
                         String accessKey = user.getString("access_key");
                         String isConfirmed = user.getString("is_confirmed");
+                        int profession = user.getInt("profession");
+                        int level = user.getInt("level");
+                        int exp = user.getInt("exp");
+                        int money = user.getInt("money");
+                        int strength = user.getInt("strength");
+                        int intelligence = user.getInt("intelligence");
+                        int agile = user.getInt("agile");
+                        String introduction = user.getString("introduction");
 
                         session.setUserEmail(email);
                         session.setUserPassword(password);
@@ -103,6 +111,14 @@ public class ClientFunctions {
                         session.setUserSchoolID(Integer.valueOf(schoolID));
                         session.setUserAccessKey(accessKey);
                         session.setUserIsConfirmed(Integer.valueOf(isConfirmed)!=0);
+                        session.setUserProfession(profession);
+                        session.setUserLevel(level);
+                        session.setUserExp(exp);
+                        session.setUserMoney(money);
+                        session.setUserStrength(strength);
+                        session.setUserIntelligence(intelligence);
+                        session.setUserAgile(agile);
+                        session.setUserIntroduction(introduction);
 
                         ClientFunctions.updateSchools(new ClientResponse() {
                             @Override
@@ -2231,7 +2247,7 @@ public class ClientFunctions {
             public void onResponse(String response) {
                 //Log.d(TAG, "Register Response: " + response.toString());
 
-                try {
+                try  {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {

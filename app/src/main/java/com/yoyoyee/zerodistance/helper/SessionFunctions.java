@@ -131,4 +131,68 @@ public class SessionFunctions {
     public static boolean isConfirmed() {
         return session.isConfirmed();
     }
+
+    public void setUserProfession(int profession) {
+        session.setUserProfession(profession);
+    }
+
+    public int getUserProfession() {
+        return session.getUserProfession();
+    }
+
+    public void setUserLevel(int level){
+        session.setUserLevel(level);
+    }
+
+    public int getUserLevel(){
+        return session.getUserLevel();
+    }
+
+    public void setUserExp(int exp) {
+        session.setUserExp(exp);
+    }
+
+    public int getUserExp() {
+        return session.getUserExp();
+    }
+
+    public void setUserMoney(int money) {
+        session.setUserMoney(money);
+    }
+
+    public int getUserMoney() {
+        return session.getUserMoney();
+    }
+
+    public void setUserStrength(int strength) {
+        session.setUserStrength(strength);
+    }
+
+    public int getUserStrength() {
+        return session.getUserStrength();
+    }
+
+    public void setUserIntelligence(int intelligence) {
+        session.setUserIntelligence(intelligence);
+    }
+
+    public int getUserIntelligence() {
+        return session.getUserIntelligence();
+    }
+
+    public void setUserAgile(int agile) {
+        session.setUserAgile(agile);
+    }
+
+    public int getUserAgile() {
+        return session.getUserAgile();
+    }
+
+    public void setUserIntroduction(String introduction) {
+        session.setUserIntroduction(introduction);
+    }
+
+    public String getUserIntroduction() {
+        return session.getUserIntroduction();
+    }
 }

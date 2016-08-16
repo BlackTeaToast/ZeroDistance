@@ -33,6 +33,14 @@ public class SessionManager {
     private static final String KEY_USER_SCHOOL_NAME = "schoolName";
 	private static final String KEY_USER_STUDENT_ID = "studentID";
     private static final String KEY_USER_IS_CONFIRMED = "isConfirmed";
+    private static final String KEY_USER_PROFESSION = "profession";
+    private static final String KEY_USER_LEVEL = "level";
+    private static final String KEY_USER_EXP = "exp";
+    private static final String KEY_USER_MONEY = "money";
+    private static final String KEY_USER_STRENGTH = "strength";
+    private static final String KEY_USER_INTELLIGENCE = "intelligence";
+    private static final String KEY_USER_AGILE = "agile";
+    private static final String KEY_USER_INTRODUCTION = "introduction";
     private static final String KEY_USER_TEXTSIZE = "usertextsize";
     private static final String KEY_USER_BECONTEXT = "becontext";
     private static final String KEY_USER_SORTWAY = "sortway";
@@ -189,5 +197,78 @@ public class SessionManager {
     public boolean isConfirmed() {
         return pref.getBoolean(KEY_USER_IS_CONFIRMED, false);
     }
+
+    public void setUserProfession(int profession) {
+        editor.putInt(KEY_USER_PROFESSION, profession);
+        editor.commit();
+    }
+
+    public int getUserProfession() {
+        return pref.getInt(KEY_USER_PROFESSION, 0);
+    }
+
+    public void setUserLevel(int level){
+        editor.putInt(KEY_USER_LEVEL, level);
+        editor.commit();
+    }
+
+    public int getUserLevel(){
+        return pref.getInt(KEY_USER_LEVEL, 1);
+    }
+
+    public void setUserExp(int exp) {
+        editor.putInt(KEY_USER_EXP, exp);
+        editor.commit();
+    }
+
+    public int getUserExp() {
+        return pref.getInt(KEY_USER_EXP, 0);
+    }
+
+    public void setUserMoney(int money) {
+        editor.putInt(KEY_USER_MONEY, money);
+        editor.commit();
+    }
+
+    public int getUserMoney() {
+        return pref.getInt(KEY_USER_MONEY, 0);
+    }
+
+    public void setUserStrength(int strength) {
+        editor.putInt(KEY_USER_STRENGTH, strength);
+        editor.commit();
+    }
+
+    public int getUserStrength() {
+        return pref.getInt(KEY_USER_STRENGTH, 0);
+    }
+
+    public void setUserIntelligence(int intelligence) {
+        editor.putInt(KEY_USER_INTELLIGENCE, intelligence);
+        editor.commit();
+    }
+
+    public int getUserIntelligence() {
+        return pref.getInt(KEY_USER_INTELLIGENCE, 0);
+    }
+
+    public void setUserAgile(int agile) {
+        editor.putInt(KEY_USER_AGILE, agile);
+        editor.commit();
+    }
+
+    public int getUserAgile() {
+        return pref.getInt(KEY_USER_AGILE, 0);
+    }
+
+    public void setUserIntroduction(String introduction) {
+        editor.putString(KEY_USER_INTRODUCTION, introduction);
+        editor.commit();
+    }
+
+    public String getUserIntroduction() {
+        return pref.getString(KEY_USER_INTRODUCTION,"");
+    }
+
 
 }
