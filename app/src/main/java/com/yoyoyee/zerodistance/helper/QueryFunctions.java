@@ -34,7 +34,7 @@ import java.util.TimeZone;
  */
 public class QueryFunctions {
 
-    private static final String TAG = SQLiteHandler.class.getSimpleName();
+    private static final String TAG = QueryFunctions.class.getSimpleName();
     private static final SQLiteHandler DB = AppController.getDB();
 
     /**
@@ -497,7 +497,6 @@ public class QueryFunctions {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getMissions: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -542,7 +541,6 @@ public class QueryFunctions {
                     mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                     missions.add(mission);
-                    Log.d(TAG, "getMissions: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -588,7 +586,6 @@ public class QueryFunctions {
                     mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                     missions.add(mission);
-                    Log.d(TAG, "getMissions: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -631,7 +628,6 @@ public class QueryFunctions {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getGroups: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -674,7 +670,6 @@ public class QueryFunctions {
                     group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                     groups.add(group);
-                    Log.d(TAG, "getGroups: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -718,7 +713,6 @@ public class QueryFunctions {
                     group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                     groups.add(group);
-                    Log.d(TAG, "getGroups: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -897,8 +891,6 @@ public class QueryFunctions {
                 ma.acceptedAt = dateFormat.parse(cursor.getString(MissionAcceptUserTable.COLUMNS_NUM_ACCEPTED_AT));
 
                 maList.add(ma);
-                Log.d(TAG, "getMissionAcceptUser: " + ma.missionID + ", " + ma.userUid + ", " + ma.userName + ", "
-                        + ma.acceptedAt);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -931,8 +923,6 @@ public class QueryFunctions {
                 ga.acceptedAt = dateFormat.parse(cursor.getString(GroupAcceptUserTable.COLUMNS_NUM_ACCEPTED_AT));
 
                 gaList.add(ga);
-                Log.d(TAG, "getGroupAcceptUser: " + ga.groupID + ", " + ga.userUid + ", " + ga.userName + ", "
-                        + ga.acceptedAt);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1049,7 +1039,6 @@ public class QueryFunctions {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getUserAcceptMissions: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1094,7 +1083,7 @@ public class QueryFunctions {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getUserAcceptMissions: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1164,7 +1153,7 @@ public class QueryFunctions {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getUserAcceptGroups: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1207,7 +1196,7 @@ public class QueryFunctions {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getUserAcceptUnfinishedGroups: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1250,7 +1239,7 @@ public class QueryFunctions {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getUserAcceptFinishedGroups: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

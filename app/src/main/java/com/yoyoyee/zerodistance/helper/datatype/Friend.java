@@ -11,6 +11,7 @@ public class Friend {
     public String nickName;
     public int schoolID;
     public String studentID;
+    public String email;
     public int profession;
     public int level;
     public int exp;
@@ -20,5 +21,33 @@ public class Friend {
     public int agile;
     public String introduction;
     public boolean isAccepted;
+
+    public Friend() {
+
+    }
+
+    public Friend(String uid, boolean isTeacher, String name, String nickName, int schoolID,
+                  String studentID, String email, int profession, int level, int exp, int money,
+                  int strength, int intelligence, int agile,String introduction,
+                  boolean isAccepted) {
+
+        this.uid = uid;
+        this.isTeacher = isTeacher;
+        this.name = name;
+        this.nickName = nickName;
+        this.schoolID = schoolID;
+        this.studentID = studentID;
+        this.email = email;
+        this.profession = profession;
+        this.level = level;
+        this.exp = exp;
+        this.money = money;
+        this.strength = strength;
+        this.intelligence = intelligence;
+        this.agile = agile;
+        this.introduction = introduction;
+        this.isAccepted = isAccepted;
+
+    }
 
 }

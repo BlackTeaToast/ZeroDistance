@@ -15,6 +15,7 @@ import android.util.Log;
 import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.datatype.Friend;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -23,6 +24,7 @@ import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.datatype.UserAcceptGroups;
 import com.yoyoyee.zerodistance.helper.datatype.UserAcceptMissions;
+import com.yoyoyee.zerodistance.helper.table.FriendsTable;
 import com.yoyoyee.zerodistance.helper.table.GroupAcceptUserTable;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
@@ -45,7 +47,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 22;
+	private static final int DATABASE_VERSION = 23;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -68,6 +70,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(GroupAcceptUserTable.CREATE_GROUP_ACCEPT_USER_TABLE);
         db.execSQL(UserAcceptMissionsTable.CREATE_USER_ACCEPT_MISSIONS_TABLE);
         db.execSQL(UserAcceptGroupsTable.CREATE_USER_ACCEPT_GROUPS_TABLE);
+        db.execSQL(FriendsTable.CREATE_FRIENDS_TABLE);
         if(session.isLoggedIn()) {
             ClientFunctions.checkLogin(session.getUserEmail(), session.getUserPassword(), new ClientResponse() {
                 @Override
@@ -97,6 +100,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + GroupAcceptUserTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserAcceptMissionsTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserAcceptGroupsTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + FriendsTable.TABLE_NAME);
 		// Create tables again
 		onCreate(db);
 	}
@@ -330,7 +334,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         isTeacher = cursor.getInt(0) != 0;
-        Log.d(TAG, "isTeacher: " + cursor.getString(0));
         cursor.close();
         db.close();
         return isTeacher;
@@ -345,7 +348,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         uid = cursor.getString(0);
-        Log.d(TAG, "getUserUid: " + cursor.getString(0));
 
         cursor.close();
         db.endTransaction();
@@ -362,7 +364,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         accessKey = cursor.getString(0);
-        Log.d(TAG, "getUserUid: " + cursor.getString(0));
+
         cursor.close();
         db.endTransaction();
         db.close();
@@ -561,7 +563,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getMissions: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -606,7 +607,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                     missions.add(mission);
-                    Log.d(TAG, "getMissions: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -652,7 +652,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                     missions.add(mission);
-                    Log.d(TAG, "getMissions: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -695,7 +694,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getGroups: " );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -738,7 +736,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                     groups.add(group);
-                    Log.d(TAG, "getGroups: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -782,7 +779,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                     group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                     groups.add(group);
-                    Log.d(TAG, "getGroups: " );
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -854,9 +850,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 qa.answeredAt = dateFormat.parse(cursor.getString(QATable.COLUMNS_NUM_ANSWERED_AT));
 
                 QAs.add(qa);
-                Log.d(TAG, "getQAs: " + qa.id + ", " + qa.userUid + ", " + qa.userName + ", "
-                        + qa.question + ", " + qa.answer + ", " + qa.isAnswered + ", "
-                        + qa.createdAt + ", " + qa.answeredAt );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -961,8 +955,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 ma.acceptedAt = dateFormat.parse(cursor.getString(MissionAcceptUserTable.COLUMNS_NUM_ACCEPTED_AT));
 
                 maList.add(ma);
-                Log.d(TAG, "getMissionAcceptUser: " + ma.missionID + ", " + ma.userUid + ", " + ma.userName + ", "
-                        + ma.acceptedAt);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -995,8 +988,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 ga.acceptedAt = dateFormat.parse(cursor.getString(GroupAcceptUserTable.COLUMNS_NUM_ACCEPTED_AT));
 
                 gaList.add(ga);
-                Log.d(TAG, "getGroupAcceptUser: " + ga.groupID + ", " + ga.userUid + ", " + ga.userName + ", "
-                        + ga.acceptedAt);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1072,7 +1064,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getUserAcceptMissions: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1117,7 +1109,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getUserAcceptMissions: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1162,7 +1154,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.isFinished = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 mission.finishedAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_FINISHED_AT));
                 missions.add(mission);
-                Log.d(TAG, "getUserAcceptMissions: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1233,7 +1225,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getUserAcceptGroups: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1276,7 +1268,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getUserAcceptUnfinishedGroups: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1319,7 +1311,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 group.isFinished = cursor.getInt(GroupsTable.COLUMNS_NUM_IS_FINISHED) != 0;
                 group.finishedAt = dateFormat.parse(cursor.getString(GroupsTable.COLUMNS_NUM_FINISHED_AT));
                 groups.add(group);
-                Log.d(TAG, "getUserAcceptFinishedGroups: " );
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1329,6 +1321,48 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return groups;
+    }
+
+    public void updateFriends(ArrayList<Friend> friends) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            db.delete(FriendsTable.TABLE_NAME, null, null);
+            ContentValues values = new ContentValues();
+            for(int i=0; i<friends.size(); i++) {
+
+                values.put(FriendsTable.KEY_UID, friends.get(i).uid);
+                values.put(FriendsTable.KEY_IS_TEACHER, friends.get(i).isTeacher);
+                values.put(FriendsTable.KEY_NAME, friends.get(i).name);
+                values.put(FriendsTable.KEY_NICKNAME, friends.get(i).nickName);
+                values.put(FriendsTable.KEY_SCHOOL_ID, friends.get(i).schoolID);
+                values.put(FriendsTable.KEY_STUDENT_ID, friends.get(i).studentID);
+                values.put(FriendsTable.KEY_EMAIL, friends.get(i).email);
+                values.put(FriendsTable.KEY_PROFESSION, friends.get(i).profession);
+                values.put(FriendsTable.KEY_LEVEL, friends.get(i).level);
+                values.put(FriendsTable.KEY_EXP, friends.get(i).exp);
+                values.put(FriendsTable.KEY_MONEY, friends.get(i).money);
+                values.put(FriendsTable.KEY_STRENGTH, friends.get(i).strength);
+                values.put(FriendsTable.KEY_INTELLIGENCE, friends.get(i).intelligence);
+                values.put(FriendsTable.KEY_AGILE, friends.get(i).agile);
+                values.put(FriendsTable.KEY_INTRODUCTION, friends.get(i).introduction);
+                values.put(FriendsTable.KEY_IS_ACCEPTED, friends.get(i).isAccepted);
+
+                db.insert(FriendsTable.TABLE_NAME, null, values);
+                Log.d(TAG, "updateFriends: " + values.toString());
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "updateFriends: " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "Updated all FriendsTable info from SQLite");
+        db.close();
+
     }
 /*
     public void addGroupOrderList(int groupOrder[],String date[]) {

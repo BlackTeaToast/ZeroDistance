@@ -110,6 +110,12 @@ public class AppConfig {
     public static String URL_GET_EMAIL_CONFIRM_STATE = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/update/getEmailConfirmState";
 
 	//Server get the last version
-	public static String URL_GET_LAST_VERSION ="http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/version";
+	public static String URL_GET_LAST_VERSION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/version";
+
+	// Server get user friends
+	public static String URL_GET_USER_FRIENDS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/friend/getUserFriends";
+
+	// Server add user friends
+	public static String URL_ADD_USER_FRIENDS = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/friend/addUserFriend";
 
 }

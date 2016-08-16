@@ -15,6 +15,7 @@ import com.yoyoyee.zerodistance.app.AppController;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+import com.yoyoyee.zerodistance.helper.datatype.Friend;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -48,7 +49,7 @@ import java.util.TimeZone;
  */
 public class ClientFunctions {
 
-    public static final String TAG = AppController.class.getSimpleName();
+    public static final String TAG = ClientFunctions.class.getSimpleName();
     private static SQLiteHandler db = AppController.getDB();
     private static SessionManager session  = AppController.getSession();
 
@@ -132,6 +133,7 @@ public class ClientFunctions {
 
                             }
                         });
+
 
                         // Inserting row in users table
                         db.addUser(isTeacher, name, nickName, schoolID, studentID, email, uid,
@@ -341,7 +343,6 @@ public class ClientFunctions {
                                         mission.getInt("is_running")!=0,
                                         mission.getInt("is_finished")!=0,
                                         dateFormat.parse(mission.getString("finished_at"))));
-                                Log.d(TAG, "onResponse: " + mission.getString("exp_at"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -428,7 +429,6 @@ public class ClientFunctions {
                                         group.getInt("is_running")!=0,
                                         group.getInt("is_finished")!=0,
                                         dateFormat.parse(group.getString("finished_at"))));
-                                Log.d(TAG, "onResponse: " + group.getString("exp_at"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -815,7 +815,6 @@ public class ClientFunctions {
                                         qa.getInt("is_answered")!=0,
                                         dateFormat.parse(qa.getString("created_at")),
                                         dateFormat.parse(qa.getString("answered_at"))));
-                                Log.d(TAG, "onResponse: " + qa.getString("question"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -898,7 +897,6 @@ public class ClientFunctions {
                                         qa.getInt("is_answered")!=0,
                                         dateFormat.parse(qa.getString("created_at")),
                                         dateFormat.parse(qa.getString("answered_at"))));
-                                Log.d(TAG, "onResponse: " + qa.getString("question"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -1149,7 +1147,6 @@ public class ClientFunctions {
                                         qa.getString("user_uid"),
                                         qa.getString("user_name"),
                                         dateFormat.parse(qa.getString("accepted_at"))));
-                                Log.d(TAG, "onResponse: " + qa.getString("user_name"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -1228,7 +1225,6 @@ public class ClientFunctions {
                                         qa.getString("user_uid"),
                                         qa.getString("user_name"),
                                         dateFormat.parse(qa.getString("accepted_at"))));
-                                Log.d(TAG, "onResponse: " + qa.getString("user_name"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -1994,7 +1990,6 @@ public class ClientFunctions {
                                 list.add(new UserAcceptMissions(
                                         mission.getInt("mission_id"),
                                         dateFormat.parse(mission.getString("accepted_at"))));
-                                Log.d(TAG, "onResponse: " + mission.getString("accepted_at"));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -2287,6 +2282,89 @@ public class ClientFunctions {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("uid", session.getUserUid());
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void updateFriends(final ClientResponse clientResponse) {
+        String tag_string_req = "req_update_friends";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_GET_USER_FRIENDS, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray friends = jObj.getJSONArray("friends");
+
+                        ArrayList<Friend> list = new ArrayList<>();
+
+                        for(int i=0; i<friends.length(); i++) {
+                            JSONObject friend = friends.getJSONObject(i);
+
+                            list.add(new Friend(friend.getString("user_uid"),
+                                    friend.getInt("is_teacher")!=0,
+                                    friend.getString("name"),
+                                    friend.getString("nick_name"),
+                                    friend.getInt("school_id"),
+                                    friend.getString("student_id"),
+                                    friend.getString("email"),
+                                    friend.getInt("profession"),
+                                    friend.getInt("level"),
+                                    friend.getInt("exp"),
+                                    friend.getInt("money"),
+                                    friend.getInt("strength"),
+                                    friend.getInt("intelligence"),
+                                    friend.getInt("agile"),
+                                    friend.getString("introduction"),
+                                    friend.getInt("is_accepted")!=0));
+
+                        }
+
+                        // Inserting row in users table
+                        db.updateFriends(list);
+                        clientResponse.onResponse("friends get");
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+
                 return params;
             }
 
