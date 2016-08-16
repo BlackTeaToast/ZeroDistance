@@ -104,6 +104,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             //  getResources().getString(R.string.peopleCount)+
             if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission) {//其他頁面沒有緊急任務
                 if (missions[position].getUrgent()) {
+//                    holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
                     holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
                 } else {
                     holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
@@ -158,51 +159,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         return in;
     }
 
-
-    //字數限制
-    private String limitString(String context, int type){//0為title , 1為detial
-        switch ((int)SessionFunctions.getUserTextSize()) {
-            case 20:{
-                if(type==0){
-                    if(context.length()>30){//限制字數
-                        context = (String)context.subSequence(0, 30)+"...";
-                        //  Toast.makeText(getContext(), ""+context, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if(type==1){
-                    if(context.length()>30){//限制字數
-                        context = (String)context.subSequence(0, 30)+"...";
-                    }
-                }
-                break;}
-            case 15:{
-                if(type==0){
-                    if(context.length()>30){//限制字數
-                        context = (String)context.subSequence(0, 30)+"...";
-                    }
-                }
-                if(type==1){
-                    if(context.length()>30){//限制字數
-                        context = (String)context.subSequence(0, 30)+"...";
-                    }
-                }
-
-                break;}
-            case 10:{
-                if(type==0){
-                    if(context.length()>15){//限制字數
-                        context = (String)context.subSequence(0, 14)+"...";
-                    }
-                }
-                if(type==1){
-                    if(context.length()>48){//限制字數
-                        context = (String)context.subSequence(0, 47)+"...";
-                    }
-                }
-                break;}
-        }
-        return context;
-    }
 
     //設置字體大小
     private void setFontSize(View v){

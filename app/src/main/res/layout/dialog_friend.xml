@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/frame">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout6"
+        android:layout_marginBottom="1dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/linearLayout6"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:fillViewport="false"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp">
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000000"
+                    android:id="@+id/haveFriLine"
+                    android:visibility="visible"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="3dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/haveFriView"
+                        android:src="@drawable/ic_remove_white_24dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignBottom="@+id/havLL"
+                        android:layout_alignParentTop="true"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentStart="false"
+                        android:id="@+id/havLL"
+                        android:layout_centerVertical="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#969696"
+                            android:textSize="16dp"
+                            android:text="@string/isfriendchech" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:id="@+id/havefriend_count"
+                            android:textColor="#969696"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_row="10"
+                    android:layout_column="0"
+                    android:id="@+id/isfriendList"
+                    android:layout_below="@+id/haveFriLine" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000000"
+                    android:id="@+id/noFriLine"
+                    android:visibility="visible"
+                    android:layout_below="@+id/isfriendList"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/noFriView"
+                        android:src="@drawable/ic_remove_white_24dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignBottom="@+id/LL"
+                        android:layout_alignParentTop="true" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentStart="false"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/LL">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#969696"
+                            android:textSize="16dp"
+                            android:text="@string/nofriendchech" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:id="@+id/nofriend_count"
+                            android:textColor="#969696"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_row="10"
+                    android:layout_column="0"
+                    android:id="@+id/nofriendList"
+                    android:layout_below="@+id/noFriLine"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout6"
+        android:background="@drawable/frame">
+
+
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout5"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#00000000"
+            android:id="@+id/theOPline"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/search"
+                android:id="@+id/otherpeo"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue_glossy"
+                android:layout_marginBottom="5dp" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/delfri"
+                android:id="@+id/delfri"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue_glossy"
+                android:layout_marginBottom="5dp" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/exit"
+                android:id="@+id/cancel"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue_glossy"
+                android:layout_marginBottom="5dp" />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

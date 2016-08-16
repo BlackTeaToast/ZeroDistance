@@ -152,7 +152,11 @@
     <string name="drawer_close">關閉</string>
     <string name="level">等級</string>
     <string name="exp">經驗值</string>
+    <string name="money">金錢</string>
     <string name="Quality">素質</string>
+    <string name="Force">力量</string>
+    <string name="Agile">敏捷</string>
+    <string name="Intelligence">智力</string>
     <string name="profession">職業</string>
     <string name="Achievement">成就</string>
     <string name="Aboutmyself">自我介紹</string>
@@ -163,7 +167,7 @@
     <string name="inname">請輸入玩家名稱</string>
     <string name="waitacc">等待對方接受</string>
     <string name="search">搜尋</string>
-    <string name="newfri">加好友</string>
+    <string name="delfri">刪除</string>
     <string name="searchoth">找玩家</string>
     <string name="layoutset">卡片樣式設計</string>
     <string name="layoutset1">設定一</string>
@@ -176,6 +180,10 @@
     <string name="ourarea">【出沒地區】台中</string>
     <string name="ourps">【備註】</string>
     <string name="ourpsd">當你看到疑似本工作室的生物，請打開此APP大喊YoYoYeeee~~將可收服此生物於您的圖鑑內。</string>
+    <string name="frienddetail">個人資料</string>
+    <string name="frienddel">刪除</string>
+    <string name="isfriendchech">已確認好友</string>
+    <string name="nofriendchech">未確認好友</string>
 
 
     <!--==================================================================-->

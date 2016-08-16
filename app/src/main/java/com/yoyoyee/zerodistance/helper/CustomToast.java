@@ -5,7 +5,6 @@ package com.yoyoyee.zerodistance.helper;
  */
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 public class CustomToast {
@@ -31,5 +30,6 @@ public class CustomToast {
     public static void showToast(Context mContext, int resId, int duration) {
         showToast(mContext, mContext.getResources().getString(resId), duration);
     }
+
 
 }

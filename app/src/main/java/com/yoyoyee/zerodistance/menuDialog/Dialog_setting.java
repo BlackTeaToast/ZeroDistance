@@ -17,9 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
-import com.yoyoyee.zerodistance.helper.SQLiteHandler;
+import com.yoyoyee.zerodistance.helper.CustomToast;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
-import com.yoyoyee.zerodistance.helper.SessionManager;
 
 /**
  * Created by 楊霖村 on 2016/4/4.
@@ -32,12 +31,12 @@ public class Dialog_setting extends Dialog {
     private RadioButton poTimeFirst, endTimeFirst;
     private RadioButton layoutset1, layoutset2, layoutset3;
     private RadioGroup textsizeRG , showstyleRG, SortWay, Cardlayoutset;
-    private SQLiteHandler db;
-    private SessionManager session;
     Spinner languageSpinner;
     Button Sign_outbut, saveandexit;
     float ttsize;  //字體大小
     static float sizeS=8,sizeM=10, sizeL=20;
+    private boolean showstyle;
+    private int sortway , cardlayoutway;
     TextView  userid;
     Context context;
     public Dialog_setting(Context context) {
@@ -49,8 +48,6 @@ public class Dialog_setting extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = new SQLiteHandler(getContext());
-        session = new SessionManager(getContext());
         try {
             userid = (TextView) findViewById(R.id.userid);
         userid.setText(SessionFunctions.getUserUid());
@@ -61,103 +58,89 @@ public class Dialog_setting extends Dialog {
         saveandexit = (Button) findViewById(R.id.saveandexit);
         languageSpinner  = (Spinner) findViewById(R.id.languageSpinner);
         textsizeRG = (RadioGroup) findViewById(R.id.textsizeRG);
-        textsizeRG.setOnCheckedChangeListener(textsizeListener);
         showstyleRG = (RadioGroup) findViewById(R.id.showstyleRG);
-        showstyleRG.setOnCheckedChangeListener(showstyleListener);
         showcontent = (RadioButton) findViewById(R.id.showcontent);//顯示內容
         showpay = (RadioButton) findViewById(R.id.showpay);//顯示任務
         textsizeLRB = (RadioButton) findViewById(R.id.textsizeLRB);
         textsizeMRB = (RadioButton) findViewById(R.id.textsizeMRB);
         SortWay = (RadioGroup) findViewById(R.id.SortWay);
-        SortWay.setOnCheckedChangeListener(SortWayListener);
         textsizeSRB = (RadioButton) findViewById(R.id.textsizeSRB);
         poTimeFirst = (RadioButton) findViewById(R.id.poTimeFirst);
         endTimeFirst = (RadioButton) findViewById(R.id.endTimeFirst);
         Cardlayoutset = (RadioGroup)findViewById(R.id.Cardlayoutset);
-        Cardlayoutset.setOnCheckedChangeListener(Cardlayoutway);
         layoutset1 = (RadioButton)findViewById(R.id.layoutset1);
         layoutset2 = (RadioButton)findViewById(R.id.layoutset2);
         layoutset3 = (RadioButton)findViewById(R.id.layoutset3);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        setRG();
         setSpinner();
         setbutton();
         checkbecontext();//選擇預設項目
         setheight();//設定畫面大小
         setFontSize();//設定字體大小
         return ;}
-
-//textsize radio button 監聽
-    RadioGroup.OnCheckedChangeListener textsizeListener = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-            switch(checkedId){
-                case R.id.textsizeLRB:
-                    ttsize=sizeL;
-                    break;
-                case R.id.textsizeMRB:
-                    ttsize=sizeM;
-                    break;
-                case R.id.textsizeSRB:
-                    ttsize=sizeS;
-                    break;
+    private void setRG(){
+        textsizeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.textsizeLRB:
+                        ttsize=sizeL;
+                        break;
+                    case R.id.textsizeMRB:
+                        ttsize=sizeM;
+                        break;
+                    case R.id.textsizeSRB:
+                        ttsize=sizeS;
+                        break;
+                }
             }
-            SessionFunctions.setUserTextSize(ttsize);
-        }
+        });
 
-    };
-
-    //showstyle radio button 監聽
-    RadioGroup.OnCheckedChangeListener showstyleListener = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch(checkedId){
-                case R.id.showcontent:
-                    SessionFunctions.setbecontext(true);
-                    break;
-                case R.id.showpay:
-                    SessionFunctions.setbecontext(false);
-                    break;
+        showstyleRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.showcontent:
+                        showstyle = true;
+                        break;
+                    case R.id.showpay:
+                        showstyle = false;
+                        break;
+                }
             }
+        });
 
-        }
-
-    };
-
-    //showstyle radio button 監聽
-    RadioGroup.OnCheckedChangeListener SortWayListener = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch(checkedId){
-                case R.id.poTimeFirst:
-                    SessionFunctions.setSortWay(1);
-                    break;
-                case R.id.endTimeFirst:
-                    SessionFunctions.setSortWay(2);
-                    break;
+        SortWay.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.poTimeFirst:
+                        sortway = 1;
+                        break;
+                    case R.id.endTimeFirst:
+                        sortway = 2;
+                        break;
+                }
             }
+        });
 
-        }
-
-    };
-
-    //showstyle radio button 監聽
-    RadioGroup.OnCheckedChangeListener Cardlayoutway = new RadioGroup.OnCheckedChangeListener() {
-
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch(checkedId){
-                case R.id.layoutset1:
-                    SessionFunctions.setCardlayoutWay(1);
-                    break;
-                case R.id.layoutset2:
-                    SessionFunctions.setCardlayoutWay(2);
-                    break;
-                case R.id.layoutset3:
-                    SessionFunctions.setCardlayoutWay(3);
+        Cardlayoutset.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.layoutset1:
+                        cardlayoutway = 1;
+                        break;
+                    case R.id.layoutset2:
+                        cardlayoutway = 2;
+                        break;
+                    case R.id.layoutset3:
+                        cardlayoutway = 3;
+                }
             }
-        }
-    };
+        });
+    }
     private void setbutton(){
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +151,8 @@ public class Dialog_setting extends Dialog {
         saveandexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveinSF();
+                CustomToast.showToast(context, "設定資料已儲存", 500);
                 cancel();
             }
         });
@@ -258,5 +243,12 @@ public class Dialog_setting extends Dialog {
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
         textViewTemp =  (TextView)findViewById(R.id.cardlayout);
         textViewTemp.setTextSize(SF.getUserTextSize()+5);
+    }
+    private void saveinSF(){
+        SessionFunctions.setUserTextSize(ttsize);
+        SessionFunctions.setbecontext(showstyle);
+        SessionFunctions.setSortWay(sortway);
+        SessionFunctions.setCardlayoutWay(cardlayoutway);
+
     }
 }

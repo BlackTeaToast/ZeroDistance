@@ -106,7 +106,11 @@ public class MainActivity extends AppCompatActivity{
         });
 
         // Setting the ViewPager For the SlidingTabsLayout
+    }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 
     //設置字體大小
@@ -172,13 +176,13 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onErrorResponse(String response) {
                 if(upDataCount>=5){
-                CustomToast.showToast(context, "更新失敗任務(主)", 500);
+                    CustomToast.showToast(context, "更新失敗任務(主)", 500);
                     MakeTabAndContext();
                     hideDialog();
-            }else{
-                upDataCount+=1;
+                }else{
+                    upDataCount+=1;
                     updataMissionDB();
-            }
+                }
             }
         });
     }
@@ -238,26 +242,26 @@ public class MainActivity extends AppCompatActivity{
         }else {
             fab.hide();
         }
-         fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    switch (pager.getCurrentItem()) {
-                        case 0: {
-                                Intent in = new Intent(context, NewMissionActivity.class);
-                                in.putExtra("id", SessionFunctions.getUserUid());
-                                startActivity(in);
-                                break;
-                                 }
-                        case 1:{
-                            Intent in = new Intent(context, NewGroupActivity.class);
-                            in.putExtra("id", SessionFunctions.getUserUid());
-                            startActivity(in);
-                        }
-                                                    }
-                                        }
-                                        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (pager.getCurrentItem()) {
+                    case 0: {
+                        Intent in = new Intent(context, NewMissionActivity.class);
+                        in.putExtra("id", SessionFunctions.getUserUid());
+                        startActivity(in);
+                        break;
+                    }
+                    case 1:{
+                        Intent in = new Intent(context, NewGroupActivity.class);
+                        in.putExtra("id", SessionFunctions.getUserUid());
+                        startActivity(in);
+                    }
+                }
+            }
+        });
 
-        }
+    }
 
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
@@ -300,7 +304,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onPageSelected(int position) {
-            fabtime();
+                fabtime();
             }
 
             @Override
@@ -317,48 +321,47 @@ public class MainActivity extends AppCompatActivity{
         mDrawerLayout.setScrimColor(Color.parseColor("#3c448AFF"));
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
- private void setnav(){
-     NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
-    // navigation.inflateHeaderView(R.layout.navigation_header);
-     navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-         @Override
-         public boolean onNavigationItemSelected(MenuItem menuItem) {
-             int id = menuItem.getItemId();
-             switch (id) {
-                 case R.id.myselfpage:
-                     makeMyfselfDialog();
-                     break;
-                 case R.id.friendList:
-                     makeFriendDialog();
-                     break;
-                 case R.id.myAchievement:
-                     makeAchievementDialog();
-                     break;
-                 case R.id.setting:
-                     makeSettingDialog();
-                     break;
-                 case R.id.about_us:
-                     makeAboutusDialog();
-                     break;
-                 case R.id.sign_out:
-                     makelogoutUserDialog();
-                     break;
-                 case R.id.exit:
-                     makeexitDialog();
-                     break;
+    private void setnav(){
+        NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
+        // navigation.inflateHeaderView(R.layout.navigation_header);
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.myselfpage:
+                        makeMyfselfDialog();
+                        break;
+                    case R.id.friendList:
+                        makeFriendDialog();
+                        break;
+                    case R.id.myAchievement:
+                        makeAchievementDialog();
+                        break;
+                    case R.id.setting:
+                        makeSettingDialog();
+                        break;
+                    case R.id.about_us:
+                        makeAboutusDialog();
+                        break;
+                    case R.id.sign_out:
+                        makelogoutUserDialog();
+                        break;
+                    case R.id.exit:
+                        makeexitDialog();
+                        break;
 
-             }
-             return false;
-         }
-     });
- }
+                }
+                return false;
+            }
+        });
+    }
     private void makeMyfselfDialog(){
-        Dialog_myself dialog = new Dialog_myself(context);
-            dialog.show();
+        Dialog_myself dialog = new Dialog_myself(context, true);
+        dialog.show();
     }
     private void makeFriendDialog(){
         Dialog_friend dialog = new Dialog_friend(context);
-//        dialog.setContentView(R.layout.dialog_friend_list);
         dialog.show();
     }
     private void makeSettingDialog(){

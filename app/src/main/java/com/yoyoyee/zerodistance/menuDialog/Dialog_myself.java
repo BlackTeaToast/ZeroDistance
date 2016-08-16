@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +26,15 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
  */
 public class Dialog_myself extends Dialog {
     Button btn_confirm;
-    Button btn_exit;
-    TextView name, profession, level, exp, Achievement, Aboutmyself;
+    Button btn_exit, makefri;
+    TextView name, profession, level, exp, Achievement, Aboutmyself , Fource, Agile, Intelligence, money;
+    LinearLayout editLL, otherLL;
     Context context;
-    boolean beonclick=false;
-    public Dialog_myself(Context context) {
+    boolean ismyself;
+    public Dialog_myself(Context context , boolean ismyself) {
        super(context);
         this.context = context;
+        this.ismyself = ismyself;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_personal_page);
     }
@@ -46,11 +49,20 @@ public class Dialog_myself extends Dialog {
         exp = (TextView)findViewById(R.id.exp);
         Achievement = (TextView)findViewById(R.id.Achievement);
         Aboutmyself = (TextView)findViewById(R.id.Aboutmyself);
+        money = (TextView)findViewById(R.id.money);
+        Fource = (TextView)findViewById(R.id.Force);
+        Agile = (TextView)findViewById(R.id.Agile);
+        Intelligence = (TextView)findViewById(R.id.Intelligence);
+        editLL = (LinearLayout)findViewById(R.id.editLL);
+        otherLL = (LinearLayout)findViewById(R.id.otherLL);
+        makefri = (Button)findViewById(R.id.makefri);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
         ori();//自我介紹內容
         setheight();//畫面大小
         setbtn_confirm();//自我介紹按鈕
         setbtn_exit();//離開按鈕
+        setismyself();//是不適自己
+        setmakefri();
 
     }
     private void ori(){
@@ -58,6 +70,10 @@ public class Dialog_myself extends Dialog {
         profession.setText("狂郎勇士");
         level.setText("200");
         exp.setText("333");
+        money.setText("999999");
+        Fource.setText("死吧!蟲子");
+        Agile.setText("上吧!肥宅");
+        Intelligence.setText("-87");
         Achievement.setText("萬粽之王");
         Aboutmyself.setText("你好，我是楊霖村，我對金融業有絕大的信心和熱忱，因為我擁有專業的金融知識，利用一年時間積極考去取十張證照，在財務個案分析方面也有研究，另外也具有豐富的實習經驗(拿出財富管理競賽作品、實習在職證明給面試官看)\n" +
                 "\n" +
@@ -111,6 +127,23 @@ public class Dialog_myself extends Dialog {
             public void onClick(View v) {
                 Toast.makeText(getContext(),"you click cancel!",Toast.LENGTH_SHORT).show();
                 cancel();
+            }
+        });
+    }
+    private void setismyself(){
+        if(ismyself){
+            editLL.setVisibility(View.VISIBLE);
+            otherLL.setVisibility(View.GONE);
+        }else {
+            editLL.setVisibility(View.GONE);
+            otherLL.setVisibility(View.VISIBLE);
+        }
+    }
+    private void setmakefri(){
+        makefri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"邀請已送出",Toast.LENGTH_SHORT);
             }
         });
     }
