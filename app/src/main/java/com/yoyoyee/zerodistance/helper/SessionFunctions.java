@@ -132,67 +132,67 @@ public class SessionFunctions {
         return session.isConfirmed();
     }
 
-    public void setUserProfession(int profession) {
+    public static void setUserProfession(int profession) {
         session.setUserProfession(profession);
     }
 
-    public int getUserProfession() {
+    public static int getUserProfession() {
         return session.getUserProfession();
     }
 
-    public void setUserLevel(int level){
+    public static void setUserLevel(int level){
         session.setUserLevel(level);
     }
 
-    public int getUserLevel(){
+    public static int getUserLevel(){
         return session.getUserLevel();
     }
 
-    public void setUserExp(int exp) {
+    public static void setUserExp(int exp) {
         session.setUserExp(exp);
     }
 
-    public int getUserExp() {
+    public static int getUserExp() {
         return session.getUserExp();
     }
 
-    public void setUserMoney(int money) {
+    public static void setUserMoney(int money) {
         session.setUserMoney(money);
     }
 
-    public int getUserMoney() {
+    public static int getUserMoney() {
         return session.getUserMoney();
     }
 
-    public void setUserStrength(int strength) {
+    public static void setUserStrength(int strength) {
         session.setUserStrength(strength);
     }
 
-    public int getUserStrength() {
+    public static int getUserStrength() {
         return session.getUserStrength();
     }
 
-    public void setUserIntelligence(int intelligence) {
+    public static void setUserIntelligence(int intelligence) {
         session.setUserIntelligence(intelligence);
     }
 
-    public int getUserIntelligence() {
+    public static int getUserIntelligence() {
         return session.getUserIntelligence();
     }
 
-    public void setUserAgile(int agile) {
+    public static void setUserAgile(int agile) {
         session.setUserAgile(agile);
     }
 
-    public int getUserAgile() {
+    public static int getUserAgile() {
         return session.getUserAgile();
     }
 
-    public void setUserIntroduction(String introduction) {
+    public static void setUserIntroduction(String introduction) {
         session.setUserIntroduction(introduction);
     }
 
-    public String getUserIntroduction() {
+    public static String getUserIntroduction() {
         return session.getUserIntroduction();
     }
 }
