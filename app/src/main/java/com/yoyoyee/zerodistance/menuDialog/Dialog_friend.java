@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.FriendAdapter;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
+import com.yoyoyee.zerodistance.helper.datatype.Friend;
+
+import java.util.ArrayList;
 
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
@@ -37,7 +44,9 @@ public class Dialog_friend extends Dialog {
     Button delfri,otherpeo, cancel;
     TextView havefriend_count, nofriend_count;
     ImageView haveFriView, noFriView;
+    SwipeRefreshLayout friswi;
     boolean isvisible = false , isdel = false;
+    private ArrayList<Friend> friend;
     public Dialog_friend(Context context) {
         super(context);
         this.context=context;
@@ -58,6 +67,7 @@ public class Dialog_friend extends Dialog {
         noFriLine = (RelativeLayout)findViewById(R.id.noFriLine);
         haveFriView = (ImageView)findViewById(R.id.haveFriView);
         noFriView = (ImageView)findViewById(R.id.noFriView);
+        friswi = (SwipeRefreshLayout)findViewById(R.id.friswi);
         setdelfri(); //設定刪除好友按鈕
         setotherpeo();//找其他人
         setcancel();//離開
@@ -65,6 +75,30 @@ public class Dialog_friend extends Dialog {
         makecard();
         setfricount();//條條的人數設定
         setonclick();
+        setfriscro();
+    }
+    private void setfriscro(){
+        friswi.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                upfriendDB();
+                makecard();
+                friswi.setRefreshing(false);
+            }
+        });
+    }
+    private void upfriendDB(){
+        ClientFunctions.updateFriends(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
     }
     public void makecard(){
         isfriList = (RecyclerView) findViewById(R.id.isfriendList);
@@ -75,9 +109,12 @@ public class Dialog_friend extends Dialog {
         notlayoutManager.setOrientation(VERTICAL);
         isfriList.setLayoutManager(islayoutManager);
         nofriList.setLayoutManager(notlayoutManager);
-        friendAdapter = new FriendAdapter(isvisible, true);
+
+
+        friend = QueryFunctions.getFriends();
+        friendAdapter = new FriendAdapter(isvisible, friend);
         isfriList.setAdapter(friendAdapter);
-        nofriendAdapter = new FriendAdapter(isvisible, false);
+        nofriendAdapter = new FriendAdapter(isvisible, friend);
         nofriList.setAdapter(nofriendAdapter);
     }
     private void setdelfri(){
@@ -96,9 +133,9 @@ public class Dialog_friend extends Dialog {
         }
         isdel=!isdel;
         isvisible=!isvisible;
-        friendAdapter = new FriendAdapter(isvisible, true);
+        friendAdapter = new FriendAdapter(isvisible, friend);
         isfriList.setAdapter(friendAdapter);
-        nofriendAdapter = new FriendAdapter(isvisible, false);
+        nofriendAdapter = new FriendAdapter(isvisible, friend);
         nofriList.setAdapter(nofriendAdapter);
     }
     private void setotherpeo(){

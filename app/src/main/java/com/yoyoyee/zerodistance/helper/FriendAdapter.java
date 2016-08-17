@@ -8,9 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.helper.datatype.Friend;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_myself;
+
+import java.util.ArrayList;
 
 /**
  * Created by 楊霖村 on 2016/7/9.
@@ -18,20 +22,22 @@ import com.yoyoyee.zerodistance.menuDialog.Dialog_myself;
 public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     private int fragment;
     private int Count;
-    private boolean boxisvisible = false , ischeck;
+    private boolean boxisvisible = false;
+    private ArrayList<Friend> friend;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CheckBox checkbox;
+        public TextView friend_name;
         public android.support.v7.widget.CardView friendlistCV;
         public ViewHolder(View v) {
             super(v);
             checkbox = (CheckBox)v.findViewById(R.id.checkBox);
             friendlistCV= (android.support.v7.widget.CardView)v.findViewById(R.id.friendlistCV);
+            friend_name = (TextView)v.findViewById(R.id.friend_name);
         }
     }
-
-    public FriendAdapter (boolean boxisvisible , boolean ischeck){
+    public FriendAdapter (boolean boxisvisible, ArrayList<Friend> friend){
         this.boxisvisible = boxisvisible;
-        this.ischeck = ischeck;
+        this.friend = friend;
     }
 
     @Override
@@ -44,7 +50,8 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        if(ischeck){
+        holder.friend_name.setText(friend.get(position).name);
+        if(friend.get(position).isAccepted){
             holder.friendlistCV.setCardBackgroundColor(Color.parseColor("#D9FFFFFF"));
         }else {
             holder.friendlistCV.setCardBackgroundColor(Color.parseColor("#8FFFFFFF"));
@@ -74,8 +81,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
     }
     @Override
     public int getItemCount() {
-//        Count = missions.length;//長度
-        Count=5;
+        Count=friend.size();
         return Count;
     }
     private void setonclick(final View v, ViewHolder hoder){

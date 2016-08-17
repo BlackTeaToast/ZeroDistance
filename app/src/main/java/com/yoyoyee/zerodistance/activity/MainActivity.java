@@ -145,23 +145,33 @@ public class MainActivity extends AppCompatActivity{
         delphoneDB();//資料都先削掉
         updataSchoolDB();
         updataMissionDB();
+        updateFriendDB();
+    }
+    private void updateFriendDB(){
+        ClientFunctions.updateFriends(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
     }
     private void updataSchoolDB(){
         ClientFunctions.updateSchools(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                upDataCount=0;
+
             }
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=5){
-                    CustomToast.showToast(context, "更新失敗學校(主)", 500);
-                    hideDialog();
-                }else{
-                    upDataCount+=1;
-                    updataSchoolDB();
-                }
+                CustomToast.showToast(context, "更新失敗學校(主)", 500);
+                hideDialog();
+
             }
         });
     }
@@ -175,13 +185,10 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onErrorResponse(String response) {
-                if(upDataCount>=5){
-                    CustomToast.showToast(context, "更新失敗任務(主)", 500);
+                CustomToast.showToast(context, "更新失敗任務(主)", 500);
+                hideDialog();
+                if(adapter==null){
                     MakeTabAndContext();
-                    hideDialog();
-                }else{
-                    upDataCount+=1;
-                    updataMissionDB();
                 }
             }
         });
@@ -190,19 +197,17 @@ public class MainActivity extends AppCompatActivity{
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                MakeTabAndContext();
+                if(adapter==null){
+                    MakeTabAndContext();
+                }
             }
 
             @Override
             public void onErrorResponse(String response) {
-                //  Toast.makeText(context, "更新失敗", Toast.LENGTH_SHORT).show();
-                if(upDataCount>=5){
-                    CustomToast.showToast(context, "更新失敗揪團(主)", 500);
-                    hideDialog();
+                CustomToast.showToast(context, "更新失敗揪團(主)", 500);
+                hideDialog();
+                if(adapter==null){
                     MakeTabAndContext();
-                }else{
-                    upDataCount+=1;
-                    updataGroupDB();
                 }
             }
         });
@@ -262,7 +267,6 @@ public class MainActivity extends AppCompatActivity{
         });
 
     }
-
     private void MakeTabAndContext(){
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
         pager.setOffscreenPageLimit(4);//儲存頁面數

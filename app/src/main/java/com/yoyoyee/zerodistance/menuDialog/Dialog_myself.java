@@ -67,24 +67,25 @@ public class Dialog_myself extends Dialog {
     }
     private void ori(){
         name.setText(SessionFunctions.getUserName());
-        profession.setText("狂郎勇士");
-        level.setText("200");
-        exp.setText("333");
-        money.setText("999999");
-        Fource.setText("死吧!蟲子");
-        Agile.setText("上吧!肥宅");
-        Intelligence.setText("-87");
+        profession.setText(SessionFunctions.getUserProfession());
+        level.setText(SessionFunctions.getUserLevel());
+        exp.setText(SessionFunctions.getUserExp());
+        money.setText(SessionFunctions.getUserMoney());
+        Fource.setText(SessionFunctions.getUserStrength());
+        Agile.setText(SessionFunctions.getUserAgile());
+        Intelligence.setText(SessionFunctions.getUserIntelligence());
         Achievement.setText("萬粽之王");
-        Aboutmyself.setText("你好，我是楊霖村，我對金融業有絕大的信心和熱忱，因為我擁有專業的金融知識，利用一年時間積極考去取十張證照，在財務個案分析方面也有研究，另外也具有豐富的實習經驗(拿出財富管理競賽作品、實習在職證明給面試官看)\n" +
-                "\n" +
-                "我的個性是樂於與人相處的，服務客人時遇到不同情況也應對進退得宜，凡事不斤斤計較，做事不拖泥帶水，在學校參與過許多活動，所以與人相處融洽是我能做到的!\n" +
-                "\n" +
-                "我所推崇的大人物為巴菲特，雖然他不是銀行家，但卻是我很推崇的專業投資人(備用人物:彭淮南、威爾許、張忠謀、李昌鈺、陳嫦芬)\n" +
-                "\n" +
-                "我會來爭取此次○○機會的原因為，我把自己當作商品一樣來經營，必須要隨時(不斷地)更新、隨時進步，把每一次挑戰都當作是對自己的磨練，這就是我的工作哲學\n" +
-                "\n" +
-                "有句話說:「當別人逃避，而你留下來挑戰，就能得到更上一層樓的機會。」這句話我覺得很符合○○○○這工作的正面態度，希望進入貴公司可以秉持我的工作哲學以及座右銘面對挑戰，貢獻所學並勝任愉快! ");
+        Aboutmyself.setText(SessionFunctions.getUserIntroduction());
         Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
+//        "你好，我是楊霖村，我對金融業有絕大的信心和熱忱，因為我擁有專業的金融知識，利用一年時間積極考去取十張證照，在財務個案分析方面也有研究，另外也具有豐富的實習經驗(拿出財富管理競賽作品、實習在職證明給面試官看)\n" +
+//                "\n" +
+//                "我的個性是樂於與人相處的，服務客人時遇到不同情況也應對進退得宜，凡事不斤斤計較，做事不拖泥帶水，在學校參與過許多活動，所以與人相處融洽是我能做到的!\n" +
+//                "\n" +
+//                "我所推崇的大人物為巴菲特，雖然他不是銀行家，但卻是我很推崇的專業投資人(備用人物:彭淮南、威爾許、張忠謀、李昌鈺、陳嫦芬)\n" +
+//                "\n" +
+//                "我會來爭取此次○○機會的原因為，我把自己當作商品一樣來經營，必須要隨時(不斷地)更新、隨時進步，把每一次挑戰都當作是對自己的磨練，這就是我的工作哲學\n" +
+//                "\n" +
+//                "有句話說:「當別人逃避，而你留下來挑戰，就能得到更上一層樓的機會。」這句話我覺得很符合○○○○這工作的正面態度，希望進入貴公司可以秉持我的工作哲學以及座右銘面對挑戰，貢獻所學並勝任愉快! "
     }
     private void setheight(){
         WindowManager m = getWindow().getWindowManager();

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.helper.datatype.Friend;
 import com.yoyoyee.zerodistance.helper.datatype.Group;
 import com.yoyoyee.zerodistance.helper.datatype.GroupAccept;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
@@ -14,6 +15,7 @@ import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
 import com.yoyoyee.zerodistance.helper.datatype.UserAcceptGroups;
 import com.yoyoyee.zerodistance.helper.datatype.UserAcceptMissions;
+import com.yoyoyee.zerodistance.helper.table.FriendsTable;
 import com.yoyoyee.zerodistance.helper.table.GroupAcceptUserTable;
 import com.yoyoyee.zerodistance.helper.table.GroupsTable;
 import com.yoyoyee.zerodistance.helper.table.LoginTable;
@@ -1250,5 +1252,43 @@ public class QueryFunctions {
         db.close();
         return groups;
     }
+    public static ArrayList<Friend> getFriends() {
 
+        ArrayList<Friend> friends = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + FriendsTable.TABLE_NAME;
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                Friend friend = new Friend();
+                friend.uid = cursor.getString(FriendsTable.COLUMNS_NUM_UID);
+                friend.isTeacher = cursor.getInt(FriendsTable.COLUMNS_NUM_IS_TEACHER)==1;
+                friend.name = cursor.getString(FriendsTable.COLUMNS_NUM_NAME);
+                friend.nickName = cursor.getString(FriendsTable.COLUMNS_NUM_NICKNAME);
+                friend.schoolID = cursor.getInt(FriendsTable.COLUMNS_NUM_SCHOOL_ID);
+                friend.studentID = cursor.getString(FriendsTable.COLUMNS_NUM_STUDENT_ID);
+                friend.email = cursor.getString(FriendsTable.COLUMNS_NUM_EMAIL);
+                friend.profession = cursor.getInt(FriendsTable.COLUMNS_NUM_PROFESSION);
+                friend.level = cursor.getInt(FriendsTable.COLUMNS_NUM_LEVEL);
+                friend.exp = cursor.getInt(FriendsTable.COLUMNS_NUM_EXP);
+                friend.money = cursor.getInt(FriendsTable.COLUMNS_NUM_MONEY);
+                friend.strength = cursor.getInt(FriendsTable.COLUMNS_NUM_STRENGTH);
+                friend.intelligence = cursor.getInt(FriendsTable.COLUMNS_NUM_INTELLIGENCE);
+                friend.agile = cursor.getInt(FriendsTable.COLUMNS_NUM_AGILE);
+                friend.introduction = cursor.getString(FriendsTable.COLUMNS_NUM_INTRODUCTION);
+                friend.isAccepted = cursor.getInt(FriendsTable.COLUMNS_NUM_IS_ACCEPTED)==1;
+                friends.add(friend);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return friends;
+    }
 }
