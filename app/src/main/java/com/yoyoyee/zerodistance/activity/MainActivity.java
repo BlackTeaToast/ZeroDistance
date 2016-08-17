@@ -109,13 +109,15 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(sv.isShowing()){
-            sv.hide();
-        }else {
-            if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
-                mDrawerLayout.closeDrawer(GravityCompat.START);
+        if(sv!=null) {
+            if (sv.isShowing()) {
+                sv.hide();
             } else {
-                super.onBackPressed();
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    super.onBackPressed();
+                }
             }
         }
     }
