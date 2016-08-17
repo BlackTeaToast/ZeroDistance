@@ -2373,4 +2373,79 @@ public class ClientFunctions {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
+
+    /**
+     * 輸入好友UID，增加當前使用者好友
+     * onResponse:
+     *    1 - 增加好友成功，已成為好友
+     *    2 - 增加好友成功，等待回覆
+     * onErrorResponse:
+     *   -1 - 增加好友錯誤
+     *   -2 - 增加失敗，已加入好友
+     *   -3 - 伺服器未知錯誤
+     *   -4 - 該好友不存在
+     *   -5 - 不能加自己好友
+     * -400 - 內部錯誤(ex未連上網路)
+     * -401 - 格式錯誤
+     * -402 - 驗證錯誤
+     * @param uid 好友UID
+     * @param clientResponse
+     */
+    public static void addFriend(final String uid, final ClientResponse clientResponse) {
+        String tag_string_req = "req_add_friend";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_ADD_USER_FRIEND, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    String statusCode = jObj.getString("status_code");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+
+                        clientResponse.onResponse(statusCode);
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+
+                        clientResponse.onErrorResponse(statusCode);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    clientResponse.onErrorResponse("-400");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse("-400");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("friend_uid", uid);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
 }
