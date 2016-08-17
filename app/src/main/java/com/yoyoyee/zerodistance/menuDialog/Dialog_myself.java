@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.client.ClientFunctions;
+import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
 /**
@@ -28,7 +30,7 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 public class Dialog_myself extends Dialog {
     Button btn_confirm;
     Button btn_exit, makefri;
-    TextView name, profession, level, exp, Achievement, Aboutmyself , Fource, Agile, Intelligence, money;
+    TextView name, profession, level, exp, Achievement, Aboutmyself , Fource, Agile, Intelligence, money, expTxt;
     LinearLayout editLL, otherLL;
     Context context;
     RoundCornerProgressBar expp;
@@ -59,6 +61,7 @@ public class Dialog_myself extends Dialog {
         otherLL = (LinearLayout)findViewById(R.id.otherLL);
         makefri = (Button)findViewById(R.id.makefri);
         expp = (RoundCornerProgressBar)findViewById(R.id.expp);
+        expTxt = (TextView)findViewById(R.id.expTxt);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
         ori();//自我介紹內容
         setheight();//畫面大小
@@ -67,13 +70,28 @@ public class Dialog_myself extends Dialog {
         setismyself();//是不適自己
         setmakefri();
         setexp();
+        //addfri();
+    }
+    private void addfri(){
+        ClientFunctions.addFriend("uid", new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
     }
     private void setexp(){
-
+        expTxt.setText((int)(SessionFunctions.getUserExp()+expp.getProgress())+"/100");
         expp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 expp.setProgress(expp.getProgress() +10);
+                expTxt.setText((int)(SessionFunctions.getUserExp()+expp.getProgress())+"/100");
             }
         });
     }

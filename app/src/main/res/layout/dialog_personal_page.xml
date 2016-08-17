@@ -62,7 +62,8 @@
                         android:textColor="#ffffff"
                         android:editable="false"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginTop="2dp" />
+                        android:layout_marginTop="2dp"
+                        android:paddingLeft="3dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
@@ -95,7 +96,8 @@
                         android:layout_marginBottom="5dp"
                         android:background="#7dffffff"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="2dp" />
+                        android:layout_marginTop="2dp"
+                        android:paddingLeft="3dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
@@ -126,7 +128,8 @@
                         android:layout_marginBottom="5dp"
                         android:background="#7dffffff"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="2dp" />
+                        android:layout_marginTop="2dp"
+                        android:paddingLeft="3dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
@@ -147,22 +150,37 @@
                         android:layout_marginLeft="10dp"
                         android:textColor="#f67bfd" />
 
-                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                        android:id="@+id/expp"
+                    <FrameLayout
                         android:layout_height="20dp"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginTop="2dp"
-                        app:rcBackgroundColor="@color/custom_progress_background"
-                        app:rcBackgroundPadding="2dp"
-                        app:rcMax="100"
-                        app:rcProgress="40"
-                        app:rcProgressColor="@color/custom_progress_blue_progress"
-                        app:rcRadius="6dp"
-                        app:rcReverse="false"
-                        android:layout_weight="1" />
+                        android:layout_marginTop="2dp">
+
+                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                            android:id="@+id/expp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            app:rcBackgroundColor="@color/custom_progress_background"
+                            app:rcBackgroundPadding="3dp"
+                            app:rcMax="100"
+                            app:rcProgress="40"
+                            app:rcProgressColor="@color/custom_progress_blue_progress"
+                            app:rcRadius="6dp"
+                            app:rcReverse="false"
+                            android:layout_weight="1"
+                            android:layout_gravity="center" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Small Text"
+                            android:id="@+id/expTxt"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="#ffffff" />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -209,7 +227,8 @@
                         android:layout_marginBottom="5dp"
                         android:background="#7dffffff"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="2dp" />
+                        android:layout_marginTop="2dp"
+                        android:paddingLeft="3dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -275,7 +294,8 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
                     android:background="#7dffffff"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:paddingLeft="3dp" />
         </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -305,7 +325,8 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
                     android:background="#7dffffff"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:paddingLeft="3dp" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -335,7 +356,8 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
                     android:background="#7dffffff"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:paddingLeft="3dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -369,7 +391,8 @@
                 android:layout_marginRight="15dp"
                 android:minLines="1"
                 android:maxLines="1"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:paddingLeft="3dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -408,7 +431,8 @@
                 android:gravity="top"
                 android:scrollbars="vertical"
                   android:singleLine="false"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:paddingLeft="3dp" />
         </LinearLayout>
 
         <LinearLayout

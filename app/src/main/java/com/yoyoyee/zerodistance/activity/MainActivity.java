@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,6 +23,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity{
     ViewPagerAdapter adapter;
     Toolbar tool_bar;
     ViewPager pager;
+    TextView UserId;
     SlidingTabLayout tabs;
     private ProgressDialog pDialog;
     private SQLiteHandler db;
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity{
     FloatingActionButton fab;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
+    ShowcaseView sv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,13 +95,8 @@ public class MainActivity extends AppCompatActivity{
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.container);
         setpagerListen();
-
         setfab();//fab設定
-
-        // Assiging the Sliding Tab Layout View
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-
         // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
@@ -105,14 +105,20 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        // Setting the ViewPager For the SlidingTabsLayout
     }
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        if(sv.isShowing()){
+            sv.hide();
+        }else {
+            if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
-
     //設置字體大小
     private void setFontSize(){
         TextView textViewTemp;
@@ -129,7 +135,6 @@ public class MainActivity extends AppCompatActivity{
             pDialog.show();
         }
     }
-
     private void hideDialog() {
         if (pDialog.isShowing()){
             pDialog.dismiss();
@@ -139,7 +144,6 @@ public class MainActivity extends AppCompatActivity{
         QueryFunctions.deleteAllMissions();
         QueryFunctions.deleteAllGroups();
     }
-
     private void updataphoneDB(){//更新手機資料
         showDialog();
         delphoneDB();//資料都先削掉
@@ -324,6 +328,9 @@ public class MainActivity extends AppCompatActivity{
         mDrawerToggle.syncState();
         mDrawerLayout.setScrimColor(Color.parseColor("#3c448AFF"));
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        NavigationView navigation_view =(NavigationView)findViewById(R.id.navigation_view);
+        UserId = (TextView)navigation_view.getHeaderView(0).findViewById(R.id.UserId);
+        UserId.setText(SessionFunctions.getUserName()+"");
     }
     private void setnav(){
         NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
@@ -423,5 +430,16 @@ public class MainActivity extends AppCompatActivity{
                     }
                 })
                 .show();
+    }
+    private void setTeach(){
+        ViewTarget target = new ViewTarget(R.id.UserName, this);
+        sv = new ShowcaseView.Builder(this)
+                .setTarget(target)
+                .withNewStyleShowcase()
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setContentTitle("你好R")
+                .setContentText("這裡會顯示你的名字\n哇! "+SessionFunctions.getUserName()+"這名字真帥!!")
+                .hideOnTouchOutside()
+                .build();
     }
 }

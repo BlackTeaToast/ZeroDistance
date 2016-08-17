@@ -248,7 +248,6 @@ public class fragment_mission extends Fragment  {
         if(SessionFunctions.getSortWay()==1){
             Arrays.sort(mission);
         }else if(SessionFunctions.getSortWay()==2){
-        System.out.println("ee");
         }
     }
 }
