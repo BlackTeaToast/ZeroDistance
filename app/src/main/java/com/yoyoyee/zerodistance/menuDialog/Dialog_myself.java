@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
@@ -30,6 +31,7 @@ public class Dialog_myself extends Dialog {
     TextView name, profession, level, exp, Achievement, Aboutmyself , Fource, Agile, Intelligence, money;
     LinearLayout editLL, otherLL;
     Context context;
+    RoundCornerProgressBar expp;
     boolean ismyself;
     public Dialog_myself(Context context , boolean ismyself) {
        super(context);
@@ -56,6 +58,7 @@ public class Dialog_myself extends Dialog {
         editLL = (LinearLayout)findViewById(R.id.editLL);
         otherLL = (LinearLayout)findViewById(R.id.otherLL);
         makefri = (Button)findViewById(R.id.makefri);
+        expp = (RoundCornerProgressBar)findViewById(R.id.expp);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
         ori();//自我介紹內容
         setheight();//畫面大小
@@ -63,19 +66,28 @@ public class Dialog_myself extends Dialog {
         setbtn_exit();//離開按鈕
         setismyself();//是不適自己
         setmakefri();
+        setexp();
+    }
+    private void setexp(){
 
+        expp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expp.setProgress(expp.getProgress() +10);
+            }
+        });
     }
     private void ori(){
-        name.setText(SessionFunctions.getUserName());
-        profession.setText(SessionFunctions.getUserProfession());
-        level.setText(SessionFunctions.getUserLevel());
-        exp.setText(SessionFunctions.getUserExp());
-        money.setText(SessionFunctions.getUserMoney());
-        Fource.setText(SessionFunctions.getUserStrength());
-        Agile.setText(SessionFunctions.getUserAgile());
-        Intelligence.setText(SessionFunctions.getUserIntelligence());
+        name.setText(SessionFunctions.getUserName()+"");
+        profession.setText(SessionFunctions.getUserProfession()+"");
+        level.setText(SessionFunctions.getUserLevel()+"");
+        exp.setText(SessionFunctions.getUserExp()+"");
+        money.setText(SessionFunctions.getUserMoney()+"");
+        Fource.setText(SessionFunctions.getUserStrength()+"");
+        Agile.setText(SessionFunctions.getUserAgile()+"");
+        Intelligence.setText(SessionFunctions.getUserIntelligence()+"");
         Achievement.setText("萬粽之王");
-        Aboutmyself.setText(SessionFunctions.getUserIntroduction());
+        Aboutmyself.setText(SessionFunctions.getUserIntroduction()+"");
         Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
 //        "你好，我是楊霖村，我對金融業有絕大的信心和熱忱，因為我擁有專業的金融知識，利用一年時間積極考去取十張證照，在財務個案分析方面也有研究，另外也具有豐富的實習經驗(拿出財富管理競賽作品、實習在職證明給面試官看)\n" +
 //                "\n" +

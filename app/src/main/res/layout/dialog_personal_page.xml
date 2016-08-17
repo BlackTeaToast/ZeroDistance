@@ -3,6 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/frame"
     android:radius="5dp"
     android:id="@+id/dialog_personal_page">
@@ -146,6 +147,23 @@
                         android:layout_marginLeft="10dp"
                         android:textColor="#f67bfd" />
 
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/expp"
+                        android:layout_height="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="2dp"
+                        app:rcBackgroundColor="@color/custom_progress_background"
+                        app:rcBackgroundPadding="2dp"
+                        app:rcMax="100"
+                        app:rcProgress="40"
+                        app:rcProgressColor="@color/custom_progress_blue_progress"
+                        app:rcRadius="6dp"
+                        app:rcReverse="false"
+                        android:layout_weight="1" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -155,9 +173,10 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="5dp"
+                        android:layout_marginTop="2dp"
                         android:background="#7dffffff"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="2dp" />
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -361,7 +380,8 @@
             android:layout_weight="3"
             android:background="#cf4d4d65"
             android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="5dp"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"

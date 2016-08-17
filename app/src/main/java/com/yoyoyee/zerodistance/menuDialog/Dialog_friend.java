@@ -46,7 +46,7 @@ public class Dialog_friend extends Dialog {
     ImageView haveFriView, noFriView;
     SwipeRefreshLayout friswi;
     boolean isvisible = false , isdel = false;
-    private ArrayList<Friend> friend;
+    private ArrayList<Friend> isfriend, notfriend;
     public Dialog_friend(Context context) {
         super(context);
         this.context=context;
@@ -111,31 +111,33 @@ public class Dialog_friend extends Dialog {
         nofriList.setLayoutManager(notlayoutManager);
 
 
-        friend = QueryFunctions.getFriends();
-        friendAdapter = new FriendAdapter(isvisible, friend);
+        isfriend = QueryFunctions.getIsAcceptedFriends();
+        friendAdapter = new FriendAdapter(isvisible, isfriend);
         isfriList.setAdapter(friendAdapter);
-        nofriendAdapter = new FriendAdapter(isvisible, friend);
+        notfriend = QueryFunctions.getNoAcceptedFriends();
+        nofriendAdapter = new FriendAdapter(isvisible, notfriend);
         nofriList.setAdapter(nofriendAdapter);
     }
     private void setdelfri(){
         delfri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              dodelfrithing();
+                if(!isdel) {
+                    dodelfrithing();
+                }else {
+                    dodelfrithing();
+                    Toast.makeText(context, "已送出", Toast.LENGTH_SHORT).show();
+                    friendAdapter.text(context);
+                }
+                isdel=!isdel;
             }
         });
     }
     private void dodelfrithing(){
-        if(!isdel){
-            otherpeo.setText(R.string.ask_for_ok);
-        }else {
-            otherpeo.setText(R.string.search);
-        }
-        isdel=!isdel;
         isvisible=!isvisible;
-        friendAdapter = new FriendAdapter(isvisible, friend);
+        friendAdapter = new FriendAdapter(isvisible, isfriend);
         isfriList.setAdapter(friendAdapter);
-        nofriendAdapter = new FriendAdapter(isvisible, friend);
+        nofriendAdapter = new FriendAdapter(isvisible, notfriend);
         nofriList.setAdapter(nofriendAdapter);
     }
     private void setotherpeo(){
@@ -185,8 +187,8 @@ public class Dialog_friend extends Dialog {
         getWindow().setAttributes(p);
     }
     private void setfricount(){
-        havefriend_count.setText("("+"5"+"/"+"10"+")");
-        nofriend_count.setText("("+"5"+"/"+"10"+")");
+        havefriend_count.setText("("+isfriend.size()+"/"+(isfriend.size()+notfriend.size())+")");
+        nofriend_count.setText("("+notfriend.size()+"/"+(isfriend.size()+notfriend.size())+")");
     }
     private void setonclick(){
         haveFriLine.setOnClickListener(new View.OnClickListener() {
