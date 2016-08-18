@@ -2086,7 +2086,8 @@ public class ClientFunctions {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG, "sendConfirmationEmail Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
                 clientResponse.onErrorResponse(error.getMessage());
             }
         }) {
@@ -2145,7 +2146,8 @@ public class ClientFunctions {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG, "sendConfirmationEmail Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
                 clientResponse.onErrorResponse(error.getMessage());
             }
         }) {
@@ -2206,7 +2208,8 @@ public class ClientFunctions {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG, "sendConfirmationEmail Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
                 clientResponse.onErrorResponse(error.getMessage());
             }
         }) {
@@ -2265,7 +2268,8 @@ public class ClientFunctions {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG, "getEmailConfirmState Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
                 clientResponse.onErrorResponse(error.getMessage());
             }
         }) {
@@ -2347,7 +2351,8 @@ public class ClientFunctions {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG, "Update Friends Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
                 clientResponse.onErrorResponse(error.getMessage());
             }
         }) {
@@ -2421,7 +2426,8 @@ public class ClientFunctions {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG, "Add Friend Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
                 clientResponse.onErrorResponse("-400");
             }
         }) {

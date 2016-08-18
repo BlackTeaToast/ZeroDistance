@@ -1,6 +1,7 @@
 package com.yoyoyee.zerodistance.helper;
 
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.helper.datatype.Profession;
 
 /**
  * Created by p1235 on 2016/4/8.
@@ -12,22 +13,27 @@ public class SessionFunctions {
     public static void setCardlayoutWay(int CardlayoutWay) {
         session.setCardlayoutWay(CardlayoutWay);
     }
-    public static int getCardlayoutWay(){
+
+    public static int getCardlayoutWay() {
         return session.getCardlayoutWay();
     }
+
     public static void setSortWay(int setSortWay) {
         session.setSortWay(setSortWay);
     }
-    public static int getSortWay(){
+
+    public static int getSortWay() {
         return session.getSortWay();
     }
 
     public static void setIsTeacher(boolean isTeacher) {
         session.setIsTeacher(isTeacher);
     }
+
     public static String getUserschoolName() {
         return session.getUserSchoolName();
     }
+
     public static void setUserschoolName(String schoolName) {
         session.setUserSchoolName(schoolName);
     }
@@ -61,7 +67,7 @@ public class SessionFunctions {
     }
 
     public static String getUserUid() {
-        return  session.getUserUid();
+        return session.getUserUid();
     }
 
     public static void setUserAccessKey(String accessKey) {
@@ -103,16 +109,20 @@ public class SessionFunctions {
     public static String getStudentID() {
         return session.getStudentID();
     }
-    public static void setUserTextSize(float UserTextSize){
+
+    public static void setUserTextSize(float UserTextSize) {
         session.setUserTextSize(UserTextSize);
     }
-    public static float getUserTextSize(){
+
+    public static float getUserTextSize() {
         return session.getUserTextSize();
     }
-    public static void setbecontext(boolean setbecontext){
+
+    public static void setbecontext(boolean setbecontext) {
         session.setbecontext(setbecontext);
     }
-    public static boolean getbecontext(){
+
+    public static boolean getbecontext() {
         return session.getbecontext();
     }
 
@@ -140,11 +150,15 @@ public class SessionFunctions {
         return session.getUserProfession();
     }
 
-    public static void setUserLevel(int level){
+    public static String getUserProfessionName() {
+        return Profession.getProfessionName(session.getUserProfession());
+    }
+
+    public static void setUserLevel(int level) {
         session.setUserLevel(level);
     }
 
-    public static int getUserLevel(){
+    public static int getUserLevel() {
         return session.getUserLevel();
     }
 
