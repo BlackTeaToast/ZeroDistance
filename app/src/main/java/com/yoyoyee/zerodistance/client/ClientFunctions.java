@@ -2449,6 +2449,76 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    /**
+     * 修改當前使用者介紹
+     * onResponse:
+     *    1 - 修改使用者介紹成功
+     * onErrorResponse:
+     *   -1 - 修改使用者介紹失敗
+     * -400 - 內部錯誤(ex未連上網路)
+     * -401 - 格式錯誤
+     * -402 - 驗證錯誤
+     * @param introduction
+     * @param clientResponse
+     */
+    public static void setUserIntroduction(final String introduction,
+                                            final ClientResponse clientResponse) {
+        String tag_string_req = "req_set_user_introduction";
 
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SET_USER_INTRODUCTION, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    String statusCode = jObj.getString("status_code");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        clientResponse.onResponse(statusCode);
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Log.e(TAG, "onResponse: " + errorMsg);
+                        clientResponse.onErrorResponse(statusCode);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    clientResponse.onErrorResponse("-400");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "setUserIntroduction Error: " + error.getMessage());
+                clientResponse.onErrorResponse("-400");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("introduction", introduction);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
 
 }
