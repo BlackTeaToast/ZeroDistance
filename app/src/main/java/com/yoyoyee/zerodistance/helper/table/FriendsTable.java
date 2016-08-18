@@ -34,7 +34,7 @@ public class FriendsTable {
     public static final int COLUMNS_NUM_EMAIL = 6;
     public static final int COLUMNS_NUM_PROFESSION = 7;
     public static final int COLUMNS_NUM_LEVEL = 8;
-    public static final int COLUMNS_NUM_EXP = 9;
+    public static final int COLUMNS_NUM_EXP =    9;
     public static final int COLUMNS_NUM_MONEY = 10;
     public static final int COLUMNS_NUM_STRENGTH = 11;
     public static final int COLUMNS_NUM_INTELLIGENCE = 12;

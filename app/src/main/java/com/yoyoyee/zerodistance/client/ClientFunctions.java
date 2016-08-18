@@ -2312,7 +2312,7 @@ public class ClientFunctions {
                         for(int i=0; i<friends.length(); i++) {
                             JSONObject friend = friends.getJSONObject(i);
 
-                            list.add(new Friend(friend.getString("user_uid"),
+                            list.add(new Friend(friend.getString("friend_uid"),
                                     friend.getInt("is_teacher")!=0,
                                     friend.getString("name"),
                                     friend.getString("nick_name"),
