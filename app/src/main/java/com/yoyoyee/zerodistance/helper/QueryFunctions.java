@@ -1334,7 +1334,7 @@ public class QueryFunctions {
     }
     public static Friend getFriendsData(String Uid) {
 
-        Friend friends = new Friend();
+        Friend friend = new Friend();
         String selectQuery = "SELECT  * FROM " + FriendsTable.TABLE_NAME+
                 " WHERE "+FriendsTable.KEY_UID+" = "+"'"+Uid+"'";
 
@@ -1343,7 +1343,6 @@ public class QueryFunctions {
         cursor.moveToFirst();
 
         try {
-            Friend friend = new Friend();
             friend.uid = cursor.getString(FriendsTable.COLUMNS_NUM_UID);
             friend.isTeacher = cursor.getInt(FriendsTable.COLUMNS_NUM_IS_TEACHER)==1;
             friend.name = cursor.getString(FriendsTable.COLUMNS_NUM_NAME);
@@ -1368,6 +1367,6 @@ public class QueryFunctions {
         // Move to first row
         cursor.close();
         db.close();
-        return friends;
+        return friend;
     }
 }
