@@ -336,6 +336,7 @@ public class MainActivity extends AppCompatActivity{
     }
     private void setnav(){
         NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);
+        navigation.setBackgroundColor(getResources().getColor(R.color.white));
         // navigation.inflateHeaderView(R.layout.navigation_header);
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
