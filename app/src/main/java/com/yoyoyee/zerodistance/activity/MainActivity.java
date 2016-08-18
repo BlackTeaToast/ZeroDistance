@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity{
         context = this;
         setFontSize();//字體
         updataphoneDB();//手機資料
-
 //設置toolbar標題
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -371,7 +370,7 @@ public class MainActivity extends AppCompatActivity{
         });
     }
     private void makeMyfselfDialog(){
-        Dialog_myself dialog = new Dialog_myself(context, true);
+        Dialog_myself dialog = new Dialog_myself(context, true , SessionFunctions.getUserUid());
         dialog.show();
     }
     private void makeFriendDialog(){

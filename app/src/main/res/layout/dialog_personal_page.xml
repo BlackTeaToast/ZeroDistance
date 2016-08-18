@@ -165,7 +165,6 @@
                             app:rcBackgroundColor="@color/custom_progress_background"
                             app:rcBackgroundPadding="3dp"
                             app:rcMax="100"
-                            app:rcProgress="40"
                             app:rcProgressColor="@color/custom_progress_blue_progress"
                             app:rcRadius="6dp"
                             app:rcReverse="false"
@@ -182,19 +181,6 @@
                             android:textColor="#ffffff" />
                     </FrameLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="exp"
-                        android:id="@+id/exp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="2dp"
-                        android:background="#7dffffff"
-                        android:textColor="#ffffff"
-                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -1332,4 +1332,42 @@ public class QueryFunctions {
         db.close();
         return friends;
     }
+    public static Friend getFriendsData(String Uid) {
+
+        Friend friends = new Friend();
+        String selectQuery = "SELECT  * FROM " + FriendsTable.TABLE_NAME+
+                " WHERE "+FriendsTable.KEY_UID+" = "+"'"+Uid+"'";
+
+        SQLiteDatabase db = DB.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        try {
+            Friend friend = new Friend();
+            friend.uid = cursor.getString(FriendsTable.COLUMNS_NUM_UID);
+            friend.isTeacher = cursor.getInt(FriendsTable.COLUMNS_NUM_IS_TEACHER)==1;
+            friend.name = cursor.getString(FriendsTable.COLUMNS_NUM_NAME);
+            friend.nickName = cursor.getString(FriendsTable.COLUMNS_NUM_NICKNAME);
+            friend.schoolID = cursor.getInt(FriendsTable.COLUMNS_NUM_SCHOOL_ID);
+            friend.studentID = cursor.getString(FriendsTable.COLUMNS_NUM_STUDENT_ID);
+            friend.email = cursor.getString(FriendsTable.COLUMNS_NUM_EMAIL);
+            friend.profession = cursor.getInt(FriendsTable.COLUMNS_NUM_PROFESSION);
+            friend.level = cursor.getInt(FriendsTable.COLUMNS_NUM_LEVEL);
+            friend.exp = cursor.getInt(FriendsTable.COLUMNS_NUM_EXP);
+            friend.money = cursor.getInt(FriendsTable.COLUMNS_NUM_MONEY);
+            friend.strength = cursor.getInt(FriendsTable.COLUMNS_NUM_STRENGTH);
+            friend.intelligence = cursor.getInt(FriendsTable.COLUMNS_NUM_INTELLIGENCE);
+            friend.agile = cursor.getInt(FriendsTable.COLUMNS_NUM_AGILE);
+            friend.introduction = cursor.getString(FriendsTable.COLUMNS_NUM_INTRODUCTION);
+            friend.isAccepted = cursor.getInt(FriendsTable.COLUMNS_NUM_IS_ACCEPTED)==1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        cursor.moveToNext();
+
+        // Move to first row
+        cursor.close();
+        db.close();
+        return friends;
+    }
 }

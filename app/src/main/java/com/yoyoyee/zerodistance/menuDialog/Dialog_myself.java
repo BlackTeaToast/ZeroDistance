@@ -22,7 +22,10 @@ import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
+import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
+import com.yoyoyee.zerodistance.helper.datatype.Friend;
+import com.yoyoyee.zerodistance.helper.datatype.Profession;
 
 /**
  * Created by 楊霖村 on 2016/7/9.
@@ -30,15 +33,17 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 public class Dialog_myself extends Dialog {
     Button btn_confirm;
     Button btn_exit, makefri;
-    TextView name, profession, level, exp, Achievement, Aboutmyself , Fource, Agile, Intelligence, money, expTxt;
+    TextView name, profession, level, Achievement, Aboutmyself , Fource, Agile, Intelligence, money, expTxt;
     LinearLayout editLL, otherLL;
     Context context;
+    String Uid;
     RoundCornerProgressBar expp;
     boolean ismyself;
-    public Dialog_myself(Context context , boolean ismyself) {
+    public Dialog_myself(Context context , boolean ismyself , String Uid) {
        super(context);
         this.context = context;
         this.ismyself = ismyself;
+        this.Uid = Uid;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_personal_page);
     }
@@ -50,7 +55,6 @@ public class Dialog_myself extends Dialog {
         name = (TextView)findViewById(R.id.name);
         profession  = (TextView)findViewById(R.id.profession);
         level = (TextView)findViewById(R.id.level);
-        exp = (TextView)findViewById(R.id.exp);
         Achievement = (TextView)findViewById(R.id.Achievement);
         Aboutmyself = (TextView)findViewById(R.id.Aboutmyself);
         money = (TextView)findViewById(R.id.money);
@@ -70,20 +74,6 @@ public class Dialog_myself extends Dialog {
         setismyself();//是不適自己
         setmakefri();
         setexp();
-        //addfri();
-    }
-    private void addfri(){
-        ClientFunctions.addFriend("uid", new ClientResponse() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-
-            @Override
-            public void onErrorResponse(String response) {
-
-            }
-        });
     }
     private void setexp(){
         expTxt.setText((int)(SessionFunctions.getUserExp()+expp.getProgress())+"/100");
@@ -96,17 +86,33 @@ public class Dialog_myself extends Dialog {
         });
     }
     private void ori(){
-        name.setText(SessionFunctions.getUserName()+"");
-        profession.setText(SessionFunctions.getUserProfession()+"");
-        level.setText(SessionFunctions.getUserLevel()+"");
-        exp.setText(SessionFunctions.getUserExp()+"");
-        money.setText(SessionFunctions.getUserMoney()+"");
-        Fource.setText(SessionFunctions.getUserStrength()+"");
-        Agile.setText(SessionFunctions.getUserAgile()+"");
-        Intelligence.setText(SessionFunctions.getUserIntelligence()+"");
-        Achievement.setText("萬粽之王");
-        Aboutmyself.setText(SessionFunctions.getUserIntroduction()+"");
-        Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
+        if(SessionFunctions.getUserUid().equals(Uid)) {
+            name.setText(SessionFunctions.getUserName() + "");
+            profession.setText(Profession.getProfessionName(SessionFunctions.getUserProfession()));
+            level.setText(SessionFunctions.getUserLevel() + "");
+            expTxt.setText((int)(SessionFunctions.getUserExp())+"/100");
+            money.setText(SessionFunctions.getUserMoney() + "");
+            Fource.setText(SessionFunctions.getUserStrength() + "");
+            Agile.setText(SessionFunctions.getUserAgile() + "");
+            Intelligence.setText(SessionFunctions.getUserIntelligence() + "");
+            Achievement.setText("萬粽之王我");
+            Aboutmyself.setText(SessionFunctions.getUserIntroduction() + "");
+            Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
+        }else{
+            Friend friend = QueryFunctions.getFriendsData(Uid);
+            Toast.makeText(context, "Uid:"+Uid, Toast.LENGTH_SHORT).show();
+            name.setText(friend.name + "");
+            profession.setText(Profession.getProfessionName(friend.profession));
+            level.setText(friend.level + "");
+            expTxt.setText((int)(friend.exp)+"/100");
+            money.setText(friend.money + "");
+            Fource.setText(friend.strength + "");
+            Agile.setText(friend.agile + "");
+            Intelligence.setText(friend.intelligence + "");
+            Achievement.setText("萬粽之王");
+            Aboutmyself.setText(friend.introduction+ "");
+            Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
+        }
 //        "你好，我是楊霖村，我對金融業有絕大的信心和熱忱，因為我擁有專業的金融知識，利用一年時間積極考去取十張證照，在財務個案分析方面也有研究，另外也具有豐富的實習經驗(拿出財富管理競賽作品、實習在職證明給面試官看)\n" +
 //                "\n" +
 //                "我的個性是樂於與人相處的，服務客人時遇到不同情況也應對進退得宜，凡事不斤斤計較，做事不拖泥帶水，在學校參與過許多活動，所以與人相處融洽是我能做到的!\n" +
@@ -174,7 +180,62 @@ public class Dialog_myself extends Dialog {
         makefri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"邀請已送出",Toast.LENGTH_SHORT);
+                ClientFunctions.addFriend(Uid, new ClientResponse() {
+                    @Override
+                    public void onResponse(String response) {
+                        int i = Integer.parseInt(response);
+                        String speak="增加成功";
+                        switch(i) {
+                            case 1:
+                                speak="增加好友成功，等待對方確認";
+                                break;
+                            case 2:
+                                speak="增加好友成功，等待對方確認";
+                                break;
+                            default:
+                                speak="增加成功但有未知錯誤";
+                                break;
+                        }
+                        Toast.makeText(getContext(),speak+"",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onErrorResponse(String response) {
+                        String speak="增加失敗";
+                        int i = Integer.parseInt(response);
+                        switch(i) {
+                            case -1:
+                                speak="增加好友錯誤";
+                                break;
+                            case -2:
+                                speak="增加失敗，已加入好友";
+                                break;
+                            case -3:
+                                speak="伺服器未知錯誤";
+                                break;
+                            case -4:
+                                speak="該好友不存在";
+                                break;
+                            case -5:
+                                speak="不能加自己好友";
+                                break;
+                            case -400:
+                                speak="內部錯誤";
+                                break;
+                            case -401:
+                                speak="格式錯誤";
+                                break;
+                            case -402:
+                                speak="驗證錯誤";
+                                break;
+                            default:
+                                speak="增加失敗and未知錯誤";
+                                break;
+                        }
+
+                        Toast.makeText(getContext(),speak+"",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

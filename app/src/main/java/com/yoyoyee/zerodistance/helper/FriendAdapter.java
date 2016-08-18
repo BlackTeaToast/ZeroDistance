@@ -29,13 +29,14 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
     private static int delcount;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CheckBox checkbox;
-        public TextView friend_name;
+        public TextView friend_name , saveuid;
         public android.support.v7.widget.CardView friendlistCV;
         public ViewHolder(View v) {
             super(v);
             checkbox = (CheckBox)v.findViewById(R.id.checkBox);
             friendlistCV= (android.support.v7.widget.CardView)v.findViewById(R.id.friendlistCV);
             friend_name = (TextView)v.findViewById(R.id.friend_name);
+            saveuid = (TextView)v.findViewById(R.id.saveuid);
         }
     }
     public FriendAdapter (boolean boxisvisible, ArrayList<Friend> friend){
@@ -54,6 +55,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.friend_name.setText(friend.get(position).name);
+        holder.saveuid.setText(friend.get(position).uid);
         if(friend.get(position).isAccepted){
             holder.friendlistCV.setCardBackgroundColor(Color.parseColor("#D9FFFFFF"));
         }else {
@@ -89,7 +91,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
         Count=friend.size();
         return Count;
     }
-    private void setonclick(final View v, ViewHolder hoder){
+    private void setonclick(final View v, final ViewHolder hoder){
         final PopupMenu popupmenu = new PopupMenu(v.getContext(), hoder.friendlistCV);
         popupmenu.getMenuInflater().inflate(R.menu.menu_friend, popupmenu.getMenu());
         popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -97,7 +99,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case (R.id.pop_frienddetail):
-                        Dialog_myself dialog = new Dialog_myself(v.getContext(), false);
+                        Dialog_myself dialog = new Dialog_myself(v.getContext(), false ,hoder.saveuid.getText().toString());
                         dialog.show();
                         break;
 //                    case (R.id.pop_frienddel):
