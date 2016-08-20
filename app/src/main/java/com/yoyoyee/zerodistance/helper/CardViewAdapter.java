@@ -84,6 +84,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                     i=3;
                     break;
                 }
+                case 4:{
+                    v = LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.test_cardview, parent, false);//黑板專用
+                    i=4;
+                    break;
+                }
             }
         }else {
             v = LayoutInflater.from(parent.getContext())
@@ -105,9 +111,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission) {//其他頁面沒有緊急任務
                 if (missions[position].getUrgent()) {
 //                    holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
-                    holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
+
+                    holder.CardView.setBackgroundResource(R.drawable.greencard);
                 } else {
-                    holder.CardView.setBackgroundResource(R.drawable.undangreous_background1);
+                    holder.CardView.setBackgroundResource(R.drawable.greencard);
                 }
             }
             if (missions[position].isMission()) {
