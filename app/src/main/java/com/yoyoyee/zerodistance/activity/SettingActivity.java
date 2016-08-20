@@ -1,12 +1,13 @@
-package com.yoyoyee.zerodistance.menuDialog;
+package com.yoyoyee.zerodistance.activity;
 
-import android.app.Dialog;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.r0adkll.slidr.Slidr;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.CustomToast;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
@@ -23,7 +25,7 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 /**
  * Created by 楊霖村 on 2016/4/4.
  */
-public class Dialog_setting extends Dialog {
+public class SettingActivity extends AppCompatActivity {
     int languageuse =0;//0中文 1英文
     private ArrayAdapter<String> adapterPress;
     private RadioButton textsizeLRB, textsizeMRB, textsizeSRB;//大中小字體
@@ -38,22 +40,15 @@ public class Dialog_setting extends Dialog {
     private boolean showstyle;
     private int sortway , cardlayoutway;
     TextView  userid;
-    Context context;
-    public Dialog_setting(Context context) {
-        super(context);
-        this.context = context;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.fragment_setting);
-    }
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            userid = (TextView) findViewById(R.id.userid);
+        setContentView(R.layout.fragment_setting);
+
+        userid = (TextView) findViewById(R.id.userid);
         userid.setText(SessionFunctions.getUserUid());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         Sign_outbut = (Button) findViewById(R.id.Setting_cancel);
         saveandexit = (Button) findViewById(R.id.saveandexit);
         languageSpinner  = (Spinner) findViewById(R.id.languageSpinner);
@@ -71,13 +66,16 @@ public class Dialog_setting extends Dialog {
         layoutset1 = (RadioButton)findViewById(R.id.layoutset1);
         layoutset2 = (RadioButton)findViewById(R.id.layoutset2);
         layoutset3 = (RadioButton)findViewById(R.id.layoutset3);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        Slidr.attach(this);
         setRG();
         setSpinner();
         setbutton();
         checkbecontext();//選擇預設項目
-        setheight();//設定畫面大小
+       // setheight();//設定畫面大小
         setFontSize();//設定字體大小
+        settoolbar();
         return ;}
     private void setRG(){
         textsizeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -142,18 +140,23 @@ public class Dialog_setting extends Dialog {
         });
     }
     private void setbutton(){
+        final Intent in = new Intent(SettingActivity.this, MainActivity.class);
         Sign_outbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cancel();
+               // startActivity(in);
+                finish();
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
             }
         });
         saveandexit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveinSF();
-                CustomToast.showToast(context, "設定資料已儲存", 500);
-                cancel();
+                CustomToast.showToast(v.getContext(), "設定資料已儲存", 500);
+                startActivity(in);
+                finish();
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
             }
         });
     }
@@ -166,7 +169,7 @@ public class Dialog_setting extends Dialog {
         getWindow().setAttributes(p);
     }
     private void setSpinner(){
-        adapterPress = new ArrayAdapter<String>(getContext(), R.layout.spinner, context.getResources().getStringArray(R.array.languageSppingArrary));
+        adapterPress = new ArrayAdapter<String>(this, R.layout.spinner, this.getResources().getStringArray(R.array.languageSppingArrary));
         adapterPress.setDropDownViewResource(R.layout.spinner);
         languageSpinner.setAdapter(adapterPress);
 
@@ -250,5 +253,10 @@ public class Dialog_setting extends Dialog {
         SessionFunctions.setSortWay(sortway);
         SessionFunctions.setCardlayoutWay(cardlayoutway);
 
+    }
+    private void settoolbar(){
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.set);
     }
 }

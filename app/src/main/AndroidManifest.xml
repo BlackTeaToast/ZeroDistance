@@ -78,8 +78,19 @@
             android:name=".activity.QAActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.TurnActivity"
             android:screenOrientation="portrait" />
+        <!--換頁動畫-->
+        <supports-screens
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:resizeable="true"
+            android:anyDensity="true">
+        </supports-screens>
         <!-- <activity android:name=".activity.fragmentActivity" /> -->
         <activity
             android:name=".activity.RegisterSelectActivity"

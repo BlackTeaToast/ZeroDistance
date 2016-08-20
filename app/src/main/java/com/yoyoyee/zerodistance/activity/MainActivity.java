@@ -41,7 +41,6 @@ import com.yoyoyee.zerodistance.menuDialog.Dialog_aboutus;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_achievement;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_friend;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_myself;
-import com.yoyoyee.zerodistance.menuDialog.Dialog_setting;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Titles = getResources().getStringArray(R.array.tabstyle); //設定tab
         Intent it  = this.getIntent();
-        setAT();
         whichpage= it.getIntExtra("whichpage", 0);
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity{
         context = this;
         setFontSize();//字體
         updataphoneDB();//手機資料
+        setAT();//亞堂設定
 //設置toolbar標題
         tool_bar = (Toolbar)findViewById(R.id.tool_bar);
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -106,14 +105,7 @@ public class MainActivity extends AppCompatActivity{
                 return ContextCompat.getColor(getApplicationContext(), R.color.ColorPrimaryToolbar);
             }
         });
-        /*背景運行
-        * */
-        Intent service =new Intent(MainActivity.this,TapService.class);
-        startService(service);
-        /*檢查更新
-        * */
-        UpdataFunction updataFunction =new UpdataFunction();
-        updataFunction.showUpdataDialog(MainActivity.this);
+
 
     }
 
@@ -133,8 +125,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void setAT(){
-        Intent intent = new Intent(this, TapService.class);
-        startService(intent);
+              /*背景運行
+        * */
+        Intent service =new Intent(MainActivity.this,TapService.class);
+        startService(service);
+        /*檢查更新
+        * */
+        UpdataFunction updataFunction =new UpdataFunction();
+        updataFunction.showUpdataDialog(MainActivity.this);
     }
     //設置字體大小
     private void setFontSize(){
@@ -276,12 +274,15 @@ public class MainActivity extends AppCompatActivity{
                         Intent in = new Intent(context, NewMissionActivity.class);
                         in.putExtra("id", SessionFunctions.getUserUid());
                         startActivity(in);
+                        overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
                         break;
                     }
                     case 1:{
                         Intent in = new Intent(context, NewGroupActivity.class);
                         in.putExtra("id", SessionFunctions.getUserUid());
                         startActivity(in);
+                        overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
+                        break;
                     }
                 }
             }
@@ -394,8 +395,11 @@ public class MainActivity extends AppCompatActivity{
         dialog.show();
     }
     private void makeSettingDialog(){
-        Dialog_setting dialog = new Dialog_setting(context);
-        dialog.show();
+        Intent in = new Intent(MainActivity.this,SettingActivity.class);
+        startActivity(in);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
+//        SettingActivity dialog = new SettingActivity(context);
+//        dialog.show();
     }
     private void makeAchievementDialog(){
         Dialog_achievement dialog = new Dialog_achievement(context);

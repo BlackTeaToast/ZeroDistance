@@ -2,23 +2,25 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/frame">
+
     <ScrollView android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/scrollView3"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/repeat_cube_bg"
-    android:fillViewport="false"
-        android:layout_margin="3.5dp">
+    android:fillViewport="false">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="5dp"
         android:minWidth="300dp">
-
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar" />
 
         <LinearLayout
             android:orientation="vertical"

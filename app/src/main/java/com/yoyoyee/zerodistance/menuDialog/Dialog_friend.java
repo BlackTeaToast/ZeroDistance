@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.FriendAdapter;
@@ -147,13 +148,17 @@ public class Dialog_friend extends Dialog {
                 public void onClick(View v) {
                     if(!isdel) {
                     final View item = LayoutInflater.from(context).inflate(R.layout.dialog_search, null);
+                    final EditText editText = (EditText) item.findViewById(R.id.friname);
+                         editText.addTextChangedListener(new TextLenghLimiter(60));
+                         editText.setMinLines(1);
+                         editText.setMaxLines(1);
+                         editText.setSingleLine(true);
                     new AlertDialog.Builder(context)
                             .setView(item)
                             .setTitle("請輸入要查詢玩家名稱")
                             .setNegativeButton("確定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    EditText editText = (EditText) item.findViewById(R.id.friname);
                                     Toast.makeText(context, editText.getText().toString(), Toast.LENGTH_SHORT).show();
                                 }
                             })

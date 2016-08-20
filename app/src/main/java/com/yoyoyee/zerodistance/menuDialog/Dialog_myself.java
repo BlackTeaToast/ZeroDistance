@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
@@ -136,7 +137,8 @@ public class Dialog_myself extends Dialog {
             public void onClick(View v) {
                 final View item = LayoutInflater.from(context).inflate(R.layout.dialog_search, null);
                 final EditText editText = (EditText) item.findViewById(R.id.friname);
-                editText.setMinLines(2);
+                editText.addTextChangedListener(new TextLenghLimiter(60));
+                editText.setMinLines(1);
                 editText.setMaxLines(2);
                 new AlertDialog.Builder(context)
                         .setView(item)
@@ -144,8 +146,34 @@ public class Dialog_myself extends Dialog {
                         .setNegativeButton("確定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(context, editText.getText().toString(), Toast.LENGTH_SHORT).show();
-                                Aboutmyself.setText(editText.getText().toString());
+                                ClientFunctions.setUserIntroduction(editText.getText().toString(), new ClientResponse() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if(response.equals("1")){
+                                            Toast.makeText(context,"修改成功",Toast.LENGTH_SHORT).show();
+                                        }else {
+                                            Toast.makeText(context,"修改成功,但未知錯誤",Toast.LENGTH_SHORT).show();
+                                        }
+                                        SessionFunctions.setUserIntroduction(editText.getText().toString());
+                                        Aboutmyself.setText(SessionFunctions.getUserIntroduction());
+                                    }
+
+                                    @Override
+                                    public void onErrorResponse(String response) {
+                                        if(response.equals("-1")){
+                                            Toast.makeText(context,"修改失敗",Toast.LENGTH_SHORT).show();
+                                        }else if(response.equals("-400")){
+                                            Toast.makeText(context,"內部錯誤",Toast.LENGTH_SHORT).show();
+
+                                        }else if(response.equals("-401")){
+                                            Toast.makeText(context,"格式錯誤",Toast.LENGTH_SHORT).show();
+                                        }else if(response.equals("-402")){
+                                            Toast.makeText(context,"驗證錯誤",Toast.LENGTH_SHORT).show();
+                                    }else {
+                                            Toast.makeText(context,"修改失敗未知錯誤",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             }
                         })
                         .setPositiveButton("取消" , new OnClickListener() {
