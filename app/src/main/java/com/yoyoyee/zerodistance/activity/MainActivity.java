@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.CustomToast;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Titles = getResources().getStringArray(R.array.tabstyle); //設定tab
         Intent it  = this.getIntent();
+        setAT();
         whichpage= it.getIntExtra("whichpage", 0);
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -119,6 +121,11 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         }
+    }
+
+    private void setAT(){
+        Intent intent = new Intent(this, TapService.class);
+        startService(intent);
     }
     //設置字體大小
     private void setFontSize(){
