@@ -27,6 +27,7 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.app.TapService;
+import com.yoyoyee.zerodistance.app.UpdataFunction;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.CustomToast;
@@ -105,6 +106,14 @@ public class MainActivity extends AppCompatActivity{
                 return ContextCompat.getColor(getApplicationContext(), R.color.ColorPrimaryToolbar);
             }
         });
+        /*背景運行
+        * */
+        Intent service =new Intent(MainActivity.this,TapService.class);
+        startService(service);
+        /*檢查更新
+        * */
+        UpdataFunction updataFunction =new UpdataFunction();
+        updataFunction.showUpdataDialog(MainActivity.this);
 
     }
 

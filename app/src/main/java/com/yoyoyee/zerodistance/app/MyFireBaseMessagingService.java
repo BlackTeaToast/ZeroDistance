@@ -322,6 +322,23 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
 
     }
 
+    private void showFriendsAccept(Map data){
+        Intent i = new Intent(getApplicationContext(), QAActivity.class);
+        i.putExtra("isGroup", Boolean.valueOf(data.get("isGroup").toString()));
+        i.putExtra("id", Integer.parseInt(data.get("ID").toString()));
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                .setAutoCancel(true)
+                .setContentTitle(getResources().getString(R.string.notification_QA_Title_HadAnswer))
+                .setContentText(getResources().getString(R.string.notification_QA_Contest_Answer) + content)
+                .setSmallIcon(R.drawable.login_pic8)
+                .setContentIntent(pendingIntent);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+
+    }
+
     private void showOther(final Map data) {
         Intent i = new Intent(getApplicationContext(), NewMissionActivity.class);
         i.putExtra("notificationModel", true);

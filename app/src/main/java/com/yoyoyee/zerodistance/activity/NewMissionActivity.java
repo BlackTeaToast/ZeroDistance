@@ -51,6 +51,7 @@ import com.yoyoyee.zerodistance.app.TapService;
 import com.yoyoyee.zerodistance.app.TextLenghLimiter;
 import com.yoyoyee.zerodistance.app.TextNextLineLimiter;
 import com.yoyoyee.zerodistance.app.TimeBroadcastReceiver;
+import com.yoyoyee.zerodistance.app.UpdataFunction;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
@@ -203,6 +204,12 @@ public class NewMissionActivity extends AppCompatActivity {
         final Button serviceStart,serviceStop;
         serviceStart= (Button) findViewById(R.id.serviceStart);
         serviceStop= (Button)findViewById(R.id.serviceStop);
+        //---隱藏測試用
+        Boolean test=false;
+        if (test==false) {
+            serviceStart.setVisibility(View.GONE);
+            serviceStop.setVisibility(View.GONE);
+        }
         serviceStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,6 +227,10 @@ public class NewMissionActivity extends AppCompatActivity {
                 Intent intent =new Intent (NewMissionActivity.this,TapService.class);
                 stopService(intent);
                 Toast.makeText(NewMissionActivity.this,"STOP",Toast.LENGTH_SHORT).show();
+                UpdataFunction updataFunction =new UpdataFunction();
+                updataFunction.showUpdataDialog(NewMissionActivity.this);
+
+
             }
         });
 
@@ -263,6 +274,7 @@ public class NewMissionActivity extends AppCompatActivity {
         //此區為隱藏功能用--------------------------------------------------------------------------
         //hide(PICTURE_GONE);
     }
+
     void toNotificationClass (){
         Intent intent = getIntent();
         Boolean isNotification = intent.getBooleanExtra("notificationModel",false);
