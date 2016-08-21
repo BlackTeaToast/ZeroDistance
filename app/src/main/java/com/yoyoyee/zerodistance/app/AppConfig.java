@@ -4,6 +4,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
 public class AppConfig {
+	//APP version
+	public static int VERSION =1;
+
 	// Server user login url
 	public static String URL_LOGIN = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/login";
 

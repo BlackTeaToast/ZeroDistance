@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.yoyoyee.zerodistance.R;
+import com.yoyoyee.zerodistance.activity.GroupActivity;
 import com.yoyoyee.zerodistance.activity.MainActivity;
 import com.yoyoyee.zerodistance.activity.MissionActivity;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
@@ -64,7 +65,7 @@ public class TimeBroadcastReceiver extends BroadcastReceiver{
                     nowString = nowString + (now[z]<10 ? "0" + String.valueOf(now[z]):String.valueOf(now[z]));
                 }
                 for (int z = 0; z < mission_ID.length; z++) {
-                    if ((Long.parseLong(mission_AT[z]) - Long.parseLong(nowString)) < 100) {
+                    if ((Long.parseLong(mission_AT[z]) - Long.parseLong(nowString)) < 100 && (Long.parseLong(mission_AT[z]) - Long.parseLong(nowString))>=0) {
                         int math = (Integer.parseInt(mission_AT[z].substring(8, 10)) * 60 + Integer.parseInt(mission_AT[z].substring(10, 12))) - (now[3] * 60 + now[4]);
                         for (int x=0;x<howNotiNotification.length;x++) {
                             if (math ==howNotiNotification[x]){
@@ -74,7 +75,7 @@ public class TimeBroadcastReceiver extends BroadcastReceiver{
                     }
                 }
                 for (int z = 0; z < group_ID.length; z++) {
-                    if ((Long.parseLong(group_AT[z]) - Long.parseLong(nowString)) < 100) {
+                    if ((Long.parseLong(group_AT[z]) - Long.parseLong(nowString)) < 100 && (Long.parseLong(group_AT[z]) - Long.parseLong(nowString)) >=0) {
                         long math = (Long.parseLong(group_AT[z].substring(8, 10)) * 60 +Long.parseLong(group_AT[z].substring(10, 12))) - (now[3] * 60 + now[4]);
                         for (int x=0;x<howNotiNotification.length;x++) {
                             if (math ==howNotiNotification[x]){
@@ -99,8 +100,8 @@ public class TimeBroadcastReceiver extends BroadcastReceiver{
         Mission mission=QueryFunctions.getMission(missionID);
         String title ="任務時間快到通知";
         String text ="任務："+mission.getTitle()+"還剩"+String.valueOf(time)+"分鐘就要開始囉~";
-        Intent i =new Intent(context,MainActivity.class);
-        i.putExtra("whichpage",2);
+        Intent i =new Intent(context,MissionActivity.class);
+        i.putExtra("id",missionID);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
@@ -116,8 +117,8 @@ public class TimeBroadcastReceiver extends BroadcastReceiver{
         Mission mission=QueryFunctions.getGroup(groupID);
         String title ="揪團時間快到通知";
         String text ="揪團："+mission.getTitle()+"還剩"+String.valueOf(time)+"分鐘就要開始囉~";
-        Intent i =new Intent(context,MainActivity.class);
-        i.putExtra("whichpage",2);
+        Intent i =new Intent(context, GroupActivity.class);
+        i.putExtra("id",groupID);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)

@@ -79,6 +79,28 @@ import java.util.Map;
  *                  測試通知需要：
  *                      1.
  *              }
+ *           邀請好友通知 1  加你好友"friendOPAccept"
+ *           {
+ *               需要：
+ *                  1.邀請你或是被擬邀請的人的ID:"userID"
+ *           }
+ *            邀請好友通知2   或是別人同意你的好友申請"friendOPApplication"
+ *           {
+ *               需要：
+ *                  1.邀請你或是被擬邀請的人的ID:"userID"
+ *           }
+ *           任務揪團邀請通知1  邀請加入任務"friendInviteMission"
+ *           {
+ *               需要：
+ *                  1.邀請你或是被擬邀請的人的ID:"userID"
+ *                  2.邀請的任務或揪團的ID:"ID"
+ *           }
+ *            任務揪團邀請通知2  或是邀請加入揪團"friendInviteGroup"
+ *           {
+ *               需要：
+ *                  1.邀請你或是被擬邀請的人的ID:"userID"
+ *                  2.邀請的揪團的ID:"ID"
+ *           }
  *          }
  *      使用content來傳輸內容資料，辨認代碼為"content"
  *      使用title來傳輸標題資料，辨認代碼為"title"
@@ -126,6 +148,14 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
             showOther(data);
         } else if (data.get("type").toString().equals("test")) {
             showTest(data);
+        } else if (data.get("type").toString().equals("friendOPAccept")) {
+            friendOtherPeopleAccept(data);
+        } else if (data.get("type").toString().equals("friendOPApplication")) {
+            friendOtherPeopleApplication(data);
+        } else if (data.get("type").toString().equals("friendInviteMission")) {
+            friendInviteMission(data);
+        } else if (data.get("type").toString().equals("friendInviteGroup")) {
+            friendInviteGroup(data);
         } else
             Log.d("FCM", "訊號錯誤");
 
@@ -413,6 +443,19 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
             }
         });
         mQueue.add(jsonObjectRequest);
+    }
+
+    private void friendOtherPeopleAccept(final Map map){
+
+    }
+    private void friendOtherPeopleApplication(final Map map){
+
+    }
+    private void friendInviteMission(final Map map){
+
+    }
+    private void friendInviteGroup(final Map map){
+
     }
 
 

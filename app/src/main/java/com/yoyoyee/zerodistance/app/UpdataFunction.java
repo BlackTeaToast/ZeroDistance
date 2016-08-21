@@ -51,9 +51,16 @@ public class UpdataFunction {
         getlastVersion(context, new UpdataFunction.VolleyCallback() {
             @Override
             public void onSuccess(int version,String url) {
-                AlertDialog alertDialog = getAlertDialog("這是一個對話框",String.valueOf(version),context,url);
-                alertDialog.show();
-
+                if (version ==0){
+                    Log.d("UpdataFunction :","Internet isn't connect");
+                }
+                else if (version == AppConfig.VERSION){
+                    Log.d("UpdataFunction :","It is the last version");
+                }
+                else {
+                    AlertDialog alertDialog = getAlertDialog("這是一個對話框", String.valueOf(version), context, url);
+                    alertDialog.show();
+                }
             }
         });
     }
