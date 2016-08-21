@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity{
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         TextView UserNames = (TextView)tool_bar.findViewById(R.id.UserName);
         TextView UserSchool = (TextView)tool_bar.findViewById(R.id.UserSchool);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         UserNames.setText(SessionFunctions.getUserNickName()+"");
         UserSchool.setText(SessionFunctions.getUserschoolName()+"　　");
         setSupportActionBar(tool_bar);
@@ -198,7 +199,6 @@ public class MainActivity extends AppCompatActivity{
         ClientFunctions.updateMissions(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-                upDataCount=0;
                 updataGroupDB();//更新揪團
             }
 
@@ -260,7 +260,6 @@ public class MainActivity extends AppCompatActivity{
         }.start();
     }
     private void setfab() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         if (SessionFunctions.isTeacher()&&pager.getCurrentItem()==0||pager.getCurrentItem()==1) {
             fab.show();
         }else {
@@ -294,6 +293,9 @@ public class MainActivity extends AppCompatActivity{
         pager.setOffscreenPageLimit(4);//儲存頁面數
         pager.setAdapter(adapter);
         pager.setCurrentItem(whichpage);  //預設出現頁面
+        if(whichpage==2||whichpage==3){
+            fab.hide();
+        }
         tabs.setViewPager(pager);
         hideDialog();
         CustomToast.showToast(context, "跳"+whichpage+"頁", 500);

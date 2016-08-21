@@ -125,10 +125,10 @@ public class Dialog_friend extends Dialog {
             public void onClick(View v) {
                 if(!isdel) {
                     dodelfrithing();
+                    friendAdapter.setdelCount();
                 }else {
                     dodelfrithing();
-                    Toast.makeText(context, "已送出", Toast.LENGTH_SHORT).show();
-                    friendAdapter.text(context);
+                    Toast.makeText(context, "已刪除 "+friendAdapter.getdelCount(context)+" 人", Toast.LENGTH_SHORT).show();
                 }
                 isdel=!isdel;
             }

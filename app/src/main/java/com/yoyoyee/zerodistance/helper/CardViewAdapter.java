@@ -12,8 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
@@ -35,7 +35,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         public TextView missionDetial, missionName , datetime, peoplenumber, PoName;
         public ImageView missiondangerous;
         public CardView CardView;
-        public RelativeLayout fr_fr_mi;
+        public FrameLayout fr_fr_mi;
         private Space space;
         public ViewHolder(View v) {
             super(v);
@@ -45,7 +45,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             PoName = (TextView)v.findViewById(R.id.PoName);
             missiondangerous = (ImageView) v.findViewById(R.id.missiondangerous);
             peoplenumber = (TextView)v.findViewById(R.id.peoplenumber);
-            fr_fr_mi = (RelativeLayout) v.findViewById(R.id.fr_fr_mi);
+            fr_fr_mi = (FrameLayout) v.findViewById(R.id.fr_fr_mi);
             CardView = (CardView) v.findViewById(R.id.CardView);
             space = (Space)v.findViewById(R.id.space);
 
@@ -63,39 +63,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     @Override
     public CardViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v=null;
-        int i=0;
-        if(fragment==R.layout.fragment_fragment_mission){
-            switch (SessionFunctions.getCardlayoutWay()) {
-                case 1: {
-                    v = LayoutInflater.from(parent.getContext())
-                            .inflate(fragment, parent, false);//原本
-                    i=1;
-                    break;
-                }
-                case 2: {
-                   v = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.fragment_fragment_mission1, parent, false);//原本
-                    i=2;
-                    break;
-                }
-                case 3: {
-                    v = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.fragment_fragment_mission2, parent, false);//原本
-                    i=3;
-                    break;
-                }
-                case 4:{
-                    v = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.test_cardview, parent, false);//黑板專用
-                    i=4;
-                    break;
-                }
-            }
-        }else {
+//            v = setcardlayout(v,parent);
+
             v = LayoutInflater.from(parent.getContext())
                     .inflate(fragment, parent, false);
-            i=4;
-        }
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -107,11 +78,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.datetime.setText(dateFormat.format(missions[position].getExpAt()));
             holder.peoplenumber.setText(missions[position].getCurrentNum() + "/" + missions[position].getNeedNum());
             holder.PoName.setText(missions[position].getUserName());
+            holder.CardView.setBackgroundResource(R.drawable.greencard);
             //  getResources().getString(R.string.peopleCount)+
-            if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission) {//其他頁面沒有緊急任務
+            if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission1) {//其他頁面沒有緊急任務
                 if (missions[position].getUrgent()) {
 //                    holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
-
                     holder.CardView.setBackgroundResource(R.drawable.greencard);
                 } else {
                     holder.CardView.setBackgroundResource(R.drawable.greencard);
@@ -207,8 +178,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             textViewTemp.setMaxLines(1);//顯示幾行
             textViewTemp = (TextView) v.findViewById(R.id.PoName);
             textViewTemp.setTextSize(SF.getUserTextSize() + 4);
-//        textViewTemp = (TextView) v.findViewById(R.id.peopleNumberread);
-//        textViewTemp.setTextSize(SF.getUserTextSize()+5);
+            textViewTemp = (TextView) v.findViewById(R.id.peoplecount);
+            textViewTemp.setTextSize(SF.getUserTextSize()+4);
             textViewTemp = (TextView) v.findViewById(R.id.missionDetial);
             textViewTemp.setTextSize(SF.getUserTextSize() + 7);
             if (SessionFunctions.getUserTextSize() == 10) {
@@ -249,5 +220,30 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             }
 
         }
+    }
+    private View setcardlayout(View v,ViewGroup parent){
+        switch (SessionFunctions.getCardlayoutWay()) {
+            case 1: {
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(fragment, parent, false);//原本
+                break;
+            }
+            case 2: {
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_fragment_mission1, parent, false);//原本
+                break;
+            }
+            case 3: {
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.fragment_fragment_mission2, parent, false);//原本
+                break;
+            }
+            case 4:{
+                v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.test_cardview, parent, false);//黑板專用
+                break;
+            }
+        }
+        return v;
     }
 }

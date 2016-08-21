@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.datatype.Friend;
@@ -26,7 +25,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
     private int Count;
     private boolean boxisvisible = false;
     private ArrayList<Friend> friend;
-    private static int delcount;
+    private static int delcount=0;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CheckBox checkbox;
         public TextView friend_name , saveuid;
@@ -112,8 +111,12 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
         popupmenu.show();
 
     }
-    public void text(Context context){
-        Toast.makeText(context, delcount+"", Toast.LENGTH_SHORT).show();
+    public void setdelCount(){
+        delcount=0;
+    }
+    public int getdelCount(Context context){
+//        Toast.makeText(context, delcount+"", Toast.LENGTH_SHORT).show();
+        return delcount;
     }
 
 }
