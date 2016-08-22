@@ -28,7 +28,7 @@ public class ImageViewAdapter extends RecyclerView.Adapter <ImageViewAdapter.Vie
     public ImageViewAdapter(ArrayList<String> imageURL){
         this.imageURL = imageURL;
     }
-
+    //確定每個ViewHolder中 有哪些元素 並且findViewById
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView urlImage;
 
