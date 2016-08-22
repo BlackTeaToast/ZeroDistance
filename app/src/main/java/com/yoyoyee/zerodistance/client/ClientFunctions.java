@@ -2450,6 +2450,81 @@ public class ClientFunctions {
     }
 
     /**
+     * 輸入好友UID，刪除當前使用者好友
+     * onResponse:
+     *    1 - 刪除好友成功
+     * onErrorResponse:
+     *   -1 - 刪除好友錯誤
+     *   -2 - 刪除失敗，沒有改動
+     *   -3 - 伺服器未知錯誤
+     *   -4 - 該好友不存在
+     *   -5 - Uid不能是自己
+     * -400 - 內部錯誤(ex未連上網路)
+     * -401 - 格式錯誤
+     * -402 - 驗證錯誤
+     * @param uid 好友UID
+     * @param clientResponse
+     */
+    public static void deleteFriend(final String uid, final ClientResponse clientResponse) {
+        String tag_string_req = "req_delete_friend";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_DELETE_USER_FRIEND, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    String statusCode = jObj.getString("status_code");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+
+                        clientResponse.onResponse(statusCode);
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+
+                        clientResponse.onErrorResponse(statusCode);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    clientResponse.onErrorResponse("-400");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Add Friend Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
+                clientResponse.onErrorResponse("-400");
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("friend_uid", uid);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    /**
      * 修改當前使用者介紹
      * onResponse:
      *    1 - 修改使用者介紹成功
