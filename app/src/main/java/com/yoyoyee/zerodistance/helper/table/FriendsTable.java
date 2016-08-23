@@ -60,7 +60,7 @@ public class FriendsTable {
             + KEY_INTELLIGENCE + " INTEGER,"
             + KEY_AGILE + " INTEGER,"
             + KEY_INTRODUCTION + " TEXT,"
-            + KEY_IS_ACCEPTED + " BOOLEAN"
+            + KEY_IS_ACCEPTED + " BOOLEAN,"
             + KEY_IS_INVITE + " BOOLEAN" + ")";
 
 }

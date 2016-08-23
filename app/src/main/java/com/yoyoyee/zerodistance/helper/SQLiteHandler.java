@@ -47,7 +47,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 24;
+	private static final int DATABASE_VERSION = 26;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
