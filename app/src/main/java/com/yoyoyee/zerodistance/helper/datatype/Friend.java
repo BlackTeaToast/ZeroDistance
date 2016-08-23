@@ -21,6 +21,7 @@ public class Friend {
     public int agile;
     public String introduction;
     public boolean isAccepted;
+    public boolean isInvite;
 
     public Friend() {
 
@@ -29,7 +30,7 @@ public class Friend {
     public Friend(String uid, boolean isTeacher, String name, String nickName, int schoolID,
                   String studentID, String email, int profession, int level, int exp, int money,
                   int strength, int intelligence, int agile,String introduction,
-                  boolean isAccepted) {
+                  boolean isAccepted, boolean isInvite) {
 
         this.uid = uid;
         this.isTeacher = isTeacher;
@@ -47,6 +48,7 @@ public class Friend {
         this.agile = agile;
         this.introduction = introduction;
         this.isAccepted = isAccepted;
+        this.isInvite = isInvite;
 
     }
 
