@@ -2306,7 +2306,7 @@ public class ClientFunctions {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         JSONArray friends = jObj.getJSONArray("friends");
-
+                        JSONArray invites = jObj.getJSONArray("invites");
                         ArrayList<Friend> list = new ArrayList<>();
 
                         for(int i=0; i<friends.length(); i++) {
@@ -2327,8 +2327,31 @@ public class ClientFunctions {
                                     friend.getInt("intelligence"),
                                     friend.getInt("agile"),
                                     friend.getString("introduction"),
-                                    friend.getInt("is_accepted")!=0));
+                                    friend.getInt("is_accepted")!=0,
+                                    false));
 
+                        }
+
+                        for(int i=0; i<invites.length(); i++) {
+                            JSONObject invite = invites.getJSONObject(i);
+
+                            list.add(new Friend(invite.getString("user_uid"),
+                                    invite.getInt("is_teacher")!=0,
+                                    invite.getString("name"),
+                                    invite.getString("nick_name"),
+                                    invite.getInt("school_id"),
+                                    invite.getString("student_id"),
+                                    invite.getString("email"),
+                                    invite.getInt("profession"),
+                                    invite.getInt("level"),
+                                    invite.getInt("exp"),
+                                    invite.getInt("money"),
+                                    invite.getInt("strength"),
+                                    invite.getInt("intelligence"),
+                                    invite.getInt("agile"),
+                                    invite.getString("introduction"),
+                                    invite.getInt("is_accepted")!=0,
+                                    true));
                         }
 
                         // Inserting row in users table

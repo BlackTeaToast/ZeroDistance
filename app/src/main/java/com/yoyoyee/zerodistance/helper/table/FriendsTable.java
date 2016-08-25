@@ -24,6 +24,7 @@ public class FriendsTable {
     public static final String KEY_AGILE = "agile";
     public static final String KEY_INTRODUCTION = "introduction";
     public static final String KEY_IS_ACCEPTED = "is_accepted";
+    public static final String KEY_IS_INVITE = "is_invite";
 
     public static final int COLUMNS_NUM_UID = 0;
     public static final int COLUMNS_NUM_IS_TEACHER = 1;
@@ -41,6 +42,7 @@ public class FriendsTable {
     public static final int COLUMNS_NUM_AGILE = 13;
     public static final int COLUMNS_NUM_INTRODUCTION = 14;
     public static final int COLUMNS_NUM_IS_ACCEPTED = 15;
+    public static final int COLUMNS_NUM_IS_INVITE = 16;
 
     public static final String CREATE_FRIENDS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
             + KEY_UID + " TEXT,"
@@ -58,6 +60,7 @@ public class FriendsTable {
             + KEY_INTELLIGENCE + " INTEGER,"
             + KEY_AGILE + " INTEGER,"
             + KEY_INTRODUCTION + " TEXT,"
-            + KEY_IS_ACCEPTED + " BOOLEAN" + ")";
+            + KEY_IS_ACCEPTED + " BOOLEAN,"
+            + KEY_IS_INVITE + " BOOLEAN" + ")";
 
 }

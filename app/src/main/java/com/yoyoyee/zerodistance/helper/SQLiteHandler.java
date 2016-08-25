@@ -47,7 +47,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 23;
+	private static final int DATABASE_VERSION = 26;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -1348,6 +1348,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 values.put(FriendsTable.KEY_AGILE, friends.get(i).agile);
                 values.put(FriendsTable.KEY_INTRODUCTION, friends.get(i).introduction);
                 values.put(FriendsTable.KEY_IS_ACCEPTED, friends.get(i).isAccepted);
+                values.put(FriendsTable.KEY_IS_INVITE, friends.get(i).isInvite);
 
                 db.insert(FriendsTable.TABLE_NAME, null, values);
                 Log.d(TAG, "updateFriends: " + values.toString());

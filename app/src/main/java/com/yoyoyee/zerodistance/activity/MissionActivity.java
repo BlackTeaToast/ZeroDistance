@@ -43,6 +43,8 @@ import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_achievement;
+import com.yoyoyee.zerodistance.menuDialog.Dialog_personal_rating;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -162,6 +164,7 @@ public class MissionActivity extends AppCompatActivity {
     private TextView place;
     private TextView price;
     private TextView users;
+    private TextView plus;//能力加乘
     private RatingBar ratingBar;
     private ArrayList<String> user;//拿來存有那些人
     private CheckBox checkBox;
@@ -172,6 +175,7 @@ public class MissionActivity extends AppCompatActivity {
     private int acceptNumber;//已餐與人數
     private boolean isFinished;//一開始是否勾選已完成
     private ImageView imageView;
+    private ImageView userIcon;//發布者頭像
 
     private Button rateButton;
     private Button joinButton;
@@ -235,10 +239,12 @@ public class MissionActivity extends AppCompatActivity {
         place = (TextView)findViewById(R.id.whereM);
         price = (TextView)findViewById(R.id.priceM);
         users = (TextView)findViewById(R.id.usersM);
+        plus = (TextView)findViewById(R.id.plusText);
         ratingBar = (RatingBar)findViewById(R.id.ratingBarM);
         imageView = (ImageView)findViewById(R.id.imageViewM);
         rateButton = (Button)findViewById(R.id.ratebuttonM);
         finishButton = (Button)findViewById(R.id.finishButton) ;
+        userIcon = (ImageView)findViewById(R.id.userIcon);
 
         //-------------------------------------------------------------------------------
 
@@ -259,7 +265,7 @@ public class MissionActivity extends AppCompatActivity {
                         rateTotal.setText(R.string.rate_total);
                         //將個別評分開啟
                         buttonVisible = (Button) findViewById(R.id.ratebuttonM);
-                        buttonVisible.setVisibility(View.GONE);
+                        buttonVisible.setVisibility(View.VISIBLE);
                     } else {
                         TextView rateTotal = (TextView) findViewById(R.id.rateTotalM);
                         rateTotal.setText(R.string.rate_total_one);
@@ -306,7 +312,7 @@ public class MissionActivity extends AppCompatActivity {
         rateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "點選了個別評分" ,Toast.LENGTH_SHORT).show();
+                makeRatingDialog();
             }
         });
     }//onCreate
@@ -396,7 +402,6 @@ public class MissionActivity extends AppCompatActivity {
         //字體大小
         size = SessionFunctions.getUserTextSize();
 
-
         //抓取內容
         doWhat =mission.getContent();
 
@@ -414,6 +419,25 @@ public class MissionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(title);
+
+        //測試發布者頭像顯示
+        if(imageURL.size()!=0){
+            //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
+            //建立一個AsyncTask執行緒進行圖片讀取動作，並帶入圖片連結網址路徑
+            new AsyncTask<String, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(String... params) {
+                    String url = params[0];
+                    return getBitmapFromURL(url);
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    userIcon.setImageBitmap(result);
+                    super.onPostExecute(result);
+                }
+            }.execute(imageURL.get(0));
+        }
 
         //imageViewAdapter 顯示圖片 ; 使用fragment_imageview.xml 當作每個 holder 來使用==========
         ImageViewAdapter imageViewAdapter = new ImageViewAdapter(imageURL);
@@ -548,6 +572,11 @@ public class MissionActivity extends AppCompatActivity {
         textViewTemp.setTextSize(size+7);
         textViewTemp = (TextView)findViewById(R.id.whereM);
         textViewTemp.setTextSize(size+3);
+        //完成時獲得
+        textViewTemp = (TextView)findViewById(R.id.plusTitle);
+        textViewTemp.setTextSize(size+7);
+        textViewTemp = (TextView)findViewById(R.id.plusText);
+        textViewTemp.setTextSize(size+3);
         //獎勵
         textViewTemp = (TextView)findViewById(R.id.priceTitleM);
         textViewTemp.setTextSize(size+7);
@@ -573,9 +602,9 @@ public class MissionActivity extends AppCompatActivity {
         //評分(統一、個別)
         textViewTemp = (TextView)findViewById(R.id.rateTotalM);
         textViewTemp.setTextSize(size+7);
-        Button ButtonTemp;
-        ButtonTemp = (Button)findViewById(R.id.ratebuttonM);
-        ButtonTemp.setTextSize(size+5);
+        //個別評分、完成評分按鈕
+        rateButton.setTextSize(size+5);
+        finishButton.setTextSize(size+5);
 
     }
 
@@ -1110,8 +1139,42 @@ public class MissionActivity extends AppCompatActivity {
         });
     }
 
+    //讀取網路圖片，型態為Bitmap
+    //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
+    private Bitmap getBitmapFromURL(String imageUrl)
+    {
+        try
+        {
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            return bitmap;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void makeRatingDialog(){
+        //如果沒有超過需要人數，有參加的人都可以個別評分
+        if(acceptNumber <= needNumber){
+            Dialog_personal_rating dialog = new Dialog_personal_rating(this, acceptNumber);
+            dialog.show();
+        }
+
+        //供過於求，則只顯示需要的人
+        else{
+            Dialog_personal_rating dialog = new Dialog_personal_rating(this, needNumber);
+            dialog.show();
+        }
 
 
+    }
 
 
 }
