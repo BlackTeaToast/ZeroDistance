@@ -127,4 +127,7 @@ public class AppConfig {
 	// Server set User Introduction
 	public static String URL_SET_USER_INTRODUCTION = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/user/setUserIntroduction";
 
+	// Server search friend
+	public static String URL_SEARCH_FRIEND = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/friend/searchFriend";
+
 }

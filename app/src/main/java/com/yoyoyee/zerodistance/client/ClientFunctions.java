@@ -20,6 +20,7 @@ import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.MissionAccept;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 import com.yoyoyee.zerodistance.helper.datatype.School;
+import com.yoyoyee.zerodistance.helper.datatype.User;
 import com.yoyoyee.zerodistance.helper.datatype.UserAcceptGroups;
 import com.yoyoyee.zerodistance.helper.datatype.UserAcceptMissions;
 
@@ -2609,6 +2610,94 @@ public class ClientFunctions {
                 params.put("uid", session.getUserUid());
                 params.put("access_key", session.getUserAccessKey());
                 params.put("introduction", introduction);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    /**
+     * 搜尋好友
+     * onErrorResponse:
+     * -400 - 內部錯誤(ex未連上網路)
+     * -401 - 格式錯誤
+     * -402 - 驗證錯誤
+     * @param text
+     * @param clientResponseUser
+     */
+    public static void searchFriend(final String text, final ClientResponseUser clientResponseUser) {
+        String tag_string_req = "req_search_friend";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_SEARCH_FRIEND, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Register Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        JSONArray usersJSON = jObj.getJSONArray("users");
+                        User[] users = new User[usersJSON.length()];
+                        for(int i=0; i<usersJSON.length(); i++) {
+                            JSONObject user = usersJSON.getJSONObject(i);
+                            users[i] = (new User(user.getString("unique_id"),
+                                    user.getInt("is_teacher")!=0,
+                                    user.getString("name"),
+                                    user.getString("nick_name"),
+                                    user.getInt("school_id"),
+                                    user.getString("student_id"),
+                                    user.getString("email"),
+                                    user.getInt("profession"),
+                                    user.getInt("level"),
+                                    user.getInt("exp"),
+                                    user.getInt("money"),
+                                    user.getInt("strength"),
+                                    user.getInt("intelligence"),
+                                    user.getInt("agile"),
+                                    user.getString("introduction")));
+                        }
+
+                        clientResponseUser.onResponse(users);
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Log.e(TAG, "searchFriend onResponse: " + errorMsg);
+                        clientResponseUser.onErrorResponse(-400);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "searchFriend Error: " + error.networkResponse.statusCode + ", "
+                        + error.getMessage());
+                clientResponseUser.onErrorResponse(-400);
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("text", text);
 
                 return params;
             }
