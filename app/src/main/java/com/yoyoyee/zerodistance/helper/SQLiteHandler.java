@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.yoyoyee.zerodistance.app.AppController;
+import com.yoyoyee.zerodistance.app.NotificationID;
 import com.yoyoyee.zerodistance.client.ClientFunctions;
 import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.datatype.Friend;
@@ -47,7 +48,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 26;
+	private static final int DATABASE_VERSION = 29;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -71,6 +72,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(UserAcceptMissionsTable.CREATE_USER_ACCEPT_MISSIONS_TABLE);
         db.execSQL(UserAcceptGroupsTable.CREATE_USER_ACCEPT_GROUPS_TABLE);
         db.execSQL(FriendsTable.CREATE_FRIENDS_TABLE);
+        db.execSQL(NotificationID.CREATE_TABLE);
         if(session.isLoggedIn()) {
             ClientFunctions.checkLogin(session.getUserEmail(), session.getUserPassword(), new ClientResponse() {
                 @Override
@@ -101,6 +103,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + UserAcceptMissionsTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserAcceptGroupsTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + FriendsTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + NotificationID.TABLE_NAME);
 		// Create tables again
 		onCreate(db);
 	}
@@ -1364,6 +1367,59 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Updated all FriendsTable info from SQLite");
         db.close();
 
+    }
+    public void putFriendList(String put){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(NotificationID.NICKNAME, put);
+            // Inserting Row
+            db.insert(NotificationID.TABLE_NAME, null, values);
+
+            Log.d(TAG, "New Friend put " );
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            db.close(); // Closing database connection
+        }
+    }
+    public ArrayList<String> getFriendList() {
+        ArrayList<String> st = new ArrayList<>();
+        String selectQuery = "SELECT "+NotificationID.NICKNAME+" FROM "+NotificationID.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        for(int i=0; i<cursor.getCount(); i++){
+            try {
+                String s=new String();
+                s = cursor.getString(0);
+                st.add(s);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.moveToNext();
+        }
+        // Move to first row
+        cursor.close();
+        db.close();
+        return st;
+    }
+    public void friendListDelete(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(NotificationID.TABLE_NAME, null, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "delete Friend List " + e.toString());
+        } finally {
+            db.endTransaction();
+        }
+
+        Log.d(TAG, "delete Friend List Complete");
+        db.close();
     }
 /*
     public void addGroupOrderList(int groupOrder[],String date[]) {

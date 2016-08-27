@@ -76,7 +76,12 @@ public class TapService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        compareTime();
+        try{
+            compareTime();
+        }catch (Exception e){
+         Log.d("TapService: ",e.toString());
+        }
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -178,6 +183,7 @@ public class TapService extends Service {
         }
         return list;
     }
+
 }
 
 /* 20160711碼調

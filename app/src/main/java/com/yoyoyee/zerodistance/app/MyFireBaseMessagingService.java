@@ -79,10 +79,11 @@ import java.util.Map;
  *                  測試通知需要：
  *                      1.
  *              }
- *           邀請好友通知 1  加你好友"friendOPAccept"
+ *           邀請好友通知 1  加好友通知"friendaccept"
  *           {
  *               需要：
- *                  1.邀請你或是被擬邀請的人的ID:"userID"
+ *                  1.邀請你或是被擬邀請的人的名字:"nickName"
+ *                  2.邀請你的人的UID:"userID"
  *           }
  *            邀請好友通知2   或是別人同意你的好友申請"friendOPApplication"
  *           {
@@ -148,14 +149,8 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
             showOther(data);
         } else if (data.get("type").toString().equals("test")) {
             showTest(data);
-        } else if (data.get("type").toString().equals("friendOPAccept")) {
-            friendOtherPeopleAccept(data);
-        } else if (data.get("type").toString().equals("friendOPApplication")) {
-            friendOtherPeopleApplication(data);
-        } else if (data.get("type").toString().equals("friendInviteMission")) {
-            friendInviteMission(data);
-        } else if (data.get("type").toString().equals("friendInviteGroup")) {
-            friendInviteGroup(data);
+        } else if (data.get("type").toString().equals("friendaccept")) {
+            showFriendsAccept(data);
         } else
             Log.d("FCM", "訊號錯誤");
 
@@ -353,19 +348,57 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
     }
 
     private void showFriendsAccept(Map data){
-        Intent i = new Intent(getApplicationContext(), QAActivity.class);
-        i.putExtra("isGroup", Boolean.valueOf(data.get("isGroup").toString()));
-        i.putExtra("id", Integer.parseInt(data.get("ID").toString()));
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                .setAutoCancel(true)
-                .setContentTitle(getResources().getString(R.string.notification_QA_Title_HadAnswer))
-                .setContentText(getResources().getString(R.string.notification_QA_Contest_Answer) + content)
-                .setSmallIcon(R.drawable.login_pic8)
-                .setContentIntent(pendingIntent);
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.notify(Integer.parseInt(data.get("ID").toString()), builder.build());
+        NotificationID list =new NotificationID();
+        list.putNameList(data.get("nickName").toString());
+        String nameList[] =list.getNameList();
+        int number =nameList.length;
+        String title ="";
+        for (int i=0;i<number;i++){
+            title += nameList[i] ;
+            if((number-1)!=i) title +="，";
+        }
+        if (number ==1) {
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            String UID = data.get("userID").toString();
+            i.putExtra("userID", UID);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                    .setAutoCancel(true)
+                    .setContentTitle(title + "想要跟你成為朋友喔~趕快去看看吧")
+                    .setContentText("點擊信息可以直接到對方個人頁面歐~")
+                    .setSmallIcon(R.drawable.login_pic8)
+                    .setContentIntent(pendingIntent);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.notify(NotificationID.FRIEND_ID, builder.build());
+        }
+        else if(number<=3){
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                    .setAutoCancel(true)
+                    .setContentTitle(title + "想要跟你成為朋友喔~趕快去看看吧")
+                    .setContentText("點擊信息可以直接到對方個人頁面歐~")
+                    .setSmallIcon(R.drawable.login_pic8)
+                    .setContentIntent(pendingIntent);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.notify(NotificationID.FRIEND_ID, builder.build());
+        }
+        else if (number>3){
+            list.deleteFriendList();
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                    .setAutoCancel(true)
+                    .setContentTitle("有很多人想要和你成為好友喔~趕快回應他們吧")
+                    .setContentText("點擊信息可以直接到對方個人頁面歐~")
+                    .setSmallIcon(R.drawable.login_pic8)
+                    .setContentIntent(pendingIntent);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.notify(NotificationID.FRIEND_ID, builder.build());
+        }
 
     }
 
@@ -445,18 +478,6 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
         mQueue.add(jsonObjectRequest);
     }
 
-    private void friendOtherPeopleAccept(final Map map){
-
-    }
-    private void friendOtherPeopleApplication(final Map map){
-
-    }
-    private void friendInviteMission(final Map map){
-
-    }
-    private void friendInviteGroup(final Map map){
-
-    }
 
 
 }
