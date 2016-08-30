@@ -122,7 +122,7 @@ public class fragment_havebeen extends Fragment {//
             allmission[missions.size()+i]=group[i];
         }
         dosort();
-        CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen);
+        CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen , getContext());
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }else {

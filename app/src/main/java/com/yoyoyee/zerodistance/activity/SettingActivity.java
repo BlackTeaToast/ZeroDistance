@@ -77,6 +77,13 @@ public class SettingActivity extends AppCompatActivity {
         setFontSize();//設定字體大小
         settoolbar();
         return ;}
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
+    }
+
     private void setRG(){
         textsizeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

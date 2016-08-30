@@ -7,6 +7,7 @@ package com.yoyoyee.zerodistance.helper;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private int Countplus;
     private SimpleDateFormat dateFormat;
     Intent in;
+    private Context context;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView missionDetial, missionName , datetime, peoplenumber, PoName;
         public ImageView missiondangerous;
@@ -55,9 +57,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }
     }
 
-    public CardViewAdapter(Mission[] missions, int fragment) {
+    public CardViewAdapter(Mission[] missions, int fragment, Context context) {
         this.missions = missions;
         this.fragment = fragment;
+        this.context = context;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.missionName.setText(missions[position].getTitle());
@@ -78,6 +82,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.datetime.setText(dateFormat.format(missions[position].getExpAt()));
             holder.peoplenumber.setText(missions[position].getCurrentNum() + "/" + missions[position].getNeedNum());
             holder.PoName.setText(missions[position].getUserName());
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {  //版本過低會葛闢
             holder.CardView.setBackgroundResource(R.drawable.greencard);
             //  getResources().getString(R.string.peopleCount)+
             if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission1) {//其他頁面沒有緊急任務
@@ -88,6 +93,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                     holder.CardView.setBackgroundResource(R.drawable.greencard);
                 }
             }
+        }
             if (missions[position].isMission()) {
                 holder.missionName.setTextColor(Color.parseColor("#FF428BCA"));
             } else {

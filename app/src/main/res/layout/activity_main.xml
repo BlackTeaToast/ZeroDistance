@@ -69,9 +69,11 @@
             app:pressedTranslationZ="12dp"
             android:background="@drawable/action_floating_blue"
             card_view:backgroundTint="#e15afc"
-            android:visibility="gone"
             android:layout_weight="1"
-            android:layout_above="@+id/tabs">
+            android:layout_above="@+id/tabs"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="false"
+            android:visibility="gone">
 
         </android.support.design.widget.FloatingActionButton>
 

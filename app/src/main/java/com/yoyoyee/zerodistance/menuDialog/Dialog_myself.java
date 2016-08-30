@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Friend;
 import com.yoyoyee.zerodistance.helper.datatype.Profession;
+import com.yoyoyee.zerodistance.helper.datatype.User;
 
 /**
  * Created by 楊霖村 on 2016/7/9.
@@ -38,13 +40,15 @@ public class Dialog_myself extends Dialog {
     LinearLayout editLL, otherLL;
     Context context;
     String Uid;
+    User user;
     RoundCornerProgressBar expp;
     boolean ismyself;
-    public Dialog_myself(Context context , boolean ismyself , String Uid) {
+    public Dialog_myself(Context context , boolean ismyself , String Uid , User user) {
        super(context);
         this.context = context;
         this.ismyself = ismyself;
         this.Uid = Uid;
+        this.user = user;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_personal_page);
     }
@@ -67,6 +71,7 @@ public class Dialog_myself extends Dialog {
         makefri = (Button)findViewById(R.id.makefri);
         expp = (RoundCornerProgressBar)findViewById(R.id.expp);
         expTxt = (TextView)findViewById(R.id.expTxt);
+        ImageView iv = (ImageView)findViewById(R.id.mypicture);
         getWindow().setBackgroundDrawable(new ColorDrawable(0));
         ori();//自我介紹內容
         setheight();//畫面大小
@@ -99,7 +104,7 @@ public class Dialog_myself extends Dialog {
             Achievement.setText("萬粽之王我");
             Aboutmyself.setText(SessionFunctions.getUserIntroduction() + "");
             Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
-        }else{
+        }else if(!Uid.equals("user")){
             Friend friend = QueryFunctions.getFriendsData(Uid);
             Toast.makeText(context, "Uid:"+Uid, Toast.LENGTH_SHORT).show();
             name.setText(friend.name + "");
@@ -112,6 +117,19 @@ public class Dialog_myself extends Dialog {
             Intelligence.setText(friend.intelligence + "");
             Achievement.setText("萬粽之王");
             Aboutmyself.setText(friend.introduction+ "");
+            Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
+        }else if(Uid.equals("user")){
+            Toast.makeText(context, "user:"+Uid, Toast.LENGTH_SHORT).show();
+            name.setText(user.name + "");
+            profession.setText(Profession.getProfessionName(user.profession));
+            level.setText(user.level + "");
+            expTxt.setText((int)(user.exp)+"/100");
+            money.setText(user.money + "");
+            Fource.setText(user.strength + "");
+            Agile.setText(user.agile + "");
+            Intelligence.setText(user.intelligence + "");
+            Achievement.setText("萬粽之王");
+            Aboutmyself.setText(user.introduction+ "");
             Aboutmyself.setMovementMethod(ScrollingMovementMethod.getInstance());
         }
 //        "你好，我是楊霖村，我對金融業有絕大的信心和熱忱，因為我擁有專業的金融知識，利用一年時間積極考去取十張證照，在財務個案分析方面也有研究，另外也具有豐富的實習經驗(拿出財富管理競賽作品、實習在職證明給面試官看)\n" +
@@ -137,10 +155,11 @@ public class Dialog_myself extends Dialog {
             public void onClick(View v) {
                 final View item = LayoutInflater.from(context).inflate(R.layout.dialog_search, null);
                 final EditText editText = (EditText) item.findViewById(R.id.friname);
-                editText.addTextChangedListener(new TextLenghLimiter(60));
-                editText.setMinLines(1);
+                editText.addTextChangedListener(new TextLenghLimiter(30));
                 editText.setMaxLines(2);
-                new AlertDialog.Builder(context)
+                editText.setMaxWidth(editText.getWidth());
+                editText.setText(Aboutmyself.getText().toString());
+                new AlertDialog.Builder(context,R.style.DialogTheme)
                         .setView(item)
                         .setTitle("請輸入自我介紹")
                         .setNegativeButton("確定", new DialogInterface.OnClickListener() {
@@ -208,6 +227,9 @@ public class Dialog_myself extends Dialog {
         makefri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Uid.equals("user")){
+                    Uid=user.uid;
+                }
                 ClientFunctions.addFriend(Uid, new ClientResponse() {
                     @Override
                     public void onResponse(String response) {

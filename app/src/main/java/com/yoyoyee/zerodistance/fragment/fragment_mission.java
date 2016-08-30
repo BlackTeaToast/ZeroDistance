@@ -227,7 +227,7 @@ public class fragment_mission extends Fragment  {
         dosort();
 //        bedangerfirst();    //任務排序 (緊急任務先)
 
-            CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission1/*,res*/);
+            CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission1/*,res*/, getContext());
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }else {

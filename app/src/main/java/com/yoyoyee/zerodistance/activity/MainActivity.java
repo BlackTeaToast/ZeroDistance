@@ -4,9 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
@@ -39,6 +37,7 @@ import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.SessionManager;
 import com.yoyoyee.zerodistance.helper.SlidingTabLayout;
 import com.yoyoyee.zerodistance.helper.ViewPagerAdapter;
+import com.yoyoyee.zerodistance.helper.datatype.User;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_aboutus;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_achievement;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_friend;
@@ -117,17 +116,17 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(sv!=null) {
-            if (sv.isShowing()) {
-                sv.hide();
-            } else {
+//        if(sv!=null) {
+//            if (sv.isShowing()) {
+//                sv.hide();
+//            } else {
                 if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mDrawerLayout.closeDrawer(GravityCompat.START);
                 } else {
                     super.onBackPressed();
                 }
-            }
-        }
+//            }
+//        }
     }
 
     private void setAT(){
@@ -394,7 +393,7 @@ public class MainActivity extends AppCompatActivity{
         });
     }
     private void makeMyfselfDialog(){
-        Dialog_myself dialog = new Dialog_myself(context, true , SessionFunctions.getUserUid());
+        Dialog_myself dialog = new Dialog_myself(context, true , SessionFunctions.getUserUid(), new User());
         dialog.show();
     }
     private void makeFriendDialog(){

@@ -230,7 +230,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/imageView3"
+                    android:id="@+id/mypicture"
                     android:layout_weight="1"
                     android:src="@mipmap/ic_launcher"
                     android:layout_marginTop="10dp"
@@ -410,7 +410,7 @@
                 android:layout_weight="2"
                 android:layout_marginLeft="15dp"
                 android:background="#7dffffff"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="2dp"
                 android:layout_marginRight="15dp"
                 android:minLines="2"
                 android:textColor="#ffffff"
