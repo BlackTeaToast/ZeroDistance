@@ -48,7 +48,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 30;
+	private static final int DATABASE_VERSION = 31;
 
 	// Database Name
 	private static final String DATABASE_NAME = "zero_distance_api";
@@ -394,6 +394,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 values.put(MissionsTable.KEY_PLACE, missionsList.get(i).place);
                 values.put(MissionsTable.KEY_CONTENT, missionsList.get(i).content); // Created At
                 values.put(MissionsTable.KEY_REWARD, missionsList.get(i).reward); // Created At
+                values.put(MissionsTable.KEY_STRENGTH, missionsList.get(i).strength);
+                values.put(MissionsTable.KEY_INTELLIGENCE, missionsList.get(i).intelligence);
+                values.put(MissionsTable.KEY_AGILE, missionsList.get(i).agile);
                 values.put(MissionsTable.KEY_CREATED_AT, dateFormat.format(missionsList.get(i).createdAt)); // Created At
                 values.put(MissionsTable.KEY_EXP_AT, dateFormat.format(missionsList.get(i).expAt)); // Created At
                 values.put(MissionsTable.KEY_IS_RUNNING, missionsList.get(i).isRunning); // Created At
@@ -480,6 +483,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
             mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
             mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+            mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+            mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+            mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
             mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
             mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
             mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
@@ -560,6 +566,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
                 mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
                 mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+                mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+                mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
                 mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
                 mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
                 mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
@@ -604,6 +613,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
                     mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
                     mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                    mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+                    mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+                    mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
                     mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
                     mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
                     mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
@@ -649,6 +661,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
                     mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
                     mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                    mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+                    mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+                    mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
                     mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
                     mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
                     mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
@@ -1061,6 +1076,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
                 mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
                 mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+                mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+                mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
                 mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
                 mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
                 mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
@@ -1106,6 +1124,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
                 mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
                 mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+                mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+                mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
                 mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
                 mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
                 mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
@@ -1151,6 +1172,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 mission.place = cursor.getString(MissionsTable.COLUMNS_NUM_PLACE);
                 mission.content = cursor.getString(MissionsTable.COLUMNS_NUM_CONTENT);
                 mission.reward = cursor.getString(MissionsTable.COLUMNS_NUM_REWARD);
+                mission.strength = cursor.getInt(MissionsTable.COLUMNS_NUM_STRENGTH);
+                mission.intelligence = cursor.getInt(MissionsTable.COLUMNS_NUM_INTELLIGENCE);
+                mission.agile = cursor.getInt(MissionsTable.COLUMNS_NUM_AGILE);
                 mission.createdAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_CREATED_AT));
                 mission.expAt = dateFormat.parse(cursor.getString(MissionsTable.COLUMNS_NUM_EXP_AT));
                 mission.isRunning = cursor.getInt(MissionsTable.COLUMNS_NUM_IS_RUNNING) != 0;
