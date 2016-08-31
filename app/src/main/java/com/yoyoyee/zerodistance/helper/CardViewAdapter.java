@@ -83,7 +83,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             holder.peoplenumber.setText(missions[position].getCurrentNum() + "/" + missions[position].getNeedNum());
             holder.PoName.setText(missions[position].getUserName());
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {  //版本過低會葛闢
-            holder.CardView.setBackgroundResource(R.drawable.greencard);
+            holder.CardView.setBackgroundResource(R.drawable.paper1);
             //  getResources().getString(R.string.peopleCount)+
             if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission1) {//其他頁面沒有緊急任務
                 if (missions[position].getUrgent()) {
