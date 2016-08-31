@@ -604,7 +604,7 @@
                     android:text="@string/okbuttom_new_mission_and_group"
                     android:id="@+id/buttonOK"
                     android:onClick="onClickOkOutputData"
-                    android:background="@drawable/new_mission_overbuttom"
+                    android:background="@drawable/new_mission_overbuttom2"
                     android:textColor="#331c1c"
                     android:layout_weight=".10"/>
 
