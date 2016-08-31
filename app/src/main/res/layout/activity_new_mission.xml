@@ -65,7 +65,7 @@
 
                 <EditText
                 android:layout_width="188dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/editTextName"
@@ -204,7 +204,7 @@
                     android:layout_weight=".45"/>
                 <EditText
                     android:layout_width="188dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/editTextOtherPay"
@@ -254,7 +254,7 @@
                     android:layout_weight=".20"/>
                 <EditText
                     android:layout_width="160dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:inputType="numberSigned"
                     android:ems="10"
                     android:id="@+id/editTextPeopleNumber"
@@ -382,7 +382,7 @@
 
                 <EditText
                 android:layout_width="188dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/editTextWhere"
@@ -484,7 +484,7 @@
 
                 <EditText
                 android:layout_width="188dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/editTextContent"
