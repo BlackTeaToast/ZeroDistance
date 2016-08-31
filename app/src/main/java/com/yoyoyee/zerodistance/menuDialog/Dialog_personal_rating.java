@@ -62,7 +62,7 @@ public class Dialog_personal_rating extends Dialog{
        finishButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Toast.makeText(context, "完成評分，已可關閉此任務" ,Toast.LENGTH_SHORT).show();
+               Toast.makeText(context, "請按下完成鈕完成最後步驟" ,Toast.LENGTH_SHORT).show();
                cancel();
 
            }

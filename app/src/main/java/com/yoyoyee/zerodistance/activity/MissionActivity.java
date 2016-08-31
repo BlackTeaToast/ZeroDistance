@@ -196,6 +196,9 @@ public class MissionActivity extends AppCompatActivity {
     private ArrayList<String> imageURL;
     private int stars = 0;//設定的星星數量
     private int trueStars = 0;//已評分過的星星數量，比較用，是實際上的資料庫資料。
+    private int str = 0; //力量
+    private int intelligence=0; //智力
+    private int agi = 0; //敏捷
 
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
@@ -312,6 +315,7 @@ public class MissionActivity extends AppCompatActivity {
         rateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finishButton.setVisibility(View.VISIBLE);
                 makeRatingDialog();
             }
         });
@@ -399,6 +403,11 @@ public class MissionActivity extends AppCompatActivity {
         whatPrice = mission.getReward();
         isFinished = mission.isFinished;
 
+        //完成任務後三項數值加成
+        str = mission.strength;
+        intelligence = mission.intelligence;
+        agi = mission.agile;
+
         //字體大小
         size = SessionFunctions.getUserTextSize();
 
@@ -420,6 +429,7 @@ public class MissionActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(title);
 
+        /*
         //測試發布者頭像顯示
         if(imageURL.size()!=0){
             //取自http://dean-android.blogspot.tw/2013/06/androidimageviewconverting-image-url-to.html
@@ -438,6 +448,7 @@ public class MissionActivity extends AppCompatActivity {
                 }
             }.execute(imageURL.get(0));
         }
+        */
 
         //imageViewAdapter 顯示圖片 ; 使用fragment_imageview.xml 當作每個 holder 來使用==========
         ImageViewAdapter imageViewAdapter = new ImageViewAdapter(imageURL);
@@ -494,6 +505,12 @@ public class MissionActivity extends AppCompatActivity {
         place.setText(where);
         //獎勵種類
         price.setText(whatPrice);
+        //將獎勵素質(力量、智力、敏捷)擺上
+        String tempPlus="";
+        tempPlus +="力量+"+str+" ";
+        tempPlus +="智力+"+intelligence+" ";
+        tempPlus +="敏捷+"+agi;
+        plus.setText(tempPlus);
 
         //設置老師與學生的差別，以及是否參加
         setTeacherOrStudent();

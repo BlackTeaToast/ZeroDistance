@@ -44,11 +44,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="委託人:"
+                    android:text="發佈者:"
                     android:id="@+id/whoSentTitleM"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:textSize="30dp"
+                    android:textSize="19dp"
                     android:layout_marginTop="8dp"
                     android:textColor="#f2da3f"
                     android:layout_marginLeft="5dp" />
@@ -86,7 +86,7 @@
                     android:layout_row="0"
                     android:layout_column="4"
                     android:layout_marginRight="0dp"
-                    android:textSize="25dp"
+                    android:textSize="15dp"
                     android:layout_marginTop="8dp"
                     android:textColor="#a9deff"
                     android:layout_gravity="center_horizontal" />
@@ -98,7 +98,7 @@
                     android:layout_row="1"
                     android:layout_column="4"
                     android:layout_marginRight="5dp"
-                    android:textSize="20dp"
+                    android:textSize="10dp"
                     android:textColor="#ffffff"
                     android:text="xxxx/xx/xx xx:xx" />
 
@@ -241,7 +241,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="執行時間"
                     android:id="@+id/timeToDoTitleM"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:textColor="#47d016"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp" />
@@ -270,7 +270,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="執行地點"
                     android:id="@+id/whereTitleM"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:textColor="#ff5757"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp" />
@@ -299,7 +299,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="獎勵"
                     android:id="@+id/priceTitleM"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:textColor="#f67bfd"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp" />
@@ -311,7 +311,7 @@
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
                     android:textColor="#ffffff"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginBottom="5dp" />
 
             </LinearLayout>
 
@@ -329,7 +329,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="完成時獲得"
                     android:id="@+id/plusTitle"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:textColor="#d0c116"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp" />
@@ -338,7 +338,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/plusText"
-                    android:textSize="28dp"
+                    android:textSize="13dp"
                     android:layout_marginLeft="10dp"
                     android:textColor="#ffffff"
                     android:layout_marginBottom="5dp"
@@ -358,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/needTitleM"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:text="人數"
                     android:textColor="#00df76"
                     android:layout_marginLeft="5dp"
@@ -371,7 +371,8 @@
                     android:textSize="28dp"
                     android:layout_marginLeft="10dp"
                     android:textColor="#ffffff"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginBottom="5dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -389,7 +390,7 @@
                     android:layout_height="wrap_content"
                     android:text="參與者"
                     android:id="@+id/usersTitleM"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:gravity="center_vertical"
                     android:textColor="#45b4ff"
                     android:layout_marginLeft="5dp"
@@ -424,7 +425,7 @@
                     android:layout_height="wrap_content"
                     android:text="候補者"
                     android:id="@+id/waitTitleM"
-                    android:textSize="30dp"
+                    android:textSize="17dp"
                     android:gravity="center_vertical"
                     android:textColor="#e9a969"
                     android:layout_marginLeft="5dp"
