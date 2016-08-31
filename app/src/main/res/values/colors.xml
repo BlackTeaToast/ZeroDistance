@@ -29,6 +29,8 @@
     <color name="spinnertext_new_mission">#46A3FF</color>
 
     <!--楊使用區-->
+    <color name="FarmColor">#882E3237</color>
+
     <color name="ColorPrimaryToolbarMain">#893ab2</color>
 
     <color name="background_dark">#ff363636</color>

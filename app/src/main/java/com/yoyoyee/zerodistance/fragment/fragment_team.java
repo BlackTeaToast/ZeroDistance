@@ -129,7 +129,7 @@ public class fragment_team extends Fragment{
 
         }
         dosort();
-        CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/, getContext());
+        CardViewAdapter = new CardViewAdapter(group,R.layout.fragment_fragment_team/*,res*/, getContext(), getActivity());
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }else {
@@ -204,6 +204,17 @@ public class fragment_team extends Fragment{
                 }
             }
         });
+        ClientFunctions.updateUserAcceptMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
     }
     private void updataGroupDB(){
         ClientFunctions.updateGroups(new ClientResponse() {
@@ -221,6 +232,17 @@ public class fragment_team extends Fragment{
                     upDataCount+=1;
                     updataGroupDB();
                 }
+            }
+        });
+        ClientFunctions.updateUserAcceptGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
             }
         });
     }

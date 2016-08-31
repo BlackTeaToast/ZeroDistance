@@ -4,6 +4,8 @@ package com.yoyoyee.zerodistance.helper;
  * Created by 楊霖村 on 2016/3/30.
  */
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +35,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private SimpleDateFormat dateFormat;
     Intent in;
     private Context context;
+    Activity mActivity;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView missionDetial, missionName , datetime, peoplenumber, PoName;
         public ImageView missiondangerous;
@@ -57,10 +60,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }
     }
 
-    public CardViewAdapter(Mission[] missions, int fragment, Context context) {
+    public CardViewAdapter(Mission[] missions, int fragment, Context context, Activity mActivity) {
         this.missions = missions;
         this.fragment = fragment;
         this.context = context;
+        this.mActivity = mActivity;
     }
 
     @Override
@@ -101,11 +105,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             }
 
             holder.fr_fr_mi.setOnClickListener(new View.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.ECLAIR)
                 @Override
                 public void onClick(View v) {
                     doIntent(v.getContext(), missions[position].isMission());
                     in.putExtra("id", missions[position].getId());
                     v.getContext().startActivity(in);
+                    mActivity.overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
                 }
             });
 //        if(position==missions.length){

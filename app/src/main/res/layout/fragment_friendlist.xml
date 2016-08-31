@@ -12,12 +12,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="false">
+        android:focusableInTouchMode="false"
+        android:id="@+id/ll">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/RL">
 
             <com.yoyoyee.zerodistance.helper.CircleImageView
                 android:id="@+id/profile_image"
@@ -43,7 +45,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="false"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:id="@+id/linearLayout11">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,17 +68,27 @@
                     android:layout_gravity="center_vertical"
                     android:visibility="visible" />
 
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentEnd="false">
+
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:visibility="gone"
-                    android:id="@+id/CheckfriLL">
+                    android:id="@+id/CheckfriLL"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -97,8 +110,7 @@
                         android:src="@drawable/ic_close_black_24dp"
                         android:background="@drawable/redframe" />
                 </LinearLayout>
-
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
 

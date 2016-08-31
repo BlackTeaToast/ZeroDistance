@@ -209,7 +209,6 @@ public class Dialog_myself extends Dialog {
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"you click cancel!",Toast.LENGTH_SHORT).show();
                 cancel();
             }
         });

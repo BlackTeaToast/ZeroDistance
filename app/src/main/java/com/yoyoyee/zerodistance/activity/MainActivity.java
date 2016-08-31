@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
@@ -215,6 +216,17 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        ClientFunctions.updateUserAcceptMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
     }
     private void updataGroupDB(){
         ClientFunctions.updateGroups(new ClientResponse() {
@@ -232,6 +244,17 @@ public class MainActivity extends AppCompatActivity{
                 if(adapter==null){
                     MakeTabAndContext();
                 }
+            }
+        });
+        ClientFunctions.updateUserAcceptGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
             }
         });
     }
@@ -355,6 +378,18 @@ public class MainActivity extends AppCompatActivity{
         NavigationView navigation_view =(NavigationView)findViewById(R.id.navigation_view);
         UserId = (TextView)navigation_view.getHeaderView(0).findViewById(R.id.UserId);
         UserId.setText(SessionFunctions.getUserName()+"");
+        com.yoyoyee.zerodistance.helper.CircleImageView head = (com.yoyoyee.zerodistance.helper.CircleImageView)navigation_view.getHeaderView(0).findViewById(R.id.profile_image);
+        final int[] touch = {0};
+        head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                touch[0]++;
+                if(touch[0]==10){
+                    Toast.makeText(MainActivity.this, "別再點我的頭了!!!!!!", Toast.LENGTH_SHORT).show();
+                    touch[0]=0;
+                }
+            }
+        });
     }
     private void setnav(){
         NavigationView navigation = (NavigationView) findViewById(R.id.navigation_view);

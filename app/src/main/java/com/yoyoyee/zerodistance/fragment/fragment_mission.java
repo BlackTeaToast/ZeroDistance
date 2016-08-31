@@ -169,6 +169,17 @@ public class fragment_mission extends Fragment  {
                     Toast.makeText(getContext(), "更新失敗(任務)", Toast.LENGTH_SHORT).show();
             }
         });
+        ClientFunctions.updateUserAcceptMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
     }
     private void updataGroupDB(){
         ClientFunctions.updateGroups(new ClientResponse() {
@@ -180,6 +191,17 @@ public class fragment_mission extends Fragment  {
             @Override
             public void onErrorResponse(String response) {
                     updataGroupDB();
+            }
+        });
+        ClientFunctions.updateUserAcceptGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
             }
         });
     }
@@ -227,7 +249,7 @@ public class fragment_mission extends Fragment  {
         dosort();
 //        bedangerfirst();    //任務排序 (緊急任務先)
 
-            CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission1/*,res*/, getContext());
+            CardViewAdapter = new CardViewAdapter(mission,R.layout.fragment_fragment_mission1/*,res*/, getContext(), getActivity());
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }else {

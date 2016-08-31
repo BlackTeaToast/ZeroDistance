@@ -43,6 +43,7 @@ public class Dialog_friend extends Dialog {
     static RecyclerView isfriList, nofriList, noinvfriendList;
     LinearLayoutManager islayoutManager, notlayoutManager, noinvfriendManager;//CARD layout
     static Context context;
+    int totalcount;
     FriendAdapter friendAdapter , nofriendAdapter, getNoInviteFriendsAdapter;
     RelativeLayout haveFriLine, noFriLine;
     Button delfri,otherpeo, cancel;
@@ -225,21 +226,23 @@ public class Dialog_friend extends Dialog {
         nofriendAdapter = new FriendAdapter(context, isvisible, isplue, notfriend);
         nofriList.setAdapter(nofriendAdapter);
     }
-    public static void updatainso4(boolean isvisible){
+    public static void updatainso4(final boolean isvisible){
         ClientFunctions.updateFriends(new ClientResponse() {
             @Override
             public void onResponse(String response) {
-
+                isfriList.setAdapter(new FriendAdapter(context, isvisible, false, QueryFunctions.getIsAcceptedFriends()));
+                nofriList.setAdapter( new FriendAdapter(context, isvisible, false, QueryFunctions.getNoAcceptedFriends()));
+                noinvfriendList.setAdapter(new FriendAdapter(context, false, true, QueryFunctions.getNoInviteFriends()));
             }
 
             @Override
             public void onErrorResponse(String response) {
+                isfriList.setAdapter(new FriendAdapter(context, isvisible, false, QueryFunctions.getIsAcceptedFriends()));
+                nofriList.setAdapter( new FriendAdapter(context, isvisible, false, QueryFunctions.getNoAcceptedFriends()));
+                noinvfriendList.setAdapter(new FriendAdapter(context, false, true, QueryFunctions.getNoInviteFriends()));
 
             }
         });
-        isfriList.setAdapter(new FriendAdapter(context, isvisible, true, QueryFunctions.getIsAcceptedFriends()));
-        nofriList.setAdapter( new FriendAdapter(context, isvisible, true, QueryFunctions.getNoAcceptedFriends()));
-        noinvfriendList.setAdapter(new FriendAdapter(context, false, true, QueryFunctions.getNoInviteFriends()));
     }
     private void setotherpeo(){
 
@@ -307,8 +310,9 @@ public class Dialog_friend extends Dialog {
         getWindow().setAttributes(p);
     }
     private void setfricount(){
-        havefriend_count.setText("("+isfriend.size()+"/"+(isfriend.size()+notfriend.size())+")");
-        nofriend_count.setText("("+notfriend.size()+"/"+(isfriend.size()+notfriend.size())+")");
+        totalcount=isfriend.size()+ notfriend.size();
+        havefriend_count.setText("("+isfriend.size()+"/"+totalcount+")");
+        nofriend_count.setText("("+notfriend.size()+"/"+totalcount+")");
     }
     private void setonclick(){
         haveFriLine.setOnClickListener(new View.OnClickListener() {

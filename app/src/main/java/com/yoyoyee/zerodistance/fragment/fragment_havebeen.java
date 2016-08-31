@@ -90,8 +90,8 @@ public class fragment_havebeen extends Fragment {//
 
     }
     public void makecard() {
-        missions  = QueryFunctions.getFinishedMissions();
-        Group  = QueryFunctions.getFinishedGroups();
+        missions  = QueryFunctions.getUserAcceptFinishedMissions();
+        Group  = QueryFunctions.getUserAcceptFinishedGroups();
         mission = new Mission[missions.size()];
         group = new Group[Group.size()];
         allmission = new Mission[missions.size()+Group.size()];
@@ -122,7 +122,7 @@ public class fragment_havebeen extends Fragment {//
             allmission[missions.size()+i]=group[i];
         }
         dosort();
-        CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen , getContext());
+        CardViewAdapter = new CardViewAdapter(allmission,R.layout.fragment_fragment_havebeen , getContext(), getActivity());
         if(!isfirst) {
             mList.setAdapter(CardViewAdapter);
         }else {
@@ -133,6 +133,17 @@ public class fragment_havebeen extends Fragment {//
         updataMissionDB();
     }
     private void updataMissionDB(){  //成功會更新Group
+        ClientFunctions.updateUserAcceptMissions(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {
@@ -154,6 +165,17 @@ public class fragment_havebeen extends Fragment {//
     }
 
     private void updataGroupDB(){
+        ClientFunctions.updateUserAcceptGroups(new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
         ClientFunctions.updateGroups(new ClientResponse() {
             @Override
             public void onResponse(String response) {

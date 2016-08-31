@@ -118,7 +118,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
                             }else if(response.equals("2")){
                                 Toast.makeText(context, "增加好友成功，等待回覆", Toast.LENGTH_SHORT).show();
                             }
-                            updatalist(checkfribevisible);
+                            updatalist(false);
                         }
 
                         @Override
@@ -168,7 +168,6 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
                             if(response.equals("1")){
                                 Toast.makeText(context, "刪除好友成功", Toast.LENGTH_SHORT).show();
                             }
-                            updatalist(checkfribevisible);
                         }
 
                         @Override
@@ -207,6 +206,7 @@ public class FriendAdapter  extends RecyclerView.Adapter<FriendAdapter.ViewHolde
                             Toast.makeText(context, speak, Toast.LENGTH_SHORT).show();
                         }
                     });
+                    updatalist(false);
                 }
             });
         }else{
