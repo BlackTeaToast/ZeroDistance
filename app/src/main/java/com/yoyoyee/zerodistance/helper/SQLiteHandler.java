@@ -1053,7 +1053,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Mission> missions = new ArrayList<>();
         String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
-                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id";
+                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id = t2.mission_id";
 
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -1101,7 +1101,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Mission> missions = new ArrayList<>();
         String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
-                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id AND t1.is_finished = 0";
+                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id = t2.mission_id AND t1.is_finished = 0";
 
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -1149,7 +1149,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Mission> missions = new ArrayList<>();
         String selectQuery = "SELECT t1.* FROM " + MissionsTable.TABLE_NAME + " as t1, "
-                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.mission_id AND t1.is_finished = 1";
+                + UserAcceptMissionsTable.TABLE_NAME + " as t2 WHERE t1.id = t2.mission_id AND t1.is_finished = 1";
 
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -1225,7 +1225,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Group> groups = new ArrayList<>();
         String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
-                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id";
+                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id = t2.group_id";
 
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -1268,7 +1268,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Group> groups = new ArrayList<>();
         String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
-                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id AND t1.is_finished = 0";
+                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id = t2.group_id AND t1.is_finished = 0";
 
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -1311,7 +1311,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Group> groups = new ArrayList<>();
         String selectQuery = "SELECT t1.* FROM " + GroupsTable.TABLE_NAME + " as t1, "
-                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id IN t2.group_id AND t1.is_finished = 1";
+                + UserAcceptGroupsTable.TABLE_NAME + " as t2 WHERE t1.id = t2.group_id AND t1.is_finished = 1";
 
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
