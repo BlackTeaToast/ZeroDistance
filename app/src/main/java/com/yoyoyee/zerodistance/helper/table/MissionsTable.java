@@ -18,6 +18,9 @@ public class MissionsTable {
     public static final String KEY_PLACE = "place";
     public static final String KEY_CONTENT = "content";
     public static final String KEY_REWARD = "reward";
+    public static final String KEY_STRENGTH = "strength";
+    public static final String KEY_INTELLIGENCE = "intelligence";
+    public static final String KEY_AGILE = "agile";
     public static final String KEY_CREATED_AT = "created_at";
     public static final String KEY_EXP_AT = "exp_at";
     public static final String KEY_IS_RUNNING = "is_running";
@@ -35,11 +38,14 @@ public class MissionsTable {
     public static final int COLUMNS_NUM_PLACE = 8;
     public static final int COLUMNS_NUM_CONTENT = 9;
     public static final int COLUMNS_NUM_REWARD = 10;
-    public static final int COLUMNS_NUM_CREATED_AT = 11;
-    public static final int COLUMNS_NUM_EXP_AT = 12;
-    public static final int COLUMNS_NUM_IS_RUNNING = 13;
-    public static final int COLUMNS_NUM_IS_FINISHED = 14;
-    public static final int COLUMNS_NUM_FINISHED_AT = 15;
+    public static final int COLUMNS_NUM_STRENGTH = 11;
+    public static final int COLUMNS_NUM_INTELLIGENCE = 12;
+    public static final int COLUMNS_NUM_AGILE = 13;
+    public static final int COLUMNS_NUM_CREATED_AT = 14;
+    public static final int COLUMNS_NUM_EXP_AT = 15;
+    public static final int COLUMNS_NUM_IS_RUNNING = 16;
+    public static final int COLUMNS_NUM_IS_FINISHED = 17;
+    public static final int COLUMNS_NUM_FINISHED_AT = 18;
 
     public static final String CREATE_MISSIONS_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + KEY_ID + " INTEGER NOT NULL PRIMARY KEY, "
@@ -53,6 +59,9 @@ public class MissionsTable {
             + KEY_PLACE + " TEXT, "
             + KEY_CONTENT + " TEXT , "
             + KEY_REWARD + " TEXT DEFAULT NULL, "
+            + KEY_STRENGTH + " INTEGER,"
+            + KEY_INTELLIGENCE + " INTEGER,"
+            + KEY_AGILE + " INTEGER,"
             + KEY_CREATED_AT + " datetime NOT NULL, "
             + KEY_EXP_AT + " datetime NOT NULL, "
             + KEY_IS_RUNNING + " tinyint(1) NOT NULL DEFAULT '0', "

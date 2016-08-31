@@ -333,6 +333,9 @@ public class ClientFunctions {
                                         mission.getString("place"),
                                         mission.getString("content"),
                                         mission.getString("reward"),
+                                        mission.getInt("strength"),
+                                        mission.getInt("intelligence"),
+                                        mission.getInt("agile"),
                                         dateFormat.parse(mission.getString("created_at")),
                                         dateFormat.parse(mission.getString("exp_at")),
                                         mission.getInt("is_running")!=0,
@@ -527,6 +530,77 @@ public class ClientFunctions {
                 params.put("place", place);
                 params.put("content", content);
                 params.put("reward", reward);
+                params.put("exp_at", sdf.format(expAt));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    public static void publishMission(final String title, final boolean isUrgent, final int needNum,
+                                      final String place, final String content, final String reward,
+                                      final int strength, final int intelligence, final int agile,
+                                      final Date expAt, final ClientResponse clientResponse) {
+        String tag_string_req = "req_publish_mission";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_PUBLISH_MISSION, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        String insertID = jObj.getString("insert_id");
+                        clientResponse.onResponse(insertID);
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        clientResponse.onErrorResponse(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                clientResponse.onErrorResponse(error.getMessage());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", session.getUserUid());
+                params.put("access_key", session.getUserAccessKey());
+                params.put("title", title);
+                params.put("is_urgent", isUrgent?"1":"0");
+                params.put("need_num", String.valueOf(needNum));
+                params.put("place", place);
+                params.put("content", content);
+                params.put("reward", reward);
+                params.put("strength", String.valueOf(strength));
+                params.put("intelligence", String.valueOf(intelligence));
+                params.put("agile", String.valueOf(agile));
                 params.put("exp_at", sdf.format(expAt));
 
                 return params;
@@ -1670,7 +1744,8 @@ public class ClientFunctions {
                                             final boolean isUrgent, final int needNum,
                                             final String place, final String content,
                                             final String reward, final Date expAt,
-                                            final ClientResponse clientResponse) {
+                                            final int strength, final int intelligence,
+                                            final int agile, final ClientResponse clientResponse) {
         String tag_string_req = "req_publish_update_mission";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -1724,6 +1799,9 @@ public class ClientFunctions {
                 params.put("place", place);
                 params.put("content", content);
                 params.put("reward", reward);
+                params.put("strength", String.valueOf(strength));
+                params.put("intelligence", String.valueOf(intelligence));
+                params.put("agile", String.valueOf(agile));
                 params.put("exp_at", sdf.format(expAt));
 
                 return params;

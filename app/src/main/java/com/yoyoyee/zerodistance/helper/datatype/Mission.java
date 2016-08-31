@@ -18,6 +18,9 @@ public class Mission implements Comparable{
     public String place;          //地點
     public String content;        //任務內容
     public String reward;         //獎勵
+    public int strength;
+    public int intelligence;
+    public int agile;
     public Date createdAt;         //創建時間
     public Date expAt;            //到期時間
     public boolean isRunning;     //是否執行中
@@ -29,8 +32,9 @@ public class Mission implements Comparable{
 
     }
 
-    public Mission(int id, String userUid, String userName, int schoolID, String title, boolean isUrgent,
-                   int needNum, int currentNum, String place, String content, String reward, Date createdAt,
+    public Mission(int id, String userUid, String userName, int schoolID, String title,
+                   boolean isUrgent, int needNum, int currentNum, String place, String content,
+                   String reward, int strength, int intelligence, int agile, Date createdAt,
                    Date expAt, boolean isRunning, boolean isFinished, Date finishedAt) {
         this.id = id;
         this.userUid = userUid;
@@ -43,6 +47,9 @@ public class Mission implements Comparable{
         this.place = place;
         this.content = content;
         this.reward = reward;
+        this.strength = strength;
+        this.intelligence = intelligence;
+        this.agile = agile;
         this.createdAt = createdAt;
         this.expAt = expAt;
         this.isRunning = isRunning;
