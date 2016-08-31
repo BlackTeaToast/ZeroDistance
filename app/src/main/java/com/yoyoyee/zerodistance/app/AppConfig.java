@@ -4,7 +4,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 
 public class AppConfig {
-	//APP version  1
+	//APP version
 	public static int VERSION =1;
 
 	// Server user login url
