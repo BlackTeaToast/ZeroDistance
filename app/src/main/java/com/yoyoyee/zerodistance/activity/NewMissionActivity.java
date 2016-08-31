@@ -60,6 +60,8 @@ import com.yoyoyee.zerodistance.helper.datatype.Mission;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -83,7 +85,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
 
      -------------------------------------------------------------------------------------------------------------*/
-    private ArrayAdapter<String> adapterPress,adapterPay;
+    private ArrayAdapter<String> adapterPress,adapterPay,adapterVirtue;
     private Boolean press;//緊急程度 false是不僅緊急，true是緊急
     private Boolean oneTimesDate =true,oneTimesTime=true;//第一次進行時間日期設定判斷用的，用以顯示提示吐司
     private Boolean allreadyDate=false,allreadyTime=false;//是否有選取時間和日期
@@ -105,14 +107,14 @@ public class NewMissionActivity extends AppCompatActivity {
     private EditText editTextcontent,editTextOtherPay,editTextName,editTextNumber,editTextWhere;
 
     private ImageView imv;
-    private Spinner spinnerPress, spinnerPay;
+    private Spinner spinnerPress, spinnerPay,spinnerVirtue;
     private String[] stringPress ,stringPay;
     private String picturePath;
     private String getPay;
     private String dir,fname;
 
 
-    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere;
+    private TextView textViewName,textViewPress,textViewPay,Display,Display2,textViewMissionDate, textViewcontent,textViewPicture,textViewPeopleNumber,textViewWhere,textViewVirtue,textPeople;
     private TextView textViewTime,textViewDate;//Timepickerdialog使用
     private Toolbar toolbar;
     private Uri uriImg=null;
@@ -125,6 +127,7 @@ public class NewMissionActivity extends AppCompatActivity {
     private int missionID;
     private int hourAMPM;
     private int pay;
+    private int virtue=-1;
 
 
     @Override
@@ -146,6 +149,9 @@ public class NewMissionActivity extends AppCompatActivity {
         textViewPicture= (TextView) findViewById(R.id.textViewPicture);
         textViewPeopleNumber= (TextView) findViewById(R.id.textViewPeopleNumber);
         textViewWhere= (TextView) findViewById(R.id.textViewWhere);
+        textViewVirtue=(TextView) findViewById(R.id.textViewVirtue);
+        textPeople= (TextView) findViewById(R.id.people_Mission);
+
         //editText定位區
         editTextName= (EditText) findViewById(R.id.editTextName);
         editTextcontent = (EditText) findViewById(R.id.editTextContent);
@@ -161,6 +167,7 @@ public class NewMissionActivity extends AppCompatActivity {
         //spinner 定位區
         spinnerPress = (Spinner) findViewById(R.id.spinnerPress);
         spinnerPay = (Spinner) findViewById(R.id.spinnerPay);
+        spinnerVirtue= (Spinner) findViewById(R.id.spinnerVirtue);
         //ImageView
         imv =(ImageView)findViewById(R.id.imageViewPicture);
         //ActionBar 設定區，主要為為了toolbar使用---------------------------------------------------
@@ -191,10 +198,13 @@ public class NewMissionActivity extends AppCompatActivity {
 
         adapterPress = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.press_new_mission_and_group));
         adapterPay = new ArrayAdapter<String>(this, R.layout.spinner,getResources().getStringArray(R.array.pay_new_mission));
+        adapterVirtue =new ArrayAdapter<String>(this,R.layout.spinner,getResources().getStringArray(R.array.virtue_new_mission));
         adapterPress.setDropDownViewResource(R.layout.spinner);
         adapterPay.setDropDownViewResource(R.layout.spinner);
+        adapterVirtue.setDropDownViewResource(R.layout.spinner);
         spinnerPress.setAdapter(adapterPress);
         spinnerPay.setAdapter(adapterPay);
+        spinnerVirtue.setAdapter(adapterVirtue);
 
         limitLong();//名稱字數限制以及字型大小限制
         allTextSize(SessionFunctions.getUserTextSize());
@@ -269,8 +279,19 @@ public class NewMissionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        spinnerVirtue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                virtue=position;
+            }
 
-        toNotificationClass();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                virtue=0;
+            }
+        });
+
+                toNotificationClass();
         //此區為隱藏功能用--------------------------------------------------------------------------
         //hide(PICTURE_GONE);
     }
@@ -316,7 +337,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
     public void isEdit(){
         Intent intent=getIntent();
-        isEdit=intent.getBooleanExtra("isEdit", false);
+        isEdit=intent.getBooleanExtra("isEdit",false);
         missionID =intent.getIntExtra("id",0);
         if (isEdit){
             ActionBar actionBar = getSupportActionBar();
@@ -389,6 +410,8 @@ public class NewMissionActivity extends AppCompatActivity {
         textViewcontent.setTextSize(size+5);
         textViewMissionDate.setTextSize(size+5);
         textViewPeopleNumber.setTextSize(size+5);
+        textViewVirtue.setTextSize(size+5);
+        textPeople.setTextSize(size+5);
         buttonTime.setTextSize(size);
         buttonDate.setTextSize(size);
         buttonPicture.setTextSize(size);
@@ -646,7 +669,7 @@ public class NewMissionActivity extends AppCompatActivity {
     }
     //按完成鈕送出
     //防止空白資訊
-    public void onClickOkOutputData(final View v){
+   /* public void onClickOkOutputData(final View v){
         if (editTextName.getText().toString().trim().equals("")) {
             Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
         } else {
@@ -760,7 +783,7 @@ public class NewMissionActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
     //按取消鈕返回
     public void onClickCancel(View v){
     finish();

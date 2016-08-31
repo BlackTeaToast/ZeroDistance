@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fffff"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.yoyoyee.zerodistance.activity.NewMissionActivity">
-    <GridLayout
+    android:layout_height="fill_parent"
+    tools:context="com.yoyoyee.zerodistance.activity.NewMissionActivity"
+    android:background="@drawable/repeat_cube_bg">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="14"
-        android:rowCount="101"
-        android:background="@drawable/repeat_cube_bg">
+        android:layout_height="match_parent">
+
 
         <include
             android:id="@+id/tool_bar"
@@ -21,358 +21,523 @@
             android:layout_height="wrap_content"
             android:layout_columnSpan="14" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/missionname_new_mission"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/textViewName"
-            android:layout_row="4"
-            android:layout_columnSpan="7"
-            android:layout_gravity="left|center"
-            android:layout_margin="0dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextName"
-            android:layout_row="4"
-            android:layout_column="7"
-            android:layout_gravity="center|right"
-            android:layout_marginTop="40dp"
-            android:layout_columnSpan="7"
-            android:layout_marginRight="15dp"
-            android:layout_margin="0dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="left|center_vertical"
-            android:minLines="1"
-            android:maxLines="2"
-            android:singleLine="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/press_new_mission_and_group"
-            android:id="@+id/textViewPress"
-            android:layout_row="6"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/editTextMissonName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="left|center"
-            android:layout_columnSpan="7"
-            android:layout_margin="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <Spinner
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerPress"
-            android:spinnerMode="dropdown"
-            android:layout_row="6"
-            android:layout_column="7"
-            android:layout_alignTop="@+id/textView4"
-            android:layout_toRightOf="@+id/textView4"
-            android:layout_toEndOf="@+id/textView4"
-            android:layout_weight="1"
-            android:entries="@array/press_new_mission_and_group"
-            android:layout_columnSpan="7"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:layout_margin="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:popupBackground="#e3ffffff"
-            android:background="#7feff6fa"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/pay_new_mission"
-            android:id="@+id/textViewPay"
-            android:layout_row="8"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/spinner"
-            android:layout_toLeftOf="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="left|center"
-            android:layout_columnSpan="7"
-            android:layout_margin="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <Spinner
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerPay"
-            android:spinnerMode="dropdown"
-            android:layout_row="8"
-            android:layout_column="7"
-            android:layout_below="@+id/spinner"
-            android:layout_alignLeft="@+id/spinner"
-            android:layout_alignStart="@+id/spinner"
-            android:layout_weight="1"
-            android:entries="@array/pay_new_mission"
-            android:layout_columnSpan="7"
-            android:layout_gravity="center"
-            android:layout_margin="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="15dp"
-            android:background="#7feff6fa"
-            android:popupBackground="#e3ffffff"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/peoplenumber_new_mission_and_group"
-            android:id="@+id/textViewPeopleNumber"
-            android:layout_row="11"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/spinner"
-            android:layout_toLeftOf="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="left|center"
-            android:layout_columnSpan="7"
-            android:layout_margin="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextOtherPay"
-            android:layout_column="0"
-            android:layout_row="10"
-            android:layout_columnSpan="14"
-            android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:gravity="left"
-            android:minWidth="0dp" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:ems="10"
-            android:id="@+id/editTextPeopleNumber"
-            android:layout_row="11"
-            android:layout_column="7"
-            android:layout_columnSpan="7"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_gravity="center|right"
-            android:maxLength="9" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/date_new_mission"
-            android:id="@+id/textViewMissionDate"
-            android:layout_row="12"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/spinner"
-            android:layout_toLeftOf="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="left|center"
-            android:layout_columnSpan="7"
-            android:layout_margin="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="日期"
-            android:id="@+id/buttonDate"
-            android:layout_column="7"
-            android:layout_row="12"
-            android:layout_columnSpan="3"
-            android:onClick="onClickDate"
-            android:layout_margin="0dp"
-            android:layout_gravity="left|center"
-            android:layout_marginLeft="-20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/patrickc_button_yellow"
-            android:textColor="#0b0b07" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="時間"
-            android:id="@+id/buttonTime"
-            android:layout_column="10"
-            android:layout_row="12"
-            android:onClick="onClickTime"
-            android:layout_gravity="center|right"
-            android:layout_columnSpan="4"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="0dp"
-            android:background="@drawable/patrickc_button_yellow"
-            android:textColor="#0b0b07" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/where_new_mission"
-            android:id="@+id/textViewWhere"
-            android:layout_row="14"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/spinner"
-            android:layout_toLeftOf="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_columnSpan="7"
-            android:layout_gravity="left|center"
-            android:layout_margin="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextWhere"
-            android:layout_column="7"
-            android:layout_row="14"
-            android:layout_columnSpan="7"
-            android:layout_gravity="center|right"
-            android:layout_margin="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="任務內容："
-            android:id="@+id/textViewContent"
-            android:layout_row="17"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/spinner"
-            android:layout_toLeftOf="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_columnSpan="14"
-            android:layout_gravity="left|center"
-            android:layout_margin="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextContent"
-            android:layout_column="0"
-            android:layout_row="18"
-            android:layout_columnSpan="14"
-            android:layout_margin="15dp"
-            android:minLines="1"
-            android:layout_gravity="center"
-            android:lines="5" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/uploadpicture_new_mission_and_group"
-            android:id="@+id/textViewPicture"
-            android:layout_row="20"
-            android:layout_column="0"
-            android:textSize="20dp"
-            android:layout_below="@+id/spinner"
-            android:layout_toLeftOf="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_columnSpan="14"
-            android:layout_gravity="left|center"
-            android:layout_margin="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="#00ffffff"
-            android:textColor="#3a58a4" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_column="0"
-            android:layout_columnSpan="14"
-            android:layout_row="22">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tool_bar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/new_mission1">
 
-            <Button
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/li1">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/uploadpictruebuttom_new_mission_and_group"
-                android:id="@+id/buttonPicture"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/missionname_new_mission"
+                android:layout_column="6"
+                android:textSize="20dp"
+                    android:id="@+id/textViewName"
+                android:layout_row="4"
+                    android:layout_gravity="center"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/editTextName"
+                    android:layout_weight=".20"/>
+
+                <EditText
+                android:layout_width="188dp"
+                android:layout_height="40dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editTextName"
+                android:layout_row="4"
+                android:layout_column="13"
+                android:layout_gravity="center|right"
+                    android:gravity="left|center_vertical"
+                android:minLines="1"
+                android:maxLines="2"
+                android:singleLine="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li2"
+                android:layout_below="@+id/li1"
+                android:layout_centerHorizontal="true">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/press_new_mission_and_group"
+                android:id="@+id/textViewPress"
+                android:layout_row="6"
                 android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_gravity="left|center"
                 android:layout_columnSpan="7"
-                android:layout_row="22"
-                android:layout_gravity="left|center"
-                android:onClick="onClickPickimg"
-                android:textColor="#114462"
-                android:background="@drawable/patrickc_button_blue"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="48dp"
-                android:layout_marginStart="48dp" />
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/spinnerPress"
+                    android:layout_toStartOf="@+id/spinnerPress"
+                    android:layout_weight=".20"/>
 
-            <Button
+                <Spinner
+                    android:layout_width="188dp"
+                android:layout_height="40dp"
+                android:id="@+id/spinnerPress"
+                android:spinnerMode="dropdown"
+                android:layout_row="6"
+                android:layout_column="7"
+                    android:entries="@array/press_new_mission_and_group"
+                android:layout_columnSpan="7"
+                android:layout_gravity="center"
+                    android:popupBackground="#e3ffffff"
+                android:background="#7feff6fa"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li3"
+                android:layout_below="@+id/li2"
+                android:layout_centerHorizontal="true">
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/pay_new_mission"
+                android:id="@+id/textViewPay"
+                android:layout_row="8"
+                android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_gravity="left|center"
+                android:layout_columnSpan="7"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/spinnerPay"
+                    android:layout_toStartOf="@+id/spinnerPay"
+                    android:layout_weight=".20"/>
+
+                <Spinner
+                    android:layout_width="188dp"
+                android:layout_height="40dp"
+                android:id="@+id/spinnerPay"
+                android:spinnerMode="dropdown"
+                android:layout_row="8"
+                android:layout_column="7"
+                    android:entries="@array/pay_new_mission"
+                android:layout_columnSpan="7"
+                android:layout_gravity="center"
+                    android:background="#7feff6fa"
+                android:popupBackground="#e3ffffff"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li4"
+                android:layout_below="@+id/li3"
+                android:layout_centerHorizontal="true">
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".45"/>
+                <EditText
+                    android:layout_width="188dp"
+                android:layout_height="40dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editTextOtherPay"
+                android:layout_column="0"
+                android:layout_row="10"
+                android:layout_columnSpan="14"
+                    android:gravity="left"
+                android:minWidth="0dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li5"
+                android:layout_below="@+id/li4"
+                android:layout_centerHorizontal="true">
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/peoplenumber_new_mission_and_group"
+                android:id="@+id/textViewPeopleNumber"
+                android:layout_row="11"
+                android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_gravity="left|center"
+                android:layout_columnSpan="7"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/editTextPeopleNumber"
+                    android:layout_toStartOf="@+id/editTextPeopleNumber"
+                    android:layout_weight=".20"/>
+                <EditText
+                    android:layout_width="160dp"
+                    android:layout_height="40dp"
+                    android:inputType="numberSigned"
+                    android:ems="10"
+                    android:id="@+id/editTextPeopleNumber"
+                    android:layout_row="11"
+                    android:layout_column="7"
+                    android:layout_columnSpan="7"
+                    android:layout_gravity="center|right"
+                    android:maxLength="9"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/people_Mission"
+                    android:layout_weight=".25"
+                    />
+                <TextView
+                    android:layout_width="28dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/peoplenumber_people"
+                    android:id="@+id/people_Mission"
+                    android:layout_row="11"
+                    android:layout_column="0"
+                    android:textSize="20dp"
+                    android:layout_gravity="left|center"
+                    android:layout_columnSpan="7"
+                    android:background="#00ffffff"
+                    android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".05"/>
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li6"
+                android:layout_below="@+id/li5"
+                android:layout_centerHorizontal="true">
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/date_new_mission"
+                android:id="@+id/textViewMissionDate"
+                android:layout_row="12"
+                android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_gravity="left|center"
+                android:layout_columnSpan="7"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonDate"
+                    android:layout_alignParentStart="@+id/buttonDate"
+                    android:layout_weight=".20"/>
+
+                <Button
+                android:layout_width="94dp"
+                android:layout_height="40dp"
+                android:text="日期"
+                android:id="@+id/buttonDate"
+                android:onClick="onClickDate"
+                    android:layout_gravity="top|center"
+                    android:background="@drawable/new_mission_buttom5"
+                android:textColor="#0b0b07"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonTime"
+                    android:layout_weight=".15"/>
+
+                <Button
+                android:layout_width="94dp"
+                android:layout_height="40dp"
+                    android:text="時間"
+                android:id="@+id/buttonTime"
+                android:onClick="onClickTime"
+                    android:background="@drawable/new_mission_buttom5"
+                android:textColor="#0b0b07"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".15"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li7"
+                android:layout_below="@+id/li6"
+                android:layout_centerHorizontal="true">
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/where_new_mission"
+                android:id="@+id/textViewWhere"
+                android:layout_row="14"
+                android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_columnSpan="7"
+                android:layout_gravity="left|center"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/editTextWhere"
+                    android:layout_alignParentStart="@+id/editTextWhere"
+                    android:layout_weight=".20"/>
+
+                <EditText
+                android:layout_width="188dp"
+                android:layout_height="40dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editTextWhere"
+                android:layout_column="7"
+                android:layout_row="14"
+                android:layout_columnSpan="7"
+                android:layout_gravity="center|right"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li8"
+                android:layout_below="@+id/li7"
+                android:layout_centerHorizontal="true">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/virtue_new_mission"
+                    android:id="@+id/textViewVirtue"
+                    android:layout_row="8"
+                    android:layout_column="0"
+                    android:textSize="20dp"
+                    android:layout_gravity="left|center"
+                    android:layout_columnSpan="7"
+                    android:background="#00ffffff"
+                    android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/spinnerVirtue"
+                    android:layout_toStartOf="@+id/spinnerVirtue"
+                    android:layout_weight=".20"/>
+
+                <Spinner
+                    android:layout_width="188dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/spinnerVirtue"
+                    android:spinnerMode="dropdown"
+                    android:layout_row="8"
+                    android:layout_column="7"
+                    android:entries="@array/virtue_new_mission"
+                    android:layout_columnSpan="7"
+                    android:layout_gravity="center"
+                    android:background="#7feff6fa"
+                    android:popupBackground="#e3ffffff"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li9"
+                android:layout_below="@+id/li8"
+                android:layout_centerHorizontal="true">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="任務內容："
+                android:id="@+id/textViewContent"
+                android:layout_row="17"
+                android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_columnSpan="14"
+                android:layout_gravity="left|center"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/editTextContent"
+                    android:layout_toStartOf="@+id/editTextContent"
+                    android:layout_weight=".20"/>
+
+                <EditText
+                android:layout_width="188dp"
+                android:layout_height="40dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editTextContent"
+                android:layout_column="0"
+                android:layout_row="18"
+                android:layout_columnSpan="14"
+                    android:minLines="1"
+                android:layout_gravity="center"
+                android:lines="5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".30"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li10"
+                android:layout_below="@+id/li9"
+                android:layout_centerHorizontal="true">
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/uploadpicture_new_mission_and_group"
+                android:id="@+id/textViewPicture"
+                android:layout_row="20"
+                android:layout_column="0"
+                android:textSize="20dp"
+                    android:layout_columnSpan="14"
+                android:layout_gravity="left|center"
+                    android:background="#00ffffff"
+                android:textColor="#3a58a4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonPicture"
+                    android:layout_toStartOf="@+id/buttonPicture"
+                    android:layout_weight=".20"/>
+
+                <Button
+                    android:layout_width="104dp"
+                    android:layout_height="40dp"
+                    android:text="@string/uploadpictruebuttom_new_mission_and_group"
+                    android:id="@+id/buttonPicture"
+                    android:layout_column="0"
+                    android:layout_columnSpan="7"
+                    android:layout_row="22"
+                    android:onClick="onClickPickimg"
+                    android:textColor="#114462"
+                    android:background="@drawable/new_mission_buttom5"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/buttonTakePicture"
+                    android:layout_weight=".15"/>
+
+                <Button
+                android:layout_width="84dp"
+                android:layout_height="40dp"
                 android:text="@string/takepicturebuttom_new_mission_and_group"
                 android:id="@+id/buttonTakePicture"
                 android:layout_column="7"
@@ -380,16 +545,20 @@
                 android:onClick="useCamera"
                 android:layout_gravity="center|right"
                 android:layout_columnSpan="7"
-                android:layout_marginRight="46dp"
                 android:textColor="#114462"
-                android:background="@drawable/patrickc_button_blue"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="46dp" />
-        </RelativeLayout>
+                android:background="@drawable/new_mission_buttom5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".15"/>
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="20px"
+                    android:layout_weight=".25"/>
+            </LinearLayout>
 
-        <ImageView
+
+
+            <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewPicture"
@@ -401,7 +570,63 @@
             android:longClickable="true"
             android:adjustViewBounds="true"/>
 
-        <TextView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li11"
+                android:layout_below="@+id/li10"
+                android:layout_centerHorizontal="true">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/linearLayout10"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayout10"
+                android:layout_below="@+id/li11"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_weight=".05"
+                     />
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="32dp"
+                    android:text="@string/okbuttom_new_mission_and_group"
+                    android:id="@+id/buttonOK"
+                    android:onClick="onClickOkOutputData"
+                    android:background="@drawable/new_mission_overbuttom"
+                    android:textColor="#331c1c"
+                    android:layout_weight=".10"/>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="32dp"
+                    android:text="@string/cancelbuttom_new_mission_and_group"
+                    android:id="@+id/buttonCancel"
+                    android:onClick="onClickCancel"
+                    android:background="@drawable/new_mission_canclebuttom"
+                    android:textColor="#331c1c"
+
+                    android:layout_weight=".10"/>
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_weight=".75"
+                    />
+
+            </LinearLayout>
+
+            <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -412,78 +637,51 @@
             android:layout_columnSpan="11"
             android:visibility="gone" />
 
-        <Button
+            <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ServiceStart"
             android:id="@+id/serviceStart"
             android:layout_row="99"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:visibility="gone" />
 
-        <Button
+            <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ServiseStop"
-            android:id="@+id/serviceStop" />
+            android:id="@+id/serviceStop"
+            android:visibility="gone"
+            android:layout_row="99"
+            android:layout_column="12" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/printf2"
-            android:layout_row="98"
-            android:layout_column="1"
-            android:layout_columnSpan="11"
-            android:visibility="gone" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_column="0"
-            android:layout_columnSpan="14"
-            android:layout_row="100"
-            android:layout_margin="15dp">
-
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/okbuttom_new_mission_and_group"
-                android:id="@+id/buttonOK"
-                android:layout_gravity="center"
-                android:layout_column="0"
-                android:layout_columnSpan="7"
-                android:layout_row="100"
-                android:layout_marginLeft="20dp"
-                android:onClick="onClickOkOutputData"
-                android:background="@drawable/patrickc_button_red"
-                android:textColor="#331c1c"
-                android:layout_marginStart="20dp"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentRight="false"
-                android:layout_marginBottom="10dp" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/printf2"
+                android:layout_row="98"
+                android:layout_column="1"
+                android:layout_columnSpan="11"
+                android:visibility="gone" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cancelbuttom_new_mission_and_group"
-                android:id="@+id/buttonCancel"
-                android:layout_column="7"
-                android:layout_row="100"
-                android:layout_gravity="center"
-                android:layout_marginRight="43dp"
-                android:layout_columnSpan="7"
-                android:onClick="onClickCancel"
-                android:background="@drawable/patrickc_button_red"
-                android:textColor="#331c1c"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/li12"
+                android:layout_below="@+id/linearLayout10"
+                android:layout_centerHorizontal="true">
+
+                <Space
+                    android:layout_width="20px"
+                    android:layout_height="50dp"
+                     />
+            </RelativeLayout>
+
         </RelativeLayout>
 
-    </GridLayout>
+        </RelativeLayout>
+
 
 </ScrollView>
