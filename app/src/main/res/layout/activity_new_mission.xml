@@ -484,7 +484,7 @@
                 android:lines="5"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_weight=".30"/>
+                    android:layout_weight=".30" />
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"

@@ -57,6 +57,7 @@ import com.yoyoyee.zerodistance.client.ClientResponse;
 import com.yoyoyee.zerodistance.helper.QueryFunctions;
 import com.yoyoyee.zerodistance.helper.SessionFunctions;
 import com.yoyoyee.zerodistance.helper.datatype.Mission;
+import com.yoyoyee.zerodistance.helper.datatype.Permission;
 import com.yoyoyee.zerodistance.helper.datatype.QA;
 
 
@@ -124,6 +125,7 @@ public class NewMissionActivity extends AppCompatActivity {
 
     private int yearNow, monthNow, dayNow, hourNow, minuteNow,pmamNow;
     private int year, month, day, hour, minute;
+    int strV,intV,agiV;
     private int missionID;
     private int hourAMPM;
     private int pay;
@@ -252,7 +254,6 @@ public class NewMissionActivity extends AppCompatActivity {
         spinnerPress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Display.setText(stringPress[position]);
                 press = (position == 0) ? false : true;
             }
 
@@ -264,7 +265,6 @@ public class NewMissionActivity extends AppCompatActivity {
         spinnerPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Display.setText(stringPay[position]);
                 if (position == (getResources().getStringArray(R.array.pay_new_mission).length - 1)) {
                     editTextOtherPay.setVisibility(View.VISIBLE);
                     isOtherPay = true;
@@ -283,6 +283,7 @@ public class NewMissionActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 virtue=position;
+                Toast.makeText(getApplicationContext(),String.valueOf(virtue),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -351,6 +352,9 @@ public class NewMissionActivity extends AppCompatActivity {
             day=Integer.valueOf(dateString.substring(6,8));
             hour=Integer.valueOf(dateString.substring(8,10));
             minute=Integer.valueOf(dateString.substring(10,12));
+            strV=mission.strength;
+            agiV=mission.agile;
+            intV=mission.intelligence;
             String tempAMPM;
             if (hour>=12 && hour<24){
                 if (hour>12) {
@@ -389,6 +393,20 @@ public class NewMissionActivity extends AppCompatActivity {
                    editTextOtherPay.setText(mission.getReward());
                }
             }
+            if (strV==3){
+                virtue=1;
+            }
+            else if(intV==3){
+                virtue=2;
+            }
+            else if(agiV==3){
+                virtue=3;
+            }
+            else{
+                virtue=0;
+            }
+            Toast.makeText(getApplicationContext(),String.valueOf(strV)+"---"+String.valueOf(intV)+"---"+String.valueOf(agiV)+"---"+String.valueOf(missionID),Toast.LENGTH_SHORT).show();
+            spinnerVirtue.setSelection(virtue);
 
 
 
@@ -496,10 +514,11 @@ public class NewMissionActivity extends AppCompatActivity {
     //按鈕開啟相機，但要先取得相機權限
     public void useCamera(View v){
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
-            int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+            int permission = ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permission != PackageManager.PERMISSION_GRANTED) { //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
                 //申请WRITE_EXTERNAL_STORAGE權限，
                 if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) == false) {
+                    ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, Permission.WRITE_EXTERNAL_STORAGE_KEY);
                     showMessageOKCancel(getResources().getString(R.string.restorereadpermission_new_mission_and_group), new DialogInterface.OnClickListener() {
                         @TargetApi(Build.VERSION_CODES.M)
                         @Override
@@ -669,7 +688,7 @@ public class NewMissionActivity extends AppCompatActivity {
     }
     //按完成鈕送出
     //防止空白資訊
-   /* public void onClickOkOutputData(final View v){
+    public void onClickOkOutputData(final View v){
         if (editTextName.getText().toString().trim().equals("")) {
             Toast.makeText(this, R.string.errornoname_new_mission, Toast.LENGTH_SHORT).show();
         } else {
@@ -688,94 +707,146 @@ public class NewMissionActivity extends AppCompatActivity {
                         if (editTextWhere.getText().toString().trim().equals("")) {
                             Toast.makeText(this, R.string.errorwhere_new_mission, Toast.LENGTH_SHORT).show();
                         } else {
-                            //待添加TIME
-                            if (editTextcontent.getText().toString().trim().equals("")) {
-                                Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
+                            if (virtue<0) {
+                                Toast.makeText(this, R.string.errorvirtue_new_mission, Toast.LENGTH_SHORT).show();
                             } else {
-                                //    missionData.content = editTextcontent.getText().toString();
-                                if (isOtherPay) {
-                                    getPay = editTextOtherPay.getText().toString();
+                                Toast.makeText(getApplicationContext(),String.valueOf(virtue),Toast.LENGTH_SHORT).show();
+                                switch (virtue){
+                                    case 0:{
+                                        strV=1;
+                                        intV=1;
+                                        agiV=1;
+                                        break;
+                                    }
+                                    case 1:{
+                                        strV=3;
+                                        intV=0;
+                                        agiV=0;
+                                        break;
+                                    }
+                                    case 2:{
+                                        strV=0;
+                                        intV=3;
+                                        agiV=0;
+                                        break;
+                                    }
+                                    case 3:{
+                                        strV=0;
+                                        intV=0;
+                                        agiV=3;
+                                        break;
+                                    }
+                                    default:{
+                                        strV=1;
+                                        intV=1;
+                                        agiV=1;
+                                    }
                                 }
-                                calendar.set(year, month, day, hour, minute);
-                                if (!isEdit) {
-                                    final ProgressDialog progressDialog = new ProgressDialog(this);
-                                    progressDialog.setCancelable(false);
-                                    progressDialog.show();
-                                    ClientFunctions.publishMission(
-                                            editTextName.getText().toString(),
-                                            press,
-                                            Integer.valueOf(editTextNumber.getText().toString()),
-                                            editTextWhere.getText().toString(),
-                                            editTextcontent.getText().toString(),
-                                            getPay,
-                                            calendar.getTime(),
-                                            new ClientResponse() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    if (!String.valueOf(uriImg).equals("null")) {
-                                                        ClientFunctions.uploadMissionImage(Integer.valueOf(response), picturePath, new ClientResponse() {
+                                //待添加TIME
+                                if (editTextcontent.getText().toString().trim().equals("")) {
+                                    Toast.makeText(this, R.string.errornocontent_new_mission, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    //    missionData.content = editTextcontent.getText().toString();
+                                    if (isOtherPay) {
+                                        getPay = editTextOtherPay.getText().toString();
+                                    }
+                                    calendar.set(year, month, day, hour, minute);
+                                    if (!isEdit) {
+                                        final ProgressDialog progressDialog = new ProgressDialog(this);
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+                                        ClientFunctions.publishMission(
+                                                editTextName.getText().toString(),
+                                                press,
+                                                Integer.valueOf(editTextNumber.getText().toString()),
+                                                editTextWhere.getText().toString(),
+                                                editTextcontent.getText().toString(),
+                                                getPay,
+                                                strV,
+                                                intV,
+                                                agiV,
+                                                calendar.getTime(),
+                                                new ClientResponse() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        if (!String.valueOf(uriImg).equals("null")) {
+                                                            ClientFunctions.uploadMissionImage(Integer.valueOf(response), picturePath, new ClientResponse() {
+                                                                @Override
+                                                                public void onResponse(String response) {
+
+                                                                    progressDialog.dismiss();
+                                                                    Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
+
+                                                                    NewMissionActivity.this.finish();
+                                                                }
+
+                                                                @Override
+                                                                public void onErrorResponse(String response) {
+                                                                    progressDialog.dismiss();
+                                                                    Toast.makeText(v.getContext(), "上傳完成", Toast.LENGTH_SHORT).show();
+                                                                    NewMissionActivity.this.finish();
+                                                                }
+                                                            });
+                                                        } else {
+
+                                                            Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
+                                                            NewMissionActivity.this.finish();
+                                                        }
+                                                        ClientFunctions.updateMissions(new ClientResponse() {
                                                             @Override
                                                             public void onResponse(String response) {
+                                                            }
 
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), "上傳成功" , Toast.LENGTH_SHORT).show();
+                                                            @Override
+                                                            public void onErrorResponse(String response) {
+                                                            }
+                                                        });
+                                                    }
 
+                                                    @Override
+                                                    public void onErrorResponse(String response) {
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(v.getContext(), response, Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                });
+                                    } else {
+                                        ClientFunctions.publishUpdateMission(missionID,
+                                                editTextName.getText().toString(),
+                                                press,
+                                                Integer.valueOf(editTextNumber.getText().toString()),
+                                                editTextWhere.getText().toString(),
+                                                editTextcontent.getText().toString(),
+                                                getPay,
+                                                calendar.getTime(),
+                                                strV,
+                                                intV,
+                                                agiV,
+                                                new ClientResponse() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        Toast.makeText(NewMissionActivity.this, "編輯成功", Toast.LENGTH_SHORT).show();
+                                                        ClientFunctions.updateMissions(new ClientResponse() {
+                                                            @Override
+                                                            public void onResponse(String response) {
                                                                 NewMissionActivity.this.finish();
                                                             }
 
                                                             @Override
                                                             public void onErrorResponse(String response) {
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(v.getContext(), "上傳完成", Toast.LENGTH_SHORT).show();
-                                                                NewMissionActivity.this.finish();
+
                                                             }
                                                         });
-                                                    } else {
-
-                                                        Toast.makeText(v.getContext(), "上傳成功", Toast.LENGTH_SHORT).show();
-                                                        NewMissionActivity.this.finish();
                                                     }
-                                                    ClientFunctions.updateMissions(new ClientResponse() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                        }
 
-                                                        @Override
-                                                        public void onErrorResponse(String response) {
-                                                        }
-                                                    });
+                                                    @Override
+                                                    public void onErrorResponse(String response) {
+                                                        Toast.makeText(NewMissionActivity.this, response + "_4", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
+                                        );
 
-                                                @Override
-                                                public void onErrorResponse(String response) {
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(v.getContext(), response , Toast.LENGTH_SHORT).show();
-
-                                                }
-                                            });
-                                } else {
-                                    ClientFunctions.publishUpdateMission(missionID,
-                                            editTextName.getText().toString(),
-                                            press,
-                                            Integer.valueOf(editTextNumber.getText().toString()),
-                                            editTextWhere.getText().toString(),
-                                            editTextcontent.getText().toString(),
-                                            getPay,
-                                            calendar.getTime(),
-                                            new ClientResponse() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    Toast.makeText(NewMissionActivity.this, "編輯成功", Toast.LENGTH_SHORT).show();
-                                                    NewMissionActivity.this.finish();
-                                                }
-
-                                                @Override
-                                                public void onErrorResponse(String response) {
-                                                    Toast.makeText(NewMissionActivity.this, response + "_4", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                    );
-
+                                    }
                                 }
                             }
                         }
@@ -783,11 +854,22 @@ public class NewMissionActivity extends AppCompatActivity {
                 }
             }
         }
-    }*/
+    }
     //按取消鈕返回
     public void onClickCancel(View v){
     finish();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode==Permission.WRITE_EXTERNAL_STORAGE_KEY){
+
+        }
+
+    }
+
+
+
 
 }
 //

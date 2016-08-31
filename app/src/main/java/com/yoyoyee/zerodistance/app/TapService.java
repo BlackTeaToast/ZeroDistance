@@ -79,7 +79,7 @@ public class TapService extends Service {
         try{
             compareTime();
         }catch (Exception e){
-         Log.d("TapService: ",e.toString());
+         Log.e("TapService: ",e.toString());
         }
 
         return super.onStartCommand(intent, flags, startId);

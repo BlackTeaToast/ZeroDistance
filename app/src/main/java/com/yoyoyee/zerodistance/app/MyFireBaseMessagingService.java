@@ -82,8 +82,8 @@ import java.util.Map;
  *           邀請好友通知 1  加好友通知"friendaccept"
  *           {
  *               需要：
- *                  1.邀請你或是被擬邀請的人的名字:"nickName"
- *                  2.邀請你的人的UID:"userID"
+ *                  1.邀請你或是被擬邀請的人的名字:"name"
+ *                  2.邀請你的人的UID:"uid"
  *           }
  *            邀請好友通知2   或是別人同意你的好友申請"friendOPApplication"
  *           {
@@ -349,7 +349,7 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
 
     private void showFriendsAccept(Map data){
         NotificationID list =new NotificationID();
-        list.putNameList(data.get("nickName").toString());
+        list.putNameList(data.get("name").toString());
         String nameList[] =list.getNameList();
         int number =nameList.length;
         String title ="";
@@ -359,7 +359,7 @@ public class MyFireBaseMessagingService extends com.google.firebase.messaging.Fi
         }
         if (number ==1) {
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            String UID = data.get("userID").toString();
+            String UID = data.get("uid").toString();
             i.putExtra("userID", UID);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
