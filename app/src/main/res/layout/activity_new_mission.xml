@@ -22,13 +22,16 @@
             android:layout_columnSpan="14" />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tool_bar"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/new_mission1">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/new_mission3"
+        android:layout_below="@+id/tool_bar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -36,7 +39,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/li1">
+                android:id="@+id/li1"
+                android:layout_weight="1">
 
                 <Space
                     android:layout_width="20px"
@@ -88,7 +92,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li2"
                 android:layout_below="@+id/li1"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
 
                 <Space
                     android:layout_width="20px"
@@ -140,7 +145,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li3"
                 android:layout_below="@+id/li2"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
@@ -190,7 +196,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li4"
                 android:layout_below="@+id/li3"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
@@ -222,7 +229,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li5"
                 android:layout_below="@+id/li4"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
@@ -288,7 +296,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li6"
                 android:layout_below="@+id/li5"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
@@ -347,7 +356,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li7"
                 android:layout_below="@+id/li6"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
@@ -395,7 +405,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li8"
                 android:layout_below="@+id/li7"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
 
                 <Space
                     android:layout_width="20px"
@@ -446,7 +457,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li9"
                 android:layout_below="@+id/li8"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
 
                 <Space
                     android:layout_width="20px"
@@ -497,7 +509,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/li10"
                 android:layout_below="@+id/li9"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1">
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
@@ -570,19 +583,14 @@
             android:longClickable="true"
             android:adjustViewBounds="true"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/li11"
-                android:layout_below="@+id/li10"
-                android:layout_centerHorizontal="true">
+
 
                 <Space
                     android:layout_width="20px"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/linearLayout10"
-                    android:layout_centerHorizontal="true" />
-            </RelativeLayout>
+                    android:layout_weight="8"
+                    />
+
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -591,7 +599,8 @@
                 android:id="@+id/linearLayout10"
                 android:layout_below="@+id/li11"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_weight="1">
 
                 <Space
                     android:layout_width="20dp"
@@ -666,20 +675,16 @@
                 android:layout_columnSpan="11"
                 android:visibility="gone" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/li12"
-                android:layout_below="@+id/linearLayout10"
-                android:layout_centerHorizontal="true">
+
 
                 <Space
                     android:layout_width="20px"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="50"
                      />
-            </RelativeLayout>
 
-        </RelativeLayout>
+
+    </LinearLayout>
 
         </RelativeLayout>
 
