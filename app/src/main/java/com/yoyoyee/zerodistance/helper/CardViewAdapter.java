@@ -92,9 +92,9 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             if (missions[position].isMission() && fragment == R.layout.fragment_fragment_mission1) {//其他頁面沒有緊急任務
                 if (missions[position].getUrgent()) {
 //                    holder.CardView.setBackgroundResource(R.drawable.dangreous_background2);
-                    holder.CardView.setBackgroundResource(R.drawable.woodcard6);
+                    holder.CardView.setBackgroundResource(R.drawable.woodcard8);
                 } else {
-                    holder.CardView.setBackgroundResource(R.drawable.woodcard6);
+                    holder.CardView.setBackgroundResource(R.drawable.woodcard8);
                 }
             }
         }
