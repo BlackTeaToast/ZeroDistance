@@ -60,7 +60,6 @@
     <string name="PM_new_mission_and_group">PM</string>
     <string name="errornoDate_new_mission_and_group">尚未選擇日期</string>
     <string name="errornoTime_new_mission_and_group">尚未選擇時間</string>
-    <string name="restorereadpermission_new_mission_and_group">無法讀取圖片資訊\n請至設定->應用程式->校園0距離->權限，將儲存權限打開</string>
     <string name="errorpeoplenumber_new_mission_and_group">請填寫需求人數</string>
     <string name="takepicturemessage_new_mission_and_group">長按圖片可刪除</string>
     <string name="idontwantpicture_new_mission_and_group">已取消選取</string>
@@ -74,6 +73,13 @@
     <string name="notification_Mission_Changer_Name">任務名稱為：</string>
     <string name="notification_Group_Changer">您參與的揪團有所更動</string>
     <string name="notification_Group_Changer_Name">揪團名稱為：</string>
+
+    <!--權限部分-->
+    <string name="permission_new_mission_and_group">無法讀取圖片資訊，使否轉跳應用程式資訊頁面？</string>
+    <string name="permission_tip">點擊權限，將關閉的權限打開</string>
+    <string name="permission_no_premission_picture">若不授予權限將無法進行相片存取</string>
+    <string name="permission_gotoset">轉跳頁面</string>
+    <string name="permission_cencel">取消</string>
 
 
     <!--========Tree 選單文字=========-->
