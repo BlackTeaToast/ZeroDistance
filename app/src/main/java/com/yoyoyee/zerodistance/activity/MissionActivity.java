@@ -193,12 +193,14 @@ public class MissionActivity extends AppCompatActivity {
     private String doWhat;//content
     private String whoSeeID;//看到的人的ID,拿來判斷是否參與
     private boolean joined;//是否有餐與
+    private boolean personalRated = false;//個人評分過了
     private ArrayList<String> imageURL;
     private int stars = 0;//設定的星星數量
     private int trueStars = 0;//已評分過的星星數量，比較用，是實際上的資料庫資料。
     private int str = 0; //力量
     private int intelligence=0; //智力
     private int agi = 0; //敏捷
+    private float personalStar[];
 
     //拿來停止，直到某件事做完才繼續執行用
     private ProgressDialog pDialog;
@@ -277,7 +279,8 @@ public class MissionActivity extends AppCompatActivity {
                         buttonVisible.setVisibility(View.GONE);
                     }
                 } else {
-                    //關閉評分區
+                    //關閉評分區 、Reset 個別評分
+                    personalRated = false;
                     gridLayout.setVisibility(View.GONE);
                 }
             }
@@ -316,6 +319,9 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finishButton.setVisibility(View.VISIBLE);
+                ratingBar.setVisibility(View.GONE);
+                ratingBar.setVisibility(View.GONE);
+                personalRated = true;//已按下個別評分
                 makeRatingDialog();
             }
         });
@@ -741,6 +747,21 @@ public class MissionActivity extends AppCompatActivity {
 
     }
 
+    //想要評分
+    private void wantRating(int id, String uid, int stars){
+        ClientFunctions.setMissionUserStar(id, uid, stars, new ClientResponse() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onErrorResponse(String response) {
+
+            }
+        });
+    }
+
     //更新手機任務資料庫
     private void updateMissions(){
         ClientFunctions.updateMissions(new ClientResponse() {
@@ -929,10 +950,20 @@ public class MissionActivity extends AppCompatActivity {
         else
             builder.setTitle(R.string.give_score);
 
-        String message = getString(R.string.give) + " "+stars+" " + getString(R.string.star);
+        String message = "";
+        //依照是否進行過個人評分來更改提示的文字
+        if(personalRated){
+            message += "依照剛剛的設置個別評分嗎";
+        }
+        else{
+            message += getString(R.string.give) + " "+stars+" " + getString(R.string.star);
+        }
+
         builder.setMessage(message);
 
-        if(stars == 0)
+        if(personalRated)
+            builder.setIcon(R.drawable.ic_thumb_up_black_24dp);
+        else if(stars == 0 )
             builder.setIcon(R.drawable.ic_thumb_down_black_24dp);
         else
             builder.setIcon(R.drawable.ic_thumb_up_black_24dp);
@@ -950,7 +981,38 @@ public class MissionActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                //依照有無個別配分來登記星星數量，並且完成任務
 
+                //個別評分
+                if(personalRated){
+                    //供過於求
+                    if(acceptNumber > needNumber){
+                        for(int i=0 ; i<needNumber ; i++){
+                            wantRating(id, missonAccept.get(i).userUid, (int)personalStar[i]);
+                        }
+                    }
+                    //供不應求
+                    else{
+                        for(int i=0 ; i<acceptNumber ; i++){
+                            wantRating(id, missonAccept.get(i).userUid, (int)personalStar[i]);
+                        }
+                    }
+                }
+                //一起評分
+                else{
+                    //供過於求
+                    if(acceptNumber > needNumber){
+                        for(int i=0 ; i<needNumber ; i++){
+                            wantRating(id, missonAccept.get(i).userUid, stars);
+                        }
+                    }
+                    //供不應求
+                    else{
+                        for(int i=0 ; i<acceptNumber ; i++){
+                            wantRating(id, missonAccept.get(i).userUid, stars);
+                        }
+                    }
+                }
                 //重新設定讀取資料庫次數為5，預設為不能正常讀取資料庫
                 updateCount = 5;
                 updateError = true;
@@ -1180,13 +1242,31 @@ public class MissionActivity extends AppCompatActivity {
     private void makeRatingDialog(){
         //如果沒有超過需要人數，有參加的人都可以個別評分
         if(acceptNumber <= needNumber){
+            personalStar = new float[acceptNumber];
             Dialog_personal_rating dialog = new Dialog_personal_rating(this, acceptNumber);
+            //利用接口接受回傳的星星
+            dialog.setRatingResult(new Dialog_personal_rating.OnRatingResult() {
+                @Override
+                public void finish(float[] manyStars) {
+                    personalStar = manyStars;
+                }
+            });
+
             dialog.show();
         }
 
         //供過於求，則只顯示需要的人
         else{
+            personalStar = new float[needNumber];
             Dialog_personal_rating dialog = new Dialog_personal_rating(this, needNumber);
+            //利用接口接受回傳的星星
+            dialog.setRatingResult(new Dialog_personal_rating.OnRatingResult() {
+                @Override
+                public void finish(float[] manyStars) {
+                    personalStar = manyStars;
+                }
+            });
+
             dialog.show();
         }
 
