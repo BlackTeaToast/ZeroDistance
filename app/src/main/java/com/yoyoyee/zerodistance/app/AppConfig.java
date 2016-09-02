@@ -130,7 +130,10 @@ public class AppConfig {
 	// Server search friend
 	public static String URL_SEARCH_FRIEND = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/friend/searchFriend";
 
-	// Server search friend
+	// Server set mission user star
 	public static String URL_SET_MISSION_USER_STAR = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/mission/setMissionUserStar";
+
+	// Server set mission users star
+	public static String URL_SET_MISSION_USERS_STAR = "http://ec2-52-26-84-202.us-west-2.compute.amazonaws.com:3000/zerodistance/mission/setMissionUsersStar";
 
 }
