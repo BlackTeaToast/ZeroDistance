@@ -330,7 +330,7 @@ public class NewGroupActivity extends AppCompatActivity {
         textViewcontent.setTypeface(face);
         textViewGroupDate.setTypeface(face);
         textViewPeopleNumber.setTypeface(face);
-//        textPeople.setTypeface(face);
+//      textPeople.setTypeface(face);
         buttonTime.setTypeface(face);
         buttonDate.setTypeface(face);
         buttonPicture.setTypeface(face);

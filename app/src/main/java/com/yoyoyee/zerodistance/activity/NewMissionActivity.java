@@ -446,7 +446,7 @@ public class NewMissionActivity extends AppCompatActivity {
         buttonDate.setTextSize(size);
         //FontManager.changeFonts((ViewGroup) this.findViewById(android.R.id.content),NewMissionActivity.this);
 
-        Typeface face =Typeface.createFromAsset(this.getAssets(),"setofont.ttf");
+        /*Typeface face =Typeface.createFromAsset(this.getAssets(),"setofont.ttf");
         textViewName.setTypeface(face);
         textViewPress.setTypeface(face);
         textViewPay.setTypeface(face);
@@ -464,7 +464,7 @@ public class NewMissionActivity extends AppCompatActivity {
         buttonOk.setTypeface(face);
         buttonCancel.setTypeface(face);
         buttonTime.setTypeface(face);
-        buttonDate.setTypeface(face);
+        buttonDate.setTypeface(face);*/
 
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

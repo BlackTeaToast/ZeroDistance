@@ -6,6 +6,7 @@ package com.yoyoyee.zerodistance.activity;
         import android.content.Intent;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
+        import android.graphics.Typeface;
         import android.support.v4.widget.SwipeRefreshLayout;
         import android.support.v7.app.ActionBar;
         import android.support.v7.app.AlertDialog;
@@ -17,13 +18,16 @@ package com.yoyoyee.zerodistance.activity;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
+        import android.view.ViewGroup;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.ListView;
         import android.widget.TextView;
         import android.widget.Toast;
 
 
         import com.yoyoyee.zerodistance.R;
+        import com.yoyoyee.zerodistance.app.FontManager;
         import com.yoyoyee.zerodistance.app.QAndA;
         import com.yoyoyee.zerodistance.client.ClientFunctions;
         import com.yoyoyee.zerodistance.client.ClientResponse;
@@ -53,12 +57,14 @@ public class QAActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qa);
+
         //toolbar
         intentData =getIntent();
         isGroup=intentData.getBooleanExtra("isGroup", true);
         group_or_mission_ID=intentData.getIntExtra("id", 1);
         publisher =intentData.getStringExtra("publisher");
         toolbar= (Toolbar) findViewById(R.id.qAndA_Toolbar);
+
         onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -146,6 +152,16 @@ public class QAActivity extends AppCompatActivity {
          * 抓資料進入手機的QAtable裡面，並且使用動態新增出來↓↓↓↓↓↓↓↓
          */
     protected void printListView () {
+        //
+      /* TextView qT,aT,qC,aC;
+        qT= (TextView) findViewById(R.id.a_A_Title);
+        aT= (TextView) findViewById(R.id.q_Q_Title);
+        aC = (TextView) findViewById(R.id.a_Acontent);
+        Typeface face =Typeface.createFromAsset(this.getAssets(),"setofont.ttf");
+        qT.setTypeface(face);
+        aC.setTypeface(face);
+        aT.setTypeface(face);*/
+
         int list =DataQas.size();
         Toast.makeText(this, "讀取完成，總共"+String.valueOf(list)+"則", Toast.LENGTH_SHORT).show();
         QA[] q =new QA[list];
@@ -168,6 +184,7 @@ public class QAActivity extends AppCompatActivity {
         }
         QAAdapter QAAdapter = new QAAdapter(q_a_ID,size, userID.equals(publisher),isGroup,q_Qtimetext, q_Qnametext, q_Qcontenttext, a_Atimetext, a_Acontenttext,userUID);
         RecyclerView mList = (RecyclerView) findViewById(R.id.QAlistView);
+
 
         LinearLayoutManager layoutManager;
         layoutManager = new LinearLayoutManager(this);
