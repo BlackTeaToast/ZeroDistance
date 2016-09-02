@@ -44,6 +44,8 @@ import com.yoyoyee.zerodistance.menuDialog.Dialog_achievement;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_friend;
 import com.yoyoyee.zerodistance.menuDialog.Dialog_myself;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class MainActivity extends AppCompatActivity{
 
 //    private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -504,5 +506,9 @@ public class MainActivity extends AppCompatActivity{
                 .setContentText("這裡會顯示你的名字\n哇! "+SessionFunctions.getUserName()+"這名字真帥!!")
                 .hideOnTouchOutside()
                 .build();
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
