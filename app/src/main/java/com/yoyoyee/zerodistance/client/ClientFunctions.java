@@ -5,6 +5,8 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TimeZone;
 
 /**
@@ -2787,7 +2790,7 @@ public class ClientFunctions {
     }
 
     /**
-     * 修改當前使用者介紹
+     * 修改任務使用者星數
      * onResponse:
      *    1 - 評分成功
      *    2 - 評分未更動
@@ -2863,4 +2866,71 @@ public class ClientFunctions {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    /**
+     * 修改任務多個使用者星數
+     * onResponse:
+     *    1 - 評分成功
+     *    2 - 評分未更動
+     * onErrorResponse:
+     *   -1 - 非任務創立者
+     * -400 - 內部錯誤(ex未連上網路)
+     * -401 - 格式錯誤
+     * -402 - 驗證錯誤
+     * @param missionID
+     * @param userStar uid和stars
+     * @param clientResponseInteger
+     */
+    public static void setMissionUsersStar(final int missionID, HashMap<String,Integer> userStar,
+                                           final ClientResponseInteger clientResponseInteger) {
+
+        String tag_json_req = "req_set_mission_users_star";
+
+        try {
+
+            JSONObject jsonObj = new JSONObject();
+            JSONArray jsonAry = new JSONArray();
+
+            jsonObj.put("uid", session.getUserUid());
+            jsonObj.put("access_key", session.getUserAccessKey());
+            jsonObj.put("mission_id", missionID);
+            for (Entry<String, Integer> entry : userStar.entrySet()) {
+                JSONObject user = new JSONObject();
+                user.put("uid", entry.getKey());
+                user.put("stars", entry.getValue());
+                jsonAry.put(user);
+            }
+            jsonObj.put("users", jsonAry);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    AppConfig.URL_SET_MISSION_USERS_STAR, jsonObj, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        boolean error = response.getBoolean("error");
+                        int statusCode = response.getInt("status_code");
+                        if (!error) {
+                            clientResponseInteger.onResponse(statusCode);
+                        } else {
+                            clientResponseInteger.onErrorResponse(statusCode);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        clientResponseInteger.onErrorResponse(-400);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, "setMissionUsersStar onErrorResponse: ", error);
+                    clientResponseInteger.onErrorResponse(-400);
+                }
+            });
+
+            AppController.getInstance().addToRequestQueue(jsonObjectRequest, tag_json_req);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            clientResponseInteger.onErrorResponse(-400);
+        }
+    }
 }

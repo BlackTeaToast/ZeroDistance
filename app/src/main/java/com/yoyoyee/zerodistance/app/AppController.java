@@ -6,8 +6,11 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.yoyoyee.zerodistance.R;
 import com.yoyoyee.zerodistance.helper.SQLiteHandler;
 import com.yoyoyee.zerodistance.helper.SessionManager;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class AppController extends Application {
 
@@ -21,6 +24,11 @@ public class AppController extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("setofont.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 		mInstance = this;
 		session = new SessionManager(getApplicationContext());
 		db = new SQLiteHandler(getApplicationContext());
