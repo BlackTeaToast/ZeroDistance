@@ -41,6 +41,8 @@ package com.yoyoyee.zerodistance.activity;
         import java.text.SimpleDateFormat;
         import java.util.ArrayList;
 
+        import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class QAActivity extends AppCompatActivity {
     private float size;//定義所有文字大小
     private Boolean isGroup;
@@ -211,5 +213,8 @@ public class QAActivity extends AppCompatActivity {
         loadQandAData(isGroup, group_or_mission_ID);
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }
